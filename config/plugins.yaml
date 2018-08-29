@@ -1,0 +1,347 @@
+# Plugin repository whitelist.
+# Keys: Full repo name: "org/repo".
+# Values: List of plugins to run against the repo.
+---
+triggers:
+- repos:
+  - jetstack/kube-lego
+  - jetstack/test-infra
+  - jetstack/navigator
+  - jetstack/tarmak
+  - jetstack/okta-kubectl-auth
+  - jetstack/puppet-module-aws_ebs
+  - jetstack/puppet-module-calico
+  - jetstack/puppet-module-etcd
+  - jetstack/puppet-module-kubernetes
+  - jetstack/puppet-module-kubernetes_addons
+  - jetstack/puppet-module-prometheus
+  - jetstack/puppet-module-vault_client
+  - jetstack/puppet-module-tarmak
+  - jetstack/vault-helper
+  - jetstack/vault-unsealer
+  - jetstack/vault-plugin-auth-templated-aws
+  trusted_org: jetstack
+  only_org_members: true
+- repos:
+  - jetstack/cert-manager
+  trusted_org: cert-manager
+  only_org_members: true
+
+blunderbuss:
+  # Only request a review from 1 reviewer
+  request_count: 1
+
+external_plugins:
+  jetstack/kube-lego:
+  - name: needs-rebase
+  jetstack/navigator:
+  - name: needs-rebase
+  jetstack/cert-manager:
+  - name: needs-rebase
+  jetstack/tarmak:
+  - name: needs-rebase
+
+# heart:
+#   adorees:
+#   - k8s-merge-robot
+
+# slack:
+#   mergewarnings:
+#   - repos:
+#     - kubernetes/kubernetes
+#     channels:
+#     - kubernetes-dev
+#     whitelist:
+#     - k8s-merge-robot
+
+milestonestatus:
+  # You can curl the following endpoint in order to determine the github ID of your team
+  # responsible for maintaining the milestones:
+  # curl -H "Authorization: token <token>" https://api.github.com/orgs/<org-name>/teams
+  # https://github.com/orgs/cert-manager/teams/milestone-maintainers
+  maintainers_id: 2805308
+
+config_updater:
+  maps:
+    # label_sync/labels.yaml:
+    #   name: label-config
+    prow/config.yaml:
+      name: config
+    prow/plugins.yaml:
+      name: plugins
+    config/jobs/**/*.yaml:
+      name: job-config
+
+plugins:
+
+  jetstack/test-infra:
+  - trigger
+  - shrug
+  - config-updater
+  - lgtm
+  - approve
+  - size
+  - wip
+  - lifecycle
+  - assign
+  - hold
+  - label
+  - dco
+
+  jetstack/cert-manager:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - blunderbuss
+  - assign
+  - golint
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - skip
+  - milestone
+  - milestonestatus
+  - lifecycle
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/kube-lego:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/navigator:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - blunderbuss
+  - assign
+  - lifecycle
+  - golint
+  - heart
+  - hold
+  - label
+  - approve
+  - lgtm
+  - milestonestatus
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/tarmak:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - assign
+  - blunderbuss
+  - lifecycle
+  - golint
+  - skip
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - milestonestatus
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/okta-kubectl-auth:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - assign
+  - blunderbuss
+  - lifecycle
+  - golint
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-aws_ebs:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-calico:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-etcd:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-kubernetes:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-kubernetes_addons:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-prometheus:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-tarmak:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/puppet-module-vault_client:
+  - docs-no-retest
+  - trigger
+  - assign
+  - lifecycle
+  - heart
+  - hold
+  - label
+  - lgtm
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/vault-helper:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - assign
+  - blunderbuss
+  - lifecycle
+  - golint
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/vault-unsealer:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - assign
+  - blunderbuss
+  - lifecycle
+  - golint
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - size
+  - yuks
+  - wip
+  - shrug
+
+  jetstack/vault-plugin-auth-templated-aws:
+  - docs-no-retest
+  - trigger
+  - release-note
+  - assign
+  - blunderbuss
+  - lifecycle
+  - golint
+  - heart
+  - hold
+  - label
+  - lgtm
+  - approve
+  - size
+  - yuks
+  - wip
+  - shrug
