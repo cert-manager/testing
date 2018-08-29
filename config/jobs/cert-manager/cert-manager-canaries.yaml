@@ -1,0 +1,159 @@
+.minikube_small: &minikube_small
+  resources:
+    requests:
+      cpu: 2900m
+      memory: 8Gi
+
+presubmits:
+  jetstack/cert-manager:
+
+  # decorated jobs test
+  - name: pull-cert-manager-verify-decorated
+    always_run: false
+    skip_report: true
+    context: pull-cert-manager-verify-decorated
+    max_concurrency: 2
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    decorate: true
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/cert-manager-golang:0.1
+        command:
+        - make
+        - verify
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test( verify-decorated),?(\\s+|$)"
+    rerun_command: "/test verify-decorated"
+
+  # dind based 1.10 e2e test
+  # TODO: port to jetstack/testing images
+  - name: pull-cert-manager-e2e-v1-10
+    always_run: false
+    skip_report: true
+    context: pull-cert-manager-e2e-v1-10
+    max_concurrency: 2
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/bootstrap:v20180510-5a6e51d3f
+        #      - image: eu.gcr.io/jetstack-build-infra/bootstrap-dind-cluster-1.10.2:v20180509-0faaabe54
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        resources:
+          requests:
+            cpu: 4
+            memory: 8Gi
+        env:
+        - name: DOCKER_IN_DOCKER_ENABLED
+          value: "true"
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+        volumeMounts:
+        - name: docker-graph
+          mountPath: /docker-graph
+        - name: libmodules
+          mountPath: /lib/modules
+        - name: sysfscgroup
+          mountPath: /sys/fs/cgroup
+          readOnly: true
+      volumes:
+      - name: docker-graph
+        emptyDir: {}
+      - name: libmodules
+        hostPath:
+          path: /lib/modules
+      - name: sysfscgroup
+        hostPath:
+          path: /sys/fs/cgroup
+    trigger: "(?m)^/test( dind-e2e),?(\\s+|$)"
+    rerun_command: "/test dind-e2e"
+
+  # bazel based cert-manager verify test
+  # TODO: port to jetstack/testing images
+  - name: pull-cert-manager-verify
+    always_run: false
+    skip_report: true
+    context: pull-cert-manager-verify
+    max_concurrency: 2
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/bazelbuild:v20180821-942bf34f9-0.16.1
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--job=$(JOB_NAME)"
+        - "--clean"
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+        env:
+        - name: DOCKER_IN_DOCKER_ENABLED
+          value: "true"
+        - name: GOPATH
+          value: "/go"
+        # docker-in-docker needs privileged mode
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: docker-graph
+          mountPath: /docker-graph
+      volumes:
+      - name: docker-graph
+        emptyDir: {}
+    trigger: "(?m)^/test( all| verify),?(\\s+|$)"
+    rerun_command: "/test verify"
+
+  # testing minikube 1.10
+  # TODO: port to jetstack/testing images
+  - name: cert-manager-e2e-v1-10
+    context: cert-manager-e2e-v1-10
+    always_run: false
+    trigger: "(?m)^/test( all| e2e( v?1.10)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.10"
+    # Match everything except PRs that only touch docs/
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    skip_report: true
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      cert-manager-cloudflare-svc-acct: "true"
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-small: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.10.0:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_small
+        securityContext:
+          privileged: true

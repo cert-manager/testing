@@ -1,0 +1,120 @@
+.minikube_small: &minikube_small
+  resources:
+    requests:
+      cpu: 2900m
+      memory: 8Gi
+
+presets:
+- labels:
+    cert-manager-cloudflare-svc-acct: "true"
+  env:
+  - name: CLOUDFLARE_E2E_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: api-token
+  - name: CLOUDFLARE_E2E_EMAIL
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: email
+  - name: CLOUDFLARE_E2E_DOMAIN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: domain
+
+presubmits:
+  jetstack/cert-manager:
+
+  - name: cert-manager-chart-verify
+    always_run: true
+    context: cert-manager-chart-verify
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/bootstrap:v20180509-54804d71a
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+        env:
+        - name: DOCKER_IN_DOCKER_ENABLED
+          value: "true"
+        # docker-in-docker needs privileged mode
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: docker-graph
+          mountPath: /docker-graph
+      volumes:
+      - name: docker-graph
+        emptyDir: {}
+    trigger: "(?m)^/test( all| chart-verify),?(\\s+|$)"
+    rerun_command: "/test chart-verify"
+
+  - name: cert-manager-quick-verify
+    always_run: true
+    skip_report: false
+    context: cert-manager-quick-verify
+    max_concurrency: 2
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/gcloud-in-go:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
+    rerun_command: "/test verify"
+
+  - name: cert-manager-e2e-v1-9
+    context: cert-manager-e2e-v1-9
+    trigger: "(?m)^/test( all| e2e( v?1.9)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.9"
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      cert-manager-cloudflare-svc-acct: "true"
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-small: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.9.6:0.14
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_small
+        securityContext:
+          privileged: true

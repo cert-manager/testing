@@ -1,0 +1,74 @@
+.minikube_small: &minikube_small
+  resources:
+    requests:
+      cpu: 2900m
+      memory: 8Gi
+
+presubmits:
+
+  jetstack/cert-manager:
+  - name: cert-manager-e2e-v1-7
+    context: cert-manager-e2e-v1-7
+    trigger: "(?m)^/test( all| e2e( v?1.7)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.7"
+    always_run: false
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      cert-manager-cloudflare-svc-acct: "true"
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-small: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.7.15:0.14
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_small
+        securityContext:
+          privileged: true
+
+  - name: cert-manager-e2e-v1-8
+    context: cert-manager-e2e-v1-8
+    trigger: "(?m)^/test( all| e2e( v?1.8)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.8"
+    always_run: false
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      cert-manager-cloudflare-svc-acct: "true"
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-small: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.8.10:0.14
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_small
+        securityContext:
+          privileged: true
