@@ -5,6 +5,12 @@ This repository contains the configuration used for testing all jetstck projects
 It is used by [Prow](https://github.com/kubernetes/test-infra/tree/master/prow)
 to provide GitHub automation to all of our repositories.
 
+## Common tasks
+
+* [config/](config/): Adding or modifying CI jobs (presubmits, periodics or postsubmits)
+* [prow/](prow/): Updating/upgrading Prow
+* [images/](images/): Creating or modifying images used during CI
+
 ## Structure
 
 ### config/
