@@ -1,0 +1,67 @@
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+
+go_image(
+    name = "branchprotector",
+    binary = "@test_infra//prow/cmd/branchprotector",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "deck",
+    binary = "@test_infra//prow/cmd/deck",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "ghproxy",
+    binary = "@test_infra//ghproxy",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "hook",
+    binary = "@test_infra//prow/cmd/hook",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "horologium",
+    binary = "@test_infra//prow/cmd/horologium",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "plank",
+    binary = "@test_infra//prow/cmd/plank",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "sinker",
+    binary = "@test_infra//prow/cmd/sinker",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "splice",
+    binary = "@test_infra//prow/cmd/splice",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "tide",
+    binary = "@test_infra//prow/cmd/tide",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "tot",
+    binary = "@test_infra//prow/cmd/tot",
+    visibility = ["//prow:__subpackages__"],
+)
+
+go_image(
+    name = "needs-rebase",
+    binary = "@test_infra//prow/external-plugins/needs-rebase",
+    visibility = ["//prow:__subpackages__"],
+)
