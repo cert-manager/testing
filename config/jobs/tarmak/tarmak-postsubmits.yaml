@@ -1,0 +1,38 @@
+postsubmits:
+  jetstack/tarmak:
+  - name: tarmak-docs-push
+    branches:
+    - master
+    - release-0.1
+    - release-0.2
+    - release-0.3
+    - release-0.4
+    - release-0.5
+    - release-0.6
+    context: tarmak-docs-push
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/sphinx-docs:0.2
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/workspace"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        env:
+        - name: DOCS_GOOGLE_APPLICATION_CREDENTIALS
+          value: /etc/docs-service-account/service-account.json
+        resources:
+          requests:
+            cpu: 200m
+            memory: 1Gi
+        volumeMounts:
+        - name: docs-service
+          mountPath: /etc/docs-service-account
+          readOnly: true
+      volumes:
+      - name: docs-service
+        secret:
+          secretName: tarmak-docs-push-service-account

@@ -1,0 +1,27 @@
+presubmits:
+
+  jetstack/testing:
+  - name: pull-testing-verify-config
+    always_run: true
+    context: pull-testing-verify-config
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/bazelbuild:v20180830-942bf34f9-0.16.1
+        args:
+        - bazel
+        - test
+        - //...
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+        # TODO: investigate whether bazel requires privileged mode
+        securityContext:
+          privileged: true
+    trigger: "(?m)^/test config,?(\\s+|$)"
+    rerun_command: "/test config"
