@@ -1,0 +1,280 @@
+# minikube size job templates
+.minikube_medium: &minikube_medium
+  resources:
+    requests:
+      cpu: 3800m
+      memory: 12Gi
+
+presubmits:
+  jetstack/navigator:
+  - name: pull-navigator-bazel-verify
+    agent: kubernetes
+    context: pull-navigator-bazel-verify
+    always_run: false
+    rerun_command: "/test pull-navigator-bazel-verify"
+    trigger: "(?m)^/test pull-navigator-bazel-verify,?(\\s+|$)"
+    labels:
+      preset-service-account: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-bazel-remote-cache-enabled: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/bazelbuild:v20180321-d7679e93b-0.11.1
+        imagePullPolicy: IfNotPresent
+        args:
+        - "--clean"
+        - "--git-cache=/root/.cache/git"
+        - "--job=$(JOB_NAME)"
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--scenario=kubernetes_bazel"
+        - "--" # end bootstrap args, scenario args below
+        - --test=//cmd/... //pkg/... //internal/... //plugin/...
+        # Bazel needs privileged mode in order to sandbox builds.
+        securityContext:
+          privileged: true
+        resources:
+          requests:
+            memory: "2Gi"
+
+  - name: pull-navigator-e2e-v1-9
+    context: pull-navigator-e2e-v1-9
+    always_run: false
+    trigger: "(?m)^/test( bazel-e2e( v?1.9)?|)( \\[.+\\])?$"
+    rerun_command: "/test bazel-e2e v1.9"
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-medium: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.9.6:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        - "--job=$(JOB_NAME)"
+        - "--scenario=minikube"
+        - "--"
+        - make
+        - e2e-test
+        <<: *minikube_medium
+        securityContext:
+          privileged: true
+
+  - name: navigator-quick-verify
+    always_run: true
+    skip_report: false
+    context: navigator-quick-verify
+    max_concurrency: 2
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/jetstack-build-infra/gcloud-in-go:0.10
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
+    rerun_command: "/test verify"
+
+  - name: navigator-e2e-v1-7
+    context: navigator-e2e-v1-7
+    always_run: true
+    trigger: "(?m)^/test( all| e2e( v?1.7)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.7"
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-medium: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.7.15:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_medium
+        securityContext:
+          privileged: true
+
+  - name: navigator-e2e-v1-8
+    context: navigator-e2e-v1-8
+    always_run: true
+    trigger: "(?m)^/test( all| e2e( v?1.8)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.8"
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-medium: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.8.10:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_medium
+        securityContext:
+          privileged: true
+
+  - name: navigator-e2e-v1-9
+    context: navigator-e2e-v1-9
+    always_run: true
+    trigger: "(?m)^/test( all| e2e( v?1.9)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.9"
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-medium: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.9.6:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_medium
+        securityContext:
+          privileged: true
+
+  - name: navigator-e2e-v1-10
+    context: navigator-e2e-v1-10
+    always_run: false
+    trigger: "(?m)^/test( all| e2e( v?1.10)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.10"
+    skip_report: false
+    max_concurrency: 4
+    agent: kubernetes
+    labels:
+      preset-service-account: "true"
+      libvirt-socket: "true"
+      minikube-support: "true"
+      minikube-medium: "true"
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/libvirt: ""
+      # Note: this is not supported yet by prow PodSpec, taint temporary removed
+      tolerations:
+      - effect: NoSchedule
+        key: dedicated
+        operator: Equal
+      containers:
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.10.0:0.12
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--clean"
+        <<: *minikube_medium
+        securityContext:
+          privileged: true
+
+  - name: navigator-kubetest-e2e
+    agent: kubernetes
+    context: pull-navigator-kubetest
+    rerun_command: "/test kubetest-e2e"
+    trigger: "(?m)^/test kubetest-e2e,?(\\s+|$)"
+    always_run: false
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: gcr.io/k8s-testimages/bootstrap:v20180122-6fd3aef1a
+        args:
+        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
+        - "--root=/go/src"
+        - "--clean"
+        - "--git-cache=/root/.cache/git"
+        - "--job=$(JOB_NAME)"
+        - "--service-account=/etc/service-account/service-account.json"
+        - "--upload=gs://jetstack-logs/pr-logs"
+        - "--timeout=90"
+        env:
+        - name: DOCKER_IN_DOCKER_ENABLED
+          value: "true"
+        # docker-in-docker needs privileged mode
+        securityContext:
+          privileged: true
+        volumeMounts:
+        # - name: cache-ssd
+        #   mountPath: /root/.cache
+        # - name: docker-graph
+        #   mountPath: /docker-graph
+        - name: var-lib-docker
+          mountPath: /var/lib/docker
+        # TODO: not sure if we can run parallel builds
+        # ports:
+        # - containerPort: 9999
+        #   hostPort: 9999
+        resources:
+          requests:
+            cpu: 3800m
+            memory: "12Gi"
+      volumes:
+      # TODO: re-enable cache volumes
+      # - name: cache-ssd
+      #   hostPath:
+      #     path: /mnt/disks/ssd0
+      # - name: docker-graph
+      #   hostPath:
+      #     path: /mnt/disks/ssd0/docker-graph
+      - name: var-lib-docker
+        emptyDir: {}
+
