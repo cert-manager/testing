@@ -12,12 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = 2.4.0
+IMG = eu.gcr.io/jetstack-build-infra-images/sphinx-docs
+TAG := $(shell date +v%Y%m%d)-$(shell git describe --tags --always --dirty)
 
-image:
-	docker build -t "gcr.io/jetstack-build-infra/tarmak-ruby:$(VERSION)" .
+# TODO: add sphinx version to image tag
 
-push: image
-	gcloud docker -- push "gcr.io/jetstack-build-infra/tarmak-ruby:$(VERSION)"
+all: build
 
-.PHONY: image push
+do_build = \
+	docker build --pull --build-arg IMAGE_ARG=$(IMG):$(TAG) -t $(IMG):$(TAG) .;\
+	docker tag $(IMG):$(TAG) $(IMG):latest;\
+	echo Built $(IMG):$(TAG) and tagged with latest;
+
+do_push = \
+	docker push $(IMG):$(TAG);\
+	docker push $(IMG):latest;\
+	echo Pushed $(IMG) with $(TAG) and latest tags;
+
+build:
+	@$(do_build)
+
+push: build
+	@$(do_push)
+
+.PHONY: all build push

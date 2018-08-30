@@ -14,11 +14,7 @@
 
 # Includes go and gcloud
 FROM golang:1.9.3
-LABEL maintainer="senlu@google.com"
-
-# add env we can debug with the image name:tag
-ARG IMAGE_ARG
-ENV IMAGE=${IMAGE_ARG}
+LABEL maintainer="james@jetstack.io"
 
 RUN apt-get update && apt-get install -y \
     python \
@@ -47,4 +43,9 @@ RUN go get -v golang.org/x/tools/cmd/goimports
 
 WORKDIR /workspace
 ADD runner /
+
+# add env we can debug with the image name:tag
+ARG IMAGE_ARG
+ENV IMAGE=${IMAGE_ARG}
+
 ENTRYPOINT ["/bin/bash", "/runner"]
