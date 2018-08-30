@@ -12,47 +12,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM ruby:2.4.4
+FROM debian:jessie
 LABEL maintainer="christian.simon@jetstack.io"
 
 RUN apt-get update && apt-get install -y \
-    python \
     git \
     curl \
-    zlib1g-dev \
     build-essential \
-    libc++-dev \
-    ruby-dev \
-    libssl-dev \
-    libreadline-dev \
-    libyaml-dev \
-    libsqlite3-dev \
-    sqlite3 \
-    libxml2-dev \
-    libxslt1-dev \
-    libvirt-dev \
-    libcurl4-openssl-dev \
-    python3-software-properties \
-    libffi-dev \
-    nodejs \
-    rsync \
-    wget && \
+    python-minimal \
+    python-pip \
+    python3-enchant \
+    wamerican \
+    wbritish && \
     apt-get clean
 
-
-# Download and install vagrant
-ENV VAGRANT_VERSION 2.1.1
-ENV VAGRANT_HASH cee18b6f3b1209ea5878c22cfd84a9f0004f20ef146cb7a18aada19162928a0f
-RUN curl -sL -o /tmp/vagrant.deb https://releases.hashicorp.com/vagrant/${VAGRANT_VERSION}/vagrant_${VAGRANT_VERSION}_x86_64.deb \
- && echo "${VAGRANT_HASH}  /tmp/vagrant.deb" | sha256sum -c \
- && DEBIAN_FRONTEND=noninteractive dpkg -i /tmp/vagrant.deb \
- && rm /tmp/vagrant.deb
-
-# Download and install vagrant's libvirt plugin
-RUN vagrant plugin install vagrant-libvirt
-
-ENV GCLOUD_VERSION 206.0.0
-ENV GCLOUD_HASH d39293914b2e969bfe18dd19eb77ba96d283995f8cf1e5d7ba6ac712a3c9479a
+ENV GCLOUD_VERSION 178.0.0
+ENV GCLOUD_HASH 2e0bbbf81c11164bf892cf0b891751ba4e5172661eff907ad1f7fc0b6907e296
 RUN curl -sL -o /tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz && \
     echo "$GCLOUD_HASH  /tmp/google-cloud-sdk.tar.gz" | sha256sum -c && \
     tar xf /tmp/google-cloud-sdk.tar.gz -C / && \
@@ -60,6 +35,25 @@ RUN curl -sL -o /tmp/google-cloud-sdk.tar.gz https://dl.google.com/dl/cloudsdk/c
     /google-cloud-sdk/install.sh
 ENV PATH "/google-cloud-sdk/bin:${PATH}"
 
-WORKDIR /workspace
+RUN pip install virtualenv
+
 ADD runner /
+
+# run as non root
+ENV VENV_PATH /venv
+RUN mkdir -p /home/nobody /workspace ${VENV_PATH} && chown nobody /home/nobody /workspace ${VENV_PATH}
+
+WORKDIR /workspace
+
+ENV HOME /home/nobody
+USER nobody
+
+ADD requirements.txt /tmp/requirements.txt
+RUN virtualenv -p $(which python3) ${VENV_PATH}
+RUN ${VENV_PATH}/bin/pip install -r /tmp/requirements.txt
+
+# add env we can debug with the image name:tag
+ARG IMAGE_ARG
+ENV IMAGE=${IMAGE_ARG}
+
 ENTRYPOINT ["/bin/bash", "/runner"]

@@ -88,4 +88,9 @@ RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
 
 WORKDIR /workspace
 ADD runner /
+
+# add env we can debug with the image name:tag
+ARG IMAGE_ARG
+ENV IMAGE=${IMAGE_ARG}
+
 ENTRYPOINT ["/bin/bash", "/runner"]

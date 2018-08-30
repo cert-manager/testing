@@ -2,7 +2,6 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
-        "//images/tarmak/ruby:all-srcs",
     ],
     visibility = ["//visibility:public"],
 )
