@@ -71,7 +71,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/jetstack-build-infra/cert-mmanager-gcloud-in-go:0.12
+      - image: gcr.io/jetstack-build-infra/gcloud-in-go:0.12
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/go/src"
@@ -109,7 +109,7 @@ presubmits:
         key: dedicated
         operator: Equal
       containers:
-      - image: gcr.io/jetstack-build-infra/cert-manager-minikube-in-go-v1.9.6:0.14
+      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.9.6:0.14
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/go/src"
