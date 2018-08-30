@@ -5,71 +5,27 @@ load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
 
 release(
     "production",
-    component("branchprotector", "cronjob",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-branchprotector:latest": "//prow/images:branchprotector",
-        },
-    ),
-    component("deck", "service", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-deck:latest": "//prow/images:deck",
-        },
-    ),
+    component("branchprotector", "cronjob"),
+    component("deck", "service", "deployment", "rbac"),
     component("gce-ssd-retain", "storageclass"),
-    component("ghproxy", "service", "deployment",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-ghproxy:latest": "//prow/images:ghproxy",
-        },
-    ),
-    component("hook", "service", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-hook:latest": "//prow/images:hook",
-        },
-    ),
-    component("horologium", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-horologium:latest": "//prow/images:horologium",
-        },
-    ),
+    component("ghproxy", "service", "deployment"),
+    component("hook", "service", "deployment", "rbac"),
+    component("horologium", "deployment", "rbac"),
     component("lego", "deployment"),
     component(
         "mem-limit-range",
         "limitrange",
         context = BUILD_CONTEXT,
     ),
-    component("plank", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-plank:latest": "//prow/images:plank",
-        },
-    ),
+    component("plank", "deployment", "rbac"),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
-    component("sinker", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-sinker:latest": "//prow/images:sinker",
-        },
-    ),
-    component("splice", "deployment",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-splice:latest": "//prow/images:splice",
-        },
-    ),
-    component("tide", "service", "deployment", "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tide:latest": "//prow/images:tide",
-        },
-    ),
+    component("sinker", "deployment", "rbac"),
+    component("splice", "deployment"),
+    component("tide", "service", "deployment", "rbac"),
     component("tls-ing", "ingress"),
-    component("tot", "service", "deployment",
-            images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tot:latest": "//prow/images:tot",
-        },
-    ),
-    component("needs-rebase", "deployment", "service",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-needs-rebase:latest": "//prow/images:needs-rebase",
-        },
-    ),
+    component("tot", "service", "deployment"),
+    component("needs-rebase", "deployment", "service"),
 )
 
 filegroup(

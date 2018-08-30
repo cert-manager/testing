@@ -17,7 +17,7 @@ spec:
         args:
         - --build-cluster=/etc/cluster/cluster
         - --job-config-path=/etc/job-config
-        image: eu.gcr.io/jetstack-build-infra/prow-sinker:latest
+        image: gcr.io/k8s-prow/sinker:v20180827-b14cf3e25
         volumeMounts:
         - name: config
           mountPath: /etc/config
