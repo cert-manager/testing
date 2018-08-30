@@ -75,6 +75,10 @@ config_updater:
 plugins:
 
   jetstack/testing:
+  - trigger
+  - size
+  - hold
+  - label
   - config-updater
 
   jetstack/test-infra:
