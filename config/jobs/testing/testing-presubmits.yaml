@@ -11,7 +11,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/jetstack-build-infra/bazelbuild:v20180830-942bf34f9-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180830-ae2a64a-0.16.1
         args:
         - bazel
         - test
