@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: ghproxy
-        image: gcr.io/k8s-testimages/ghproxy:latest
+        image: eu.gcr.io/jetstack-build-infra/prow-ghproxy:latest
         imagePullPolicy: Always
         args:
         - --cache-dir=/cache
