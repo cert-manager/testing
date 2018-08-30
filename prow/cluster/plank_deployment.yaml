@@ -30,7 +30,7 @@ spec:
       serviceAccountName: "plank" # Uncomment for use with RBAC
       containers:
       - name: plank
-        image: gcr.io/k8s-prow/plank:v20180827-b14cf3e25
+        image: eu.gcr.io/jetstack-build-infra/prow-plank:latest
         args:
         - --tot-url=http://tot
         - --dry-run=false

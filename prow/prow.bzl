@@ -44,7 +44,7 @@ def object(name, context=CORE_CONTEXT, **kwargs):
 #     "service": [":hook_service"],
 #     "deployment": [":hook_deployment"],
 #   }
-def component(cmd, *kinds, **kwargs):
+def component(cmd, *kinds, images = {}, **kwargs):
   targets = {}
   for k in kinds:
       if k == MULTI_KIND:
@@ -54,7 +54,10 @@ def component(cmd, *kinds, **kwargs):
       kwargs["name"] = n
       kwargs["kind"] = k
       kwargs["template"] = ":%s.yaml" % n
-      object(**kwargs)
+      args = dict(kwargs)
+      if k == "deployment" or k == "cronjob":
+        args["images"] = images
+      object(**args)
       if k != MULTI_KIND:
         targets.setdefault(cmd,[]).append(":%s" % n)
         targets.setdefault(k,[]).append(":%s" % n)

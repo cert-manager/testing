@@ -21,10 +21,8 @@ set -o pipefail
 git_commit="$(git describe --tags --always --dirty)"
 build_date="$(date -u '+%Y%m%d')"
 docker_tag="v${build_date}-${git_commit}"
-# TODO(fejta): retire STABLE_PROW_REPO
 cat <<EOF
-STABLE_DOCKER_REPO ${DOCKER_REPO_OVERRIDE:-gcr.io/k8s-testimages}
-STABLE_PROW_REPO ${PROW_REPO_OVERRIDE:-gcr.io/k8s-prow}
+STABLE_DOCKER_REPO ${DOCKER_REPO_OVERRIDE:-eu.gcr.io/jetstack-build-infra}
 STABLE_PROW_CONTEXT build-infra
 STABLE_BUILD_CONTEXT libvirt
 STABLE_BUILD_GIT_COMMIT ${git_commit}
