@@ -40,7 +40,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: tot
-        image: eu.gcr.io/jetstack-build-infra/prow-tot:latest
+        image: gcr.io/k8s-prow/tot:v20180827-b14cf3e25
         imagePullPolicy: Always
         args:
         - -storage=/store/tot.json

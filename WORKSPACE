@@ -40,17 +40,9 @@ git_repository(
     tag = "v0.5.1",
 )
 
-
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker_pull")
 
 docker_repositories()
-
-load(
-    "@io_bazel_rules_docker//go:image.bzl",
-    _go_repositories = "repositories",
-)
-
-_go_repositories()
 
 git_repository(
     name = "io_bazel_rules_k8s",
