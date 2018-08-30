@@ -30,7 +30,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     unzip \
     python \
     wget \
-    ca-certificates
+    ca-certificates \
+    git
 
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     DOWNLOAD_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${INSTALLER}"; \
