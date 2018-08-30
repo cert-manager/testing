@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-VERSION = 0.12
+VERSION = 0.13
 
 image:
-	docker build -t "gcr.io/jetstack-build-infra/cert-manager-gcloud-in-go:$(VERSION)" .
+	docker build -t "gcr.io/jetstack-build-infra/gcloud-in-go:$(VERSION)" .
 
 push: image
-	gcloud docker -- push "gcr.io/jetstack-build-infra/cert-manager-gcloud-in-go:$(VERSION)"
+	gcloud docker -- push "gcr.io/jetstack-build-infra/gcloud-in-go:$(VERSION)"
 
 .PHONY: image push
