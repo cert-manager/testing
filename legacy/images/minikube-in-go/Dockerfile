@@ -63,13 +63,6 @@ RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud
     /google-cloud-sdk/install.sh
 ENV PATH "/google-cloud-sdk/bin:${PATH}"
 
-ARG KUBERNETES_VERSION
-ENV KUBERNETES_VERSION=$KUBERNETES_VERSION
-RUN curl -Lo helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz && tar xvf helm.tar.gz && mv linux-amd64/helm /usr/local/bin \
-    && curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/ \
-    && curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.23.0/minikube-linux-amd64 && chmod +x minikube && mv minikube /usr/local/bin/
-ENV PATH "/usr/local/bin:${PATH}"
-
 RUN curl -L https://github.com/golang/dep/releases/download/v0.3.2/dep-linux-amd64 >/tmp/dep \
     && chmod +x /tmp/dep \
     && mv /tmp/dep /usr/local/bin/dep
@@ -85,6 +78,13 @@ RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     DOWNLOAD_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${INSTALLER}"; \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
+
+ARG KUBERNETES_VERSION
+ENV KUBERNETES_VERSION=$KUBERNETES_VERSION
+RUN curl -Lo helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz && tar xvf helm.tar.gz && mv linux-amd64/helm /usr/local/bin \
+    && curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/ \
+    && curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.23.0/minikube-linux-amd64 && chmod +x minikube && mv minikube /usr/local/bin/
+ENV PATH "/usr/local/bin:${PATH}"
 
 WORKDIR /workspace
 ADD runner /
