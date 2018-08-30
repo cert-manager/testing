@@ -28,7 +28,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     g++ \
     zlib1g-dev \
     unzip \
-    python
+    python \
+    wget
 
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     DOWNLOAD_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${INSTALLER}"; \
