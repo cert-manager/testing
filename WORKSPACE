@@ -1,3 +1,5 @@
+workspace(name = "io_jetstack_testing")
+
 git_repository(
     name = "bazel_skylib",
     commit = "2169ae1c374aab4a09aa90e65efe1a3aad4e279b",

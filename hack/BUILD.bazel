@@ -4,17 +4,47 @@ py_test(
     data = ["//:all-srcs"],
 )
 
-filegroup(
-    name = "all-srcs",
-    srcs = [
-        ":package-srcs",
-        "//hack/boilerplate:all-srcs",
+sh_binary(
+    name = "update-kazel",
+    srcs = ["update-kazel.sh"],
+    data = [
+        ":kazel",
     ],
+)
+
+sh_test(
+    name = "verify-kazel",
+    srcs = ["verify-kazel.sh"],
+    data = [
+        ":kazel",
+        "//:all-srcs",
+    ],
+    deps = [
+        "@bazel_tools//tools/bash/runfiles",
+    ],
+)
+
+genrule(
+    name = "getkazel",
+    srcs = ["@io_kubernetes_build//kazel"],
+    outs = ["kazel"],
+    cmd = "cp $(SRCS) $@",
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
+    tags = ["automanaged"],
     visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "all-srcs",
+    srcs = [
+        ":package-srcs",
+        "//hack/boilerplate:all-srcs",
+    ],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
 )

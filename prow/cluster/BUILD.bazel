@@ -5,28 +5,44 @@ load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
 
 release(
     "production",
-    component("branchprotector", "cronjob",
+    component(
+        "branchprotector",
+        "cronjob",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
         },
     ),
-    component("deck", "deployment", "service", "rbac",
+    component(
+        "deck",
+        "deployment",
+        "service",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
         },
     ),
     component("gce-ssd-retain", "storageclass"),
-    component("ghproxy", "service", "deployment",
+    component(
+        "ghproxy",
+        "service",
+        "deployment",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-ghproxy:latest": "@test_infra//ghproxy:image",
         },
     ),
-    component("hook", "service", "deployment", "rbac",
+    component(
+        "hook",
+        "service",
+        "deployment",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
         },
     ),
-    component("horologium", "deployment", "rbac",
+    component(
+        "horologium",
+        "deployment",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
         },
@@ -37,35 +53,53 @@ release(
         "limitrange",
         context = BUILD_CONTEXT,
     ),
-    component("plank", "deployment", "rbac",
+    component(
+        "plank",
+        "deployment",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
         },
     ),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
-    component("sinker", "deployment", "rbac",
+    component(
+        "sinker",
+        "deployment",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
         },
     ),
-    component("splice", "deployment",
+    component(
+        "splice",
+        "deployment",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
         },
     ),
-    component("tide", "service", "deployment", "rbac",
+    component(
+        "tide",
+        "service",
+        "deployment",
+        "rbac",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
         },
     ),
     component("tls-ing", "ingress"),
-    component("tot", "service", "deployment",
+    component(
+        "tot",
+        "service",
+        "deployment",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
         },
     ),
-    component("needs-rebase", "deployment", "service",
+    component(
+        "needs-rebase",
+        "deployment",
+        "service",
         images = {
             "eu.gcr.io/jetstack-build-infra/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
         },

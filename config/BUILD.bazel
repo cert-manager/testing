@@ -4,8 +4,8 @@ sh_test(
     name = "verify",
     srcs = ["verify.sh"],
     data = [
-        ":yaml",
         ":checkconfig",
+        ":yaml",
     ],
 )
 
@@ -22,15 +22,15 @@ filegroup(
 )
 
 filegroup(
-    name = "all-srcs",
-    srcs = [
-        ":package-srcs",
-    ],
-    visibility = ["//visibility:public"],
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    tags = ["automanaged"],
+    visibility = ["//visibility:private"],
 )
 
 filegroup(
-    name = "package-srcs",
-    srcs = glob(["**"]),
-    visibility = ["//visibility:private"],
+    name = "all-srcs",
+    srcs = [":package-srcs"],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
 )
