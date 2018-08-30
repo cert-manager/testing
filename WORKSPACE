@@ -24,8 +24,8 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "a8cee5a60a2d9476341cf843867221a8bd18a3e8",
-    remote = "https://github.com/kubernetes/test-infra.git",
+    commit = "a62c9b4a9dc6765256de49a9db12845491f54a1d",
+    remote = "https://github.com/jetstack/test-infra.git",
 )
 
 git_repository(
@@ -44,6 +44,30 @@ git_repository(
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker_pull")
 
 docker_repositories()
+
+docker_pull(
+    name = "alpine-base",
+    # 0.1 as of 2017/11/29
+    digest = "sha256:317d39ece9dd09992fa81236964be3f3919b940f42e3143379dd66e4af930f3a",
+    registry = "gcr.io",
+    repository = "k8s-prow/alpine",
+)
+
+docker_pull(
+    name = "git-base",
+    # 0.2 as of 2018/05/10
+    digest = "sha256:3eaeff9a2c35a50c3a0af7ef7cf26ea73e6fd966f54ef3dfe79d4ffb45805112",
+    registry = "gcr.io",
+    repository = "k8s-prow/git",
+)
+
+docker_pull(
+    name = "python",
+    digest = "sha256:8bfeec8f8ba3aaeea918a0198f4b1c7c9b2b39e26f399a7173229dfcef76fc1f",
+    registry = "index.docker.io",
+    repository = "library/python",
+    tag = "2.7.14-jessie",
+)
 
 load(
     "@io_bazel_rules_docker//go:image.bzl",
