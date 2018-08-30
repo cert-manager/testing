@@ -25,7 +25,7 @@ spec:
       labels:
         app: horologium
     spec:
-      # serviceAccountName: "horologium" # Uncomment for use with RBAC
+      serviceAccountName: "horologium" # Uncomment for use with RBAC
       terminationGracePeriodSeconds: 30
       containers:
       - name: horologium
