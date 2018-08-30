@@ -1,8 +1,11 @@
 filegroup(
     name = "all-srcs",
     srcs = [
+        "//images/gcloud:all-srcs",
+        "//images/minikube-in-go:all-srcs",
+        "//images/sphinx-docs:all-srcs",
+        "//images/tarmak:all-srcs",
         ":package-srcs",
-        "//prow/cluster:all-srcs",
     ],
     visibility = ["//visibility:public"],
 )

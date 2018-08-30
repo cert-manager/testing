@@ -2,7 +2,6 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
-        "//prow/cluster:all-srcs",
     ],
     visibility = ["//visibility:public"],
 )

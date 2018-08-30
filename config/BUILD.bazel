@@ -20,3 +20,17 @@ filegroup(
     name = "yaml",
     srcs = glob(["**/*.yaml"]),
 )
+
+filegroup(
+    name = "all-srcs",
+    srcs = [
+        ":package-srcs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:private"],
+)

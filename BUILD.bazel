@@ -1,0 +1,24 @@
+filegroup(
+    name = "all-srcs",
+    srcs = [
+        ":package-srcs",
+        "//config:all-srcs",
+        "//hack:all-srcs",
+        "//images:all-srcs",
+        "//legacy:all-srcs",
+        "//prow:all-srcs",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            "bazel-*/**",
+            ".git/**",
+        ],
+    ),
+    visibility = ["//visibility:private"],
+)

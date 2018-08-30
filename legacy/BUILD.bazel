@@ -2,7 +2,9 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
-        "//prow/cluster:all-srcs",
+        "//legacy/bootstrap:all-srcs",
+        "//legacy/jobs:all-srcs",
+        "//legacy/scenarios:all-srcs",
     ],
     visibility = ["//visibility:public"],
 )
