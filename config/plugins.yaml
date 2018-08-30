@@ -92,8 +92,6 @@ plugins:
   - assign
   - hold
   - label
-  # Disable until we have built images containing the dco plugin
-  # - dco
 
   jetstack/cert-manager:
   - docs-no-retest
@@ -115,6 +113,7 @@ plugins:
   - yuks
   - wip
   - shrug
+  - dco
 
   jetstack/kube-lego:
   - docs-no-retest
