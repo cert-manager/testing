@@ -1,0 +1,43 @@
+load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
+
+# Usage:
+#   bazel run //prow/cluster:foo.apply
+
+release(
+    "production",
+    component("branchprotector", "cronjob"),
+    component("deck", "service", "deployment", "rbac"),
+    component("gce-ssd-retain", "storageclass"),
+    component("ghproxy", "service", "deployment"),
+    component("hook", "service", "deployment", "rbac"),
+    component("horologium", "deployment", "rbac"),
+    component("lego", "deployment"),
+    component(
+        "mem-limit-range",
+        "limitrange",
+        context = BUILD_CONTEXT,
+    ),
+    component("plank", "deployment", "rbac"),
+    component("prowjob", "customresourcedefinition"),
+    component("pushgateway", "deployment"),
+    component("sinker", "deployment", "rbac"),
+    component("splice", "deployment"),
+    component("tide", "service", "deployment", "rbac"),
+    component("tls-ing", "ingress"),
+    component("tot", "service", "deployment"),
+    component("needs-rebase", "deployment", "service"),
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    tags = ["automanaged"],
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "all-srcs",
+    srcs = [":package-srcs"],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
+)
