@@ -2,7 +2,7 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
-        "//legacy/images/gcloud:all-srcs",
+        "//legacy/images/gcloud-in-go:all-srcs",
         "//legacy/images/minikube-in-go:all-srcs",
         "//legacy/images/tarmak:all-srcs",
         "//legacy/bootstrap:all-srcs",
