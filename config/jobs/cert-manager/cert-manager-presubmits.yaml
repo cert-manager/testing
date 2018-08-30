@@ -109,7 +109,7 @@ presubmits:
         key: dedicated
         operator: Equal
       containers:
-      - image: gcr.io/jetstack-build-infra/minikube-in-go-v1.9.6:0.14
+      - image: eu.gcr.io/jetstack-build-infra-images/minikube-in-go:v20180830-8035146-v1.9.6
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/go/src"
