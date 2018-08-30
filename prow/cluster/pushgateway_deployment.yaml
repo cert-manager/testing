@@ -24,6 +24,8 @@ metadata:
   name: pushgateway
   labels:
     app: pushgateway
+  annotations:
+    prometheus.io/scrape: "true"
 spec:
   ports:
   - name: pushgateway

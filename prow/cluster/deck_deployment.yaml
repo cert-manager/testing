@@ -19,7 +19,7 @@ metadata:
   labels:
     app: deck
 spec:
-  replicas: 3
+  replicas: 2
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -34,7 +34,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: deck
-        image: gcr.io/k8s-prow/deck:v20180814-0a3efc115
+        image: gcr.io/k8s-prow/deck:v20180827-b14cf3e25
         imagePullPolicy: Always
         ports:
           - name: http
@@ -43,39 +43,40 @@ spec:
         - --build-cluster=/etc/cluster/cluster
         - --tide-url=http://tide/
         - --hook-url=http://hook:8888/plugin-help
-        - --redirect-http-to=prow.k8s.io
+        - --redirect-http-to=prow.build-infra.jetstack.io
         - --oauth-url=/github-login
         - --job-config-path=/etc/job-config
         volumeMounts:
-        - name: oauth-config
-          mountPath: /etc/github
-          readOnly: true
-        - name: cookie-secret
-          mountPath: /etc/cookie
-          readOnly: true
-        - mountPath: /etc/cluster
-          name: cluster
-          readOnly: true
         - name: config
           mountPath: /etc/config
+          readOnly: true
+        - name: cluster
+          mountPath: /etc/cluster
+        - mountPath: /etc/github
+          name: oauth-config
+          readOnly: true
+        - mountPath: /etc/cookie
+          name: cookie-secret
           readOnly: true
         - name: job-config
           mountPath: /etc/job-config
           readOnly: true
       volumes:
-      - name: oauth-config
-        secret:
-          secretName: github-oauth-config
-      - name: cookie-secret
-        secret:
-          secretName: cookie
+      - name: config
+        configMap:
+          name: config
       - name: cluster
         secret:
           defaultMode: 420
           secretName: build-cluster
-      - name: config
-        configMap:
-          name: config
+      - name: oauth-config
+        secret:
+          defaultMode: 420
+          secretName: github-oauth-config
+      - name: cookie-secret
+        secret:
+          defaultMode: 420
+          secretName: cookie
       - name: job-config
         configMap:
           name: job-config

@@ -34,20 +34,17 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: hook
-        image: gcr.io/k8s-prow/hook:v20180814-0a3efc115
+        # Using a custom image that include the DCO sign-off checker plugin
+        # until https://github.com/kubernetes/test-infra/pull/9197 merges.
+        image: eu.gcr.io/jetstack-build-infra/hook:20180829-a6ba34-dco
         imagePullPolicy: Always
         args:
         - --dry-run=false
-        - --slack-token-file=/etc/slack/token
-        - --github-endpoint=http://ghproxy
-        - --github-endpoint=https://api.github.com
         - --job-config-path=/etc/job-config
         ports:
           - name: http
             containerPort: 8888
         volumeMounts:
-        - name: slack
-          mountPath: /etc/slack
         - name: hmac
           mountPath: /etc/webhook
           readOnly: true
@@ -63,13 +60,7 @@ spec:
         - name: plugins
           mountPath: /etc/plugins
           readOnly: true
-        - name: cat-api
-          mountPath: /etc/cat-api
-          readOnly: true
       volumes:
-      - name: slack
-        secret:
-          secretName: slack-token
       - name: hmac
         secret:
           secretName: hmac-token
@@ -85,6 +76,3 @@ spec:
       - name: plugins
         configMap:
           name: plugins
-      - name: cat-api
-        configMap:
-          name: cat-api-key

@@ -40,7 +40,7 @@ metadata:
   labels:
     app: ghproxy
 spec:
-  replicas: 1 
+  replicas: 1
   template:
     metadata:
       labels:
@@ -64,10 +64,10 @@ spec:
         persistentVolumeClaim:
           claimName: ghproxy
       # run on our dedicated node
-      tolerations:
-      - key: "dedicated"
-        operator: "Equal"
-        value: "ghproxy"
-        effect: "NoSchedule"
-      nodeSelector:
-        dedicated: "ghproxy"
+      # tolerations:
+      # - key: "dedicated"
+      #   operator: "Equal"
+      #   value: "ghproxy"
+      #   effect: "NoSchedule"
+      # nodeSelector:
+      #   dedicated: "ghproxy"
