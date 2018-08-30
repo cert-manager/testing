@@ -24,7 +24,7 @@ do_build = \
 	docker build --pull --build-arg BAZEL_VERSION=$(VERSION) --build-arg IMAGE_ARG=$(IMG):$(TAG)-$(VERSION) -t $(IMG):$(TAG)-$(VERSION) .;\
 	docker tag $(IMG):$(TAG)-$(VERSION) $(IMG):latest-$(VERSION);\
 	echo Built $(IMG):$(TAG)-$(VERSION) and tagged with latest-$(VERSION);\
-	[ "$(VERSION)" == "$(LATEST_BAZEL_VERSION)" ] &&\
+	[ "$(VERSION)" = "$(LATEST_BAZEL_VERSION)" ] &&\
 	docker tag $(IMG):$(TAG)-$(VERSION) $(IMG):latest-latest &&\
 	echo tagged $(IMG) with latest-latest tag;
 
@@ -32,7 +32,7 @@ do_push = \
 	docker push $(IMG):$(TAG)-$(VERSION);\
 	docker push $(IMG):latest-$(VERSION);\
 	echo Pushed $(IMG) with $(TAG)-$(VERSION) and latest-$(VERSION) tags;\
-	[ "$(VERSION)" == "$(LATEST_BAZEL_VERSION)" ] &&\
+	[ "$(VERSION)" = "$(LATEST_BAZEL_VERSION)" ] &&\
 	docker push $(IMG):latest-latest &&\
 	echo Pushed $(IMG) with latest-latest tag;
 
