@@ -26,7 +26,7 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "801ab0ef5114e5da63f510981318575bb3044960",
+    commit = "dfe3447ad03790ee93be76ba2c981adf40b32d17",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
