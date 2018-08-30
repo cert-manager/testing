@@ -1,6 +1,6 @@
 periodics:
 
-- name: periodic-testing-retester
+- name: periodic-test-infra-retester
   interval: 20m  # Retest at most 1 PR per 20m, which should not DOS the queue.
   agent: kubernetes
   spec:
@@ -41,7 +41,7 @@ periodics:
       secret:
         secretName: retest-bot-token
 
-- name: periodic-testing-close
+- name: periodic-test-infra-close
   interval: 1h
   agent: kubernetes
   spec:
@@ -71,7 +71,7 @@ periodics:
       secret:
         secretName: retest-bot-token
 
-- name: periodic-testing-rotten
+- name: periodic-test-infra-rotten
   interval: 1h
   agent: kubernetes
   spec:
@@ -104,7 +104,7 @@ periodics:
       secret:
         secretName: retest-bot-token
 
-- name: periodic-testing-stale
+- name: periodic-test-infra-stale
   interval: 1h
   agent: kubernetes
   spec:
