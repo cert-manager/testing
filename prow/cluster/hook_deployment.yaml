@@ -34,9 +34,7 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: hook
-        # Using a custom image that include the DCO sign-off checker plugin
-        # until https://github.com/kubernetes/test-infra/pull/9197 merges.
-        image: eu.gcr.io/jetstack-build-infra/hook:20180829-a6ba34-dco
+        image: eu.gcr.io/jetstack-build-infra/prow-hook:latest
         imagePullPolicy: Always
         args:
         - --dry-run=false
