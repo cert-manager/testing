@@ -1,3 +1,5 @@
+load("//def:bootstrap.bzl", "bootstrap_image", "bootstrap_image_bundle")
+
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
@@ -10,4 +12,12 @@ filegroup(
     srcs = [":package-srcs"],
     tags = ["automanaged"],
     visibility = ["//visibility:public"],
+)
+
+bootstrap_image_bundle(
+    name = "bundle",
+    images = {
+        "{IMAGE_DOCKER_REPO}/gcloud-in-go:{IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
+    },
+    stamp = True,
 )
