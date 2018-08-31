@@ -16,23 +16,13 @@
 
 # generic runner script, handles DIND, bazelrc for caching, etc.
 
-# Disable bazel remote caching for now
-
-# Check if the job has opted-in to bazel remote caching and if so generate
-# .bazelrc entries pointing to the remote cache
-# export BAZEL_REMOTE_CACHE_ENABLED=${BAZEL_REMOTE_CACHE_ENABLED:-false}
-# if [[ "${BAZEL_REMOTE_CACHE_ENABLED}" == "true" ]]; then
-#     echo "Bazel remote cache is enabled, generating .bazelrcs ..."
-#     # if we have a test-infra checkout (because bootstrap), use that since
-#     # it is newer and this is probably k/k so we can push fixes faster this way
-#     # otherwise run the one baked into the image
-#     # TODO(bentheelder): someday only support the pod-utils
-#     if [[ -d "./test-infra" ]]; then
-#         ./test-infra/images/bootstrap/create_bazel_cache_rcs.sh
-#     else
-#         /usr/local/bin/create_bazel_cache_rcs.sh
-#     fi
-# fi
+Check if the job has opted-in to bazel remote caching and if so generate
+.bazelrc entries pointing to the remote cache
+export BAZEL_REMOTE_CACHE_ENABLED=${BAZEL_REMOTE_CACHE_ENABLED:-false}
+if [[ "${BAZEL_REMOTE_CACHE_ENABLED}" == "true" ]]; then
+    echo "Bazel remote cache is enabled, generating .bazelrcs ..."
+    /usr/local/bin/create_bazel_cache_rcs.sh
+fi
 
 
 # used by cleanup_dind to ensure binfmt_misc entries are not persisted
@@ -98,6 +88,8 @@ set +o errexit
 "$@"
 EXIT_VALUE=$?
 
+coalesce.py || true
+
 # cleanup after job
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo "Cleaning up after docker in docker."
@@ -106,8 +98,6 @@ if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     printf '=%.0s' {1..80}; echo
     echo "Done cleaning up after docker in docker."
 fi
-
-coalesce.py
 
 # preserve exit value from job / bootstrap
 exit ${EXIT_VALUE}

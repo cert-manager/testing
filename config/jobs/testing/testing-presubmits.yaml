@@ -10,9 +10,11 @@ presubmits:
     decorate: true
     labels:
       preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-5aae0fe-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9029f78-0.16.1
         args:
         - runner
         - bazel
@@ -38,9 +40,11 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-5aae0fe-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9029f78-0.16.1
         args:
         - runner
         - bazel

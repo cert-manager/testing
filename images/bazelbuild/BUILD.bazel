@@ -19,12 +19,14 @@ container_image(
     name = "image",
     base = "@bazelbuild//image.0.16.1",
     files = [
+        ":create_bazel_cache_rcs.sh",
         "//hack:coalesce.py",
         "//images:barnacle",
     ],
     symlinks = {
         "/usr/local/bin/barnacle": "/barnacle",
         "/usr/local/bin/coalesce.py": "/coalesce.py",
+        "/usr/local/bin/create_bazel_cache_rcs.sh": "/create_bazel_cache_rcs.sh",
     },
 )
 
