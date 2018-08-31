@@ -107,5 +107,7 @@ if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo "Done cleaning up after docker in docker."
 fi
 
+coalesce.py
+
 # preserve exit value from job / bootstrap
 exit ${EXIT_VALUE}
