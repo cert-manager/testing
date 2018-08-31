@@ -97,3 +97,25 @@ py_library(
     strip_prefix = "PyYAML-3.12/lib/yaml",
     urls = ["https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"],
 )
+
+load("//def:container.bzl", "container_dockerfile")
+
+container_dockerfile(
+    name = "bazelbuild",
+    build_args = {
+        "BAZEL_VERSION": "0.16.1",
+    },
+    dockerfile = "//images/bazelbuild:Dockerfile",
+)
+
+container_dockerfile(
+    name = "minikube-in-go",
+    build_args = {
+        "BAZEL_VERSION": "0.16.1",
+        "GCLOUD_VERSION": "163.0.0",
+    },
+    build_matrix = {
+        "KUBERNETES_VERSION": ["v1.9.6", "v1.8.10", "v1.7.15"],
+    },
+    dockerfile = "//legacy/images/minikube-in-go:Dockerfile",
+)
