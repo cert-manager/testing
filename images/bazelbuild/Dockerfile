@@ -66,11 +66,6 @@ RUN mkdir /docker-graph
 # END: DOCKER IN DOCKER SETUP
 #
 
-# note the runner is also responsible for making docker in docker function if
-# env DOCKER_IN_DOCKER_ENABLED is set ~and similarly responsible for generating
-# .bazelrc files if bazel remote caching is enabled~
-COPY ["runner", "/usr/local/bin/"]
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     zip \
@@ -89,5 +84,3 @@ RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
 WORKDIR /workspace
-
-ENTRYPOINT ["/usr/local/bin/runner"]
