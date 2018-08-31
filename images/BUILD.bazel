@@ -21,8 +21,8 @@ filegroup(
 go_binary(
     name = "barnacle",
     embed = ["@test_infra//images/bootstrap/barnacle:go_default_library"],
-    pure = "on",
-    goos = "linux",
     goarch = "amd64",
+    goos = "linux",
+    pure = "on",
     visibility = ["//visibility:public"],
 )
