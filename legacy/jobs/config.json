@@ -343,6 +343,51 @@
       "UNKNOWN"
     ]
   },
+  "tarmak-puppet-module-consul-quick-verify": {
+    "args": [
+      "--env",
+      "FIXTURES_YML=.fixtures.yml.local",
+      "--",
+      "make",
+      "-C",
+      "puppet/modules/consul",
+      "verify"
+    ],
+    "scenario": "execute",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
+  },
+  "tarmak-puppet-module-consul-acceptance-single-node": {
+    "args": [
+      "--env",
+      "FIXTURES_YML=.fixtures.yml.local",
+      "--",
+      "make",
+      "-C",
+      "puppet/modules/consul",
+      "acceptance"
+    ],
+    "scenario": "execute",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
+  },
+  "tarmak-puppet-module-consul-acceptance-three-node": {
+    "args": [
+      "--env",
+      "FIXTURES_YML=.fixtures.yml.local",
+      "--",
+      "make",
+      "-C",
+      "puppet/modules/consul",
+      "acceptance-three-node"
+    ],
+    "scenario": "execute",
+    "sigOwners": [
+      "UNKNOWN"
+    ]
+  },
   "tarmak-puppet-module-etcd-quick-verify": {
     "args": [
       "--env",

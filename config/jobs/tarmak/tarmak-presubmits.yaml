@@ -240,6 +240,29 @@ presubmits:
     run_if_changed: "^(puppet/modules/calico).*$"
     trigger: "(?m)^/test( all| puppet| puppet-calico| puppet-calico-acceptance|)( \\[.+\\])?$"
     rerun_command: "/test puppet-calico-acceptance"
+  # puppet module consul
+  - <<: *puppet_module_verify
+    name: tarmak-puppet-module-consul-quick-verify
+    context: tarmak-puppet-module-consul-quick-verify
+    always_run: false
+    run_if_changed: "^(puppet/modules/consul).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-consul| puppet-verify| puppet-consul-verify|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-consul-verify"
+  - <<: *puppet_module_acceptance
+    name: tarmak-puppet-module-consul-acceptance-single-node
+    context: tarmak-puppet-module-consul-acceptance-single-node
+    always_run: false
+    run_if_changed: "^(puppet/modules/consul).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-consul| puppet-consul-acceptance-single-node|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-consul-acceptance-single-node"
+    run_after_success:
+    - <<: *puppet_module_acceptance
+      name: tarmak-puppet-module-consul-acceptance-three-node
+      context: tarmak-puppet-module-consul-acceptance-three-node
+      always_run: false
+      run_if_changed: "^(puppet/modules/consul).*$"
+      trigger: "(?m)^/test( all| puppet| puppet-consul| puppet-consul-acceptance-three-node|)( \\[.+\\])?$"
+      rerun_command: "/test puppet-consul-acceptance-three-node"
   # puppet module etcd
   - <<: *puppet_module_verify
     name: tarmak-puppet-module-etcd-quick-verify
