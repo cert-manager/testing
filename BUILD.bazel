@@ -10,6 +10,7 @@ filegroup(
     srcs = [
         ":package-srcs",
         "//config:all-srcs",
+        "//def:all-srcs",
         "//hack:all-srcs",
         "//images:all-srcs",
         "//legacy:all-srcs",
