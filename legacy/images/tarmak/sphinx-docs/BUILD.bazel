@@ -1,4 +1,5 @@
 load("//def:bootstrap.bzl", "bootstrap_image", "bootstrap_image_bundle")
+load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 
 filegroup(
     name = "package-srcs",
@@ -15,9 +16,14 @@ filegroup(
 )
 
 bootstrap_image_bundle(
-    name = "bundle",
+    name = "sphinx-docs",
     images = {
         "{IMAGE_DOCKER_REPO}/tarmak-sphinx-docs:{IMAGE_DOCKER_TAG}": "@tarmak-sphinx-docs//image",
     },
     stamp = True,
+)
+
+docker_push(
+    name = "push",
+    bundle = ":sphinx-docs",
 )

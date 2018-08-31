@@ -1,3 +1,6 @@
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
+
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
@@ -12,12 +15,15 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
-
 container_bundle(
-    name = "bundle",
+    name = "bazelbuild",
     images = {
         "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}": "@bazelbuild//image",
     },
     stamp = True,
+)
+
+docker_push(
+    name = "push",
+    bundle = ":bazelbuild",
 )
