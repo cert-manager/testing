@@ -1,3 +1,5 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
@@ -9,8 +11,18 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
+        "//images/alpine:all-srcs",
         "//images/bazelbuild:all-srcs",
     ],
     tags = ["automanaged"],
+    visibility = ["//visibility:public"],
+)
+
+go_binary(
+    name = "barnacle",
+    embed = ["@test_infra//images/bootstrap/barnacle:go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
     visibility = ["//visibility:public"],
 )

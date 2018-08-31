@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Copyright 2018 The Jetstack contributors.
 #
@@ -18,8 +18,22 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-git clone https://github.com/jetstack/testing
-./testing/legacy/bootstrap/bootstrap.py \
-    --job=${JOB_NAME} \
-    --service-account=${GOOGLE_APPLICATION_CREDENTIALS} \
-    "$@"
+# This script should be executed via bazel only.
+
+OUT=$1
+shift
+DOCKERFILE=$1
+shift
+ROOTDIR=$(dirname "${DOCKERFILE}")
+
+# TODO: construct a directory to contain the dockerfile's build context
+# This will need to be assembled based on paths passed to this script.
+# Without doing this, we cannot automatically rebuild when changes are
+# made to files that are added into images, as we currently don't explicitly
+# state which workspace files are required.
+
+image_id=$(docker build -q "$@" -f "$DOCKERFILE" "$ROOTDIR")
+if $?; then
+    exit $?
+fi
+docker save "${image_id}" -o "$OUT"

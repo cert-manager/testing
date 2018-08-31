@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     wget && \
     apt-get clean
 
-ENV GCLOUD_VERSION 163.0.0
+ARG GCLOUD_VERSION
 RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz && \
     tar xf google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz -C / && \
     rm google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz && \
@@ -40,12 +40,3 @@ RUN curl -L https://github.com/golang/dep/releases/download/v0.4.1/dep-linux-amd
     && chmod +x /tmp/vert \
     && mv /tmp/dep /tmp/yaml /tmp/vert /usr/local/bin/
 RUN go get -v golang.org/x/tools/cmd/goimports
-
-WORKDIR /workspace
-ADD runner /
-
-# add env we can debug with the image name:tag
-ARG IMAGE_ARG
-ENV IMAGE=${IMAGE_ARG}
-
-ENTRYPOINT ["/bin/bash", "/runner"]

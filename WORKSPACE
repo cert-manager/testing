@@ -1,5 +1,7 @@
 workspace(name = "io_jetstack_testing")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 git_repository(
     name = "bazel_skylib",
     commit = "2169ae1c374aab4a09aa90e65efe1a3aad4e279b",
@@ -8,12 +10,23 @@ git_repository(
 
 load("@bazel_skylib//:lib.bzl", "versions")
 
-versions.check(minimum_bazel_version = "0.10.0")
+versions.check(minimum_bazel_version = "0.15.0")
 
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "1868ff68d6079e31b2f09b828b58d62e57ca8e9636edff699247c9108518570b",
     url = "https://github.com/bazelbuild/rules_go/releases/download/0.11.1/rules_go-0.11.1.tar.gz",
+)
+
+http_archive(
+    name = "io_bazel_rules_go",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.15.1/rules_go-0.15.1.tar.gz"],
+    sha256 = "5f3b0304cdf0c505ec9e5b3c4fc4a87b5ca21b13d8ecc780c97df3d1809b9ce6",
+)
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains(
+    go_version = "1.11",
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
@@ -26,7 +39,7 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "dfe3447ad03790ee93be76ba2c981adf40b32d17",
+    commit = "559514a9dd5e925def79992ee87572967058661d",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
@@ -96,4 +109,60 @@ py_library(
     sha256 = "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab",
     strip_prefix = "PyYAML-3.12/lib/yaml",
     urls = ["https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"],
+)
+
+load("//def:container.bzl", "container_dockerfile")
+
+container_dockerfile(
+    name = "bazelbuild",
+    build_matrix = {
+        "BAZEL_VERSION": ["0.16.1"],
+    },
+    dockerfile = "//images/bazelbuild:Dockerfile",
+)
+
+container_dockerfile(
+    name = "alpine",
+    dockerfile = "//images/alpine:Dockerfile",
+)
+
+container_dockerfile(
+    name = "gcloud-in-go",
+    build_args = {
+        "GCLOUD_VERSION": "163.0.0",
+    },
+    dockerfile = "//legacy/images/gcloud-in-go:Dockerfile",
+)
+
+container_dockerfile(
+    name = "minikube-in-go",
+    build_args = {
+        "BAZEL_VERSION": "0.16.1",
+        "GCLOUD_VERSION": "163.0.0",
+    },
+    build_matrix = {
+        "KUBERNETES_VERSION": ["v1.9.6", "v1.8.10", "v1.7.15"],
+    },
+    dockerfile = "//legacy/images/minikube-in-go:Dockerfile",
+)
+
+container_dockerfile(
+    name = "tarmak-ruby",
+    build_args = {
+        "GCLOUD_VERSION": "206.0.0",
+        "GCLOUD_HASH": "d39293914b2e969bfe18dd19eb77ba96d283995f8cf1e5d7ba6ac712a3c9479a",
+    },
+    build_matrix = {
+        "RUBY_VERSION": ["2.4.4"],
+    },
+    dockerfile = "//legacy/images/tarmak/ruby:Dockerfile",
+)
+
+container_dockerfile(
+    name = "tarmak-sphinx-docs",
+    build_args = {
+        "GCLOUD_VERSION": "178.0.0",
+        "GCLOUD_HASH": "2e0bbbf81c11164bf892cf0b891751ba4e5172661eff907ad1f7fc0b6907e296",
+    },
+    dockerfile = "//legacy/images/tarmak/sphinx-docs:Dockerfile",
 )

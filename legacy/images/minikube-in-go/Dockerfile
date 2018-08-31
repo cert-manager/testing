@@ -44,6 +44,13 @@ RUN apt-get update \
         zlib1g-dev \
     && apt-get clean
 
+ARG GCLOUD_VERSION
+RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz && \
+    tar xf google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz -C / && \
+    rm google-cloud-sdk-${GCLOUD_VERSION}-linux-x86_64.tar.gz && \
+    /google-cloud-sdk/install.sh
+ENV PATH "/google-cloud-sdk/bin:${PATH}"
+
 RUN curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-Linux-x86_64 >/tmp/docker-machine \
     && chmod +x /tmp/docker-machine \
     && cp /tmp/docker-machine /usr/local/bin/docker-machine
@@ -56,13 +63,6 @@ ENV GOPATH "/go"
 RUN go get -v github.com/dhiltgen/docker-machine-kvm/cmd/docker-machine-driver-kvm
 RUN go get -v golang.org/x/tools/cmd/goimports
 
-ENV GCLOUD_VERSION 163.0.0
-RUN wget https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz && \
-    tar xf google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz -C / && \
-    rm google-cloud-sdk-$GCLOUD_VERSION-linux-x86_64.tar.gz && \
-    /google-cloud-sdk/install.sh
-ENV PATH "/google-cloud-sdk/bin:${PATH}"
-
 RUN curl -L https://github.com/golang/dep/releases/download/v0.3.2/dep-linux-amd64 >/tmp/dep \
     && chmod +x /tmp/dep \
     && mv /tmp/dep /usr/local/bin/dep
@@ -73,24 +73,14 @@ RUN curl -L "https://get.docker.com/builds/Linux/x86_64/docker-1.9.1.tgz" \
     | tar -C /usr/bin -xvzf- --strip-components=3 usr/local/bin/docker
 
 ARG BAZEL_VERSION
-
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     DOWNLOAD_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${INSTALLER}"; \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
 ARG KUBERNETES_VERSION
-ENV KUBERNETES_VERSION=$KUBERNETES_VERSION
+ENV KUBERNETES_VERSION=${KUBERNETES_VERSION}
 RUN curl -Lo helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz && tar xvf helm.tar.gz && mv linux-amd64/helm /usr/local/bin \
     && curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/${KUBERNETES_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && mv kubectl /usr/local/bin/ \
     && curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.23.0/minikube-linux-amd64 && chmod +x minikube && mv minikube /usr/local/bin/
 ENV PATH "/usr/local/bin:${PATH}"
-
-WORKDIR /workspace
-ADD runner /
-
-# add env we can debug with the image name:tag
-ARG IMAGE_ARG
-ENV IMAGE=${IMAGE_ARG}
-
-ENTRYPOINT ["/bin/bash", "/runner"]

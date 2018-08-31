@@ -9,7 +9,7 @@ release(
         "branchprotector",
         "cronjob",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
+            "{PROW_DOCKER_REPO}/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
         },
     ),
     component(
@@ -18,7 +18,7 @@ release(
         "service",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
+            "{PROW_DOCKER_REPO}/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
         },
     ),
     component("gce-ssd-retain", "storageclass"),
@@ -27,7 +27,7 @@ release(
         "service",
         "deployment",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-ghproxy:latest": "@test_infra//ghproxy:image",
+            "{PROW_DOCKER_REPO}/prow-ghproxy:latest": "@test_infra//ghproxy:image",
         },
     ),
     component(
@@ -36,7 +36,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
+            "{PROW_DOCKER_REPO}/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
         },
     ),
     component(
@@ -44,7 +44,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
+            "{PROW_DOCKER_REPO}/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
         },
     ),
     component("lego", "deployment"),
@@ -58,7 +58,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
+            "{PROW_DOCKER_REPO}/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
         },
     ),
     component("prowjob", "customresourcedefinition"),
@@ -68,14 +68,14 @@ release(
         "deployment",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
+            "{PROW_DOCKER_REPO}/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
         },
     ),
     component(
         "splice",
         "deployment",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
+            "{PROW_DOCKER_REPO}/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
         },
     ),
     component(
@@ -84,7 +84,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
+            "{PROW_DOCKER_REPO}/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
         },
     ),
     component("tls-ing", "ingress"),
@@ -93,7 +93,7 @@ release(
         "service",
         "deployment",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
+            "{PROW_DOCKER_REPO}/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
         },
     ),
     component(
@@ -101,7 +101,7 @@ release(
         "deployment",
         "service",
         images = {
-            "eu.gcr.io/jetstack-build-infra/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
+            "{PROW_DOCKER_REPO}/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
         },
     ),
 )

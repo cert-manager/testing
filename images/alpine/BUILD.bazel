@@ -1,4 +1,4 @@
-load("//def:bootstrap.bzl", "bootstrap_image_bundle")
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
 load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 
 filegroup(
@@ -15,15 +15,15 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-bootstrap_image_bundle(
-    name = "gcloud-in-go",
+container_bundle(
+    name = "alpine",
     images = {
-        "{IMAGE_DOCKER_REPO}/gcloud-in-go:{IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
+        "{IMAGE_DOCKER_REPO}/alpine:{IMAGE_DOCKER_TAG}": "@alpine//image",
     },
     stamp = True,
 )
 
 docker_push(
     name = "push",
-    bundle = ":gcloud-in-go",
+    bundle = ":alpine",
 )
