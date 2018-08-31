@@ -15,7 +15,7 @@ postsubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/jetstack-build-infra/sphinx-docs:0.1
+      - image: eu.gcr.io/jetstack-build-infra-images/sphinx-docs:v20180831-4ff2528
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/workspace"
