@@ -22,9 +22,11 @@ git_commit="$(git describe --tags --always --dirty)"
 build_date="$(date -u '+%Y%m%d')"
 docker_tag="v${build_date}-${git_commit}"
 cat <<EOF
-STABLE_DOCKER_REPO ${DOCKER_REPO_OVERRIDE:-eu.gcr.io/jetstack-build-infra}
+PROW_DOCKER_REPO eu.gcr.io/jetstack-build-infra
+IMAGE_DOCKER_REPO eu.gcr.io/jetstack-build-infra-images
+IMAGE_DOCKER_TAG ${docker_tag}
+
 STABLE_PROW_CONTEXT build-infra
 STABLE_BUILD_CONTEXT libvirt
 STABLE_BUILD_GIT_COMMIT ${git_commit}
-DOCKER_TAG ${docker_tag}
 EOF
