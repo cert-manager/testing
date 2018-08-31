@@ -18,7 +18,7 @@ filegroup(
 container_bundle(
     name = "bazelbuild",
     images = {
-        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}": "@bazelbuild//image",
+        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}-0.16.1": "@bazelbuild//image.0.16.1",
     },
     stamp = True,
 )
