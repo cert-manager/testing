@@ -1,4 +1,4 @@
-load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_bundle")
 load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 
 filegroup(
@@ -15,10 +15,21 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+container_image(
+    name = "image",
+    base = "@bazelbuild//image.0.16.1",
+    files = [
+        "//images:barnacle",
+    ],
+    symlinks = {
+        "/usr/local/bin/barnacle": "/barnacle",
+    },
+)
+
 container_bundle(
     name = "bazelbuild",
     images = {
-        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}-0.16.1": "@bazelbuild//image.0.16.1",
+        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}-0.16.1": ":image",
     },
     stamp = True,
 )

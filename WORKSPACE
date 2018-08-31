@@ -1,5 +1,7 @@
 workspace(name = "io_jetstack_testing")
 
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 git_repository(
     name = "bazel_skylib",
     commit = "2169ae1c374aab4a09aa90e65efe1a3aad4e279b",
@@ -8,12 +10,23 @@ git_repository(
 
 load("@bazel_skylib//:lib.bzl", "versions")
 
-versions.check(minimum_bazel_version = "0.10.0")
+versions.check(minimum_bazel_version = "0.15.0")
 
 http_archive(
     name = "io_bazel_rules_go",
     sha256 = "1868ff68d6079e31b2f09b828b58d62e57ca8e9636edff699247c9108518570b",
     url = "https://github.com/bazelbuild/rules_go/releases/download/0.11.1/rules_go-0.11.1.tar.gz",
+)
+
+http_archive(
+    name = "io_bazel_rules_go",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.15.1/rules_go-0.15.1.tar.gz"],
+    sha256 = "5f3b0304cdf0c505ec9e5b3c4fc4a87b5ca21b13d8ecc780c97df3d1809b9ce6",
+)
+load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+go_rules_dependencies()
+go_register_toolchains(
+    go_version = "1.11",
 )
 
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
@@ -26,7 +39,7 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "dfe3447ad03790ee93be76ba2c981adf40b32d17",
+    commit = "559514a9dd5e925def79992ee87572967058661d",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
