@@ -34,9 +34,10 @@ presubmits:
     agent: kubernetes
     labels:
       preset-service-account: "true"
+      preset-dind-enabled: "true"
     spec:
       containers:
-      - image: gcr.io/jetstack-build-infra/bootstrap:v20180509-54804d71a
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/go/src"
@@ -44,20 +45,11 @@ presubmits:
         - "--clean"
         resources:
           requests:
-            cpu: 100m
-            memory: 512Mi
-        env:
-        - name: DOCKER_IN_DOCKER_ENABLED
-          value: "true"
+            cpu: 1
+            memory: 1Gi
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
-        volumeMounts:
-        - name: docker-graph
-          mountPath: /docker-graph
-      volumes:
-      - name: docker-graph
-        emptyDir: {}
     trigger: "(?m)^/test( all| chart-verify),?(\\s+|$)"
     rerun_command: "/test chart-verify"
 
@@ -71,7 +63,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: gcr.io/jetstack-build-infra/gcloud-in-go:0.12
+      - image: eu.gcr.io/jetstack-build-infra-images/gcloud-in-go:v20180831-6e6e29c
         args:
         - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
         - "--root=/go/src"
