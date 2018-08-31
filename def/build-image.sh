@@ -32,6 +32,8 @@ ROOTDIR=$(dirname "${DOCKERFILE}")
 # made to files that are added into images, as we currently don't explicitly
 # state which workspace files are required.
 
-# TODO: randomise name here
-docker build -t "testimagebuild" "$@" -f "$DOCKERFILE" "$ROOTDIR"
-docker save "testimagebuild" -o "$OUT"
+image_id=$(docker build -q "$@" -f "$DOCKERFILE" "$ROOTDIR")
+if $?; then
+    exit $?
+fi
+docker save "${image_id}" -o "$OUT"
