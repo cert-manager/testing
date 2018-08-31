@@ -129,9 +129,19 @@ presets:
 
 - labels:
     preset-bazel-remote-cache-enabled: "true"
+  volumes:
+  - name: bazel-cache-credentials
+    secret:
+      secretName: bazel-cache-credentials
+  volumeMounts:
+  - name: bazel-cache-credentials
+    mountPath: /etc/bazel-cache-credentials
+    readOnly: true
   env:
   - name: BAZEL_REMOTE_CACHE_ENABLED
     value: "true"
+  - name: BAZEL_CACHE_CREDENTIALS
+    value: /etc/bazel-cache-credentials/credentials.json
 
 tide:
   target_url: https://prow.build-infra.jetstack.net/tide.html
