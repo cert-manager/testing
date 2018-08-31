@@ -14,7 +14,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9029f78-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9aa47fd-0.16.1
         args:
         - runner
         - bazel
@@ -44,7 +44,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9029f78-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9aa47fd-0.16.1
         args:
         - runner
         - bazel
