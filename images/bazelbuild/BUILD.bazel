@@ -11,3 +11,13 @@ filegroup(
     tags = ["automanaged"],
     visibility = ["//visibility:public"],
 )
+
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+
+container_bundle(
+    name = "bundle",
+    images = {
+        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}": "@bazelbuild//image",
+    },
+    stamp = True,
+)
