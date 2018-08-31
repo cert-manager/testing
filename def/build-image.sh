@@ -26,6 +26,12 @@ DOCKERFILE=$1
 shift
 ROOTDIR=$(dirname "${DOCKERFILE}")
 
+# TODO: construct a directory to contain the dockerfile's build context
+# This will need to be assembled based on paths passed to this script.
+# Without doing this, we cannot automatically rebuild when changes are
+# made to files that are added into images, as we currently don't explicitly
+# state which workspace files are required.
+
 # TODO: randomise name here
 docker build -t "testimagebuild" "$@" -f "$DOCKERFILE" "$ROOTDIR"
 docker save "testimagebuild" -o "$OUT"
