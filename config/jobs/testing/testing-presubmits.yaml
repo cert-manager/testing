@@ -14,7 +14,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9aa47fd-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180901-b2e416b-0.16.1
         args:
         - runner
         - bazel
@@ -32,8 +32,9 @@ presubmits:
     rerun_command: "/test config"
 
   - name: pull-testing-verify-images
-    always_run: true
+    always_run: false
     context: pull-testing-verify-images
+    run_if_changed: "^(images/|legacy/images/).*$"
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -44,7 +45,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-9aa47fd-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180901-b2e416b-0.16.1
         args:
         - runner
         - bazel

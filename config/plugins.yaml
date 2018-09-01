@@ -79,6 +79,10 @@ plugins:
   - size
   - hold
   - label
+  - lgtm
+  - approve
+  - wip
+  - shrug
   - config-updater
 
   jetstack/test-infra:
