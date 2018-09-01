@@ -25,6 +25,7 @@ presubmits:
         args:
         - runner
         - hack/verify-all.sh
+        - //... # additional test targets
         resources:
           requests:
             cpu: 1
