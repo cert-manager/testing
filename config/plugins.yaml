@@ -128,6 +128,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -199,6 +200,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -213,6 +215,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -227,6 +230,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -241,6 +245,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -255,6 +260,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -269,6 +275,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -283,6 +290,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
@@ -297,6 +305,7 @@ plugins:
   - hold
   - label
   - lgtm
+  - approve
   - size
   - yuks
   - wip
