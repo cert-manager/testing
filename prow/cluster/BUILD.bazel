@@ -1,7 +1,25 @@
 load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
+load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
+load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 
 # Usage:
 #   bazel run //prow/cluster:foo.apply
+
+container_bundle(
+    name = "podutils",
+    images = {
+        "{PROW_DOCKER_REPO}/prow-clonerefs:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/clonerefs:image",
+        "{PROW_DOCKER_REPO}/prow-entrypoint:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/entrypoint:image",
+        "{PROW_DOCKER_REPO}/prow-initupload:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/initupload:image",
+        "{PROW_DOCKER_REPO}/prow-sidecar:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/sidecar:image",
+    },
+    stamp = True,
+)
+
+docker_push(
+    name = "podutils.push",
+    bundle = ":podutils",
+)
 
 release(
     "production",
