@@ -9,24 +9,22 @@ presubmits:
 
   # bazel based cert-manager verify test
   # TODO: port to jetstack/testing images
-  - name: pull-cert-manager-verify
+  - name: pull-cert-manager-bazel
     always_run: false
-    skip_report: true
-    context: pull-cert-manager-verify
+    skip_report: false
+    context: pull-cert-manager-bazel
     max_concurrency: 2
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180901-b2e416b-0.16.1
         args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/go/src"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--job=$(JOB_NAME)"
-        - "--clean"
+        - runner
+        - hack/verify-all.sh
         resources:
           requests:
             cpu: 1
@@ -36,5 +34,5 @@ presubmits:
           value: "/go"
         securityContext:
           privileged: true
-    trigger: "(?m)^/test( all| verify),?(\\s+|$)"
-    rerun_command: "/test verify"
+    trigger: "(?m)^/test bazel,?(\\s+|$)"
+    rerun_command: "/test bazel"
