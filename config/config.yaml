@@ -6,10 +6,10 @@ plank:
     timeout: 7200000000000 # 2h
     grace_period: 15000000000 # 15s
     utility_images:
-      clonerefs: "gcr.io/k8s-prow/clonerefs:v20180824-3f00a5016"
-      initupload: "gcr.io/k8s-prow/initupload:v20180824-3f00a5016"
-      entrypoint: "gcr.io/k8s-prow/entrypoint:v20180824-3f00a5016"
-      sidecar: "gcr.io/k8s-prow/sidecar:v20180824-3f00a5016"
+      clonerefs: "eu.gcr.io/jetstack-build-infra/prow-clonerefs:v20180901-0def397"
+      initupload: "eu.gcr.io/jetstack-build-infra/prow-initupload:v20180901-0def397"
+      entrypoint: "eu.gcr.io/jetstack-build-infra/prow-entrypoint:v20180901-0def397"
+      sidecar: "eu.gcr.io/jetstack-build-infra/prow-sidecar:v20180901-0def397"
     gcs_configuration:
       bucket: "jetstack-logs"
       path_strategy: "legacy"
