@@ -32,8 +32,9 @@ presubmits:
     rerun_command: "/test config"
 
   - name: pull-testing-verify-images
-    always_run: true
+    always_run: false
     context: pull-testing-verify-images
+    run_if_changed: "^(images/|legacy/images/).*$"
     max_concurrency: 4
     agent: kubernetes
     decorate: true
