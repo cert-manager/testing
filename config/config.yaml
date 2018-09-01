@@ -13,8 +13,9 @@ plank:
     gcs_configuration:
       bucket: "jetstack-logs"
       path_strategy: "legacy"
-      default_org: "jetstack"
-      default_repo: "test-infra"
+      # Leave this as k/k so that all logs use org_repo in the path
+      default_org: "kubernetes"
+      default_repo: "kubernetes"
     gcs_credentials_secret: "service-account"
 
 jenkins_operator:
