@@ -346,6 +346,7 @@ plugins:
   - yuks
   - wip
   - shrug
+  - dco
 
   jetstack/vault-plugin-auth-templated-aws:
   - docs-no-retest

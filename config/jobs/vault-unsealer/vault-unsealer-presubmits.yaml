@@ -1,0 +1,24 @@
+presubmits:
+  jetstack/vault-unsealer:
+  - name: vault-unsealer-quick-verify
+    always_run: true
+    skip_report: false
+    context: vault-unsealer-quick-verify
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: golang:1.10.4
+        workingDir: /go/src/github.com/jetstack/vault-unsealer
+        command:
+        - make
+        - verify
+        resources:
+          requests:
+            cpu: 750m
+            memory: 1Gi
+    trigger: "(?m)^/test( all| verify|)( \\[.+\\])?$"
+    rerun_command: "/test verify"
