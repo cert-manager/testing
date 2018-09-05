@@ -14,12 +14,10 @@
       command:
       - /bin/sh
       - -c
-      - make -C puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') verify
+      - cd puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') && { if test -e .fixtures.yml.local; then export FIXTURES_YML=.fixtures.yml.local ; fi; } && make verify
       env:
       - name: BUNDLE_DIR
         value: /cache/bundle/$(JOB_NAME)
-      - name: FIXTURES_YML
-        value: .fixtures.yml.local
       resources:
         requests:
           cpu: 750m
