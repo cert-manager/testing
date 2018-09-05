@@ -51,7 +51,7 @@ presubmits:
           set -o pipefail
 
           ./hack/verify-chart-version.sh
-          IMAGE=eu.gcr.io/jetstack-build-infra/gen-apidocs-img ./verify-reference-docs.sh
+          IMAGE=eu.gcr.io/jetstack-build-infra/gen-apidocs-img ./hack/verify-reference-docs.sh
         resources:
           requests:
             cpu: 1
