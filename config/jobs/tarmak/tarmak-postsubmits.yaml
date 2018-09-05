@@ -11,16 +11,20 @@ postsubmits:
     - release-0.6
     context: tarmak-docs-push
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/sphinx-docs:v20180831-4ff2528
-        args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/workspace"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
+        workingDir: /go/src/github.com/jetstack/tarmak
+        command:
+        - make
+        - -C
+        - docs
+        - clean
+        - multiversion_build
+        - multiversion_push
         env:
         - name: DOCS_GOOGLE_APPLICATION_CREDENTIALS
           value: /etc/docs-service-account/service-account.json

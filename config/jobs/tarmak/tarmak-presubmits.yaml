@@ -5,19 +5,21 @@
   skip_report: false
   max_concurrency: 4
   agent: kubernetes
+  decorate: true
   labels:
     preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
-      args:
-      - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-      - "--root=/workspace"
-      - "--upload=gs://jetstack-logs/pr-logs"
-      - "--clean"
+      command:
+      - /bin/sh
+      - -c
+      - make -C puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') verify
       env:
       - name: BUNDLE_DIR
         value: /cache/bundle/$(JOB_NAME)
+      - name: FIXTURES_YML
+        value: .fixtures.yml.local
       resources:
         requests:
           cpu: 750m
@@ -420,16 +422,16 @@ presubmits:
     context: tarmak-quick-verify
     max_concurrency: 2
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/gcloud-in-go:v20180831-6e6e29c
-        args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/go/src"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
+      - image: golang:1.10.4
+        workingDir: /go/src/github.com/jetstack/tarmak
+        command:
+        - make
+        - all
         resources:
           requests:
             cpu: 750m
@@ -443,16 +445,22 @@ presubmits:
     context: tarmak-docs-verify
     max_concurrency: 2
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/sphinx-docs:v20180831-4ff2528
-        args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/workspace"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
+        workingDir: /go/src/github.com/jetstack/tarmak
+        command:
+        - make
+        - -C
+        - docs
+        - clean
+        - spelling
+        - linkcheck
+        - html
+        - copy_artifacts
         resources:
           requests:
             cpu: 750m

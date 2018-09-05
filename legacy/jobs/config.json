@@ -249,59 +249,6 @@
       "UNKNOWN"
     ]
   },
-  "tarmak-quick-verify": {
-    "args": [
-      "make",
-      "all"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-aws_ebs-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/aws_ebs",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-aws_es_proxy-quick-verify": {
-    "args": [
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/aws_es_proxy",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-calico-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/calico",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
   "tarmak-puppet-module-calico-acceptance": {
     "args": [
       "--env",
@@ -317,19 +264,6 @@
       "UNKNOWN"
     ]
   },
-  "tarmak-puppet-module-fluent_bit-quick-verify": {
-    "args": [
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/fluent_bit",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
   "tarmak-puppet-module-fluent_bit-acceptance": {
     "args": [
       "--",
@@ -337,21 +271,6 @@
       "-C",
       "puppet/modules/fluent_bit",
       "acceptance"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-consul-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/consul",
-      "verify"
     ],
     "scenario": "execute",
     "sigOwners": [
@@ -388,21 +307,6 @@
       "UNKNOWN"
     ]
   },
-  "tarmak-puppet-module-etcd-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/etcd",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
   "tarmak-puppet-module-etcd-acceptance-single-node": {
     "args": [
       "--env",
@@ -433,21 +337,6 @@
       "UNKNOWN"
     ]
   },
-  "tarmak-puppet-module-kubernetes-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/kubernetes",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
   "tarmak-puppet-module-kubernetes-acceptance": {
     "args": [
       "--env",
@@ -457,51 +346,6 @@
       "-C",
       "puppet/modules/kubernetes",
       "acceptance"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-kubernetes_addons-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/kubernetes_addons",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-prometheus-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/prometheus",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-puppet-module-tarmak-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/tarmak",
-      "verify"
     ],
     "scenario": "execute",
     "sigOwners": [
@@ -643,21 +487,6 @@
       "UNKNOWN"
     ]
   },
-  "tarmak-puppet-module-vault_client-quick-verify": {
-    "args": [
-      "--env",
-      "FIXTURES_YML=.fixtures.yml.local",
-      "--",
-      "make",
-      "-C",
-      "puppet/modules/vault_client",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
   "tarmak-puppet-module-vault_client-acceptance-centos": {
     "args": [
       "--env",
@@ -682,38 +511,6 @@
       "-C",
       "puppet/modules/vault_client",
       "acceptance-ubuntu"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-docs-verify": {
-    "args": [
-      "--",
-      "make",
-      "-C",
-      "docs",
-      "clean",
-      "spelling",
-      "linkcheck",
-      "html",
-      "copy_artifacts"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "tarmak-docs-push": {
-    "args": [
-      "--",
-      "make",
-      "-C",
-      "docs",
-      "clean",
-      "multiversion_build",
-      "multiversion_push"
     ],
     "scenario": "execute",
     "sigOwners": [
