@@ -209,6 +209,37 @@ presubmits:
     always_run: true
 
   jetstack/tarmak:
+  # puppet role spec
+  - <<: *puppet_module_verify
+    name: tarmak-puppet-roles-quick-verify
+    context: tarmak-puppet-roles-quick-verify
+    always_run: false
+    run_if_changed: "^(puppet).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-roles| puppet-verify| puppet-roles-verify|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-roles-verify"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+        command:
+        - make
+        - -C
+        - puppet
+        - verify
+        env:
+        - name: BUNDLE_DIR
+          value: /cache/bundle/$(JOB_NAME)
+        resources:
+          requests:
+            cpu: 750m
+            memory: 1Gi
+        volumeMounts:
+        - name: bundle-cache
+          mountPath: /cache/bundle
+      volumes:
+      - name: bundle-cache
+        hostPath:
+          path: /var/lib/libvirt/caches/bundle
+          type: Directory
   # puppet module aws_ebs
   - <<: *puppet_module_verify
     name: tarmak-puppet-module-aws_ebs-quick-verify
