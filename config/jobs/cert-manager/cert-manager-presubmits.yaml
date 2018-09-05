@@ -42,6 +42,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
         args:
+        - runner
         - /bin/bash
         - -c
         - |
