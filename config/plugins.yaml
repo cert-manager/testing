@@ -173,6 +173,7 @@ plugins:
   - yuks
   - wip
   - shrug
+  - dco
 
   jetstack/okta-kubectl-auth:
   - docs-no-retest
