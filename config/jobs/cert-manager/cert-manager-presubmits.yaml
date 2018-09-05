@@ -32,6 +32,7 @@ presubmits:
     context: cert-manager-chart-verify
     max_concurrency: 4
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -41,10 +42,16 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
         args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/go/src"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
+        - /bin/bash
+        - -c
+        - |
+          #!/bin/bash
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          ./hack/verify-chart-version.sh
+          IMAGE=eu.gcr.io/jetstack-build-infra/gen-apidocs-img ./verify-reference-docs.sh
         resources:
           requests:
             cpu: 1
