@@ -14,9 +14,8 @@ presubmits:
       - image: golang:1.10.4
         workingDir: /go/src/github.com/jetstack/vault-unsealer
         command:
-        - /bin/sh
-        - -c
-        - make -C puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') verify
+        - make
+        - verify
         resources:
           requests:
             cpu: 750m
