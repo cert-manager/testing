@@ -133,6 +133,7 @@ plugins:
   - yuks
   - wip
   - shrug
+  - dco
 
   jetstack/navigator:
   - docs-no-retest
@@ -172,6 +173,7 @@ plugins:
   - yuks
   - wip
   - shrug
+  - dco
 
   jetstack/okta-kubectl-auth:
   - docs-no-retest
