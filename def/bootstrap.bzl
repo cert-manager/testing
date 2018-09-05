@@ -22,6 +22,9 @@ def bootstrap_image(name, base, runner = "//legacy/bootstrap:runner"):
         # TODO: lookup name of 'runner' target
         entrypoint = ["/bin/bash", "/runner"],
         files = [runner],
+        symlinks = {
+            "/runner": "/workspace/runner",
+        },
     )
 
 def bootstrap_image_bundle(name, images, stamp):
