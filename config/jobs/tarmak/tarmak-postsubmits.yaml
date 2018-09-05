@@ -17,7 +17,6 @@ postsubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/sphinx-docs:v20180831-4ff2528
-        workingDir: /go/src/github.com/jetstack/tarmak
         securityContext:
           runAsUser: 0
         command:
