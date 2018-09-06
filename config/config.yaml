@@ -4,6 +4,8 @@ plank:
   pod_pending_timeout: 60m
   default_decoration_config:
     timeout: 7200000000000 # 2h
+    ssh_key_secrets:
+    - jetstack-pulling-bot
     grace_period: 15000000000 # 15s
     utility_images:
       clonerefs: "eu.gcr.io/jetstack-build-infra/prow-clonerefs:v20180901-0def397"
