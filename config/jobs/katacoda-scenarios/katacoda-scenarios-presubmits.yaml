@@ -1,0 +1,25 @@
+presubmits:
+  jetstack/katacoda-scenarios:
+  - name: pull-katacoda-scenarios-lint
+    always_run: true
+    skip_report: false
+    context: pull-katacoda-scenarios-lint
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/katacoda-lint:v20180906-ebe04eb
+        args:
+        - ./hack/lint.sh
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test verify,?(\\s+|$)"
+    rerun_command: "/test verify"

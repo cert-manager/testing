@@ -74,6 +74,9 @@ config_updater:
 
 plugins:
 
+  jetstack/katacoda-scenarios:
+  - trigger
+
   jetstack/testing:
   - trigger
   - size
