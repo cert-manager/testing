@@ -13,6 +13,7 @@ filegroup(
         ":package-srcs",
         "//images/alpine:all-srcs",
         "//images/bazelbuild:all-srcs",
+        "//images/katacoda-lint:all-srcs",
     ],
     tags = ["automanaged"],
     visibility = ["//visibility:public"],
