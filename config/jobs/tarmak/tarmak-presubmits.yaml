@@ -34,6 +34,54 @@
   rerun_command: "/test verify"
 
 # puppet module acceptance tests using ruby tooling, elevated privileges due
+# to requirement to run nested vms. (modern decorators)
+.puppet_module_acceptance_decorate: &puppet_module_acceptance_decorate
+  skip_report: false
+  max_concurrency: 2
+  decorate: true
+  agent: kubernetes
+  labels:
+    preset-service-account: "true"
+    libvirt-socket: "true"
+  spec:
+    nodeSelector:
+      node-role.kubernetes.io/libvirt: ""
+    # Note: this is not supported yet by prow PodSpec, taint temporary removed
+    tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+      command:
+      - /bin/sh
+      - -c
+      - cd puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') && { if test -e .fixtures.yml.local; then export FIXTURES_YML=.fixtures.yml.local ; fi; } && make acceptance
+      env:
+      - name: BUNDLE_DIR
+        value: /cache/bundle/$(JOB_NAME)
+      resources:
+        requests:
+          cpu: 750m
+          memory: 1Gi
+      volumeMounts:
+      - name: bundle-cache
+        mountPath: /cache/bundle
+      - name: vagrant-boxes
+        mountPath: /root/.vagrant.d/boxes
+    volumes:
+    - name: bundle-cache
+      hostPath:
+        path: /var/lib/libvirt/caches/bundle
+        type: Directory
+    - name: vagrant-boxes
+      hostPath:
+        path: /var/lib/libvirt/caches/vagrant-boxes
+        type: Directory
+  trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
+  rerun_command: "/test acceptance"
+
+# puppet module acceptance tests using ruby tooling, elevated privileges due
 # to requirement to run nested VMs
 .puppet_module_acceptance: &puppet_module_acceptance
   skip_report: false
@@ -444,6 +492,21 @@ presubmits:
       run_if_changed: "^(puppet/modules/vault_client).*$"
       trigger: "(?m)^/test( all| puppet| puppet-vault_client| puppet-vault_client-acceptance-ubuntu|)( \\[.+\\])?$"
       rerun_command: "/test puppet-vault_client-acceptance-ubuntu"
+  # puppet module vault_server
+  - <<: *puppet_module_verify
+    name: tarmak-puppet-module-vault_server-quick-verify
+    context: tarmak-puppet-module-vault_server-quick-verify
+    always_run: false
+    run_if_changed: "^(puppet/modules/vault_server).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-vault_server| puppet-verify| puppet-vault_server-verify|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-vault_server-verify"
+  - <<: *puppet_module_acceptance_decorate
+    name: tarmak-puppet-module-vault_server-acceptance-centos
+    context: tarmak-puppet-module-vault_server-acceptance-centos
+    always_run: false
+    run_if_changed: "^(puppet/modules/vault_server).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-vault_server| puppet-vault_server-acceptance-centos|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-vault_server-acceptance-centos"
 
   - name: tarmak-quick-verify
     always_run: true
