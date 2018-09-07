@@ -27,9 +27,9 @@ presets:
 presubmits:
   jetstack/cert-manager:
 
-  - name: cert-manager-chart-verify
+  - name: pull-cert-manager-chart-verify
     always_run: true
-    context: cert-manager-chart-verify
+    context: pull-cert-manager-chart-verify
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -63,10 +63,10 @@ presubmits:
     trigger: "(?m)^/test( all| chart-verify),?(\\s+|$)"
     rerun_command: "/test chart-verify"
 
-  - name: cert-manager-quick-verify
+  - name: pull-cert-manager-verify
     always_run: true
     skip_report: false
-    context: cert-manager-quick-verify
+    context: pull-cert-manager-verify
     max_concurrency: 2
     agent: kubernetes
     labels:
@@ -83,7 +83,7 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
+    trigger: "(?m)^/test( all| verify),?(\\s+|$)"
     rerun_command: "/test verify"
 
   # kind based cert-manager e2e job
@@ -134,51 +134,4 @@ presubmits:
     trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
     rerun_command: "/test e2e v1.11"
 
-  - name: pull-cert-manager-e2e-v1-10
-    skip_report: false
-    context: pull-cert-manager-e2e-v1-10
-    # Match everything except PRs that only touch docs/
-    always_run: false
-    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-14386ae-0.16.1
-        args:
-        - runner
-        - hack/ci/run-e2e-kind.sh
-        resources:
-          requests:
-            cpu: 2
-            memory: 6Gi
-        env:
-        - name: KIND_IMAGE
-          value: eu.gcr.io/jetstack-build-infra-images/kind:1.10.7-0
-        - name: KIND_KUBEADM_1_11_FORCE
-          value: "true"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-    trigger: "(?m)^/test( e2e( v?1.10)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.10"
+  # we don't have a 1.10 job as kind does not support kubernetes 1.10
