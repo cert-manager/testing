@@ -5,9 +5,8 @@
       memory: 8Gi
 
 periodics:
-- name: cert-manager-e2e-v1-7
+- name: ci-cert-manager-e2e-v1-7
   interval: 12h
-  agent: kubernetes
   labels:
     cert-manager-cloudflare-svc-acct: "true"
     preset-service-account: "true"
@@ -17,7 +16,6 @@ periodics:
   spec:
     nodeSelector:
       node-role.kubernetes.io/libvirt: ""
-    # Note: this is not supported yet by prow PodSpec, taint temporary removed
     tolerations:
     - effect: NoSchedule
       key: dedicated
@@ -29,13 +27,15 @@ periodics:
       - "--root=/go/src"
       - "--upload=gs://jetstack-logs/logs"
       - "--clean"
+      env:
+      - name: DISABLE_WEBHOOK
+        value: "true"
       <<: *minikube_small
       securityContext:
         privileged: true
 
-- name: cert-manager-e2e-v1-8
+- name: ci-cert-manager-e2e-v1-8
   interval: 12h
-  agent: kubernetes
   labels:
     cert-manager-cloudflare-svc-acct: "true"
     preset-service-account: "true"
@@ -45,13 +45,41 @@ periodics:
   spec:
     nodeSelector:
       node-role.kubernetes.io/libvirt: ""
-    # Note: this is not supported yet by prow PodSpec, taint temporary removed
     tolerations:
     - effect: NoSchedule
       key: dedicated
       operator: Equal
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/minikube-in-go:v20180830-8035146-v1.8.10
+      args:
+      - "--repo=github.com/jetstack/cert-manager=master"
+      - "--root=/go/src"
+      - "--upload=gs://jetstack-logs/logs"
+      - "--clean"
+      env:
+      - name: DISABLE_WEBHOOK
+        value: "true"
+      <<: *minikube_small
+      securityContext:
+        privileged: true
+
+- name: ci-cert-manager-e2e-v1-9
+  interval: 12h
+  labels:
+    cert-manager-cloudflare-svc-acct: "true"
+    preset-service-account: "true"
+    libvirt-socket: "true"
+    minikube-support: "true"
+    minikube-small: "true"
+  spec:
+    nodeSelector:
+      node-role.kubernetes.io/libvirt: ""
+    tolerations:
+    - effect: NoSchedule
+      key: dedicated
+      operator: Equal
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/minikube-in-go:v20180830-8035146-v1.9.6
       args:
       - "--repo=github.com/jetstack/cert-manager=master"
       - "--root=/go/src"
