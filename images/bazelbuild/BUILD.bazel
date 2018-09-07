@@ -30,6 +30,7 @@ container_image(
         "/usr/local/bin/coalesce.py": "/coalesce.py",
         "/usr/local/bin/create_bazel_cache_rcs.sh": "/create_bazel_cache_rcs.sh",
     },
+    visibility = ["//visibility:public"],
 )
 
 container_bundle(
