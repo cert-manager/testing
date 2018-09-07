@@ -517,27 +517,27 @@
       "UNKNOWN"
     ]
   },
-  "cert-manager-e2e-v1-7": {
+  "ci-cert-manager-e2e-v1-7": {
     "args": [
-      "./hack/ci.sh"
+      "./hack/ci/run-e2e-minikube.sh"
     ],
     "scenario": "minikube",
     "sigOwners": [
       "UNKNOWN"
     ]
   },
-  "cert-manager-e2e-v1-8": {
+  "ci-cert-manager-e2e-v1-8": {
     "args": [
-      "./hack/ci.sh"
+      "./hack/ci/run-e2e-minikube.sh"
     ],
     "scenario": "minikube",
     "sigOwners": [
       "UNKNOWN"
     ]
   },
-  "cert-manager-e2e-v1-9": {
+  "ci-cert-manager-e2e-v1-9": {
     "args": [
-      "./hack/ci.sh"
+      "./hack/ci/run-e2e-minikube.sh"
     ],
     "scenario": "minikube",
     "sigOwners": [
@@ -547,8 +547,7 @@
   "pull-cert-manager-verify": {
     "args": [
       "make",
-      "verify",
-      "test"
+      "verify"
     ],
     "scenario": "execute",
     "sigOwners": [
