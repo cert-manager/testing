@@ -37,3 +37,29 @@ presubmits:
           privileged: true
     trigger: "(?m)^/test bazel,?(\\s+|$)"
     rerun_command: "/test bazel"
+
+  # kind based cert-manager e2e job
+  - name: pull-cert-manager-e2e-kind
+    always_run: false
+    skip_report: false
+    context: pull-cert-manager-e2e-kind
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-4b48299-0.16.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 12Gi
+        securityContext:
+          privileged: true
+    trigger: "(?m)^/test kind,?(\\s+|$)"
+    rerun_command: "/test kind"
