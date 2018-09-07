@@ -30,12 +30,6 @@ branch-protection:
       #   contexts:
       #   - dco
       repos:
-        tarmak:
-          protect: false
-          required_status_checks:
-            # TODO: add more contexts
-            contexts:
-            - dco
         cert-manager:
           protect: true
           required_status_checks:
