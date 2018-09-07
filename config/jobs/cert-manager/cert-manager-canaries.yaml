@@ -58,8 +58,25 @@ presubmits:
         resources:
           requests:
             cpu: 2
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
     trigger: "(?m)^/test kind,?(\\s+|$)"
     rerun_command: "/test kind"
