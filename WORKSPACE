@@ -39,7 +39,7 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "559514a9dd5e925def79992ee87572967058661d",
+    commit = "24b536d5e1714637e4433bacddffd9efeb1044cb",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
@@ -170,4 +170,26 @@ container_dockerfile(
         "GCLOUD_HASH": "2e0bbbf81c11164bf892cf0b891751ba4e5172661eff907ad1f7fc0b6907e296",
     },
     dockerfile = "//legacy/images/tarmak/sphinx-docs:Dockerfile",
+)
+
+# Dependencies used for the cert-manager e2e image
+http_file(
+   name = "golang",
+   url = "https://dl.google.com/go/go1.11.linux-amd64.tar.gz",
+   sha256 = "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499",
+)
+
+new_http_archive(
+    name = "helm_linux",
+    sha256 = "0fa2ed4983b1e4a3f90f776d08b88b0c73fd83f305b5b634175cb15e61342ffe",
+    urls = ["https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz"],
+    build_file_content = """
+filegroup(
+    name = "helm",
+    srcs = [
+        "linux-amd64/helm",
+    ],
+    visibility = ["//visibility:public"],
+)
+""",
 )
