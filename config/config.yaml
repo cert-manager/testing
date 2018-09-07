@@ -21,6 +21,7 @@ plank:
     gcs_credentials_secret: "service-account"
 
 branch-protection:
+  allow_disabled_policies: true
   orgs:
     jetstack:
       # TODO: enforce dco check org-wide
@@ -30,7 +31,7 @@ branch-protection:
       #   - dco
       repos:
         tarmak:
-          protect: true
+          protect: false
           required_status_checks:
             # TODO: add more contexts
             contexts:
