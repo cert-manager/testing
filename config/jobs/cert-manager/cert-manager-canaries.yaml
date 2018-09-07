@@ -51,7 +51,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-4b48299-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-c93f33f-0.16.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
