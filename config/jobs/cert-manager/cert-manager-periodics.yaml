@@ -5,6 +5,7 @@
       memory: 8Gi
 
 periodics:
+
 - name: ci-cert-manager-e2e-v1-7
   interval: 12h
   labels:

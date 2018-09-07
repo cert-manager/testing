@@ -544,52 +544,13 @@
       "UNKNOWN"
     ]
   },
-  "cert-manager-e2e-v1-10": {
-    "args": [
-      "./hack/ci.sh"
-    ],
-    "scenario": "minikube",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "cert-manager-chart-verify": {
-    "args": [
-      "make",
-      "verify_pr"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "cert-manager-quick-verify": {
+  "pull-cert-manager-verify": {
     "args": [
       "make",
       "verify",
       "test"
     ],
     "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "pull-cert-manager-verify": {
-    "args": [
-      "make",
-      "verify"
-    ],
-    "scenario": "execute",
-    "sigOwners": [
-      "UNKNOWN"
-    ]
-  },
-  "pull-cert-manager-e2e-v1-10": {
-    "args": [
-      "--branch=${PULL_BASE_REF}",
-      "--script=./hack/ci/test-e2e-dockerized.sh"
-    ],
-    "scenario": "cert-manager_e2e",
     "sigOwners": [
       "UNKNOWN"
     ]
