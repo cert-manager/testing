@@ -27,6 +27,9 @@ periodics:
       - "--root=/go/src"
       - "--upload=gs://jetstack-logs/logs"
       - "--clean"
+      env:
+      - name: DISABLE_WEBHOOK
+        value: "true"
       <<: *minikube_small
       securityContext:
         privileged: true
@@ -53,6 +56,9 @@ periodics:
       - "--root=/go/src"
       - "--upload=gs://jetstack-logs/logs"
       - "--clean"
+      env:
+      - name: DISABLE_WEBHOOK
+        value: "true"
       <<: *minikube_small
       securityContext:
         privileged: true
