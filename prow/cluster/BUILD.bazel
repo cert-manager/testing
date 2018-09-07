@@ -31,6 +31,13 @@ release(
         },
     ),
     component(
+        "labelsync",
+        "cronjob",
+        images = {
+            "eu.gcr.io/jetstack-build-infra/prow-labelsync:latest": "@test_infra//label_sync:label_sync-image",
+        },
+    ),
+    component(
         "deck",
         "deployment",
         "service",

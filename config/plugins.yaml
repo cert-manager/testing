@@ -73,8 +73,8 @@ repo_milestone:
 
 config_updater:
   maps:
-    # label_sync/labels.yaml:
-    #   name: label-config
+    config/labels.yaml:
+      name: label-config
     config/config.yaml:
       name: config
     config/plugins.yaml:
