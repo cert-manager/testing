@@ -86,37 +86,99 @@ presubmits:
     trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
     rerun_command: "/test verify"
 
-  - name: cert-manager-e2e-v1-9
-    context: cert-manager-e2e-v1-9
-    trigger: "(?m)^/test( all| e2e( v?1.9)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.9"
+  # kind based cert-manager e2e job
+  - name: pull-cert-manager-e2e-v1-11
+    skip_report: false
+    context: pull-cert-manager-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
     run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
-    skip_report: false
     max_concurrency: 4
     agent: kubernetes
+    decorate: true
     labels:
-      cert-manager-cloudflare-svc-acct: "true"
       preset-service-account: "true"
-      libvirt-socket: "true"
-      minikube-support: "true"
-      minikube-small: "true"
+      preset-dind-enabled: "true"
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/libvirt: ""
-      # Note: this is not supported yet by prow PodSpec, taint temporary removed
-      tolerations:
-      - effect: NoSchedule
-        key: dedicated
-        operator: Equal
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/minikube-in-go:v20180830-8035146-v1.9.6
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-14386ae-0.16.1
         args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/go/src"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
-        <<: *minikube_small
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        env:
+        - name: KIND_IMAGE
+          value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.2-0
         securityContext:
           privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.11"
+
+  - name: pull-cert-manager-e2e-v1-10
+    skip_report: false
+    context: pull-cert-manager-e2e-v1-10
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-14386ae-0.16.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        env:
+        - name: KIND_IMAGE
+          value: eu.gcr.io/jetstack-build-infra-images/kind:1.10.7-0
+        - name: KIND_KUBEADM_1_11_FORCE
+          value: "true"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.10)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.10"
