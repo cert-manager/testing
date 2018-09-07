@@ -66,6 +66,8 @@ RUN mkdir /docker-graph
 # END: DOCKER IN DOCKER SETUP
 #
 
+# make is installed simply because a lot of things use it - it is not required
+# by Bazel
 RUN apt-get update && apt-get install -y --no-install-recommends \
     pkg-config \
     zip \
@@ -75,7 +77,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python \
     wget \
     ca-certificates \
-    git
+    git \
+    make
 
 ARG BAZEL_VERSION
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
