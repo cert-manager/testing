@@ -30,7 +30,7 @@ container_image(
     ],
     symlinks = {
         "/usr/local/bin/helm": "/helm",
-        "/usr/local/bin/dep": "/dep",
+        "/usr/local/bin/dep": "/dep-linux-amd64",
         "/usr/local/bin/kind": "/kind",
         "/usr/local/go": "/go",
     },
