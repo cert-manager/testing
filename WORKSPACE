@@ -179,6 +179,13 @@ http_file(
    sha256 = "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499",
 )
 
+http_file(
+    name = "dep_linux",
+    executable = 1,
+    url = "https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64",
+    sha256 = "287b08291e14f1fae8ba44374b26a2b12eb941af3497ed0ca649253e21ba2f83"
+)
+
 new_http_archive(
     name = "helm_linux",
     sha256 = "0fa2ed4983b1e4a3f90f776d08b88b0c73fd83f305b5b634175cb15e61342ffe",

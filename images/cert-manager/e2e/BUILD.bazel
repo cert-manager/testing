@@ -25,10 +25,12 @@ container_image(
     },
     files = [
         ":kind",
+        "@dep_linux//file",
         "@helm_linux//:helm",
     ],
     symlinks = {
         "/usr/local/bin/helm": "/helm",
+        "/usr/local/bin/dep": "/dep",
         "/usr/local/bin/kind": "/kind",
         "/usr/local/go": "/go",
     },
