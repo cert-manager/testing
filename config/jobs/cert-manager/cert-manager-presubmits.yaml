@@ -27,6 +27,36 @@ presets:
 presubmits:
   jetstack/cert-manager:
 
+  - name: pull-cert-manager-docs-verify
+    always_run: true
+    context: pull-cert-manager-docs-verify
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
+        args:
+        - runner
+        - ./hack/verify-reference-docs.sh
+        env:
+        - name: IMAGE
+          value: eu.gcr.io/jetstack-build-infra/gen-apidocs-img
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+        # docker-in-docker needs privileged mode
+        securityContext:
+          privileged: true
+    trigger: "(?m)^/test( all| docs-verify),?(\\s+|$)"
+    rerun_command: "/test docs-verify"
+
   - name: pull-cert-manager-chart-verify
     always_run: true
     context: pull-cert-manager-chart-verify
@@ -43,16 +73,7 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
         args:
         - runner
-        - /bin/bash
-        - -c
-        - |
-          #!/bin/bash
-          set -o errexit
-          set -o nounset
-          set -o pipefail
-
-          ./hack/verify-chart-version.sh
-          IMAGE=eu.gcr.io/jetstack-build-infra/gen-apidocs-img ./hack/verify-reference-docs.sh
+        - ./hack/verify-chart-version.sh
         resources:
           requests:
             cpu: 1
