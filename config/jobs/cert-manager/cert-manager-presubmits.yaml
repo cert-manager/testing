@@ -40,7 +40,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-4f5258e-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
         - ./hack/verify-reference-docs.sh
@@ -70,7 +70,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-4f5258e-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
         - ./hack/verify-chart-version.sh
@@ -97,7 +97,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-4f5258e-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
         - make
@@ -124,9 +124,10 @@ presubmits:
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
+      cert-manager-cloudflare-svc-acct: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-4f5258e-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
