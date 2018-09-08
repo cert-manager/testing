@@ -89,3 +89,45 @@ periodics:
       <<: *minikube_small
       securityContext:
         privileged: true
+
+- name: ci-cert-manager-e2e-v1-11
+  interval: 12h
+  decorate: true
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    cert-manager-cloudflare-svc-acct: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      args:
+      - runner
+      - hack/ci/run-e2e-kind.sh
+      resources:
+        requests:
+          cpu: 2
+          memory: 6Gi
+      env:
+      - name: KIND_IMAGE
+        value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.2-0
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
