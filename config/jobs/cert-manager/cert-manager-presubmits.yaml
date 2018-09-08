@@ -40,7 +40,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-7033964-0.16.1
         args:
         - runner
         - ./hack/verify-reference-docs.sh
@@ -70,7 +70,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180831-a4c5a2b-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-7033964-0.16.1
         args:
         - runner
         - ./hack/verify-chart-version.sh
@@ -90,16 +90,18 @@ presubmits:
     context: pull-cert-manager-verify
     max_concurrency: 2
     agent: kubernetes
+    decorate: true
     labels:
       preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/gcloud-in-go:v20180905-55cbcb7
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-7033964-0.16.1
         args:
-        - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-        - "--root=/go/src"
-        - "--upload=gs://jetstack-logs/pr-logs"
-        - "--clean"
+        - runner
+        - make
+        - verify
         resources:
           requests:
             cpu: 1
@@ -120,9 +122,11 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180907-14386ae-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-7033964-0.16.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
