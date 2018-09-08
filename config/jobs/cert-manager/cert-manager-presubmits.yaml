@@ -27,9 +27,9 @@ presets:
 presubmits:
   jetstack/cert-manager:
 
-  - name: pull-cert-manager-docs-verify
+  - name: pull-cert-manager-docs
     always_run: true
-    context: pull-cert-manager-docs-verify
+    context: pull-cert-manager-docs
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -43,7 +43,8 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
-        - ./hack/verify-reference-docs.sh
+        - make
+        - verify_docs
         env:
         - name: IMAGE
           value: eu.gcr.io/jetstack-build-infra/gen-apidocs-img
@@ -54,12 +55,12 @@ presubmits:
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
-    trigger: "(?m)^/test( all| docs-verify),?(\\s+|$)"
-    rerun_command: "/test docs-verify"
+    trigger: "(?m)^/test( all| docs),?(\\s+|$)"
+    rerun_command: "/test docs"
 
-  - name: pull-cert-manager-chart-verify
+  - name: pull-cert-manager-chart
     always_run: true
-    context: pull-cert-manager-chart-verify
+    context: pull-cert-manager-chart
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -73,7 +74,8 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
         args:
         - runner
-        - ./hack/verify-chart-version.sh
+        - make
+        - verify_chart
         resources:
           requests:
             cpu: 1
@@ -81,13 +83,13 @@ presubmits:
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
-    trigger: "(?m)^/test( all| chart-verify),?(\\s+|$)"
-    rerun_command: "/test chart-verify"
+    trigger: "(?m)^/test( all| chart),?(\\s+|$)"
+    rerun_command: "/test chart"
 
-  - name: pull-cert-manager-verify
+  - name: pull-cert-manager-codegen
     always_run: true
     skip_report: false
-    context: pull-cert-manager-verify
+    context: pull-cert-manager-codegen
     max_concurrency: 2
     agent: kubernetes
     decorate: true
@@ -101,13 +103,88 @@ presubmits:
         args:
         - runner
         - make
-        - verify
+        - verify_codegen
         resources:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test( all| verify),?(\\s+|$)"
-    rerun_command: "/test verify"
+    trigger: "(?m)^/test codegen,?(\\s+|$)"
+    rerun_command: "/test codegen"
+
+  - name: pull-cert-manager-deps
+    always_run: true
+    skip_report: false
+    context: pull-cert-manager-deps
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+        args:
+        - runner
+        - make
+        - verify_deps
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test deps,?(\\s+|$)"
+    rerun_command: "/test deps"
+
+  - name: pull-cert-manager-unit
+    always_run: true
+    skip_report: false
+    context: pull-cert-manager-unit
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+        args:
+        - runner
+        - make
+        - verify_unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test unit,?(\\s+|$)"
+    rerun_command: "/test unit"
+
+  - name: pull-cert-manager-lint
+    always_run: true
+    skip_report: false
+    context: pull-cert-manager-lint
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+        args:
+        - runner
+        - make
+        - verify_lint
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test lint,?(\\s+|$)"
+    rerun_command: "/test lint"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
