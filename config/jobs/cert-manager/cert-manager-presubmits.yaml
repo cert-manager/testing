@@ -40,7 +40,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -71,7 +71,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -99,7 +99,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -124,7 +124,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -149,7 +149,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -174,7 +174,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - make
@@ -204,7 +204,7 @@ presubmits:
       cert-manager-cloudflare-svc-acct: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180908-ae72a9a-0.16.1
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180910-b8de01d-0.16.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
