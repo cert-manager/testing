@@ -79,7 +79,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     git \
     mercurial \
-    make
+    make \
+    rsync
 
 ARG BAZEL_VERSION
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
