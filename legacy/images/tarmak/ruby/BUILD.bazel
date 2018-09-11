@@ -18,7 +18,7 @@ filegroup(
 bootstrap_image_bundle(
     name = "ruby",
     images = {
-        "{IMAGE_DOCKER_REPO}/tarmak-ruby:{IMAGE_DOCKER_TAG}-2.4.4": "@tarmak-ruby//image.2.4.4",
+        "{STABLE_IMAGE_DOCKER_REPO}/tarmak-ruby:{STABLE_IMAGE_DOCKER_TAG}-2.4.4": "@tarmak-ruby//image.2.4.4",
     },
     stamp = True,
 )

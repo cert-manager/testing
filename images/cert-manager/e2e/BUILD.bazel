@@ -50,7 +50,7 @@ go_binary(
 container_bundle(
     name = "e2e",
     images = {
-        "{IMAGE_DOCKER_REPO}/cert-manager-e2e:{IMAGE_DOCKER_TAG}-0.16.1": ":image",
+        "{STABLE_IMAGE_DOCKER_REPO}/cert-manager-e2e:{STABLE_IMAGE_DOCKER_TAG}-0.16.1": ":image",
     },
     stamp = True,
 )

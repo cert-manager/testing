@@ -36,7 +36,7 @@ container_image(
 container_bundle(
     name = "bazelbuild",
     images = {
-        "{IMAGE_DOCKER_REPO}/bazelbuild:{IMAGE_DOCKER_TAG}-0.16.1": ":image",
+        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.16.1": ":image",
     },
     stamp = True,
 )

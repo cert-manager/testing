@@ -18,9 +18,9 @@ filegroup(
 bootstrap_image_bundle(
     name = "minikube-in-go",
     images = {
-        "{IMAGE_DOCKER_REPO}/minikube-in-go:{IMAGE_DOCKER_TAG}-v1.9.6": "@minikube-in-go//image.v1.9.6",
-        "{IMAGE_DOCKER_REPO}/minikube-in-go:{IMAGE_DOCKER_TAG}-v1.8.10": "@minikube-in-go//image.v1.8.10",
-        "{IMAGE_DOCKER_REPO}/minikube-in-go:{IMAGE_DOCKER_TAG}-v1.7.15": "@minikube-in-go//image.v1.7.15",
+        "{STABLE_IMAGE_DOCKER_REPO}/minikube-in-go:{STABLE_IMAGE_DOCKER_TAG}-v1.9.6": "@minikube-in-go//image.v1.9.6",
+        "{STABLE_IMAGE_DOCKER_REPO}/minikube-in-go:{STABLE_IMAGE_DOCKER_TAG}-v1.8.10": "@minikube-in-go//image.v1.8.10",
+        "{STABLE_IMAGE_DOCKER_REPO}/minikube-in-go:{STABLE_IMAGE_DOCKER_TAG}-v1.7.15": "@minikube-in-go//image.v1.7.15",
     },
     stamp = True,
 )

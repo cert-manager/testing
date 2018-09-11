@@ -8,10 +8,10 @@ load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 container_bundle(
     name = "podutils",
     images = {
-        "{PROW_DOCKER_REPO}/prow-clonerefs:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/clonerefs:image",
-        "{PROW_DOCKER_REPO}/prow-entrypoint:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/entrypoint:image",
-        "{PROW_DOCKER_REPO}/prow-initupload:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/initupload:image",
-        "{PROW_DOCKER_REPO}/prow-sidecar:{IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/sidecar:image",
+        "{STABLE_PROW_DOCKER_REPO}/prow-clonerefs:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/clonerefs:image",
+        "{STABLE_PROW_DOCKER_REPO}/prow-entrypoint:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/entrypoint:image",
+        "{STABLE_PROW_DOCKER_REPO}/prow-initupload:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/initupload:image",
+        "{STABLE_PROW_DOCKER_REPO}/prow-sidecar:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/sidecar:image",
     },
     stamp = True,
 )
@@ -27,7 +27,7 @@ release(
         "branchprotector",
         "cronjob",
         images = {
-            "{PROW_DOCKER_REPO}/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
         },
     ),
     component(
@@ -36,7 +36,7 @@ release(
         "service",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
         },
     ),
     component("gce-ssd-retain", "storageclass"),
@@ -45,7 +45,7 @@ release(
         "service",
         "deployment",
         images = {
-            "{PROW_DOCKER_REPO}/prow-ghproxy:latest": "@test_infra//ghproxy:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-ghproxy:latest": "@test_infra//ghproxy:image",
         },
     ),
     component(
@@ -54,7 +54,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
         },
     ),
     component(
@@ -62,7 +62,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
         },
     ),
     component("lego", "deployment"),
@@ -76,7 +76,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
         },
     ),
     component("prowjob", "customresourcedefinition"),
@@ -86,14 +86,14 @@ release(
         "deployment",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
         },
     ),
     component(
         "splice",
         "deployment",
         images = {
-            "{PROW_DOCKER_REPO}/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
         },
     ),
     component(
@@ -102,7 +102,7 @@ release(
         "deployment",
         "rbac",
         images = {
-            "{PROW_DOCKER_REPO}/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
         },
     ),
     component("tls-ing", "ingress"),
@@ -111,7 +111,7 @@ release(
         "service",
         "deployment",
         images = {
-            "{PROW_DOCKER_REPO}/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
         },
     ),
     component(
@@ -119,7 +119,7 @@ release(
         "deployment",
         "service",
         images = {
-            "{PROW_DOCKER_REPO}/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
+            "{STABLE_PROW_DOCKER_REPO}/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
         },
     ),
 )

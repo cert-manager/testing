@@ -18,7 +18,7 @@ filegroup(
 container_bundle(
     name = "katacoda-lint",
     images = {
-        "{IMAGE_DOCKER_REPO}/katacoda-lint:{IMAGE_DOCKER_TAG}": "@katacoda-lint//image",
+        "{STABLE_IMAGE_DOCKER_REPO}/katacoda-lint:{STABLE_IMAGE_DOCKER_TAG}": "@katacoda-lint//image",
     },
     stamp = True,
 )

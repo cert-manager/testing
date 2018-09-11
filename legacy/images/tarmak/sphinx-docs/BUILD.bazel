@@ -18,7 +18,7 @@ filegroup(
 bootstrap_image_bundle(
     name = "sphinx-docs",
     images = {
-        "{IMAGE_DOCKER_REPO}/tarmak-sphinx-docs:{IMAGE_DOCKER_TAG}": "@tarmak-sphinx-docs//image",
+        "{STABLE_IMAGE_DOCKER_REPO}/tarmak-sphinx-docs:{STABLE_IMAGE_DOCKER_TAG}": "@tarmak-sphinx-docs//image",
     },
     stamp = True,
 )

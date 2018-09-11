@@ -18,7 +18,7 @@ filegroup(
 container_bundle(
     name = "alpine",
     images = {
-        "{IMAGE_DOCKER_REPO}/alpine:{IMAGE_DOCKER_TAG}": "@alpine//image",
+        "{STABLE_IMAGE_DOCKER_REPO}/alpine:{STABLE_IMAGE_DOCKER_TAG}": "@alpine//image",
     },
     stamp = True,
 )

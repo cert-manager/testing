@@ -18,7 +18,7 @@ filegroup(
 bootstrap_image_bundle(
     name = "gcloud-in-go",
     images = {
-        "{IMAGE_DOCKER_REPO}/gcloud-in-go:{IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
+        "{STABLE_IMAGE_DOCKER_REPO}/gcloud-in-go:{STABLE_IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
     },
     stamp = True,
 )
