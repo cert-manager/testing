@@ -7,6 +7,9 @@ presubmits:
     max_concurrency: 2
     agent: kubernetes
     decorate: true
+    ssh_key_secrets:
+    - jetstack-pulling-bot
+    clone_uri: "git@github.com:{{.Org}}/{{.Repo}}.git"
     labels:
       preset-service-account: "true"
     spec:
