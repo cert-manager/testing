@@ -6,10 +6,10 @@ plank:
     timeout: 7200000000000 # 2h
     grace_period: 15000000000 # 15s
     utility_images:
-      clonerefs: "eu.gcr.io/jetstack-build-infra/prow-clonerefs:v20180901-0def397"
-      initupload: "eu.gcr.io/jetstack-build-infra/prow-initupload:v20180901-0def397"
-      entrypoint: "eu.gcr.io/jetstack-build-infra/prow-entrypoint:v20180901-0def397"
-      sidecar: "eu.gcr.io/jetstack-build-infra/prow-sidecar:v20180901-0def397"
+      clonerefs: "eu.gcr.io/jetstack-build-infra/prow-clonerefs:v20180918-716c6b3"
+      initupload: "eu.gcr.io/jetstack-build-infra/prow-initupload:v20180918-716c6b3"
+      entrypoint: "eu.gcr.io/jetstack-build-infra/prow-entrypoint:v20180918-716c6b3"
+      sidecar: "eu.gcr.io/jetstack-build-infra/prow-sidecar:v20180918-716c6b3"
     gcs_configuration:
       bucket: "jetstack-logs"
       path_strategy: "legacy"
@@ -193,8 +193,10 @@ tide:
     missingLabels:
     - needs-ok-to-test
     - do-not-merge
-    - do-not-merge/blocked-paths
-    - do-not-merge/cherry-pick-not-approved
+    # Disabled until/if we enable the blockade plugin
+    # - do-not-merge/blocked-paths
+    # Disabled until we configure the cherrypickunapproved plugin
+    # - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/release-note-label-needed
     - do-not-merge/work-in-progress

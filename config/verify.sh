@@ -20,8 +20,10 @@ set -o pipefail
 
 # This script is meant to be run via bazel with "bazel test //config:verify"
 
+# Disable the 'non-decorated-jobs' checker
 ./config/checkconfig \
     -strict \
+    -warnings=mismatched-tide \
     -config-path config/config.yaml \
     -job-config-path config/jobs \
     -plugin-config config/plugins.yaml
