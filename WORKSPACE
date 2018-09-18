@@ -44,6 +44,12 @@ git_repository(
 )
 
 git_repository(
+    name = "kind",
+    commit = "35d67a6310dd76e7737c44ebb6164fc757e1f919",
+    remote = "https://github.com/kubernetes-sigs/kind.git",
+)
+
+git_repository(
     name = "io_kubernetes_build",
     commit = "84d52408a061e87d45aebf5a0867246bdf66d180",
     remote = "https://github.com/kubernetes/repo-infra.git",

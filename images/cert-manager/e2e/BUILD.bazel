@@ -41,7 +41,7 @@ container_image(
 
 go_binary(
     name = "kind",
-    embed = ["@test_infra//kind:go_default_library"],
+    embed = ["@kind//:go_default_library"],
     goarch = "amd64",
     goos = "linux",
     pure = "on",
