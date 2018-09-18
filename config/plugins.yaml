@@ -75,6 +75,13 @@ config_updater:
 plugins:
 
   jetstack/katacoda-scenarios:
+  - lifecycle
+  - wip
+  - hold
+  - label
+  - lgtm
+  - shrug
+  - size
   - trigger
 
   jetstack/testing:
