@@ -29,17 +29,9 @@ go_register_toolchains(
     go_version = "1.11",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
-
-go_rules_dependencies()
-
-go_register_toolchains(
-    go_version = "1.10.2",
-)
-
 git_repository(
     name = "test_infra",
-    commit = "36b3a11229b4da7a7fc0127f1d3887679b7ef584",
+    commit = "68e120713d092848333a8efde4c6d552b12527bc",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
