@@ -549,6 +549,7 @@ presubmits:
         - -C
         - docs
         - clean
+        - reference_docs_generate
         - spelling
         - linkcheck
         - html

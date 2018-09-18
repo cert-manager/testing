@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y \
     python-pip \
     python3-enchant \
     wamerican \
+    nodejs \
     wbritish && \
     apt-get clean
 
