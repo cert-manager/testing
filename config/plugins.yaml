@@ -75,7 +75,7 @@ config_updater:
 plugins:
 
   jetstack/katacoda-scenarios:
-  - close
+  - lifecycle
   - wip
   - hold
   - label
