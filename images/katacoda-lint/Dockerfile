@@ -14,4 +14,4 @@
 
 FROM alpine:3.7
 
-RUN apk add --no-cache bash ca-certificates git jq util-linux
+RUN apk add --no-cache bash ca-certificates git jq util-linux gawk python3 curl findutils file nodejs-npm && npm i markdown-spellcheck -g
