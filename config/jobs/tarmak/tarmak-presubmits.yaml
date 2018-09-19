@@ -548,12 +548,7 @@ presubmits:
         - make
         - -C
         - docs
-        - clean
-        - reference_docs_generate
-        - spelling
-        - linkcheck
-        - html
-        - copy_artifacts
+        - ci
         resources:
           requests:
             cpu: 750m
