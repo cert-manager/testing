@@ -12,6 +12,25 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.7
+FROM debian:buster-slim
 
-RUN apk add --no-cache bash ca-certificates git jq util-linux
+RUN apt-get -y update \
+&& apt-get -y install --no-install-recommends \
+   bash \
+   ca-certificates \
+   curl \
+   file \
+   findutils \
+   gawk \
+   git \
+   gnupg \
+   jq \
+   python3 \
+   util-linux \
+   uuid-runtime \
+&& curl -fsSL https://deb.nodesource.com/setup_8.x | bash - \
+&& apt-get -y install --no-install-recommends nodejs \
+&& npm i markdown-spellcheck -g \
+&& curl -fsSL https://www.katacoda.com/cli/download/linux -o /usr/local/bin/katacoda \
+&& chmod +x /usr/local/bin/katacoda \
+&& rm -rf /var/lib/apt/lists/*
