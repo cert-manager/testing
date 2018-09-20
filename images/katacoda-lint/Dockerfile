@@ -26,6 +26,7 @@ RUN apt-get -y update \
    gnupg \
    jq \
    python3 \
+   python3-yaml \
    util-linux \
    uuid-runtime \
 && curl -fsSL https://deb.nodesource.com/setup_8.x | bash - \
