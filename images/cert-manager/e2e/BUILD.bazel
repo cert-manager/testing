@@ -19,24 +19,13 @@ filegroup(
 container_image(
     name = "image",
     # we can reuse the bazelbuild base image
-    base = "//images/bazelbuild:image",
-    env = {
-        "PATH": "/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-    },
+    base = "//images/bazelbuild:image-0.18.0",
     files = [
         ":kind",
-        "@dep_linux//file",
-        "@helm_linux//:helm",
     ],
     symlinks = {
-        "/usr/local/bin/helm": "/helm",
-        "/usr/local/bin/dep": "/dep-linux-amd64",
         "/usr/local/bin/kind": "/kind",
-        "/usr/local/go": "/go",
     },
-    tars = [
-        "@golang//file",
-    ],
 )
 
 go_binary(
@@ -50,7 +39,7 @@ go_binary(
 container_bundle(
     name = "e2e",
     images = {
-        "{STABLE_IMAGE_DOCKER_REPO}/cert-manager-e2e:{STABLE_IMAGE_DOCKER_TAG}-0.16.1": ":image",
+        "{STABLE_IMAGE_DOCKER_REPO}/cert-manager-e2e:{STABLE_IMAGE_DOCKER_TAG}-0.18.0": ":image",
     },
     stamp = True,
 )
