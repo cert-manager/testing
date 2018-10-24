@@ -143,7 +143,7 @@ container_dockerfile(
 container_dockerfile(
     name = "minikube-in-go",
     build_args = {
-        "BAZEL_VERSION": "0.16.1",
+        "BAZEL_VERSION": "0.18.0",
         "GCLOUD_VERSION": "163.0.0",
     },
     build_matrix = {
