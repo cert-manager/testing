@@ -112,7 +112,7 @@ presubmits:
     rerun_command: "/test codegen"
 
   - name: pull-cert-manager-deps
-    always_run: true
+    run_if_changed: "^(Gopkg\\.|^vendor/).*$"
     skip_report: false
     context: pull-cert-manager-deps
     max_concurrency: 2
