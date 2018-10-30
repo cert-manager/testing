@@ -83,6 +83,7 @@ plugins:
   - label
   - lgtm
   - shrug
+  - owners-label
   - size
   - trigger
 
@@ -93,6 +94,7 @@ plugins:
   - label
   - lgtm
   - approve
+  - owners-label
   - wip
   - shrug
   - config-updater
@@ -125,6 +127,7 @@ plugins:
   - skip
   - milestone
   - milestonestatus
+  - owners-label
   - lifecycle
   - size
   - yuks
@@ -185,6 +188,7 @@ plugins:
   - lgtm
   - approve
   - milestonestatus
+  - owners-label
   - size
   - yuks
   - wip
