@@ -28,7 +28,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -36,7 +36,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -61,7 +61,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -69,7 +69,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -92,14 +92,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -119,14 +119,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -146,14 +146,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -173,14 +173,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - make
@@ -203,7 +203,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.5
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -212,7 +212,7 @@ presubmits:
       cert-manager-cloudflare-svc-acct: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20180918-cbbd73b-0.16.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -244,58 +244,3 @@ presubmits:
           type: Directory
     trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
     rerun_command: "/test e2e v1.11"
-
-  - name: pull-cert-manager-e2e-v1-12
-    # Set skip_report to true until we've validated the e2e passes
-    skip_report: true
-    context: pull-cert-manager-e2e-v1-12
-    # Match everything except PRs that only touch docs/
-    always_run: false
-    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      cert-manager-cloudflare-svc-acct: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/cert-manager-e2e:v20181022-34682de-0.18.0
-        args:
-        - runner
-        - hack/ci/run-e2e-kind.sh
-        resources:
-          requests:
-            cpu: 2
-            memory: 6Gi
-        env:
-        - name: KIND_IMAGE
-          value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.1-0
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-    trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.12"
-
-  # we don't have a 1.10 job as kind does not support kubernetes 1.10
