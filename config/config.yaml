@@ -28,6 +28,7 @@ branch-protection:
       #   contexts:
       #   - dco
       repos:
+        # TODO: required contexts on a per-branch basis
         cert-manager:
           protect: true
           required_status_checks:
