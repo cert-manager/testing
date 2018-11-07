@@ -40,7 +40,7 @@ presubmits:
         - runner
         - bazel
         - test
-        - ./...
+        - //...
         resources:
           requests:
             cpu: 1
