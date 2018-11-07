@@ -22,6 +22,7 @@ presubmits:
   jetstack/cert-manager:
 
   - name: pull-cert-manager-bazel
+    always_run: true
     skip_report: true
     context: pull-cert-manager-bazel
     max_concurrency: 8
