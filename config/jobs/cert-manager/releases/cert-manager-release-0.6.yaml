@@ -1,35 +1,14 @@
-presets:
-- labels:
-    cert-manager-cloudflare-svc-acct: "true"
-  env:
-  - name: CLOUDFLARE_E2E_API_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: api-token
-  - name: CLOUDFLARE_E2E_EMAIL
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: email
-  - name: CLOUDFLARE_E2E_DOMAIN
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: domain
-
 presubmits:
   jetstack/cert-manager:
 
   - name: pull-cert-manager-bazel
-    always_run: true
     skip_report: true
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -41,7 +20,7 @@ presubmits:
         - runner
         - bazel
         - test
-        - //...
+        - ./...
         resources:
           requests:
             cpu: 1
@@ -56,7 +35,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -89,7 +68,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -120,7 +99,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -147,7 +126,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -174,7 +153,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -201,7 +180,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -231,7 +210,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -283,7 +262,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -324,5 +303,3 @@ presubmits:
           type: Directory
     trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
     rerun_command: "/test e2e v1.12"
-
-  # we don't have a 1.10 job as kind does not support kubernetes 1.10
