@@ -30,6 +30,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -57,6 +59,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -90,6 +94,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -121,6 +127,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -148,6 +156,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -175,6 +185,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -202,6 +214,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -232,6 +246,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -250,7 +266,7 @@ presubmits:
             memory: 6Gi
         env:
         - name: KIND_IMAGE
-          value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.2-0
+          value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.4-1
         securityContext:
           privileged: true
           capabilities:
@@ -284,6 +300,8 @@ presubmits:
     decorate: true
     branches:
     - master
+    # Include release-0.6 whilst we are fast-forwarding to tip of master
+    - release-0.6
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -302,7 +320,7 @@ presubmits:
             memory: 6Gi
         env:
         - name: KIND_IMAGE
-          value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.1-0
+          value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.2-1
         securityContext:
           privileged: true
           capabilities:
