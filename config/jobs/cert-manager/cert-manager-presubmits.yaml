@@ -23,7 +23,6 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
-    skip_report: true
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
@@ -46,50 +45,20 @@ presubmits:
         - //...
         resources:
           requests:
-            cpu: 1
-            memory: 1Gi
+            cpu: 2
+            memory: 4Gi
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
 
-  - name: pull-cert-manager-docs
-    always_run: true
-    context: pull-cert-manager-docs
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    # Include release-0.6 whilst we are fast-forwarding to tip of master
-    - release-0.6
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
-        args:
-        - runner
-        - make
-        - verify_docs
-        env:
-        - name: IMAGE
-          value: eu.gcr.io/jetstack-build-infra/gen-apidocs-img
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-        # docker-in-docker needs privileged mode
-        securityContext:
-          privileged: true
-    trigger: "(?m)^/test( all| docs),?(\\s+|$)"
-    rerun_command: "/test docs"
-
+  # Helm chart verification currently requires Docker.
+  # We maintain a standalone presubmit for running this.
+  # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
-    always_run: true
+    # TODO: Once we make the chart verification run under Bazel, we will be able
+    # to remove this run_if_changed and let Bazel determine whether to run the test.
+    run_if_changed: "^(contrib/|test/chart/|hack/deploy/).*$"
     context: pull-cert-manager-chart
-    max_concurrency: 4
+    max_concurrency: 8
     agent: kubernetes
     decorate: true
     branches:
@@ -118,40 +87,11 @@ presubmits:
     trigger: "(?m)^/test( all| chart),?(\\s+|$)"
     rerun_command: "/test chart"
 
-  - name: pull-cert-manager-codegen
-    always_run: true
-    skip_report: false
-    context: pull-cert-manager-codegen
-    max_concurrency: 2
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    # Include release-0.6 whilst we are fast-forwarding to tip of master
-    - release-0.6
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
-        args:
-        - runner
-        - make
-        - verify_codegen
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-    trigger: "(?m)^/test codegen,?(\\s+|$)"
-    rerun_command: "/test codegen"
-
   - name: pull-cert-manager-deps
     run_if_changed: "^(Gopkg\\.|^vendor/).*$"
     skip_report: false
     context: pull-cert-manager-deps
-    max_concurrency: 2
+    max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
@@ -175,64 +115,6 @@ presubmits:
             memory: 1Gi
     trigger: "(?m)^/test deps,?(\\s+|$)"
     rerun_command: "/test deps"
-
-  - name: pull-cert-manager-unit
-    always_run: true
-    skip_report: false
-    context: pull-cert-manager-unit
-    max_concurrency: 2
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    # Include release-0.6 whilst we are fast-forwarding to tip of master
-    - release-0.6
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
-        args:
-        - runner
-        - make
-        - verify_unit
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-    trigger: "(?m)^/test unit,?(\\s+|$)"
-    rerun_command: "/test unit"
-
-  - name: pull-cert-manager-lint
-    always_run: true
-    skip_report: false
-    context: pull-cert-manager-lint
-    max_concurrency: 2
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    # Include release-0.6 whilst we are fast-forwarding to tip of master
-    - release-0.6
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
-        args:
-        - runner
-        - make
-        - verify_lint
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-    trigger: "(?m)^/test lint,?(\\s+|$)"
-    rerun_command: "/test lint"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
