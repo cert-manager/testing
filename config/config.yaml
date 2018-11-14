@@ -168,6 +168,7 @@ presets:
 
 tide:
   target_url: https://prow.build-infra.jetstack.net/tide.html
+  squash_label: tide/squash
   queries:
   - repos:
     - jetstack/okta-kubectl-auth
