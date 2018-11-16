@@ -54,9 +54,6 @@ presubmits:
   # We maintain a standalone presubmit for running this.
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
-    # TODO: Once we make the chart verification run under Bazel, we will be able
-    # to remove this run_if_changed and let Bazel determine whether to run the test.
-    run_if_changed: "^(contrib/|test/chart/|hack/deploy/).*$"
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -88,7 +85,6 @@ presubmits:
     rerun_command: "/test chart"
 
   - name: pull-cert-manager-deps
-    run_if_changed: "^(Gopkg\\.|^vendor/).*$"
     skip_report: false
     context: pull-cert-manager-deps
     max_concurrency: 4
