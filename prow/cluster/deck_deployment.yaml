@@ -46,6 +46,7 @@ spec:
         - --redirect-http-to=prow.build-infra.jetstack.io
         - --oauth-url=/github-login
         - --job-config-path=/etc/job-config
+        - --spyglass=true
         volumeMounts:
         - name: config
           mountPath: /etc/config

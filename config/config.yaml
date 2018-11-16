@@ -49,6 +49,14 @@ sinker:
   max_prowjob_age: 48h
   max_pod_age: 1h
 
+deck:
+  spyglass:
+    size_limit: 500e6
+    viewers:
+      "started.json|finished.json": ["metadata-viewer"]
+      "build-log.txt": ["build-log-viewer"]
+      "artifacts/junit.*\\.xml": ["junit-viewer"] # Remember to escape your '\' in yaml strings!
+
 # deck:
 #   external_agent_logs:
 #   - agent: jenkins
