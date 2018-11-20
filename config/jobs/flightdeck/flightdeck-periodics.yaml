@@ -12,6 +12,8 @@ periodics:
     containers:
     - image: gcr.io/jetstack-workshops/portal-e2e
       env:
+      - name: PORTAL_URL
+        value: 'https://portal-staging.k8s.school'
       - name: SESSION
         valueFrom:
           secretKeyRef:
