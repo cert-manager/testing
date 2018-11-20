@@ -1,0 +1,21 @@
+periodics:
+
+- name: ci-flightdeck-staging-e2e
+  interval: 1h
+  cluster: trusted
+  decorate: true
+  spec:
+    containers:
+    - image: gcr.io/jetstack-workshops/portal-e2e@sha256:c91535714b0aa99b36222a5f2f6785e338e57f0786c8ddac2fe3b25938c3fc34
+      env:
+      - name: PORTAL_URL
+        value: 'https://portal-staging.k8s.school'
+      - name: SESSION
+        valueFrom:
+          secretKeyRef:
+            name: flightdeck-staging-session-token
+            key: session
+      resources:
+        requests:
+          cpu: 1
+          memory: 2Gi
