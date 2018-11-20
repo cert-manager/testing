@@ -54,6 +54,7 @@ presubmits:
   # We maintain a standalone presubmit for running this.
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
+    always_run: true
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -85,7 +86,7 @@ presubmits:
     rerun_command: "/test chart"
 
   - name: pull-cert-manager-deps
-    skip_report: false
+    always_run: true
     context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
@@ -114,7 +115,6 @@ presubmits:
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
-    skip_report: false
     context: pull-cert-manager-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -168,7 +168,6 @@ presubmits:
     rerun_command: "/test e2e v1.11"
 
   - name: pull-cert-manager-e2e-v1-12
-    skip_report: false
     context: pull-cert-manager-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
