@@ -2,6 +2,7 @@ periodics:
 
 - name: ci-flightdeck-staging-e2e
   interval: 1h
+  cluster: trusted
   spec:
     containers:
     - image: eu.gcr.io/jetstack-workshops/portal-e2e:canary
@@ -16,5 +17,5 @@ periodics:
             key: session
       resources:
         requests:
-          cpu: 2900m
+          cpu: 1
           memory: 2Gi
