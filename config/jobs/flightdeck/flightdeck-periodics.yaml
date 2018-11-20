@@ -11,6 +11,7 @@ periodics:
   spec:
     containers:
     - image: gcr.io/jetstack-workshops/portal-e2e:canary
+      imagePullPolicy: Always
       env:
       - name: PORTAL_URL
         value: 'https://portal-staging.k8s.school'
