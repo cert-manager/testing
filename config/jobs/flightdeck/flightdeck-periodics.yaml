@@ -10,7 +10,7 @@ periodics:
   interval: 1h
   spec:
     containers:
-    - image: gcr.io/jetstack-workshops/portal-e2e
+    - image: gcr.io/jetstack-workshops/portal-e2e:canary
       env:
       - name: PORTAL_URL
         value: 'https://portal-staging.k8s.school'
