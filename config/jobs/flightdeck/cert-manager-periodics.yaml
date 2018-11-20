@@ -1,0 +1,20 @@
+.selenium_small: &selenium_small
+  resources:
+    requests:
+      cpu: 2900m
+      memory: 2Gi
+
+periodics:
+
+- name: ci-flightdeck-staging-e2e
+  interval: 1h
+  spec:
+    containers:
+    - image: gcr.io/jetstack-workshops/portal-e2e
+      env:
+      - name: SESSION
+        valueFrom:
+          secretKeyRef:
+            name: flightdeck-staging-session-token
+            key: session
+      <<: *selenium_small
