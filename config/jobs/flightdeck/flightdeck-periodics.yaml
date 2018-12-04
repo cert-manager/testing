@@ -1,6 +1,6 @@
 periodics:
 
-- name: ci-flightdeck-staging-e2e
+- name: ci-flightdeck-production-e2e
   interval: 1h
   cluster: trusted
   decorate: true
@@ -12,11 +12,11 @@ periodics:
       args: ["python3", "-m", "pytest", "tests/test_e2e.py"]
       env:
       - name: PORTAL_URL
-        value: 'https://portal-staging.k8s.school'
+        value: 'https://flightdeck.jetstack.io'
       - name: SESSION
         valueFrom:
           secretKeyRef:
-            name: flightdeck-staging-session-token
+            name: flightdeck-production-session-token
             key: session
       resources:
         requests:
