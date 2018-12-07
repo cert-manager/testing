@@ -174,26 +174,28 @@ plugins:
   - shrug
 
   jetstack/tarmak:
-  - docs-no-retest
-  - trigger
-  - release-note
+  - approve
   - assign
   - blunderbuss
-  - lifecycle
+  - cherry-pick-unapproved
+  - dco
+  - docs-no-retest
   - golint
-  - skip
   - heart
   - hold
   - label
   - lgtm
-  - approve
+  - lifecycle
+  - milestone
   - milestonestatus
   - owners-label
-  - size
-  - yuks
-  - wip
+  - release-note
   - shrug
-  - dco
+  - size
+  - skip
+  - trigger
+  - wip
+  - yuks
 
   jetstack/okta-kubectl-auth:
   - docs-no-retest
