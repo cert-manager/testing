@@ -117,6 +117,7 @@ container_dockerfile(
         "BAZEL_VERSION": [
             "0.16.1",
             "0.18.0",
+            "0.21.0",
         ],
     },
     dockerfile = "//images/bazelbuild:Dockerfile",
