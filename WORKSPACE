@@ -87,7 +87,7 @@ git_repository(
     remote = "https://github.com/bazelbuild/rules_k8s.git",
 )
 
-new_http_archive(
+http_archive(
     name = "yaml",
     build_file_content = """
 py_library(
