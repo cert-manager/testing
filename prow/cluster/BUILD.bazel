@@ -90,13 +90,6 @@ release(
         },
     ),
     component(
-        "splice",
-        "deployment",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-splice:latest": "@test_infra//prow/cmd/splice:image",
-        },
-    ),
-    component(
         "tide",
         "service",
         "deployment",
