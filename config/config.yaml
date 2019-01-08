@@ -51,7 +51,7 @@ sinker:
 
 deck:
   spyglass:
-    size_limit: 500e6
+    size_limit: 500000000
     viewers:
       "started.json|finished.json": ["metadata-viewer"]
       "build-log.txt": ["build-log-viewer"]
