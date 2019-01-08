@@ -1,11 +1,14 @@
 workspace(name = "io_jetstack_testing")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
 
 git_repository(
     name = "bazel_skylib",
-    commit = "2169ae1c374aab4a09aa90e65efe1a3aad4e279b",
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
+    tag = "0.6.0",
 )
 
 load("@bazel_skylib//:lib.bzl", "versions")
@@ -14,31 +17,21 @@ versions.check(minimum_bazel_version = "0.15.0")
 
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "1868ff68d6079e31b2f09b828b58d62e57ca8e9636edff699247c9108518570b",
-    url = "https://github.com/bazelbuild/rules_go/releases/download/0.11.1/rules_go-0.11.1.tar.gz",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz"],
+    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705",
 )
 
-http_archive(
-    name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.15.1/rules_go-0.15.1.tar.gz"],
-    sha256 = "5f3b0304cdf0c505ec9e5b3c4fc4a87b5ca21b13d8ecc780c97df3d1809b9ce6",
-)
 load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+
 go_rules_dependencies()
 go_register_toolchains(
-    go_version = "1.11",
+    go_version = "1.11.4",
 )
 
 git_repository(
     name = "test_infra",
-    commit = "68e120713d092848333a8efde4c6d552b12527bc",
+    commit = "c37d8b3620bbd74befa78a1788a3822d3925ed83",
     remote = "https://github.com/jetstack/test-infra.git",
-)
-
-git_repository(
-    name = "kind",
-    commit = "35d67a6310dd76e7737c44ebb6164fc757e1f919",
-    remote = "https://github.com/kubernetes-sigs/kind.git",
 )
 
 git_repository(
@@ -52,7 +45,6 @@ git_repository(
     remote = "https://github.com/bazelbuild/rules_docker.git",
     tag = "v0.5.1",
 )
-
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker_pull")
 
@@ -95,7 +87,7 @@ git_repository(
     remote = "https://github.com/bazelbuild/rules_k8s.git",
 )
 
-new_http_archive(
+http_archive(
     name = "yaml",
     build_file_content = """
 py_library(
@@ -107,6 +99,37 @@ py_library(
     sha256 = "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab",
     strip_prefix = "PyYAML-3.12/lib/yaml",
     urls = ["https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"],
+)
+
+
+http_archive(
+    name = "build_bazel_rules_typescript",
+    strip_prefix = "rules_typescript-0.22.0",
+    url = "https://github.com/bazelbuild/rules_typescript/archive/0.22.0.zip",
+)
+
+# Fetch our Bazel dependencies that aren't distributed on npm
+load("@build_bazel_rules_typescript//:package.bzl", "rules_typescript_dependencies")
+
+rules_typescript_dependencies()
+
+# Setup TypeScript toolchain
+load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
+
+git_repository(
+    name = "build_bazel_rules_nodejs",
+    remote = "https://github.com/bazelbuild/rules_nodejs.git",
+    tag = "0.16.4",
+)
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "yarn_install")
+
+node_repositories(package_json = ["@test_infra//:package.json"])
+
+yarn_install(
+    name = "npm",
+    package_json = "@test_infra//:package.json",
+    yarn_lock = "@test_infra//:yarn.lock",
 )
 
 load("//def:container.bzl", "container_dockerfile")
@@ -177,14 +200,14 @@ container_dockerfile(
 # Dependencies used for the cert-manager e2e image
 http_file(
    name = "golang",
-   url = "https://dl.google.com/go/go1.11.linux-amd64.tar.gz",
+   urls = ["https://dl.google.com/go/go1.11.linux-amd64.tar.gz"],
    sha256 = "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499",
 )
 
 http_file(
     name = "dep_linux",
     executable = 1,
-    url = "https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64",
+    urls = ["https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64"],
     sha256 = "287b08291e14f1fae8ba44374b26a2b12eb941af3497ed0ca649253e21ba2f83"
 )
 

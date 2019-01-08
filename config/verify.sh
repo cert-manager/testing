@@ -22,7 +22,7 @@ set -o pipefail
 
 # Disable the 'non-decorated-jobs' checker
 ./config/checkconfig \
-    -strict \
+    -strict=false \
     -warnings=mismatched-tide \
     -config-path config/config.yaml \
     -job-config-path config/jobs \
