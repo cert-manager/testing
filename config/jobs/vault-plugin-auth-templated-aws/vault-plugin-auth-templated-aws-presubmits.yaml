@@ -1,9 +1,9 @@
 presubmits:
-  jetstack/vault-unsealer:
-  - name: vault-unsealer-quick-verify
+  jetstack/vault-plugin-auth-templated-aws:
+  - name: vault-plugin-auth-templated-aws-quick-verify
     always_run: true
     skip_report: false
-    context: vault-unsealer-quick-verify
+    context: vault-plugin-auth-templated-aws-quick-verify
     max_concurrency: 2
     agent: kubernetes
     decorate: true
@@ -12,10 +12,10 @@ presubmits:
     spec:
       containers:
       - image: golang:1.11.4
-        workingDir: /go/src/github.com/jetstack/vault-unsealer
+        workingDir: /go/src/github.com/jetstack/vault-plugin-auth-templated-aws
         command:
         - make
-        - verify
+        - all
         resources:
           requests:
             cpu: 750m

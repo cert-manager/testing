@@ -519,7 +519,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: golang:1.10.4
+      - image: golang:1.11.4
         command:
         - make
         - all
