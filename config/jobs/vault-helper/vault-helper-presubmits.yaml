@@ -1,9 +1,9 @@
 presubmits:
-  jetstack/vault-unsealer:
-  - name: vault-unsealer-quick-verify
+  jetstack/vault-helper:
+  - name: vault-helper-quick-verify
     always_run: true
     skip_report: false
-    context: vault-unsealer-quick-verify
+    context: vault-helper-quick-verify
     max_concurrency: 2
     agent: kubernetes
     decorate: true
@@ -12,10 +12,10 @@ presubmits:
     spec:
       containers:
       - image: golang:1.11.4
-        workingDir: /go/src/github.com/jetstack/vault-unsealer
+        workingDir: /go/src/github.com/jetstack/vault-helper
         command:
         - make
-        - verify
+        - all
         resources:
           requests:
             cpu: 750m
