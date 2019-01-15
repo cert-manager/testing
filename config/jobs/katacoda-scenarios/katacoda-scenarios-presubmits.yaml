@@ -22,8 +22,8 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test verify,?(\\s+|$)"
-    rerun_command: "/test verify"
+    trigger: "(?m)^/test lint,?(\\s+|$)"
+    rerun_command: "/test lint"
   - name: pull-katacoda-scenarios-bazel
     always_run: true
     context: pull-katacoda-scenarios-bazel
