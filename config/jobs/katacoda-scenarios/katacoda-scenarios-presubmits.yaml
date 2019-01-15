@@ -33,6 +33,7 @@ presubmits:
     decoration_config:
       ssh_key_secrets:
       - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/katacoda-scenarios.git"
     branches:
     - master
     labels:
