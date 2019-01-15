@@ -30,6 +30,9 @@ presubmits:
     max_concurrency: 2
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
     branches:
     - master
     labels:
