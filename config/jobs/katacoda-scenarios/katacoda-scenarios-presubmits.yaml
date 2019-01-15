@@ -22,14 +22,17 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test verify,?(\\s+|$)"
-    rerun_command: "/test verify"
+    trigger: "(?m)^/test lint,?(\\s+|$)"
+    rerun_command: "/test lint"
   - name: pull-katacoda-scenarios-bazel
     always_run: true
     context: pull-katacoda-scenarios-bazel
     max_concurrency: 2
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
     branches:
     - master
     labels:
@@ -39,7 +42,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190108-0a1da0a-0.21.0
         args:
         - runner
         - bazel
