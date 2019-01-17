@@ -115,6 +115,7 @@ plugins:
   jetstack/cert-manager:
   - docs-no-retest
   - trigger
+  - cherry-pick-unapproved
   - release-note
   - blunderbuss
   - assign
