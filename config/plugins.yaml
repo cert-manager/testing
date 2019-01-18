@@ -129,6 +129,7 @@ plugins:
   - milestone
   - milestonestatus
   - owners-label
+  - override
   - lifecycle
   - size
   - yuks
