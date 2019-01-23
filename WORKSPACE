@@ -30,7 +30,7 @@ go_register_toolchains(
 
 git_repository(
     name = "test_infra",
-    commit = "c37d8b3620bbd74befa78a1788a3822d3925ed83",
+    commit = "d8438622095051e201f8991099a3ba513e579661",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
@@ -43,7 +43,7 @@ git_repository(
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    tag = "v0.5.1",
+    tag = "v0.6.0",
 )
 
 load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker_pull")
