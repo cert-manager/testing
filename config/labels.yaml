@@ -65,6 +65,11 @@ default:
     name: "dco-signoff: yes"
     target: prs
     addedBy: dco
+  - color: e11d21
+    description: Indicates that at least one commit in this pull request is missing the DCO sign-off message.
+    name: "dco-signoff: no"
+    target: prs
+    addedBy: dco
   - color: d455d0
     description: Indicates an issue needs more information in order to work on it.
     name: triage/needs-information
