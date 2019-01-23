@@ -175,7 +175,7 @@ presets:
     value: /etc/bazel-cache-credentials/credentials.json
 
 tide:
-  target_url: https://prow.build-infra.jetstack.net/tide.html
+  pr_status_base_url: https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
   - repos:
