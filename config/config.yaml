@@ -178,33 +178,18 @@ tide:
   pr_status_base_url: https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
-  - repos:
-    - jetstack/okta-kubectl-auth
-    - jetstack/puppet-module-aws_ebs
-    - jetstack/puppet-module-calico
-    - jetstack/puppet-module-etcd
-    - jetstack/puppet-module-kubernetes
-    - jetstack/puppet-module-kubernetes_addons
-    - jetstack/puppet-module-prometheus
-    - jetstack/puppet-module-tarmak
-    - jetstack/puppet-module-vault_client
-    - jetstack/tarmak
-    - jetstack/test-infra
-    - jetstack/navigator
-    - jetstack/cert-manager
-    - jetstack/vault-unsealer
-    - jetstack/vault-helper
-    - jetstack/vault-plugin-auth-templated-aws
+  - orgs:
+    - jetstack
     labels:
     - lgtm
     - approved
     missingLabels:
     - needs-ok-to-test
     - do-not-merge
-    # Disabled until/if we enable the blockade plugin
-    # - do-not-merge/blocked-paths
+    - do-not-merge/blocked-paths
     - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
     - do-not-merge/release-note-label-needed
     - do-not-merge/work-in-progress
     - needs-rebase
