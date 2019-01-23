@@ -1,6 +1,6 @@
 presets:
 - labels:
-    cert-manager-cloudflare-svc-acct: "true"
+    preset-cloudflare-credentials: "true"
   env:
   - name: CLOUDFLARE_E2E_API_TOKEN
     valueFrom:
@@ -131,7 +131,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      cert-manager-cloudflare-svc-acct: "true"
+      preset-cloudflare-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
@@ -188,7 +188,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      cert-manager-cloudflare-svc-acct: "true"
+      preset-cloudflare-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
