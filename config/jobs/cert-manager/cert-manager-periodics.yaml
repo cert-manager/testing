@@ -9,7 +9,7 @@ periodics:
 - name: ci-cert-manager-e2e-v1-7
   interval: 12h
   labels:
-    cert-manager-cloudflare-svc-acct: "true"
+    preset-cloudflare-credentials: "true"
     preset-service-account: "true"
     libvirt-socket: "true"
     minikube-support: "true"
@@ -38,7 +38,7 @@ periodics:
 - name: ci-cert-manager-e2e-v1-8
   interval: 12h
   labels:
-    cert-manager-cloudflare-svc-acct: "true"
+    preset-cloudflare-credentials: "true"
     preset-service-account: "true"
     libvirt-socket: "true"
     minikube-support: "true"
@@ -67,7 +67,7 @@ periodics:
 - name: ci-cert-manager-e2e-v1-9
   interval: 12h
   labels:
-    cert-manager-cloudflare-svc-acct: "true"
+    preset-cloudflare-credentials: "true"
     preset-service-account: "true"
     libvirt-socket: "true"
     minikube-support: "true"
@@ -98,7 +98,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
-    cert-manager-cloudflare-svc-acct: "true"
+    preset-cloudflare-credentials: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
