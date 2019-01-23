@@ -60,6 +60,11 @@ default:
     name: cherrypick-candidate
     target: prs
     addedBy: humans
+  - color: 61e552
+    description: Indicates that all commits in the pull request have the valid DCO sign-off message.
+    name: "dco-signoff: yes"
+    target: prs
+    addedBy: dco
   - color: d455d0
     description: Indicates an issue needs more information in order to work on it.
     name: triage/needs-information
@@ -179,7 +184,7 @@ default:
     name: lifecycle/rotten
     target: both
     prowPlugin: lifecycle
-    addedBy: anyone or [@fejta-bot](https://github.com/fejta-bot) via [periodic-test-infra-rotten prowjob](https://prow.k8s.io/?job=periodic-test-infra-rotten)
+    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-rotten prowjob](https://prow.build-infra.jetstack.net/?job=periodic-testing-rotten)
   - color: "795548"
     description: Denotes an issue or PR has remained open with no activity and has become stale.
     name: lifecycle/stale
@@ -187,7 +192,7 @@ default:
       - name: stale
     target: both
     prowPlugin: lifecycle
-    addedBy: anyone or [@fejta-bot](https://github.com/fejta-bot) via [periodic-test-infra-stale prowjob](https://prow.k8s.io/?job=periodic-test-infra-stale)
+    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-stale prowjob](https://prow.build-infra.jetstack.net/?job=periodic-testing-stale)
   - color: b60205
     description: Indicates a PR that requires an org member to verify it is safe to test. # This is to prevent spam/abuse of our CI system, and can be circumvented by becoming an org member. Org members can remove this label with the `/ok-to-test` command.
     name: needs-ok-to-test
@@ -291,16 +296,16 @@ default:
       - name: approved-for-milestone
     target: both
     prowPlugin: milestonestatus
-    addedBy: "[@kubernetes/kubernetes-milestone-maintainers](https://github.com/orgs/kubernetes/teams/kubernetes-milestone-maintainers/members)"
+    addedBy: "[@cert-manager/milestone-maintainers](https://github.com/orgs/cert-manager/teams/milestone-maintainers/members)"
   - color: fef2c0
     description: Used during release burndown. Denotes that an issue is actively being worked.
     name: status/in-progress
     target: both
     prowPlugin: milestonestatus
-    addedBy: "[@kubernetes/kubernetes-milestone-maintainers](https://github.com/orgs/kubernetes/teams/kubernetes-milestone-maintainers/members)"
+    addedBy: "[@cert-manager/milestone-maintainers](https://github.com/orgs/cert-manager/teams/milestone-maintainers/members)"
   - color: fef2c0
     description: Used during release burndown. Denotes that a fix for an issue is actively being reviewed.
     name: status/in-review
     target: both
     prowPlugin: milestonestatus
-    addedBy: "[@kubernetes/kubernetes-milestone-maintainers](https://github.com/orgs/kubernetes/teams/kubernetes-milestone-maintainers/members)"
+    addedBy: "[@cert-manager/milestone-maintainers](https://github.com/orgs/cert-manager/teams/milestone-maintainers/members)"
