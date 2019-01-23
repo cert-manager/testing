@@ -34,12 +34,20 @@ blunderbuss:
 external_plugins:
   jetstack/kube-lego:
   - name: needs-rebase
+    events:
+    - pull_request
   jetstack/navigator:
   - name: needs-rebase
+    events:
+    - pull_request
   jetstack/cert-manager:
   - name: needs-rebase
+    events:
+    - pull_request
   jetstack/tarmak:
   - name: needs-rebase
+    events:
+    - pull_request
 
 # heart:
 #   adorees:
@@ -76,345 +84,41 @@ config_updater:
 
 plugins:
 
-  jetstack/katacoda-scenarios:
-  - lifecycle
-  - wip
-  - hold
-  - label
-  - lgtm
-  - shrug
-  - owners-label
-  - size
-  - trigger
-
-  jetstack/testing:
-  - trigger
-  - size
-  - hold
-  - label
-  - lgtm
+  jetstack:
   - approve
-  - owners-label
-  - wip
-  - shrug
-  - config-updater
-
-  jetstack/test-infra:
-  - trigger
-  - shrug
-  - lgtm
-  - approve
-  - size
-  - wip
-  - lifecycle
   - assign
+  - blockade
+  - blunderbuss
+  - cherry-pick-unapproved
+  - dco
+  - golint
+  - heart
+  - help
   - hold
   - label
-  - release-note
+  - lgtm
+  - lifecycle
+  - milestone
+  - milestonestatus
+  - override
+  - owners-label
+  - require-matching-label
+  - shrug
+  - size
+  - skip
+  - trigger
+  - verify-owners
+  - wip
+  - yuks
 
   jetstack/cert-manager:
-  - docs-no-retest
-  - trigger
-  - cherry-pick-unapproved
   - release-note
-  - blunderbuss
-  - assign
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - skip
-  - milestone
-  - milestonestatus
-  - owners-label
-  - override
-  - lifecycle
-  - size
-  - yuks
-  - wip
-  - shrug
-  - dco
-
-  jetstack/kube-lego:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-  - dco
-
-  jetstack/navigator:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - blunderbuss
-  - assign
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - approve
-  - lgtm
-  - milestonestatus
-  - size
-  - yuks
-  - wip
-  - shrug
 
   jetstack/tarmak:
-  - approve
-  - assign
-  - blunderbuss
-  - cherry-pick-unapproved
-  - dco
-  - docs-no-retest
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - lifecycle
-  - milestone
-  - milestonestatus
-  - owners-label
   - release-note
-  - shrug
-  - size
-  - skip
-  - trigger
-  - wip
-  - yuks
 
-  jetstack/okta-kubectl-auth:
-  - docs-no-retest
-  - trigger
+  jetstack/navigator:
   - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
 
-  jetstack/puppet-module-aws_ebs:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-
-  jetstack/puppet-module-calico:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-
-  jetstack/puppet-module-etcd:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-
-  jetstack/puppet-module-kubernetes:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/puppet-module-kubernetes_addons:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/puppet-module-prometheus:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/puppet-module-tarmak:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/puppet-module-vault_client:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/vault-helper:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-
-  jetstack/vault-unsealer:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
-  - dco
-
-  jetstack/vault-plugin-auth-templated-aws:
-  - docs-no-retest
-  - trigger
-  - release-note
-  - assign
-  - blunderbuss
-  - lifecycle
-  - golint
-  - heart
-  - hold
-  - label
-  - lgtm
-  - approve
-  - size
-  - yuks
-  - wip
-  - shrug
+  jetstack/testing:
+  - config-updater
