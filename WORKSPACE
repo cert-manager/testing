@@ -50,6 +50,15 @@ load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker
 
 docker_repositories()
 
+# Used by label_sync
+docker_pull(
+    name = "distroless-base",
+    # latest circa 2017/11/29
+    digest = "sha256:bef8d030c7f36dfb73a8c76137616faeea73ac5a8495d535f27c911d0db77af3",
+    registry = "gcr.io",
+    repository = "distroless/base",
+)
+
 docker_pull(
     name = "alpine-base",
     # 0.1 as of 2017/11/29
