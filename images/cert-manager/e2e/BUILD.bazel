@@ -20,20 +20,6 @@ container_image(
     name = "image",
     # we can reuse the bazelbuild base image
     base = "//images/bazelbuild:image-0.18.0",
-    files = [
-        ":kind",
-    ],
-    symlinks = {
-        "/usr/local/bin/kind": "/kind",
-    },
-)
-
-go_binary(
-    name = "kind",
-    embed = ["@kind//:go_default_library"],
-    goarch = "amd64",
-    goos = "linux",
-    pure = "on",
 )
 
 container_bundle(
