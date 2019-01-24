@@ -21,7 +21,7 @@ repos:
       target: both
       addedBy: prow
       previously:
-        - area/provider-acme
+        - name: area/provider-acme
     - color: 0052cc
       description: Indicates a PR modifies ACME DNS01 provider code
       name: area/acme/dns01
