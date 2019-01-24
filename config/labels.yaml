@@ -17,22 +17,50 @@ repos:
       addedBy: prow
     - color: 0052cc
       description: Indicates a PR directly modifies the ACME Issuer code
-      name: area/provider-acme
+      name: area/acme
       target: both
       addedBy: prow
+      previously:
+        - area/provider-acme
     - color: 0052cc
-      description: Indicates a PR modifies or adds an ACME DNS01 provider
-      name: area/acme-dns01
+      description: Indicates a PR modifies ACME DNS01 provider code
+      name: area/acme/dns01
+      target: both
+      addedBy: prow
+      previously:
+        - name: area/acme-dns01
+    - color: 0052cc
+      description: Indicates a PR modifies ACME HTTP01 provider code
+      name: area/acme/http01
       target: both
       addedBy: prow
     - color: 0052cc
       description: Indicates a PR directly modifies the CA Issuer code
-      name: area/provider-ca
+      name: area/ca
+      target: both
+      addedBy: prow
+      previously:
+        - name: area/provider-ca
+    - color: 0052cc
+      description: Indicates a PR directly modifies the Vault Issuer code
+      name: area/vault
+      target: both
+      addedBy: prow
+      previously:
+        - name: area/provider-vault
+    - color: 0052cc
+      description: Indicates a PR directly modifies the Vault Issuer code
+      name: area/vault
       target: both
       addedBy: prow
     - color: 0052cc
-      description: Indicates a PR directly modifies the Vault Issuer code
-      name: area/provider-vault
+      description: Indicates a PR modifies deployment configuration
+      name: area/deploy
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR or issue relates to monitoring
+      name: area/monitoring
       target: both
       addedBy: prow
 
