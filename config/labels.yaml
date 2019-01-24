@@ -51,15 +51,12 @@ default:
     prowPlugin: lgtm
     addedBy: reviewers or members
   - color: fef2c0
-    description: Indicates a cherrypick PR into a release branch has been approved by the release branch manager. # Consumed by the kubernetes/kubernetes cherrypick-queue.
-    name: cherrypick-approved
+    description: Indicates a cherry-pick PR into a release branch has been approved by the release branch manager
+    name: cherry-pick-approved
     target: prs
     addedBy: humans
-  - color: fef2c0
-    description: Denotes a PR to master as a candidate for cherry picking into a release branch.
-    name: cherrypick-candidate
-    target: prs
-    addedBy: humans
+    previously:
+      - name: cherrypick-approved
   - color: 61e552
     description: Indicates that all commits in the pull request have the valid DCO sign-off message.
     name: "dco-signoff: yes"
@@ -119,6 +116,12 @@ default:
     target: prs
     prowPlugin: wip
     addedBy: prow
+  - color: e11d21
+    description: Indicates that a PR is not yet approved to merge into a release branch.
+    name: do-not-merge/cherry-pick-not-approved
+    target: prs
+    addedBy: prow
+    prowPlugin: cherrypickunapproved
   - color: 7057ff
     description: Denotes an issue ready for a new contributor, according to the "help wanted" guidelines.
     name: 'good first issue'
