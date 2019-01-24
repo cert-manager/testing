@@ -18,6 +18,31 @@ presets:
         name: cloudflare-api-key
         key: domain
 
+presets:
+- labels:
+    preset-venafi-tpp-credentials: "true"
+  env:
+  - name: VENAFI_TPP_URL
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: url
+  - name: VENAFI_TPP_ZONE
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: zone
+  - name: VENAFI_TPP_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: username
+  - name: VENAFI_TPP_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: password
+
 presubmits:
   jetstack/cert-manager:
 
@@ -124,6 +149,7 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
@@ -179,6 +205,7 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
