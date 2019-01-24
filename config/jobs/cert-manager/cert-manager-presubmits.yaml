@@ -18,7 +18,6 @@ presets:
         name: cloudflare-api-key
         key: domain
 
-presets:
 - labels:
     preset-venafi-tpp-credentials: "true"
   env:
