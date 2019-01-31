@@ -249,7 +249,7 @@ presubmits:
     # Match everything except PRs that only touch docs/
     always_run: false
     optional: true
-    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
