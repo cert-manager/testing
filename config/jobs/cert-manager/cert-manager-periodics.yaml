@@ -57,9 +57,8 @@ periodics:
       # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
       - name: KIND_IMAGE
         value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.4-1
-      # The Bazel target used to build the kind cluster
-      - name: KIND_TARGET
-        value: //test/e2e:e2e-1.11
+      - name: K8S_VERSION
+        value: "1.11"
       securityContext:
         privileged: true
         capabilities:
@@ -109,9 +108,8 @@ periodics:
       # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
       - name: KIND_IMAGE
         value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.2-1
-      # The Bazel target used to build the kind cluster
-      - name: KIND_TARGET
-        value: //test/e2e:e2e-1.12
+      - name: K8S_VERSION
+        value: "1.12"
       securityContext:
         privileged: true
         capabilities:
@@ -161,9 +159,8 @@ periodics:
       # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
       - name: KIND_IMAGE
         value: kindest/node:v1.13.2
-      # The Bazel target used to build the kind cluster
-      - name: KIND_TARGET
-        value: //test/e2e:e2e-1.13
+      - name: K8S_VERSION
+        value: "1.13"
       securityContext:
         privileged: true
         capabilities:
