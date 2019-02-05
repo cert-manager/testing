@@ -2,6 +2,7 @@ presubmits:
   munnerz/venafi-cm-demo:
   - name: pull-demo-e2e
     context: pull-demo-e2e
+    always_run: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -13,7 +14,7 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
         args:
         - runner
-        - start-demo.sh
+        - ./start-demo.sh
         resources:
           requests:
             cpu: 2
