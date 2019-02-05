@@ -1,0 +1,41 @@
+presubmits:
+  munnerz/venafi-cm-demo:
+  - name: pull-demo-e2e
+    context: pull-demo-e2e
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+        args:
+        - runner
+        - start-demo.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e)( \\[.+\\])?$"
+    rerun_command: "/test e2e"

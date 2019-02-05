@@ -122,3 +122,6 @@ plugins:
 
   jetstack/testing:
   - config-updater
+
+  munnerz/venafi-cm-demo:
+  - trigger
