@@ -1,0 +1,62 @@
+presets:
+- labels:
+    preset-cert-manager-publish-bot-credentials: "true"
+  env:
+  - name: DOCKER_CONFIG
+    value: /etc/pusher-docker-config
+  volumes:
+  - name: pusher-config
+    secret:
+      secretName: cert-manager-publish-bot
+  volumeMounts:
+  - name: pusher-config
+    mountPath: /etc/pusher-docker-config
+    readOnly: true
+
+postsubmits:
+  jetstack/cert-manager:
+  - name: post-cert-manager-release-canary
+    cluster: trusted
+    branches:
+    - master
+    always_run: true
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-service-account: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cert-manager-publish-bot-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+        args:
+        - runner
+        - hack/release.sh
+        env:
+        - name: CONFIRM
+          value: "yes"
+        - name: VERSION
+          value: canary
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 3Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
