@@ -37,6 +37,8 @@ postsubmits:
           value: "yes"
         - name: VERSION
           value: canary
+        - name: ALLOW_OVERWRITE
+          value: "yes"
         resources:
           requests:
             cpu: 1500m
