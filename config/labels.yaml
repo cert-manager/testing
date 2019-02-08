@@ -63,6 +63,16 @@ repos:
       name: area/monitoring
       target: both
       addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR or issue relates to the webhook component
+      name: area/webhook
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR or issue relates to the ingress-shim 'auto-certificate' component
+      name: area/ingress-shim
+      target: both
+      addedBy: prow
 
 default:
   labels:
