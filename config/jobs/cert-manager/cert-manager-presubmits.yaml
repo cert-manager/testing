@@ -59,7 +59,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - bazel
@@ -90,7 +90,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - make
@@ -119,7 +119,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - make
@@ -152,7 +152,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -208,7 +208,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -263,7 +263,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20181107-8aac55d-0.18.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
