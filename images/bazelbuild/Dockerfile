@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Includes bazel only
+# Includes bazel, docker-in-docker and gcloud
 FROM debian:jessie
 LABEL maintainer="james@jetstack.io"
 
@@ -66,22 +66,32 @@ RUN mkdir /docker-graph
 # END: DOCKER IN DOCKER SETUP
 #
 
+# Add new repos to install google-cloud-sdk
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" | \
+    tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
 # make is installed simply because a lot of things use it - it is not required
 # by Bazel
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    google-cloud-sdk \
     pkg-config \
     zip \
     g++ \
     zlib1g-dev \
     unzip \
     python \
+    python-pip \
     wget \
     ca-certificates \
     git \
     mercurial \
     make \
     rsync \
-    patch
+    patch && \
+    && apt-get clean \
+    && python -m pip install --upgrade pip setuptools wheel
 
 ARG BAZEL_VERSION
 RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
