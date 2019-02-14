@@ -13,8 +13,72 @@ presets:
     mountPath: /etc/pusher-docker-config
     readOnly: true
 
+- labels:
+    preset-chart-museum-deploy-credentials: "true"
+  env:
+  - name: CHART_SERVICE_ACCOUNT
+    value: /etc/chart-museum-service-account/service-account.json
+  volumes:
+  - name: chart-deploy-config
+    secret:
+      secretName: chart-museum-deploy-key
+  volumeMounts:
+  - name: chart-deploy-config
+    mountPath: /etc/chart-museum-service-account
+    readOnly: true
+
 postsubmits:
   jetstack/cert-manager:
+
+  # Run postsubmit on vX.Y.Z tags
+  - name: post-cert-manager-release
+    cluster: trusted
+    branches:
+    # Abuse Prow to make it run only on tag pushes
+    - ^v?\d+\.\d+\.\d+(-(alpha|beta)\.\d+)?$
+    always_run: true
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cert-manager-publish-bot-credentials: "true"
+      preset-chart-museum-deploy-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - hack/release.sh
+        env:
+        # Confirm we do want to push the image
+        - name: CONFIRM
+          value: "yes"
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 3Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  # Run postsubmit against the master branch
   - name: post-cert-manager-release-canary
     cluster: trusted
     branches:
@@ -23,21 +87,28 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-service-account: "true"
       preset-bazel-scratch-dir: "true"
       preset-cert-manager-publish-bot-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
         args:
+        # Wrap the release script with the runner so we can use docker-in-docker
         - runner
         - hack/release.sh
         env:
+        # Confirm we do want to push the image
         - name: CONFIRM
           value: "yes"
+        # Manually set the image tag to 'canary'
         - name: VERSION
           value: canary
+        # Allow overwrite as we'll be pushing the :canary tag
         - name: ALLOW_OVERWRITE
+          value: "yes"
+        # We only push new versions of the Helm chart on pushes to tags.
+        # Setting this to 'yes' will make the release script skip chart publishing.
+        - name: SKIP_CHART
           value: "yes"
         resources:
           requests:
