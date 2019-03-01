@@ -49,8 +49,8 @@ repos:
       previously:
         - name: area/provider-vault
     - color: 0052cc
-      description: Indicates a PR directly modifies the Vault Issuer code
-      name: area/vault
+      description: Indicates a PR directly modifies the Venafi Issuer code
+      name: area/venafi
       target: both
       addedBy: prow
     - color: 0052cc
