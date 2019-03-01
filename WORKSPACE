@@ -17,20 +17,20 @@ versions.check(minimum_bazel_version = "0.15.0")
 
 http_archive(
     name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.16.5/rules_go-0.16.5.tar.gz"],
-    sha256 = "7be7dc01f1e0afdba6c8eb2b43d2fa01c743be1b9273ab1eaf6c233df078d705",
+    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.17.0/rules_go-0.17.0.tar.gz"],
+    sha256 = "492c3ac68ed9dcf527a07e6a1b2dcbf199c6bf8b35517951467ac32e421c06c1",
 )
 
-load("@io_bazel_rules_go//go:def.bzl", "go_rules_dependencies", "go_register_toolchains")
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
 
 go_rules_dependencies()
 go_register_toolchains(
-    go_version = "1.11.4",
+    go_version = "1.11.5",
 )
 
 git_repository(
     name = "test_infra",
-    commit = "d8438622095051e201f8991099a3ba513e579661",
+    commit = "dafe7855bfde7cb978a9b05710968b59449e74e1",
     remote = "https://github.com/jetstack/test-infra.git",
 )
 
@@ -43,15 +43,13 @@ git_repository(
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    tag = "v0.6.0",
+    tag = "v0.7.0",
 )
 
-load("@io_bazel_rules_docker//docker:docker.bzl", "docker_repositories", "docker_pull")
-
-docker_repositories()
+load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
 
 # Used by label_sync
-docker_pull(
+container_pull(
     name = "distroless-base",
     # latest circa 2017/11/29
     digest = "sha256:bef8d030c7f36dfb73a8c76137616faeea73ac5a8495d535f27c911d0db77af3",
@@ -59,7 +57,7 @@ docker_pull(
     repository = "distroless/base",
 )
 
-docker_pull(
+container_pull(
     name = "alpine-base",
     # 0.1 as of 2017/11/29
     digest = "sha256:317d39ece9dd09992fa81236964be3f3919b940f42e3143379dd66e4af930f3a",
@@ -67,7 +65,7 @@ docker_pull(
     repository = "k8s-prow/alpine",
 )
 
-docker_pull(
+container_pull(
     name = "git-base",
     # 0.2 as of 2018/05/10
     digest = "sha256:3eaeff9a2c35a50c3a0af7ef7cf26ea73e6fd966f54ef3dfe79d4ffb45805112",
@@ -75,7 +73,7 @@ docker_pull(
     repository = "k8s-prow/git",
 )
 
-docker_pull(
+container_pull(
     name = "python",
     digest = "sha256:8bfeec8f8ba3aaeea918a0198f4b1c7c9b2b39e26f399a7173229dfcef76fc1f",
     registry = "index.docker.io",
@@ -128,7 +126,7 @@ load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
 git_repository(
     name = "build_bazel_rules_nodejs",
     remote = "https://github.com/bazelbuild/rules_nodejs.git",
-    tag = "0.16.4",
+    tag = "0.16.6",
 )
 
 load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "yarn_install")
