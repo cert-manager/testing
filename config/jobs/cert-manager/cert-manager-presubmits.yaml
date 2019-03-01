@@ -126,8 +126,8 @@ presubmits:
         - verify_deps
         resources:
           requests:
-            cpu: 1
-            memory: 1Gi
+            cpu: 2
+            memory: 4Gi
     trigger: "(?m)^/test deps,?(\\s+|$)"
     rerun_command: "/test deps"
 
