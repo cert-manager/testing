@@ -8,7 +8,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.6
+    - release-0.7
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -38,7 +38,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.6
+    - release-0.7
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -68,7 +68,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.6
+    - release-0.7
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -82,8 +82,8 @@ presubmits:
         - verify_deps
         resources:
           requests:
-            cpu: 1
-            memory: 1Gi
+            cpu: 2
+            memory: 4Gi
     trigger: "(?m)^/test deps,?(\\s+|$)"
     rerun_command: "/test deps"
 
@@ -98,13 +98,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.6
+    - release-0.7
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
@@ -119,9 +120,8 @@ presubmits:
         # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
         - name: KIND_IMAGE
           value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.4-1
-        # The Bazel target used to build the kind cluster
-        - name: KIND_TARGET
-          value: //test/e2e:e2e-1.11
+        - name: K8S_VERSION
+          value: "1.11"
         securityContext:
           privileged: true
           capabilities:
@@ -148,18 +148,20 @@ presubmits:
     context: pull-cert-manager-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
-    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.6
+    - release-0.7
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
@@ -174,9 +176,8 @@ presubmits:
         # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
         - name: KIND_IMAGE
           value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.2-1
-        # The Bazel target used to build the kind cluster
-        - name: KIND_TARGET
-          value: //test/e2e:e2e-1.12
+        - name: K8S_VERSION
+          value: "1.12"
         securityContext:
           privileged: true
           capabilities:
@@ -198,3 +199,58 @@ presubmits:
           type: Directory
     trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
     rerun_command: "/test e2e v1.12"
+
+  - name: pull-cert-manager-e2e-v1-13
+    context: pull-cert-manager-e2e-v1-13
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.7
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        env:
+        # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
+        - name: KIND_IMAGE
+          value: kindest/node:v1.13.2
+        - name: K8S_VERSION
+          value: "1.13"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.13)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.13"
