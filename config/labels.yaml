@@ -74,6 +74,24 @@ repos:
       target: both
       addedBy: prow
 
+  jetstack/kube-oidc-proxy:
+    labels:
+    - color: FF123A
+      description: Indicates a PR directly modifies the proxy code
+      name: area/proxy
+      target: both
+      addedBy: human
+    - color: DF62D7
+      description: Indicates a PR directly modifies end to end tests
+      name: area/e2e
+      target: both
+      addedBy: human
+    - color: 05CB68
+      description: Indicates a PR directly modifies the demos
+      name: area/demo
+      target: both
+      addedBy: human
+
 default:
   labels:
   - color: 0ffa16
