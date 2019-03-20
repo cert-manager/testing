@@ -164,6 +164,11 @@ container_dockerfile(
 )
 
 container_dockerfile(
+    name = "golang-dind",
+    dockerfile = "//images/golang-dind:Dockerfile",
+)
+
+container_dockerfile(
     name = "gcloud-in-go",
     build_args = {
         "GCLOUD_VERSION": "163.0.0",

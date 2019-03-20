@@ -1,0 +1,165 @@
+presubmits:
+  jetstack/kube-oidc-proxy:
+
+  - name: pull-kube-oidc-proxy-verify
+    always_run: true
+    context: pull-kube-oidc-proxy-verify
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    spec:
+      containers:
+      - image: golang:1.12.1
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
+        args:
+        - make
+        - all
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test( all| verify|)( \\[.+\\])?$"
+    rerun_command: "/test verify"
+
+  # kind based kube-oidc-proxy e2e job
+  - name: pull-kube-oidc-proxy-e2e-v1-11
+    context: pull-kube-oidc-proxy-e2e-v1-11
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
+        args:
+        - make
+        - e2e-1.11
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.11"
+
+  # kind based kube-oidc-proxy e2e job
+  - name: pull-kube-oidc-proxy-e2e-v1-12
+    context: pull-kube-oidc-proxy-e2e-v1-12
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
+        args:
+        - make
+        - e2e-1.12
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.12"
+
+  # kind based kube-oidc-proxy e2e job
+  - name: pull-kube-oidc-proxy-e2e-v1-13
+    context: pull-kube-oidc-proxy-e2e-v1-13
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
+        args:
+        - make
+        - e2e-1.13
+        resources:
+          requests:
+            cpu: 2
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+    trigger: "(?m)^/test( e2e( v?1.13)?|)( \\[.+\\])?$"
+    rerun_command: "/test e2e v1.13"
