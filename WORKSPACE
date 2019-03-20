@@ -145,9 +145,9 @@ container_dockerfile(
     name = "bazelbuild",
     build_matrix = {
         "BAZEL_VERSION": [
-            "0.16.1",
             "0.18.0",
             "0.21.0",
+            "0.22.0",
         ],
     },
     dockerfile = "//images/bazelbuild:Dockerfile",
