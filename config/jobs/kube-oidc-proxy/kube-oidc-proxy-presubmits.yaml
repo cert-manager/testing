@@ -39,7 +39,7 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/dind-golang
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - make
@@ -86,7 +86,7 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/dind-golang
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - make
@@ -133,7 +133,7 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/dind-golang
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - make
