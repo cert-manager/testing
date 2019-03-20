@@ -12,12 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Includes bazel, docker-in-docker and gcloud
-
-# This is a modified version of ./images/bazelbuild/Dockerfile
-
-FROM debian:jessie
-LABEL maintainer="joshua.vanleeuwen@jetstack.io"
+# Includes golang, docker-in-docker and gcloud
+FROM golang:1.12.1
+LABEL maintainer="joshua.vanleeuwen@jetstack.io" 
 
 #
 # BEGIN: DOCKER IN DOCKER SETUP
@@ -69,22 +66,29 @@ RUN mkdir /docker-graph
 # END: DOCKER IN DOCKER SETUP
 #
 
+# Add new repos to install google-cloud-sdk
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" | \
+    tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+
+RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+# make is installed simply because a lot of things use it - it is not required
+# by Bazel
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    google-cloud-sdk \
     pkg-config \
+    zip \
     g++ \
+    zlib1g-dev \
     unzip \
+    python \
+    python-pip \
     wget \
     ca-certificates \
     git \
+    mercurial \
     make \
-    && apt-get clean
-
-RUN curl -o go1.12.1.linux-amd64.tar.gz https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go1.12.1.linux-amd64.tar.gz && \
-    rm go1.12.1.linux-amd64.tar.gz
-
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-WORKDIR $GOPATH
+    rsync \
+    patch \
+    && apt-get clean \
+    && python -m pip install --upgrade pip setuptools wheel

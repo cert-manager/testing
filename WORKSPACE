@@ -164,8 +164,8 @@ container_dockerfile(
 )
 
 container_dockerfile(
-    name = "dind-golang",
-    dockerfile = "//images/dind-golang:Dockerfile",
+    name = "golang-dind",
+    dockerfile = "//images/golang-dind:Dockerfile",
 )
 
 container_dockerfile(

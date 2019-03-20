@@ -16,14 +16,14 @@ filegroup(
 )
 
 container_bundle(
-    name = "dind-golang",
+    name = "golang-dind",
     images = {
-        "{STABLE_IMAGE_DOCKER_REPO}/dind-golang:{STABLE_IMAGE_DOCKER_TAG}": "@dind-golang//image",
+        "{STABLE_IMAGE_DOCKER_REPO}/golang-dind:{STABLE_IMAGE_DOCKER_TAG}": "@golang-dind//image",
     },
     stamp = True,
 )
 
 docker_push(
     name = "push",
-    bundle = ":dind-golang",
+    bundle = ":golang-dind",
 )
