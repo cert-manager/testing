@@ -30,7 +30,7 @@ RUN apt-get -y update \
    util-linux \
    uuid-runtime \
 && curl -fsSL https://deb.nodesource.com/setup_8.x | bash - \
-&& apt-get -y install --no-install-recommends nodejs \
+&& apt-get -y install --no-install-recommends nodejs npm \
 && npm i markdown-spellcheck -g \
 && curl -fsSL https://www.katacoda.com/cli/download/linux -o /usr/local/bin/katacoda \
 && chmod +x /usr/local/bin/katacoda \
