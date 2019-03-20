@@ -74,7 +74,7 @@ container_bundle(
     images = {
         "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.18.0": ":image-0.18.0",
         "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.21.0": ":image-0.21.0",
-        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.16.1": ":image-0.22.0",
+        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.22.0": ":image-0.22.0",
     },
     stamp = True,
 )
