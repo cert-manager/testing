@@ -7,6 +7,10 @@ presubmits:
     max_concurrency: 8
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     spec:
@@ -28,15 +32,22 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
@@ -79,11 +90,14 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
@@ -121,16 +135,19 @@ presubmits:
   - name: pull-kube-oidc-proxy-e2e-v1-13
     context: pull-kube-oidc-proxy-e2e-v1-13
     # Match everything except PRs that only touch docs/
-    always_run: false
+    always_run: true
     optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
