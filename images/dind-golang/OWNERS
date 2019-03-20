@@ -1,0 +1,5 @@
+approvers:
+- joshvanl
+- simonswine
+labels:
+- area/kube-oidc-proxy
