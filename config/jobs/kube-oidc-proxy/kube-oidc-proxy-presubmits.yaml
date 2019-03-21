@@ -53,6 +53,7 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
+        - hack/docker-start-wrapper.sh
         - make
         - e2e-1.11
         resources:
@@ -103,6 +104,7 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
+        - hack/docker-start-wrapper.sh
         - make
         - e2e-1.12
         resources:
@@ -153,6 +155,7 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
+        - hack/docker-start-wrapper.sh
         - make
         - e2e-1.13
         resources:
