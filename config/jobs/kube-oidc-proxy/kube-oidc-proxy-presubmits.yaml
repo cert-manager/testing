@@ -137,7 +137,7 @@ presubmits:
   - name: pull-kube-oidc-proxy-e2e-v1-13
     context: pull-kube-oidc-proxy-e2e-v1-13
     # Match everything except PRs that only touch docs/
-    always_run: true
+    always_run: false
     optional: true
     max_concurrency: 4
     agent: kubernetes
