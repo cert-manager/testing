@@ -92,6 +92,34 @@ repos:
       target: both
       addedBy: human
 
+  jetstack/tarmak:
+    labels:
+    - name: area/wing
+      target: both
+      color: 0052cc
+      description: Indicates a PR is affecting Wing
+      addedBy: human
+    - name: area/puppet
+      target: both
+      color: 0052cc
+      description: Indicates a PR is affecting Puppet manifests
+      addedBy: human
+    - name: area/cli
+      target: both
+      color: 0052cc
+      description: Indicates a PR is affecting CLI interface
+      addedBy: human
+    - name: area/terraform
+      target: both
+      color: 0052cc
+      description: Indicates a PR is affecting Terraform configuration
+      addedBy: human
+    - name: area/provider-aws
+      target: both
+      color: 0052cc
+      description: Indicates a PR is affecting Cloud Provider AWS
+      addedBy: human
+
 default:
   labels:
   - color: 0ffa16
