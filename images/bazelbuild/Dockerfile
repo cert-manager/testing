@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Includes bazel, docker-in-docker and gcloud
-FROM debian:jessie
+FROM debian:stretch
 LABEL maintainer="james@jetstack.io"
 
 #
