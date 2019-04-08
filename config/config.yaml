@@ -175,8 +175,10 @@ tide:
   pr_status_base_url: https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
-  - orgs:
-    - jetstack
+  - repos:
+    - jetstack/cert-manager
+    - jetstack/navigator
+    - jetstack/tarmak
     labels:
     - lgtm
     - approved
@@ -188,6 +190,24 @@ tide:
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
     - do-not-merge/release-note-label-needed
+    - do-not-merge/work-in-progress
+    - needs-rebase
+  - orgs:
+    - jetstack
+    excludedRepos:
+    - jetstack/cert-manager
+    - jetstack/navigator
+    - jetstack/tarmak
+    labels:
+    - lgtm
+    - approved
+    missingLabels:
+    - needs-ok-to-test
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
 
