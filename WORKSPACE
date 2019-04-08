@@ -8,12 +8,13 @@ load("@bazel_tools//tools/build_defs/repo:git.bzl", "new_git_repository")
 git_repository(
     name = "bazel_skylib",
     remote = "https://github.com/bazelbuild/bazel-skylib.git",
-    tag = "0.6.0",
+    commit = "f83cb8dd6f5658bc574ccd873e25197055265d1c",
+    shallow_since = "1543273402 -0500",
 )
 
-load("@bazel_skylib//:lib.bzl", "versions")
+load("@bazel_skylib//lib:versions.bzl", "versions")
 
-versions.check(minimum_bazel_version = "0.15.0")
+versions.check(minimum_bazel_version = "0.23.0")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 http_archive(
@@ -21,6 +22,7 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.18.2/rules_go-0.18.2.tar.gz"],
     sha256 = "31f959ecf3687f6e0bb9d01e1e7a7153367ecd82816c9c0ae149cd0e5a92bf8c",
 )
+
 http_archive(
     name = "bazel_gazelle",
     urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.17.0/bazel-gazelle-0.17.0.tar.gz"],
@@ -36,12 +38,14 @@ git_repository(
     name = "io_kubernetes_build",
     commit = "84d52408a061e87d45aebf5a0867246bdf66d180",
     remote = "https://github.com/kubernetes/repo-infra.git",
+    shallow_since = "1535407978 -0700",
 )
 
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    tag = "v0.7.0",
+    commit = "3732c9d05315bef6a3dbd195c545d6fea3b86880",
+    shallow_since = "1547471117 +0100",
 )
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
@@ -74,6 +78,7 @@ git_repository(
     name = "io_bazel_rules_k8s",
     commit = "c861e4ea5a0b34e17fb682f60fa78a9c85050519",
     remote = "https://github.com/bazelbuild/rules_k8s.git",
+    shallow_since = "1535029445 -0400",
 )
 
 http_archive(
