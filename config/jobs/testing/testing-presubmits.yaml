@@ -2,9 +2,9 @@ presubmits:
 
   jetstack/testing:
 
-  - name: pull-testing-verify-config
+  - name: pull-testing-config
     always_run: true
-    context: pull-testing-verify-config
+    context: pull-testing-config
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -26,9 +26,9 @@ presubmits:
     trigger: "(?m)^/test config,?(\\s+|$)"
     rerun_command: "/test config"
 
-  - name: pull-testing-verify-bazel
+  - name: pull-testing-build
     always_run: true
-    context: pull-testing-verify-bazel
+    context: pull-testing-build
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -43,6 +43,33 @@ presubmits:
         - runner
         - bazel
         - build
+        - //...
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+        securityContext:
+          privileged: true
+    trigger: "(?m)^/test build,?(\\s+|$)"
+    rerun_command: "/test build"
+
+  - name: pull-testing-verify
+    always_run: true
+    context: pull-testing-verify
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190108-0a1da0a-0.21.0
+        args:
+        - runner
+        - bazel
+        - test
         - //...
         resources:
           requests:
