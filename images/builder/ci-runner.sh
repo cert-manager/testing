@@ -28,6 +28,5 @@ shift
 WORKSPACE="$(bazel info workspace)"
 
 bazel run \
-    --incompatible_disallow_data_transition=false \
     //images/builder -- \
     --build-dir "${WORKSPACE}"/"${BUILD_DIR}" "$@"
