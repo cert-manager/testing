@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -18,6 +19,7 @@ import (
 
 var (
 	versionFile string
+	repoRoot    string
 	// a file containing a line `image: foo:tag` that is used to detect the
 	// 'source' image tag that is being bumped *from*.
 	// This is used to string replace files contained in the directoryList
@@ -31,9 +33,12 @@ var (
 
 func init() {
 	flag.StringVar(&versionFile, "version-file", "prow/version", "path to a file containing the image tag that should be set")
+	flag.StringVar(&repoRoot, "repo-root", "", "base path used as a prefix for all other file paths")
 }
 
 func main() {
+	flag.Parse()
+
 	existingVersion, err := detectExistingVersion()
 	if err != nil {
 		log.Printf("error detecting existing version: %v", err)
@@ -100,7 +105,7 @@ func patchFiles(old, new string, paths ...string) ([]string, error) {
 var existingVersionRE = regexp.MustCompile(`image: gcr\.io/k8s-prow/tide:(.+)`)
 
 func detectExistingVersion() (string, error) {
-	d, err := ioutil.ReadFile(existingImageFile)
+	d, err := ioutil.ReadFile(path.Join(repoRoot, existingImageFile))
 	if err != nil {
 		return "", err
 	}
@@ -117,7 +122,7 @@ func detectExistingVersion() (string, error) {
 }
 
 func getNewVersion() (string, error) {
-	d, err := ioutil.ReadFile(versionFile)
+	d, err := ioutil.ReadFile(path.Join(repoRoot, versionFile))
 	if err != nil {
 		return "", err
 	}
@@ -130,7 +135,7 @@ func getNewVersion() (string, error) {
 func findFiles(paths ...string) ([]string, error) {
 	var files []string
 	for _, p := range paths {
-		if err := filepath.Walk(p, func(path string, info os.FileInfo, err error) error {
+		if err := filepath.Walk(path.Join(repoRoot, p), func(path string, info os.FileInfo, err error) error {
 			if info.IsDir() {
 				return nil
 			}
