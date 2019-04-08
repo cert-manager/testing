@@ -8,26 +8,19 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190108-0a1da0a-0.21.0
+      - image: gcr.io/k8s-prow/checkconfig:v20190405-651ad49e6
         args:
-        - runner
-        - bazel
-        - test
-        - //config/...
-        - //hack/...
-        - //prow/...
+        - -strict=false
+        - -warnings=mismatched-tide
+        - -config-path=config/config.yaml
+        - -job-config-path=config/jobs
+        - -plugin-config=config/plugins.yaml
         resources:
           requests:
-            cpu: 1
-            memory: 2Gi
-        securityContext:
-          privileged: true
+            cpu: 100m
+            memory: 100Mi
     trigger: "(?m)^/test config,?(\\s+|$)"
     rerun_command: "/test config"
 

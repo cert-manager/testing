@@ -15,6 +15,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  namespace: default
   name: hook
   labels:
     app: hook
@@ -34,10 +35,12 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: hook
-        image: eu.gcr.io/jetstack-build-infra/prow-hook:latest
+        image: gcr.io/k8s-prow/hook:v20190405-651ad49e6
         imagePullPolicy: Always
         args:
         - --dry-run=false
+        - --github-endpoint=http://ghproxy
+        - --github-endpoint=https://api.github.com
         - --job-config-path=/etc/job-config
         ports:
           - name: http
@@ -58,6 +61,19 @@ spec:
         - name: plugins
           mountPath: /etc/plugins
           readOnly: true
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8081
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /healthz/ready
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 3
+          timeoutSeconds: 600
       volumes:
       - name: hmac
         secret:

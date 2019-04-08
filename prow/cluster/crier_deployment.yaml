@@ -1,4 +1,4 @@
-# Copyright 2017 The Kubernetes Authors All rights reserved.
+# Copyright 2019 The Kubernetes Authors All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,33 +15,37 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  namespace: default
-  name: horologium
+  name: crier
   labels:
-    app: horologium
+    app: crier
 spec:
-  replicas: 1 # Do not scale up.
-  strategy:
-    type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
-        app: horologium
+        app: crier
     spec:
-      serviceAccountName: "horologium" # Uncomment for use with RBAC
+      serviceAccountName: crier
       terminationGracePeriodSeconds: 30
       containers:
-      - name: horologium
-        image: gcr.io/k8s-prow/horologium:v20190405-651ad49e6
+      - name: crier
+        image: gcr.io/k8s-prow/crier:v20190405-651ad49e6
         args:
+        - --github-workers=1
+        - --report-agent=knative-build
+        - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
-        - --dry-run=false
+        - --github-endpoint=http://ghproxy
+        - --github-endpoint=https://api.github.com
         volumeMounts:
         - name: config
           mountPath: /etc/config
           readOnly: true
         - name: job-config
           mountPath: /etc/job-config
+          readOnly: true
+        - name: oauth
+          mountPath: /etc/github
           readOnly: true
       volumes:
       - name: config
@@ -50,3 +54,6 @@ spec:
       - name: job-config
         configMap:
           name: job-config
+      - name: oauth
+        secret:
+          secretName: oauth-token

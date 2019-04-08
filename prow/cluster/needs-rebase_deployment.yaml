@@ -15,6 +15,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  namespace: default
   name: needs-rebase
   labels:
     app: needs-rebase
@@ -28,7 +29,7 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: needs-rebase
-        image: eu.gcr.io/jetstack-build-infra/prow-needs-rebase:latest
+        image: gcr.io/k8s-prow/needs-rebase:v20190405-651ad49e6
         imagePullPolicy: Always
         args:
         - --dry-run=false
