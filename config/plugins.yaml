@@ -32,19 +32,7 @@ blunderbuss:
   request_count: 1
 
 external_plugins:
-  jetstack/kube-lego:
-  - name: needs-rebase
-    events:
-    - pull_request
-  jetstack/navigator:
-  - name: needs-rebase
-    events:
-    - pull_request
-  jetstack/cert-manager:
-  - name: needs-rebase
-    events:
-    - pull_request
-  jetstack/tarmak:
+  jetstack:
   - name: needs-rebase
     events:
     - pull_request
