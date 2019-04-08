@@ -27,6 +27,12 @@ shift
 
 WORKSPACE="$(bazel info workspace)"
 
+echo "Activating service account..."
+gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
+
+echo "Executing builder..."
 bazel run \
     //images/builder -- \
     --build-dir "${WORKSPACE}"/"${BUILD_DIR}" "$@"
+
+echo "Build complete!"
