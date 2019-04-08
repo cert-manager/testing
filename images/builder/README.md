@@ -12,10 +12,10 @@ arguments:
 # Variants allow multiple images to be built in a single build step, with
 # different build arguments for each build.
 variants:
-- name: 0.24.1
-  # Specify build arguments for this variant
-  arguments:
-    BAZEL_VERSION: 0.24.1
+  "0.24.1":
+    # Specify build arguments for this variant
+    arguments:
+        BAZEL_VERSION: 0.24.1
 # Image names to be tagged and pushed
 images:
 - ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${BAZEL_VERSION}
