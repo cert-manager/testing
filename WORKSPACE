@@ -108,37 +108,6 @@ py_library(
     urls = ["https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"],
 )
 
-
-http_archive(
-    name = "build_bazel_rules_typescript",
-    strip_prefix = "rules_typescript-0.22.0",
-    url = "https://github.com/bazelbuild/rules_typescript/archive/0.22.0.zip",
-)
-
-# Fetch our Bazel dependencies that aren't distributed on npm
-load("@build_bazel_rules_typescript//:package.bzl", "rules_typescript_dependencies")
-
-rules_typescript_dependencies()
-
-# Setup TypeScript toolchain
-load("@build_bazel_rules_typescript//:defs.bzl", "ts_setup_workspace")
-
-git_repository(
-    name = "build_bazel_rules_nodejs",
-    remote = "https://github.com/bazelbuild/rules_nodejs.git",
-    tag = "0.16.6",
-)
-
-load("@build_bazel_rules_nodejs//:defs.bzl", "node_repositories", "yarn_install")
-
-node_repositories(package_json = ["@test_infra//:package.json"])
-
-yarn_install(
-    name = "npm",
-    package_json = "@test_infra//:package.json",
-    yarn_lock = "@test_infra//:yarn.lock",
-)
-
 load("//def:container.bzl", "container_dockerfile")
 
 container_dockerfile(

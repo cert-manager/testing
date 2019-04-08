@@ -4,71 +4,35 @@ load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
 #   bazel run //prow/cluster:production.apply
 release(
     "production",
-    component(
-        "branchprotector",
-        "cronjob",
-    ),
-    component(
-        "labelsync",
-        "cronjob",
-    ),
-    component(
-        "deck",
-        "deployment",
-        "service",
-        "rbac",
-    ),
+    # component("build", "deployment"),
+    # component("build_rbac", MULTI_KIND),
+    component("crier", "deployment"),
+    component("crier_rbac", MULTI_KIND),
+    component("deck", "service", "deployment"),
     component("gce-ssd-retain", "storageclass"),
-    component(
-        "ghproxy",
-        "service",
-        "deployment",
-    ),
-    component(
-        "hook",
-        "service",
-        "deployment",
-        "rbac",
-    ),
-    component(
-        "horologium",
-        "deployment",
-        "rbac",
-    ),
+    component("ghproxy", MULTI_KIND),
+    # component(
+    #     "grandmatriarch",
+    #     MULTI_KIND,
+    #     cluster = BUILD_CONTEXT,
+    # ),
+    component("hook", "service", "deployment"),
+    component("horologium", "deployment"),
+    # component("cert-manager", MULTI_KIND),
+    # component("cluster-issuer", MULTI_KIND),
     component(
         "mem-limit-range",
         "limitrange",
-        context = BUILD_CONTEXT,
+        cluster = BUILD_CONTEXT,
     ),
-    component(
-        "plank",
-        "deployment",
-        "rbac",
-    ),
+    component("plank", "deployment"),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
-    component(
-        "sinker",
-        "deployment",
-        "rbac",
-    ),
-    component(
-        "tide",
-        "service",
-        "deployment",
-        "rbac",
-    ),
+    component("sinker", "deployment"),
+    component("tide", "service", "deployment"),
     component("tls-ing", "ingress"),
-    component(
-        "tot",
-        "service",
-        "deployment",
-    ),
-    component(
-        "needs-rebase",
-        "deployment",
-        "service",
-    ),
+    component("tot", "service", "deployment"),
+    component("needs-rebase", "deployment"),
 )
 
 filegroup(
