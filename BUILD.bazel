@@ -5,13 +5,7 @@ gazelle(name = "gazelle")
 
 filegroup(
     name = "package-srcs",
-    srcs = glob(
-        ["**"],
-        exclude = [
-            "bazel-*/**",
-            ".git/**",
-        ],
-    ),
+    srcs = glob(["**"], exclude=["bazel-*/**", ".git/**"]),
     tags = ["automanaged"],
     visibility = ["//visibility:private"],
 )
@@ -23,7 +17,8 @@ filegroup(
         "//config:all-srcs",
         "//def:all-srcs",
         "//hack:all-srcs",
-        "//images:all-srcs",
+        "//images/bazelbuild:all-srcs",
+        "//images/builder:all-srcs",
         "//legacy:all-srcs",
         "//prow:all-srcs",
     ],

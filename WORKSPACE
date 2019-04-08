@@ -33,12 +33,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 gazelle_dependencies()
 
 git_repository(
-    name = "test_infra",
-    commit = "79922f71d442e13259ccac29e10f4b8a5374411d",
-    remote = "https://github.com/jetstack/test-infra.git",
-)
-
-git_repository(
     name = "io_kubernetes_build",
     commit = "84d52408a061e87d45aebf5a0867246bdf66d180",
     remote = "https://github.com/kubernetes/repo-infra.git",
@@ -59,22 +53,6 @@ container_pull(
     digest = "sha256:bef8d030c7f36dfb73a8c76137616faeea73ac5a8495d535f27c911d0db77af3",
     registry = "gcr.io",
     repository = "distroless/base",
-)
-
-container_pull(
-    name = "alpine-base",
-    # 0.1 as of 2017/11/29
-    digest = "sha256:317d39ece9dd09992fa81236964be3f3919b940f42e3143379dd66e4af930f3a",
-    registry = "gcr.io",
-    repository = "k8s-prow/alpine",
-)
-
-container_pull(
-    name = "git-base",
-    # 0.2 as of 2018/05/10
-    digest = "sha256:3eaeff9a2c35a50c3a0af7ef7cf26ea73e6fd966f54ef3dfe79d4ffb45805112",
-    registry = "gcr.io",
-    repository = "k8s-prow/git",
 )
 
 container_pull(
@@ -110,57 +88,6 @@ py_library(
     sha256 = "592766c6303207a20efc445587778322d7f73b161bd994f227adaa341ba212ab",
     strip_prefix = "PyYAML-3.12/lib/yaml",
     urls = ["https://files.pythonhosted.org/packages/4a/85/db5a2df477072b2902b0eb892feb37d88ac635d36245a72a6a69b23b383a/PyYAML-3.12.tar.gz"],
-)
-
-load("//def:container.bzl", "container_dockerfile")
-
-container_dockerfile(
-    name = "gcloud-in-go",
-    build_args = {
-        "GCLOUD_VERSION": "163.0.0",
-    },
-    dockerfile = "//legacy/images/gcloud-in-go:Dockerfile",
-)
-
-container_dockerfile(
-    name = "minikube-in-go",
-    build_args = {
-        "BAZEL_VERSION": "0.18.0",
-        "GCLOUD_VERSION": "163.0.0",
-    },
-    build_matrix = {
-        "KUBERNETES_VERSION": ["v1.9.6", "v1.8.10", "v1.7.15"],
-    },
-    dockerfile = "//legacy/images/minikube-in-go:Dockerfile",
-)
-
-# Dependencies used for the cert-manager e2e image
-http_file(
-   name = "golang",
-   urls = ["https://dl.google.com/go/go1.11.linux-amd64.tar.gz"],
-   sha256 = "b3fcf280ff86558e0559e185b601c9eade0fd24c900b4c63cd14d1d38613e499",
-)
-
-http_file(
-    name = "dep_linux",
-    executable = 1,
-    urls = ["https://github.com/golang/dep/releases/download/v0.5.0/dep-linux-amd64"],
-    sha256 = "287b08291e14f1fae8ba44374b26a2b12eb941af3497ed0ca649253e21ba2f83"
-)
-
-http_archive(
-    name = "helm_linux",
-    sha256 = "0fa2ed4983b1e4a3f90f776d08b88b0c73fd83f305b5b634175cb15e61342ffe",
-    urls = ["https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz"],
-    build_file_content = """
-filegroup(
-    name = "helm",
-    srcs = [
-        "linux-amd64/helm",
-    ],
-    visibility = ["//visibility:public"],
-)
-""",
 )
 
 go_repository(

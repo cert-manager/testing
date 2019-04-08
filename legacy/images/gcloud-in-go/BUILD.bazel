@@ -15,15 +15,15 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-bootstrap_image_bundle(
-    name = "gcloud-in-go",
-    images = {
-        "{STABLE_IMAGE_DOCKER_REPO}/gcloud-in-go:{STABLE_IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
-    },
-    stamp = True,
-)
+# bootstrap_image_bundle(
+#     name = "gcloud-in-go",
+#     images = {
+#         "{STABLE_IMAGE_DOCKER_REPO}/gcloud-in-go:{STABLE_IMAGE_DOCKER_TAG}": "@gcloud-in-go//image",
+#     },
+#     stamp = True,
+# )
 
-docker_push(
-    name = "push",
-    bundle = ":gcloud-in-go",
-)
+# docker_push(
+#     name = "push",
+#     bundle = ":gcloud-in-go",
+# )
