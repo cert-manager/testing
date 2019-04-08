@@ -47,7 +47,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -76,7 +76,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -105,7 +105,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -134,7 +134,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -163,7 +163,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -192,7 +192,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
