@@ -135,6 +135,7 @@ func formatImageName(cfg *buildConfig, ctx *buildContext, tmpl string) (string, 
 
 func getGitRef() (string, error) {
 	cmd := exec.Command("git", "describe", "--tags", "--always", "--dirty")
+	cmd.Dir = buildDir
 	output, err := cmd.Output()
 	if err != nil {
 		return "", err
