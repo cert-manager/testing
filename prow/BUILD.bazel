@@ -9,6 +9,7 @@ filegroup(
     name = "all-srcs",
     srcs = [
         ":package-srcs",
+        "//prow/bump:all-srcs",
         "//prow/cluster:all-srcs",
     ],
     tags = ["automanaged"],
