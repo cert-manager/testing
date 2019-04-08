@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM alpine:3.7
+ARG ALPINE_VERSION
+FROM alpine:${ALPINE_VERSION}
 
 RUN apk add --no-cache ca-certificates
