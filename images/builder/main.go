@@ -42,7 +42,7 @@ func main() {
 	// validate flags
 	if errs := validateFlags(); len(errs) > 0 {
 		for _, err := range errs {
-			log.Printf(err.Error())
+			log.Println(err.Error())
 		}
 		os.Exit(1)
 	}
