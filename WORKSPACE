@@ -115,18 +115,6 @@ py_library(
 load("//def:container.bzl", "container_dockerfile")
 
 container_dockerfile(
-    name = "bazelbuild",
-    build_matrix = {
-        "BAZEL_VERSION": [
-            "0.16.1",
-            "0.18.0",
-            "0.21.0",
-        ],
-    },
-    dockerfile = "//images/bazelbuild:Dockerfile",
-)
-
-container_dockerfile(
     name = "alpine",
     dockerfile = "//images/alpine:Dockerfile",
 )

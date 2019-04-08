@@ -6,15 +6,6 @@ py_test(
     data = ["//:all-srcs"],
 )
 
-py_test(
-    name = "coalesce_test",
-    size = "small",
-    srcs = [
-        "coalesce.py",
-        "coalesce_test.py",
-    ],
-)
-
 sh_binary(
     name = "update-kazel",
     srcs = ["update-kazel.sh"],

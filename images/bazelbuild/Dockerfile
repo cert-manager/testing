@@ -99,4 +99,8 @@ RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
+COPY runner /usr/local/bin/runner
+COPY create_bazel_cache_rcs.sh /usr/local/bin/create_bazel_cache_rcs.sh
+COPY coalesce.py /usr/local/bin/coalesce.py
+
 WORKDIR /workspace
