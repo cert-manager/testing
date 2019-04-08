@@ -1,6 +1,6 @@
 presets:
 
-  - labels:
+- labels:
     preset-deployer-service-account: "true"
   env:
   - name: GOOGLE_APPLICATION_CREDENTIALS
