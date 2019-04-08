@@ -14,6 +14,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
+  namespace: default
   labels:
     app: tot
   name: tot-storage
@@ -27,11 +28,14 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  namespace: default
   name: tot
   labels:
     app: tot
 spec:
   replicas: 1  # one canonical source of build numbers
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -40,7 +44,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: tot
-        image: eu.gcr.io/jetstack-build-infra/prow-tot:latest
+        image: gcr.io/k8s-prow/tot:v20190405-651ad49e6
         imagePullPolicy: Always
         args:
         - -storage=/store/tot.json

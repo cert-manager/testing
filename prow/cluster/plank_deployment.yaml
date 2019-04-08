@@ -15,53 +15,53 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  namespace: default
   name: plank
   labels:
     app: plank
 spec:
   replicas: 1 # Do not scale up.
+  strategy:
+    type: Recreate
   template:
     metadata:
-      annotations:
-        prometheus.io/scrape: "true"
       labels:
         app: plank
     spec:
       serviceAccountName: "plank" # Uncomment for use with RBAC
       containers:
       - name: plank
-        image: eu.gcr.io/jetstack-build-infra/prow-plank:latest
+        image: gcr.io/k8s-prow/plank:v20190405-651ad49e6
         args:
-        - --tot-url=http://tot
-        - --dry-run=false
         - --build-cluster=/etc/cluster/cluster
+        - --dry-run=false
+        - --github-endpoint=http://ghproxy
+        - --github-endpoint=https://api.github.com
         - --job-config-path=/etc/job-config
         volumeMounts:
+        - mountPath: /etc/cluster
+          name: cluster
+          readOnly: true
         - name: oauth
           mountPath: /etc/github
           readOnly: true
         - name: config
           mountPath: /etc/config
           readOnly: true
-        - mountPath: /etc/cluster
-          name: cluster
-          readOnly: true
         - name: job-config
           mountPath: /etc/job-config
           readOnly: true
-        ports:
-          - name: http
-            containerPort: 8080
       volumes:
+      - name: cluster
+        secret:
+          defaultMode: 420
+          secretName: build-cluster
       - name: oauth
         secret:
           secretName: oauth-token
       - name: config
         configMap:
           name: config
-      - name: cluster
-        secret:
-          secretName: build-cluster
       - name: job-config
         configMap:
           name: job-config
