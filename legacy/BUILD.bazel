@@ -12,7 +12,6 @@ filegroup(
         "//legacy/bootstrap:all-srcs",
         "//legacy/images/gcloud-in-go:all-srcs",
         "//legacy/images/minikube-in-go:all-srcs",
-        "//legacy/images/tarmak:all-srcs",
         "//legacy/jobs:all-srcs",
         "//legacy/scenarios:all-srcs",
     ],

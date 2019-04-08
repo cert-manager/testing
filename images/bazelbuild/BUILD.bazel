@@ -1,6 +1,3 @@
-load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_bundle")
-load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
-
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
@@ -15,71 +12,11 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
-container_image(
-    name = "image-0.18.0",
-    base = "@bazelbuild//image.0.18.0",
-    files = [
-        ":create_bazel_cache_rcs.sh",
-        ":runner",
-        "//hack:coalesce.py",
-        "//images:barnacle",
+py_test(
+    name = "coalesce_test",
+    size = "small",
+    srcs = [
+        "coalesce.py",
+        "coalesce_test.py",
     ],
-    symlinks = {
-        "/usr/local/bin/barnacle": "/barnacle",
-        "/usr/local/bin/runner": "/runner",
-        "/usr/local/bin/coalesce.py": "/coalesce.py",
-        "/usr/local/bin/create_bazel_cache_rcs.sh": "/create_bazel_cache_rcs.sh",
-    },
-    visibility = ["//visibility:public"],
-)
-
-container_image(
-    name = "image-0.21.0",
-    base = "@bazelbuild//image.0.21.0",
-    files = [
-        ":create_bazel_cache_rcs.sh",
-        ":runner",
-        "//hack:coalesce.py",
-        "//images:barnacle",
-    ],
-    symlinks = {
-        "/usr/local/bin/barnacle": "/barnacle",
-        "/usr/local/bin/runner": "/runner",
-        "/usr/local/bin/coalesce.py": "/coalesce.py",
-        "/usr/local/bin/create_bazel_cache_rcs.sh": "/create_bazel_cache_rcs.sh",
-    },
-    visibility = ["//visibility:public"],
-)
-
-container_image(
-    name = "image-0.22.0",
-    base = "@bazelbuild//image.0.22.0",
-    files = [
-        ":create_bazel_cache_rcs.sh",
-        ":runner",
-        "//hack:coalesce.py",
-        "//images:barnacle",
-    ],
-    symlinks = {
-        "/usr/local/bin/barnacle": "/barnacle",
-        "/usr/local/bin/runner": "/runner",
-        "/usr/local/bin/coalesce.py": "/coalesce.py",
-        "/usr/local/bin/create_bazel_cache_rcs.sh": "/create_bazel_cache_rcs.sh",
-    },
-    visibility = ["//visibility:public"],
-)
-
-container_bundle(
-    name = "bazelbuild",
-    images = {
-        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.18.0": ":image-0.18.0",
-        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.21.0": ":image-0.21.0",
-        "{STABLE_IMAGE_DOCKER_REPO}/bazelbuild:{STABLE_IMAGE_DOCKER_TAG}-0.22.0": ":image-0.22.0",
-    },
-    stamp = True,
-)
-
-docker_push(
-    name = "push",
-    bundle = ":bazelbuild",
 )

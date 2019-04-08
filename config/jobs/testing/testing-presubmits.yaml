@@ -26,16 +26,14 @@ presubmits:
     trigger: "(?m)^/test config,?(\\s+|$)"
     rerun_command: "/test config"
 
-  - name: pull-testing-verify-images
-    always_run: false
-    context: pull-testing-verify-images
-    run_if_changed: "^(images/|legacy/images/).*$"
+  - name: pull-testing-verify-bazel
+    always_run: true
+    context: pull-testing-verify-bazel
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     labels:
       preset-service-account: "true"
-      preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
@@ -45,13 +43,12 @@ presubmits:
         - runner
         - bazel
         - build
-        - //images/...
-        - //legacy/images/...
+        - //...
         resources:
           requests:
-            cpu: 4
-            memory: 12Gi
+            cpu: 1
+            memory: 2Gi
         securityContext:
           privileged: true
-    trigger: "(?m)^/test images,?(\\s+|$)"
-    rerun_command: "/test images"
+    trigger: "(?m)^/test verify,?(\\s+|$)"
+    rerun_command: "/test verify"

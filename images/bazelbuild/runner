@@ -44,7 +44,6 @@ cleanup_binfmt_misc() {
 
 # runs custom docker data root cleanup binary and debugs remaining resources
 cleanup_dind() {
-    barnacle || true
     # list what images and volumes remain
     echo "Remaining docker images and volumes are:"
     docker images --all || true

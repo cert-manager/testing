@@ -1,3 +1,8 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+# gazelle:prefix github.com/example/project
+gazelle(name = "gazelle")
+
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"], exclude=["bazel-*/**", ".git/**"]),
@@ -12,7 +17,8 @@ filegroup(
         "//config:all-srcs",
         "//def:all-srcs",
         "//hack:all-srcs",
-        "//images:all-srcs",
+        "//images/bazelbuild:all-srcs",
+        "//images/builder:all-srcs",
         "//legacy:all-srcs",
         "//prow:all-srcs",
     ],
