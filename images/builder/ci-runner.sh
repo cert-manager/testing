@@ -14,9 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -o errexit
+set -o nounset
+set -o pipefail
+
 BUILD_DIR="${1:-}"
 if [ -z "${BUILD_DIR}" ]; then
     echo "Invalid usage. Use as $0 path/to/build/dir [additional arguments]"
+    exit 1
 fi
 shift
 

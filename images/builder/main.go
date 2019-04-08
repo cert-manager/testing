@@ -80,7 +80,11 @@ func main() {
 
 	for _, ctx := range ctxs {
 		for _, imgTmpl := range cfg.Images {
-			img := formatImageName(cfg, ctx, imgTmpl)
+			img, err := formatImageName(cfg, ctx, imgTmpl)
+			if err != nil {
+				log.Printf("error generating image name: %v", err)
+				os.Exit(1)
+			}
 			log.Printf("pushing image %q", img)
 			if err := ctx.Push(img); err != nil {
 				log.Printf("error pushing image %q: %v", img, err)
@@ -93,22 +97,35 @@ func main() {
 	log.Printf("SUCCESS")
 }
 
-func formatImageName(cfg *buildConfig, ctx *buildContext, tmpl string) string {
+func formatImageName(cfg *buildConfig, ctx *buildContext, tmpl string) (string, error) {
 	tmplMap := make(map[string]string)
 	for k, v := range ctx.BuildArgs {
 		tmplMap[k] = v
 	}
+	gitRef, err := getGitRef()
+	if err != nil {
+		return "", err
+	}
 	tmplMap["_NAME"] = cfg.Name
 	tmplMap["_REGISTRY"] = registry
-	tmplMap["_DATE_STAMP"] = "19700101"
-	tmplMap["_GIT_REF"] = "abcdefg"
+	tmplMap["_DATE_STAMP"] = time.Now().Format("20060102")
+	tmplMap["_GIT_REF"] = gitRef
 
 	img := tmpl
 	for k, v := range tmplMap {
 		img = strings.ReplaceAll(img, fmt.Sprintf("${%s}", k), v)
 	}
 
-	return img
+	return img, nil
+}
+
+func getGitRef() (string, error) {
+	cmd := exec.Command("git", "describe", "--tags", "--always", "--dirty")
+	output, err := cmd.Output()
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(output)), nil
 }
 
 func validateFlags() []error {
