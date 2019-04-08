@@ -27,6 +27,32 @@ presubmits:
     trigger: "(?m)^/test( all| verify|)( \\[.+\\])?$"
     rerun_command: "/test verify"
 
+  - name: pull-kube-oidc-proxy-demo
+    always_run: true
+    context: pull-kube-oidc-proxy-demo
+    max_concurrency: 2
+    agent: kubernetes
+    decorate: true
+    decoration_config:
+      ssh_key_secrets:
+      - jetstack-pulling-bot
+    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
+    branches:
+    - master
+    spec:
+      containers:
+      - image: golang:1.12.1
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy/demo
+        args:
+        - make
+        - verify
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+    trigger: "(?m)^/test demo,?(\\s+|$)"
+    rerun_command: "/test demo"
+
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-11
     context: pull-kube-oidc-proxy-e2e-v1-11
