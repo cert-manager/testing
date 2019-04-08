@@ -1,26 +1,5 @@
 package(default_visibility = ["//visibility:public"])
 
-sh_test(
-    name = "verify",
-    srcs = ["verify.sh"],
-    data = [
-        ":checkconfig",
-        ":yaml",
-    ],
-)
-
-genrule(
-    name = "get_checkconfig",
-    srcs = ["@test_infra//prow/cmd/checkconfig"],
-    outs = ["checkconfig"],
-    cmd = "cp $(SRCS) $@",
-)
-
-filegroup(
-    name = "yaml",
-    srcs = glob(["**/*.yaml"]),
-)
-
 filegroup(
     name = "package-srcs",
     srcs = glob(["**"]),
