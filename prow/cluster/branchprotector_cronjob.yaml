@@ -1,9 +1,10 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
+  namespace: default
   name: branchprotector
 spec:
-  schedule: "54 11 * * *"  # Run every day at 1154
+  schedule: "54 * * * *"  # Every hour at 54 minutes past the hour
   concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
@@ -14,7 +15,7 @@ spec:
         spec:
           containers:
           - name: branchprotector
-            image: eu.gcr.io/jetstack-build-infra/prow-branchprotector:latest
+            image: gcr.io/k8s-prow/branchprotector:v20190405-651ad49e6
             args:
             - --config-path=/etc/config/config.yaml
             - --job-config-path=/etc/job-config

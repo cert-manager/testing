@@ -4,6 +4,7 @@ load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
 #   bazel run //prow/cluster:production.apply
 release(
     "production",
+    component("branchprotector", "cronjob"),
     # component("build", "deployment"),
     # component("build_rbac", MULTI_KIND),
     component("crier", "deployment"),
@@ -25,6 +26,7 @@ release(
         "limitrange",
         cluster = BUILD_CONTEXT,
     ),
+    component("needs-rebase", "deployment", "service"),
     component("plank", "deployment"),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
@@ -32,7 +34,6 @@ release(
     component("tide", "service", "deployment"),
     component("tls-ing", "ingress"),
     component("tot", "service", "deployment"),
-    component("needs-rebase", "deployment"),
 )
 
 filegroup(
