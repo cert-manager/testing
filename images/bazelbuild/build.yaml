@@ -10,6 +10,9 @@ variants:
   "0.22.0":
     arguments:
       BAZEL_VERSION: 0.22.0
+  "0.21.0":
+    arguments:
+      BAZEL_VERSION: 0.21.0
 
 # Image names to be tagged and pushed
 images:
