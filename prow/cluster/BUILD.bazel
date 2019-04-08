@@ -1,78 +1,40 @@
 load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
-load("@io_bazel_rules_docker//container:container.bzl", "container_bundle")
-load("@io_bazel_rules_docker//contrib:push-all.bzl", "docker_push")
 
 # Usage:
-#   bazel run //prow/cluster:foo.apply
-
-container_bundle(
-    name = "podutils",
-    images = {
-        "{STABLE_PROW_DOCKER_REPO}/prow-clonerefs:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/clonerefs:image",
-        "{STABLE_PROW_DOCKER_REPO}/prow-entrypoint:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/entrypoint:image",
-        "{STABLE_PROW_DOCKER_REPO}/prow-initupload:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/initupload:image",
-        "{STABLE_PROW_DOCKER_REPO}/prow-sidecar:{STABLE_IMAGE_DOCKER_TAG}": "@test_infra//prow/cmd/sidecar:image",
-    },
-    stamp = True,
-)
-
-docker_push(
-    name = "podutils.push",
-    bundle = ":podutils",
-)
-
+#   bazel run //prow/cluster:production.apply
 release(
     "production",
     component(
         "branchprotector",
         "cronjob",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-branchprotector:latest": "@test_infra//prow/cmd/branchprotector:image",
-        },
     ),
     component(
         "labelsync",
         "cronjob",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-labelsync:latest": "@test_infra//label_sync:image",
-        },
     ),
     component(
         "deck",
         "deployment",
         "service",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-deck:latest": "@test_infra//prow/cmd/deck:image",
-        },
     ),
     component("gce-ssd-retain", "storageclass"),
     component(
         "ghproxy",
         "service",
         "deployment",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-ghproxy:latest": "@test_infra//ghproxy:image",
-        },
     ),
     component(
         "hook",
         "service",
         "deployment",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-hook:latest": "@test_infra//prow/cmd/hook:image",
-        },
     ),
     component(
         "horologium",
         "deployment",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-horologium:latest": "@test_infra//prow/cmd/horologium:image",
-        },
     ),
-    component("lego", "deployment"),
     component(
         "mem-limit-range",
         "limitrange",
@@ -82,9 +44,6 @@ release(
         "plank",
         "deployment",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-plank:latest": "@test_infra//prow/cmd/plank:image",
-        },
     ),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
@@ -92,35 +51,23 @@ release(
         "sinker",
         "deployment",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-sinker:latest": "@test_infra//prow/cmd/sinker:image",
-        },
     ),
     component(
         "tide",
         "service",
         "deployment",
         "rbac",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tide:latest": "@test_infra//prow/cmd/tide:image",
-        },
     ),
     component("tls-ing", "ingress"),
     component(
         "tot",
         "service",
         "deployment",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-tot:latest": "@test_infra//prow/cmd/tot:image",
-        },
     ),
     component(
         "needs-rebase",
         "deployment",
         "service",
-        images = {
-            "eu.gcr.io/jetstack-build-infra/prow-needs-rebase:latest": "@test_infra//prow/external-plugins/needs-rebase:image",
-        },
     ),
 )
 
