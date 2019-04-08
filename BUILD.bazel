@@ -19,7 +19,6 @@ filegroup(
         "//hack:all-srcs",
         "//images/bazelbuild:all-srcs",
         "//images/builder:all-srcs",
-        "//legacy:all-srcs",
         "//prow:all-srcs",
     ],
     tags = ["automanaged"],

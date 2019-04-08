@@ -1,5 +1,9 @@
 # Legacy bootstrap-based job configuration
 
+> The files in this directory are now abandoned and should not be used.
+> They remain here for a shortwhile in order to support existing jobs that
+> have not yet migrated.
+
 This directory contains the supporting files needed for the legacy 'bootstrap'
 ProwJob setup.
 
