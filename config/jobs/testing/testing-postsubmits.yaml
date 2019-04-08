@@ -1,0 +1,64 @@
+presets:
+
+  - labels:
+    preset-deployer-service-account: "true"
+  env:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: /creds/service-account.json
+  volumeMounts:
+    - name: creds
+      mountPath: /creds
+  volumes:
+  - name: creds
+    secret:
+      secretName: deployer-service-account
+
+- labels:
+    preset-image-deploy: "true"
+  volumeMounts:
+  - mountPath: /lib/modules
+    name: modules
+    readOnly: true
+  - mountPath: /sys/fs/cgroup
+    name: cgroup
+  volumes:
+  - name: modules
+    hostPath:
+      path: /lib/modules
+      type: Directory
+  - name: cgroup
+    hostPath:
+      path: /sys/fs/cgroup
+      type: Directory
+
+postsubmits:
+  jetstack/testing:
+
+  - name: post-testing-push-bazelbuild
+    cluster: trusted
+    run_if_changed: '^images/bazelbuild/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-image-deploy: "true"
+      preset-deployer-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20190213-5eafc6f-0.21.0
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/builder/ci-runner.sh
+        - images/bazelbuild
+        - --confirm=true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
