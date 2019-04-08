@@ -1,0 +1,10 @@
+name: tarmak-sphinx-docs # Name of the image to be built
+
+arguments:
+  GCLOUD_VERSION: 178.0.0
+  GCLOUD_HASH: 2e0bbbf81c11164bf892cf0b891751ba4e5172661eff907ad1f7fc0b6907e296
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}
+- ${_REGISTRY}/${_NAME}:latest

@@ -115,21 +115,6 @@ py_library(
 load("//def:container.bzl", "container_dockerfile")
 
 container_dockerfile(
-    name = "alpine",
-    dockerfile = "//images/alpine:Dockerfile",
-)
-
-container_dockerfile(
-    name = "katacoda-lint",
-    dockerfile = "//images/katacoda-lint:Dockerfile",
-)
-
-container_dockerfile(
-    name = "golang-dind",
-    dockerfile = "//images/golang-dind:Dockerfile",
-)
-
-container_dockerfile(
     name = "gcloud-in-go",
     build_args = {
         "GCLOUD_VERSION": "163.0.0",
@@ -147,27 +132,6 @@ container_dockerfile(
         "KUBERNETES_VERSION": ["v1.9.6", "v1.8.10", "v1.7.15"],
     },
     dockerfile = "//legacy/images/minikube-in-go:Dockerfile",
-)
-
-container_dockerfile(
-    name = "tarmak-ruby",
-    build_args = {
-        "GCLOUD_VERSION": "206.0.0",
-        "GCLOUD_HASH": "d39293914b2e969bfe18dd19eb77ba96d283995f8cf1e5d7ba6ac712a3c9479a",
-    },
-    build_matrix = {
-        "RUBY_VERSION": ["2.4.4"],
-    },
-    dockerfile = "//legacy/images/tarmak/ruby:Dockerfile",
-)
-
-container_dockerfile(
-    name = "tarmak-sphinx-docs",
-    build_args = {
-        "GCLOUD_VERSION": "178.0.0",
-        "GCLOUD_HASH": "2e0bbbf81c11164bf892cf0b891751ba4e5172661eff907ad1f7fc0b6907e296",
-    },
-    dockerfile = "//legacy/images/tarmak/sphinx-docs:Dockerfile",
 )
 
 # Dependencies used for the cert-manager e2e image

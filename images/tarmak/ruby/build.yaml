@@ -1,0 +1,15 @@
+name: tarmak-ruby # Name of the image to be built
+
+arguments:
+  GCLOUD_VERSION: 206.0.0
+  GCLOUD_HASH: d39293914b2e969bfe18dd19eb77ba96d283995f8cf1e5d7ba6ac712a3c9479a
+
+variants:
+  2.4.4:
+    arguments:
+      RUBY_VERSION: 2.4.4
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${RUBY_VERSION}
+- ${_REGISTRY}/${_NAME}:latest-${RUBY_VERSION}
