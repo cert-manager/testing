@@ -57,10 +57,12 @@ def component(cmd, *kinds, images = {}, **kwargs):
       args = dict(kwargs)
       if k == "deployment" or k == "cronjob":
         args["images"] = images
+      tgt = ":%s" % n
+      targets.setdefault("all", []).append(tgt)
       object(**args)
       if k != MULTI_KIND:
-        targets.setdefault(cmd,[]).append(":%s" % n)
-        targets.setdefault(k,[]).append(":%s" % n)
+        targets.setdefault(cmd,[]).append(tgt)
+        targets.setdefault(k,[]).append(tgt)
   return targets
 
 # release packages multiple components into a release.
@@ -89,13 +91,15 @@ def release(name, *components):
   objs = []
   for cs in components:
     for (n, ts) in cs.items():
-      targets.setdefault(n, []).extend(ts)
+      if n == "all":
+        objs.extend(ts)
+      else:
+        targets.setdefault(n, []).extend(ts)
   for (piece, ts) in targets.items():
     k8s_objects(
         name = piece,
         objects = ts,
     )
-    objs.append(":%s" % piece)
   k8s_objects(
       name = name,
       objects=objs,
