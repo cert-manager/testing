@@ -90,6 +90,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     make \
     rsync \
     patch \
+    openssh-client \
     && apt-get clean \
     && python -m pip install --upgrade pip setuptools wheel
 
