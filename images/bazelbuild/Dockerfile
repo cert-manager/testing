@@ -58,10 +58,6 @@ RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph"' | \
 # We will make a fallback one now just in case
 RUN mkdir /docker-graph
 
-# add custom docker cleanup binary
-# TODO
-# COPY ["barnacle/barnacle", "/usr/local/bin/"]
-
 #
 # END: DOCKER IN DOCKER SETUP
 #
