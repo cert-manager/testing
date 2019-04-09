@@ -10,7 +10,7 @@
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:20190409-092dcaf-2.4.4
       command:
       - /bin/sh
       - -c
@@ -52,7 +52,7 @@
       key: dedicated
       operator: Equal
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:20190409-092dcaf-2.4.4
       command:
       - /bin/sh
       - -c
@@ -99,7 +99,7 @@
       key: dedicated
       operator: Equal
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:20190409-092dcaf-2.4.4
       args:
       - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
       - "--root=/workspace"
@@ -267,7 +267,7 @@ presubmits:
     rerun_command: "/test puppet-roles-verify"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
+      - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:20190409-092dcaf-2.4.4
         command:
         - make
         - -C
