@@ -102,3 +102,9 @@ go_repository(
     vcs = "git",
     importpath = "gopkg.in/yaml.v2",
 )
+
+git_repository(
+    name = "test_infra",
+    commit = "4d31f63924b8eb14211f19a2722125b8fa0040c9",
+    remote = "https://github.com/kubernetes/test-infra.git",
+)

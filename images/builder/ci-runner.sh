@@ -34,8 +34,53 @@ echo "Generating docker credentials..."
 gcloud auth configure-docker --quiet
 
 echo "Executing builder..."
-bazel run \
+PUSHED_IMAGE=$(bazel run \
     //images/builder -- \
-    --build-dir "${WORKSPACE}"/"${BUILD_DIR}" "$@"
+    --build-dir "${WORKSPACE}"/"${BUILD_DIR}" "$@")
 
 echo "Build complete!"
+
+if [ -z "${PUSHED_IMAGE}" ]; then
+    echo "No image pushed to registry"
+    exit 0
+fi
+
+echo "Pushed image ${PUSHED_IMAGE}"
+echo
+
+user="${GITHUB_USER:-}"
+token="${GITHUB_TOKEN_FILE:-}"
+if [ -z "${user}" ] || [ -z "${token}" ]; then
+    echo "Skipping patching job configs"
+    exit 0
+fi
+
+echo "Patching YAML files for new image"
+find "${WORKSPACE}/config/jobs" -type f -name '*.yaml' | \
+    xargs bazel run //tools/image-bumper -- \
+    --image-regex "${PUSHED_IMAGE}"
+
+ensure-config() {
+  local username="jetstack-bot"
+  local email="jetstack-bot@users.noreply.github.com"
+  echo "git config user.name=$username user.email=$email..." >&2
+  git config user.name "$username"
+  git config user.email "$email"
+}
+ensure-config "$@"
+
+image_name=$(basename "${PUSHED_IMAGE}")
+title="Automatic bump of ${image_name} jobs"
+git add -A
+git commit -m "${title}"
+git push -f "git@github.com:${user}/testing.git" HEAD:autobump-"${image_name}"
+
+bazel run @test_infra//robots/pr-creator -- \
+    --github-token-path="${token}" \
+    --org jetstack --repo testing --branch master \
+    --title="${title}" --match-title="Bump ${image_name} jobs" \
+    --body="Automatically bumped jobs that referenced image ${PUSHED_IMAGE}" \
+    --source="${user}":autobump-"${image_name}" \
+    --confirm
+
+echo "Complete!"

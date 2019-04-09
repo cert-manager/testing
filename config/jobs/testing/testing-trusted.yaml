@@ -1,6 +1,32 @@
 presets:
 
 - labels:
+    preset-deployer-github-token: "true"
+  env:
+  - name: GITHUB_USER
+    value: jetstack-bot
+  - name: GITHUB_TOKEN_FILE
+    value: /etc/github/token
+  volumeMounts:
+  - name: github-token
+    mountPath: /etc/github
+  volumes:
+  - name: github-token
+    secret:
+      secretName: bot-github-token
+
+- labels:
+    preset-deployer-ssh-key: "true"
+  volumeMounts:
+  - name: ssh
+    mountPath: /root/.ssh
+  volumes:
+  - name: ssh
+    secret:
+      secretName: jetstack-bot-ssh-keys
+      defaultMode: 0400
+
+- labels:
     preset-deployer-service-account: "true"
   env:
   - name: GOOGLE_APPLICATION_CREDENTIALS
@@ -45,9 +71,11 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ac1a0f9-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -74,9 +102,11 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ac1a0f9-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -103,6 +133,8 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
@@ -132,6 +164,8 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
@@ -161,6 +195,8 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
@@ -190,6 +226,8 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-image-deploy: "true"
       preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190408-4d1853d-0.24.1
