@@ -60,37 +60,6 @@ presets:
 postsubmits:
   jetstack/testing:
 
-  - name: post-testing-push-alpine
-    cluster: trusted
-    run_if_changed: '^images/alpine/'
-    branches:
-    - master
-    decorate: true
-    labels:
-      preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
-      preset-deployer-service-account: "true"
-      preset-deployer-github-token: "true"
-      preset-deployer-ssh-key: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-72e658d-0.24.1
-        args:
-        # Wrap the release script with the runner so we can use docker-in-docker
-        - runner
-        - images/builder/ci-runner.sh
-        - images/alpine
-        - --confirm=true
-        resources:
-          requests:
-            cpu: 500m
-            memory: 512Mi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-
   - name: post-testing-push-bazelbuild
     cluster: trusted
     run_if_changed: '^images/bazelbuild/'
