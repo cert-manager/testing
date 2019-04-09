@@ -15,7 +15,6 @@ filegroup(
     srcs = [
         ":package-srcs",
         "//config:all-srcs",
-        "//def:all-srcs",
         "//hack:all-srcs",
         "//images/bazelbuild:all-srcs",
         "//images/builder:all-srcs",
