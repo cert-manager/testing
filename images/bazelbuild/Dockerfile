@@ -13,7 +13,8 @@
 # limitations under the License.
 
 # Includes bazel, docker-in-docker and gcloud
-FROM debian:stretch
+ARG DEBIAN_VERSION=stretch
+FROM debian:"${DEBIAN_VERSION}"
 LABEL maintainer="james@jetstack.io"
 
 #
@@ -46,10 +47,10 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
 # the pod logs, so we just comment out the call to it... :shrug:
 # TODO(benthelder): update docker version. This is pinned because of
 # https://github.com/kubernetes/test-infra/issues/6187
+ARG DOCKER_VERSION="17.09.1~ce-0~debian"
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends docker-ce=17.09.1~ce-0~debian && \
+    apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
-
 
 # Move Docker's storage location
 RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph"' | \

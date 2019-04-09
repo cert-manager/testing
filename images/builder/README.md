@@ -27,7 +27,7 @@ images:
 To build an image locally, from the root of this repository run:
 
 ```bash
-$ bazel run //images/builder -- images/bazelbuild
+$ bazel run //images/builder -- --build-dir=$(pwd)/images/bazelbuild
 ```
 
 ### Additional options
@@ -46,6 +46,7 @@ them available for templating in the `images` section of the `build.yaml` file.
 | _REGISTRY   | The image registry (specified as --registry)         | eu.gcr.io/jetstack-build-infra-images |
 | _DATE_STAMP | The current date stamp, useful for use in image tags | 20190407                              |
 | _GIT_REF    | The current git reference of the repository          | 2ba5d19                               |
+| _VARIANT    | The name of the variant being built, if any          | experimental                          |
 +-------------+------------------------------------------------------+---------------------------------------+
 
 Additionally, all global and variant-specific options will be provided to the

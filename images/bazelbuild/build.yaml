@@ -3,6 +3,11 @@ name: bazelbuild # Name of the image to be built
 # Variants allow multiple images to be built in a single build step, with
 # different build arguments for each build.
 variants:
+  experimental:
+    arguments:
+      BAZEL_VERSION: 0.24.1
+      DEBIAN_VERSION: stretch
+      DOCKER_VERSION: 5:18.09.4~3-0~debian-stretch
   "0.24.1":
     # Specify build arguments for this variant
     arguments:
