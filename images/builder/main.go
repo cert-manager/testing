@@ -94,13 +94,14 @@ func main() {
 		os.Exit(0)
 	}
 
-	for _, ctx := range ctxs {
-		for _, imgTmpl := range cfg.Images {
-			img, err := formatImageName(cfg, ctx, imgTmpl)
-			if err != nil {
-				log.Printf("error generating image name: %v", err)
-				os.Exit(1)
-			}
+	for name, ctx := range ctxs {
+		imageNames, err := allImageNames(cfg, ctx, name, cfg.Images...)
+		if err != nil {
+			log.Printf("error determining image names: %v", err)
+			os.Exit(1)
+		}
+
+		for _, img := range imageNames {
 			log.Printf("pushing image %q", img)
 			if err := ctx.Push(img); err != nil {
 				log.Printf("error pushing image %q: %v", img, err)
@@ -111,9 +112,56 @@ func main() {
 	}
 
 	log.Printf("SUCCESS")
+	os.Stdout.Write([]byte(path.Join(registry, cfg.Name)))
 }
 
-func formatImageName(cfg *buildConfig, ctx *buildContext, tmpl string) (string, error) {
+func allImageNames(cfg *buildConfig, ctx *buildContext, variant string, templates ...string) ([]string, error) {
+	switch variant {
+	case "":
+		templates = append(templates,
+			"${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}",
+			"${_REGISTRY}/${_NAME}:latest",
+		)
+	default:
+		templates = append(templates,
+			"${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${_VARIANT}",
+			"${_REGISTRY}/${_NAME}:latest-${_VARIANT}",
+		)
+	}
+
+	imageNames := make(strSet)
+	for _, t := range templates {
+		img, err := formatImageName(cfg, ctx, variant, t)
+		if err != nil {
+			log.Printf("error generating image name: %v", err)
+			return nil, err
+		}
+
+		imageNames.Add(img)
+	}
+
+	return imageNames.Slice(), nil
+}
+
+type strSet map[string]struct{}
+
+func (s strSet) Slice() []string {
+	out := make([]string, len(s))
+	i := 0
+	for k := range s {
+		out[i] = k
+		i++
+	}
+	return out
+}
+
+func (s strSet) Add(strs ...string) {
+	for _, str := range strs {
+		s[str] = struct{}{}
+	}
+}
+
+func formatImageName(cfg *buildConfig, ctx *buildContext, variant string, tmpl string) (string, error) {
 	tmplMap := make(map[string]string)
 	for k, v := range ctx.BuildArgs {
 		tmplMap[k] = v
@@ -126,6 +174,7 @@ func formatImageName(cfg *buildConfig, ctx *buildContext, tmpl string) (string, 
 	tmplMap["_REGISTRY"] = registry
 	tmplMap["_DATE_STAMP"] = time.Now().Format("20060102")
 	tmplMap["_GIT_REF"] = gitRef
+	tmplMap["_VARIANT"] = variant
 
 	img := tmpl
 	for k, v := range tmplMap {
@@ -312,7 +361,7 @@ func (b *buildContext) runDocker(args ...string) error {
 	log.Printf("running with args %v", args)
 	cmd := exec.Command("docker", args...)
 	cmd.Stderr = os.Stderr
-	cmd.Stdout = os.Stdout
+	cmd.Stdout = os.Stderr
 	if err := cmd.Run(); err != nil {
 		return err
 	}

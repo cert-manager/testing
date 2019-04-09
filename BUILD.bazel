@@ -19,6 +19,7 @@ filegroup(
         "//images/bazelbuild:all-srcs",
         "//images/builder:all-srcs",
         "//prow:all-srcs",
+        "//tools/image-bumper:all-srcs",
     ],
     tags = ["automanaged"],
     visibility = ["//visibility:public"],
