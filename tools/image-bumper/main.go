@@ -1,3 +1,5 @@
+// +skip_license_check
+
 /*
 Copyright 2019 The Kubernetes Authors.
 
