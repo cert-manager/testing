@@ -148,11 +148,6 @@ repos:
       target: both
       addedBy: prow
     - color: 0052cc
-      description: Indicates a PR related to kube-oidc-proxy
-      name: area/kube-oidc-proxy
-      target: both
-      addedBy: prow
-    - color: 0052cc
       description: Indicates a PR related to okta-kubectl-auth
       name: area/okta-kubectl-auth
       target: both
