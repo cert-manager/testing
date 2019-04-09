@@ -42,9 +42,11 @@ presubmits:
     spec:
       containers:
       - image: golang:1.12.1
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy/demo
+        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - make
+        - -C
+        - ./demo
         - verify
         resources:
           requests:
