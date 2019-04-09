@@ -16,7 +16,6 @@ presubmits:
     spec:
       containers:
       - image: golang:1.12.1
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - make
         - all
@@ -42,9 +41,10 @@ presubmits:
     spec:
       containers:
       - image: golang:1.12.1
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy/demo
         args:
         - make
+        - -C
+        - ./demo
         - verify
         resources:
           requests:
@@ -77,7 +77,6 @@ presubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - hack/docker-start-wrapper.sh
         - make
@@ -128,7 +127,6 @@ presubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - hack/docker-start-wrapper.sh
         - make
@@ -179,7 +177,6 @@ presubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - hack/docker-start-wrapper.sh
         - make
@@ -230,7 +227,6 @@ presubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
-        workingDir: /go/src/github.com/jetstack/kube-oidc-proxy
         args:
         - hack/docker-start-wrapper.sh
         - make
