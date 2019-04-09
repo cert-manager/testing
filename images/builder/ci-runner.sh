@@ -79,7 +79,7 @@ bazel run @test_infra//robots/pr-creator -- \
     --github-token-path="${token}" \
     --org jetstack --repo testing --branch master \
     --title="${title}" --match-title="Bump ${image_name} jobs" \
-    --body="Automatically bumped jobs that referenced image ${PUSHED_IMAGE}" \
+    --body="Automatically bumped jobs that referenced image \`${PUSHED_IMAGE}\`\n\n/kind bump" \
     --source="${user}":autobump-"${image_name}" \
     --confirm
 

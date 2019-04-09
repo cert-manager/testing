@@ -1,6 +1,7 @@
 approvers:
-- munnerz
 - simonswine
+- munnerz
 reviewers:
 - munnerz
-- simonswine
+labels:
+- area/prow

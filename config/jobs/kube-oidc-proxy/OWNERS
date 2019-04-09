@@ -1,7 +1,7 @@
 approvers:
-- joshvanl
+- JoshVanL
 - simonswine
 reviewers:
-- joshvanl
+- JoshVanL
 labels:
 - area/kube-oidc-proxy
