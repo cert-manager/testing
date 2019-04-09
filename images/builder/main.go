@@ -41,15 +41,17 @@ import (
 // ProwJobs.
 
 var (
-	confirm  bool
-	registry string
-	buildDir string
+	confirm     bool
+	registry    string
+	buildDir    string
+	variantName string
 )
 
 func init() {
 	flag.BoolVar(&confirm, "confirm", false, "set to true to confirm pushing images")
 	flag.StringVar(&registry, "registry", "eu.gcr.io/jetstack-build-infra-images", "docker image registry to push images to")
 	flag.StringVar(&buildDir, "build-dir", "", "path to a directory containing a build.yaml file")
+	flag.StringVar(&variantName, "variant", "", "if specified, only the given variant will be built")
 }
 
 func main() {
@@ -255,14 +257,25 @@ func validateConfig(cfg buildConfig) []error {
 // variations will be expanded in this function.
 func buildContexts(cfg buildConfig) (map[string]*buildContext, error) {
 	if len(cfg.Variants) == 0 {
+		if variantName != "" {
+			return nil, fmt.Errorf("could not find variant %q", variantName)
+		}
 		ctx := constructContext(cfg, nil)
 		return map[string]*buildContext{"": ctx}, nil
 	}
 
 	ctxs := make(map[string]*buildContext)
 	for name, v := range cfg.Variants {
+		if variantName != "" && name != variantName {
+			log.Printf("skipping variant %q", name)
+			continue
+		}
 		ctx := constructContext(cfg, v.Arguments)
 		ctxs[name] = ctx
+	}
+
+	if len(ctxs) == 0 {
+		return nil, fmt.Errorf("could not find variant %q", variantName)
 	}
 
 	return ctxs, nil
