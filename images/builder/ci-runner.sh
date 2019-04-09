@@ -72,7 +72,7 @@ ensure-config "$@"
 image_name=$(basename "${PUSHED_IMAGE}")
 title="Automatic bump of ${image_name} jobs"
 git add -A
-git commit -m "${title}"
+git commit -s -m "${title}"
 git push -f "git@github.com:${user}/testing.git" HEAD:autobump-"${image_name}"
 
 bazel run @test_infra//robots/pr-creator -- \
