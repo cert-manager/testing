@@ -1,6 +1,8 @@
 approvers:
-- munnerz
+- JoshVanL
 - simonswine
 reviewers:
-- munnerz
+- JoshVanL
 - simonswine
+labels:
+- area/tarmak

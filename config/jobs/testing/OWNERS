@@ -4,3 +4,5 @@ approvers:
 reviewers:
 - munnerz
 - simonswine
+labels:
+- area/testing

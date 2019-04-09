@@ -120,6 +120,54 @@ repos:
       description: Indicates a PR is affecting Cloud Provider AWS
       addedBy: human
 
+  jetstack/testing:
+    labels:
+    - color: 0052cc
+      description: Indicates a PR related to cert-manager
+      name: area/cert-manager
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to tarmak
+      name: area/tarmak
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to testing
+      name: area/testing
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to kube-oidc-proxy
+      name: area/kube-oidc-proxy
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to flightdeck
+      name: area/flightdeck
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to kube-oidc-proxy
+      name: area/kube-oidc-proxy
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to okta-kubectl-auth
+      name: area/okta-kubectl-auth
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to prow
+      name: area/prow
+      target: both
+      addedBy: prow
+    - color: d455d0
+      description: Indicates a PR that is an automated image bump
+      name: kind/bump
+      target: both
+      addedBy: prow
+
 default:
   labels:
   - color: 0ffa16
