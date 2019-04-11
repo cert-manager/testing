@@ -30,8 +30,6 @@
       hostPath:
         path: /var/lib/libvirt/caches/bundle
         type: Directory
-  trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
-  rerun_command: "/test verify"
 
 # puppet module acceptance tests using ruby tooling, elevated privileges due
 # to requirement to run nested vms. (modern decorators)
@@ -76,8 +74,6 @@
       hostPath:
         path: /var/lib/libvirt/caches/vagrant-boxes
         type: Directory
-  trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
-  rerun_command: "/test acceptance"
 
 presubmits:
   jetstack/tarmak:
