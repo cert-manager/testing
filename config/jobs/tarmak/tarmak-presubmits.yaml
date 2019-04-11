@@ -35,7 +35,7 @@
 
 # puppet module acceptance tests using ruby tooling, elevated privileges due
 # to requirement to run nested vms. (modern decorators)
-.puppet_module_acceptance_decorate: &puppet_module_acceptance_decorate
+.puppet_module_acceptance: &puppet_module_acceptance
   skip_report: false
   max_concurrency: 2
   decorate: true
@@ -54,9 +54,7 @@
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
       command:
-      - /bin/sh
-      - -c
-      - cd puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') && { if test -e .fixtures.yml.local; then export FIXTURES_YML=.fixtures.yml.local ; fi; } && make acceptance
+      - hack/ci/run-puppet-job.sh
       env:
       - name: BUNDLE_DIR
         value: /cache/bundle/$(JOB_NAME)
@@ -80,55 +78,6 @@
         type: Directory
   trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
   rerun_command: "/test acceptance"
-
-# puppet module acceptance tests using ruby tooling, elevated privileges due
-# to requirement to run nested VMs
-.puppet_module_acceptance: &puppet_module_acceptance
-  skip_report: false
-  max_concurrency: 2
-  agent: kubernetes
-  labels:
-    preset-service-account: "true"
-    libvirt-socket: "true"
-  spec:
-    nodeSelector:
-      node-role.kubernetes.io/libvirt: ""
-    # Note: this is not supported yet by prow PodSpec, taint temporary removed
-    tolerations:
-    - effect: NoSchedule
-      key: dedicated
-      operator: Equal
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
-      args:
-      - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-      - "--root=/workspace"
-      - "--upload=gs://jetstack-logs/pr-logs"
-      - "--clean"
-      env:
-      - name: BUNDLE_DIR
-        value: /cache/bundle/$(JOB_NAME)
-      resources:
-        requests:
-          cpu: 750m
-          memory: 1Gi
-      volumeMounts:
-      - name: bundle-cache
-        mountPath: /cache/bundle
-      - name: vagrant-boxes
-        mountPath: /root/.vagrant.d/boxes
-    volumes:
-    - name: bundle-cache
-      hostPath:
-        path: /var/lib/libvirt/caches/bundle
-        type: Directory
-    - name: vagrant-boxes
-      hostPath:
-        path: /var/lib/libvirt/caches/vagrant-boxes
-        type: Directory
-  trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
-  rerun_command: "/test acceptance"
-
 
 presubmits:
   jetstack/tarmak:
@@ -307,6 +256,13 @@ presubmits:
     trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-ubuntu( v?1.11)?|)( \\[.+\\])?$"
     rerun_command: "/test puppet-tarmak-acceptance-ubuntu v1.11"
   - <<: *puppet_module_acceptance
+    name: tarmak-puppet-module-tarmak-acceptance-1-14-centos
+    context: tarmak-puppet-module-tarmak-acceptance-1-14-centos
+    always_run: false
+    run_if_changed: "^(puppet/modules).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-centos( v?1.14)?|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-tarmak-acceptance-centos v1.14"
+  - <<: *puppet_module_acceptance
     name: tarmak-puppet-module-tarmak-acceptance-1-13-centos
     context: tarmak-puppet-module-tarmak-acceptance-1-13-centos
     always_run: false
@@ -371,7 +327,7 @@ presubmits:
     run_if_changed: "^(puppet/modules/vault_server).*$"
     trigger: "(?m)^/test( all| puppet| puppet-vault_server| puppet-verify| puppet-vault_server-verify|)( \\[.+\\])?$"
     rerun_command: "/test puppet-vault_server-verify"
-  - <<: *puppet_module_acceptance_decorate
+  - <<: *puppet_module_acceptance
     name: tarmak-puppet-module-vault_server-acceptance-centos
     context: tarmak-puppet-module-vault_server-acceptance-centos
     always_run: false
