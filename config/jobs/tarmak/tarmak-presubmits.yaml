@@ -30,12 +30,10 @@
       hostPath:
         path: /var/lib/libvirt/caches/bundle
         type: Directory
-  trigger: "(?m)^/test( all| verify| quick verify),?(\\s+|$)"
-  rerun_command: "/test verify"
 
 # puppet module acceptance tests using ruby tooling, elevated privileges due
 # to requirement to run nested vms. (modern decorators)
-.puppet_module_acceptance_decorate: &puppet_module_acceptance_decorate
+.puppet_module_acceptance: &puppet_module_acceptance
   skip_report: false
   max_concurrency: 2
   decorate: true
@@ -54,9 +52,7 @@
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
       command:
-      - /bin/sh
-      - -c
-      - cd puppet/modules/$(echo ${JOB_NAME} | awk -F- '{print $(NF-2)}') && { if test -e .fixtures.yml.local; then export FIXTURES_YML=.fixtures.yml.local ; fi; } && make acceptance
+      - hack/ci/run-puppet-job.sh
       env:
       - name: BUNDLE_DIR
         value: /cache/bundle/$(JOB_NAME)
@@ -78,184 +74,8 @@
       hostPath:
         path: /var/lib/libvirt/caches/vagrant-boxes
         type: Directory
-  trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
-  rerun_command: "/test acceptance"
-
-# puppet module acceptance tests using ruby tooling, elevated privileges due
-# to requirement to run nested VMs
-.puppet_module_acceptance: &puppet_module_acceptance
-  skip_report: false
-  max_concurrency: 2
-  agent: kubernetes
-  labels:
-    preset-service-account: "true"
-    libvirt-socket: "true"
-  spec:
-    nodeSelector:
-      node-role.kubernetes.io/libvirt: ""
-    # Note: this is not supported yet by prow PodSpec, taint temporary removed
-    tolerations:
-    - effect: NoSchedule
-      key: dedicated
-      operator: Equal
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
-      args:
-      - "--repo=github.com/$(REPO_OWNER)/$(REPO_NAME)=$(PULL_REFS)"
-      - "--root=/workspace"
-      - "--upload=gs://jetstack-logs/pr-logs"
-      - "--clean"
-      env:
-      - name: BUNDLE_DIR
-        value: /cache/bundle/$(JOB_NAME)
-      resources:
-        requests:
-          cpu: 750m
-          memory: 1Gi
-      volumeMounts:
-      - name: bundle-cache
-        mountPath: /cache/bundle
-      - name: vagrant-boxes
-        mountPath: /root/.vagrant.d/boxes
-    volumes:
-    - name: bundle-cache
-      hostPath:
-        path: /var/lib/libvirt/caches/bundle
-        type: Directory
-    - name: vagrant-boxes
-      hostPath:
-        path: /var/lib/libvirt/caches/vagrant-boxes
-        type: Directory
-  trigger: "(?m)^/test( all| acceptance),?(\\s+|$)"
-  rerun_command: "/test acceptance"
-
 
 presubmits:
-  jetstack/puppet-module-aws_ebs:
-  - <<: *puppet_module_verify
-    always_run: true
-    name: puppet-module-aws_ebs-quick-verify
-    context: puppet-module-aws_ebs-quick-verify
-
-  jetstack/puppet-module-calico:
-  - <<: *puppet_module_verify
-    always_run: true
-    name: puppet-module-calico-quick-verify
-    context: puppet-module-calico-quick-verify
-  - <<: *puppet_module_acceptance
-    name: puppet-module-calico-acceptance
-    context: puppet-module-calico-acceptance
-
-  jetstack/puppet-module-etcd:
-  - <<: *puppet_module_verify
-    always_run: true
-    name: puppet-module-etcd-quick-verify
-    context: puppet-module-etcd-quick-verify
-  - <<: *puppet_module_acceptance
-    always_run: true
-    name: puppet-module-etcd-acceptance-single-node
-    context: puppet-module-etcd-acceptance-single-node
-  - <<: *puppet_module_acceptance
-    always_run: true
-    name: puppet-module-etcd-acceptance-three-node
-    context: puppet-module-etcd-acceptance-three-node
-
-  jetstack/puppet-module-kubernetes:
-  - <<: *puppet_module_verify
-    always_run: true
-    name: puppet-module-kubernetes-quick-verify
-    context: puppet-module-kubernetes-quick-verify
-  - <<: *puppet_module_acceptance
-    always_run: true
-    name: puppet-module-kubernetes-acceptance
-    context: puppet-module-kubernetes-acceptance
-
-  jetstack/puppet-module-kubernetes_addons:
-  - <<: *puppet_module_verify
-    name: puppet-module-kubernetes_addons-quick-verify
-    context: puppet-module-kubernetes_addons-quick-verify
-    always_run: true
-
-  jetstack/puppet-module-prometheus:
-  - <<: *puppet_module_verify
-    name: puppet-module-prometheus-quick-verify
-    context: puppet-module-prometheus-quick-verify
-    always_run: true
-
-  jetstack/puppet-module-tarmak:
-  - <<: *puppet_module_verify
-    name: puppet-module-tarmak-quick-verify
-    context: puppet-module-tarmak-quick-verify
-    always_run: true
-
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-11-centos
-    context: puppet-module-tarmak-acceptance-1-11-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.11)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.11"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-10-centos
-    context: puppet-module-tarmak-acceptance-1-10-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.10)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.10"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-9-centos
-    context: puppet-module-tarmak-acceptance-1-9-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.9)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.9"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-8-centos
-    context: puppet-module-tarmak-acceptance-1-8-centos
-    always_run: true
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.8)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.8"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-7-centos
-    context: puppet-module-tarmak-acceptance-1-7-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.7)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.7"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-6-centos
-    context: puppet-module-tarmak-acceptance-1-6-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.6)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.6"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-5-centos
-    context: puppet-module-tarmak-acceptance-1-5-centos
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-centos( v?1.5)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos v1.5"
-  - <<: *puppet_module_acceptance
-    name: puppet-module-tarmak-acceptance-1-10-ubuntu
-    context: puppet-module-tarmak-acceptance-1-10-ubuntu
-    always_run: false
-    trigger: "(?m)^/test( all| acceptance-ubuntu( v?1.10)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-ubuntu v1.10"
-
-  jetstack/puppet-module-vault_client:
-  - <<: *puppet_module_verify
-    name: puppet-module-vault_client-quick-verify
-    context: puppet-module-vault_client-quick-verify
-    always_run: true
-
-  - <<: *puppet_module_acceptance
-    name: puppet-module-vault_client-acceptance-centos
-    context: puppet-module-vault_client-acceptance-centos
-    trigger: "(?m)^/test( all| acceptance(-centos)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-centos"
-    always_run: true
-  - <<: *puppet_module_acceptance
-    name: puppet-module-vault_client-acceptance-ubuntu
-    context: puppet-module-vault_client-acceptance-ubuntu
-    trigger: "(?m)^/test( all| acceptance(-ubuntu)?|)( \\[.+\\])?$"
-    rerun_command: "/test acceptance-ubuntu"
-    always_run: true
-
   jetstack/tarmak:
   # puppet role spec
   - <<: *puppet_module_verify
@@ -432,6 +252,13 @@ presubmits:
     trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-ubuntu( v?1.11)?|)( \\[.+\\])?$"
     rerun_command: "/test puppet-tarmak-acceptance-ubuntu v1.11"
   - <<: *puppet_module_acceptance
+    name: tarmak-puppet-module-tarmak-acceptance-1-14-centos
+    context: tarmak-puppet-module-tarmak-acceptance-1-14-centos
+    always_run: false
+    run_if_changed: "^(puppet/modules).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-centos( v?1.14)?|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-tarmak-acceptance-centos v1.14"
+  - <<: *puppet_module_acceptance
     name: tarmak-puppet-module-tarmak-acceptance-1-13-centos
     context: tarmak-puppet-module-tarmak-acceptance-1-13-centos
     always_run: false
@@ -496,7 +323,7 @@ presubmits:
     run_if_changed: "^(puppet/modules/vault_server).*$"
     trigger: "(?m)^/test( all| puppet| puppet-vault_server| puppet-verify| puppet-vault_server-verify|)( \\[.+\\])?$"
     rerun_command: "/test puppet-vault_server-verify"
-  - <<: *puppet_module_acceptance_decorate
+  - <<: *puppet_module_acceptance
     name: tarmak-puppet-module-vault_server-acceptance-centos
     context: tarmak-puppet-module-vault_server-acceptance-centos
     always_run: false
