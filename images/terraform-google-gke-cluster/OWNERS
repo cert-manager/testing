@@ -1,0 +1,6 @@
+approvers:
+- wwwwil
+reviewers:
+- wwwwil
+labels:
+- area/terraform-gke

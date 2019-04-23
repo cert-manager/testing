@@ -153,6 +153,11 @@ repos:
       target: both
       addedBy: prow
     - color: 0052cc
+      description: Indicates a PR related to terraform-google-gke-cluster
+      name: area/terraform-gke
+      target: both
+      addedBy: prow
+    - color: 0052cc
       description: Indicates a PR related to prow
       name: area/prow
       target: both
