@@ -1,0 +1,19 @@
+presubmits:
+  jetstack/terraform-google-gke-cluster:
+  - name: pull-terraform-google-gke-cluster-verify
+    context: pull-terraform-google-gke-cluster-verify
+    always_run: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/terraform-google-gke-cluster:v20190320-1080345
+        args:
+        - ./hack/verify.sh
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+    trigger: "(?m)^/test verify( \\[.+\\])?$"
+    rerun_command: "/test verify"
