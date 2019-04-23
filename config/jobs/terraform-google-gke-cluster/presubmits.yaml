@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/terraform-google-gke-cluster:v20190320-1080345
+      - image: eu.gcr.io/jetstack-build-infra-images/terraform-google-gke-cluster:20190423-48f5e68
         args:
         - ./hack/verify.sh
         resources:
