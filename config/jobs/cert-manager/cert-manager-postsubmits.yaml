@@ -30,12 +30,12 @@ presets:
 postsubmits:
   jetstack/cert-manager:
 
-  # Run postsubmit on vX.Y.Z tags
+  # Publish releases for v0.8.x
   - name: post-cert-manager-release
     cluster: trusted
     branches:
-    # Abuse Prow to make it run only on tag pushes
-    - ^v?\d+\.\d+\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.8.x tags
+    - ^v?0\.8\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
@@ -46,6 +46,54 @@ postsubmits:
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ad28471-0.24.1
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - hack/release.sh
+        env:
+        # Confirm we do want to push the image
+        - name: CONFIRM
+          value: "yes"
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 3Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  # Publish releases for v0.7.x
+  - name: post-cert-manager-release-previous
+    cluster: trusted
+    branches:
+    # Only run this job on v0.7.x tags
+    - ^v?0\.7\.\d+(-(alpha|beta)\.\d+)?$
+    always_run: true
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cert-manager-publish-bot-credentials: "true"
+      preset-chart-museum-deploy-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ad28471-0.21.0
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
