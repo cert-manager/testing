@@ -72,6 +72,37 @@ presubmits:
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
 
+  # Job that runs the release tooling *without* actually publishing the built
+  # assets. This gives us visibility on whether the release tool works.
+  - name: pull-cert-manager-release-smoke
+    always_run: false
+    context: pull-cert-manager-release-smoke
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ad28471-0.24.1
+        args:
+        - runner
+        - bazel
+        - run
+        - //hack/release
+        - --
+        - --all
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+    trigger: "(?m)^/test release,?(\\s+|$)"
+    rerun_command: "/test release"
+
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
   # See https://github.com/helm/chart-testing/issues/53
