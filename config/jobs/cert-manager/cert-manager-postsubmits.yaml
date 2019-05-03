@@ -147,23 +147,13 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - hack/release.sh
-        env:
-        # Confirm we do want to push the image
-        - name: CONFIRM
-          value: "yes"
-        # Manually set the image tag to 'canary'
-        - name: VERSION
-          value: canary
-        # Allow overwrite as we'll be pushing the :canary tag
-        - name: ALLOW_OVERWRITE
-          value: "yes"
-        # We only push new versions of the Helm chart on pushes to tags.
-        # Setting this to 'yes' will make the release script skip chart publishing.
-        - name: SKIP_CHART
-          value: "yes"
-        - name: SKIP_MANIFESTS
-          value: "yes"
+        - bazel
+        - run
+        - //hack/release
+        - --
+        - --images
+        - --app-version=canary
+        - --publish
         resources:
           requests:
             cpu: 1500m
