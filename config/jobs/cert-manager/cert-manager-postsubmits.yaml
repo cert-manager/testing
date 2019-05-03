@@ -54,6 +54,8 @@ postsubmits:
         # Confirm we do want to push the image
         - name: CONFIRM
           value: "yes"
+        - name: SKIP_MANIFESTS
+          value: "yes"
         resources:
           requests:
             cpu: 1500m
@@ -101,6 +103,8 @@ postsubmits:
         env:
         # Confirm we do want to push the image
         - name: CONFIRM
+          value: "yes"
+        - name: SKIP_MANIFESTS
           value: "yes"
         resources:
           requests:
@@ -157,6 +161,8 @@ postsubmits:
         # We only push new versions of the Helm chart on pushes to tags.
         # Setting this to 'yes' will make the release script skip chart publishing.
         - name: SKIP_CHART
+          value: "yes"
+        - name: SKIP_MANIFESTS
           value: "yes"
         resources:
           requests:
