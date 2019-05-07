@@ -18,6 +18,8 @@ presets:
   env:
   - name: CHART_SERVICE_ACCOUNT
     value: /etc/chart-museum-service-account/service-account.json
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: /etc/chart-museum-service-account/service-account.json
   volumes:
   - name: chart-deploy-config
     secret:
