@@ -43,19 +43,21 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-cert-manager-publish-bot-credentials: "true"
       preset-chart-museum-deploy-credentials: "true"
+      preset-deployer-github-token: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190409-ad28471-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - hack/release.sh
-        env:
-        # Confirm we do want to push the image
-        - name: CONFIRM
-          value: "yes"
-        - name: SKIP_MANIFESTS
-          value: "yes"
+        - bazel
+        - run
+        - //hack/release
+        - --
+        - --images
+        - --chart
+        - --manifests
+        - --publish
         resources:
           requests:
             cpu: 1500m
