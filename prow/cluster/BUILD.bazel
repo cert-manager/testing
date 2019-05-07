@@ -8,6 +8,7 @@ release(
 
     # component("build", "deployment"),
     # component("build_rbac", MULTI_KIND),
+    component("cherrypick", "deployment", "service"),
     component("crier", "deployment"),
     component("crier_rbac", MULTI_KIND),
     component("deck", "service", "deployment"),

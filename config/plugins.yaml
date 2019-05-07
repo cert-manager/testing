@@ -36,6 +36,10 @@ external_plugins:
   - name: needs-rebase
     events:
     - pull_request
+  - name: cherrypick
+    events:
+    - issue_comment
+    - pull_request
 
 # heart:
 #   adorees:
