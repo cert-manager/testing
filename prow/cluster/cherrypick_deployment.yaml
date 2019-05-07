@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cherrypick
+  labels:
+    app: prow
+    component: cherrypick
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: prow
+      component: cherrypick
+  template:
+    metadata:
+      labels:
+        app: prow
+        component: cherrypick
+    spec:
+      containers:
+      - name: cherrypick
+        image: gcr.io/k8s-prow/cherrypicker:v20190423-006066e40
+        args:
+        - --dry-run=false
+        ports:
+          - name: http
+            containerPort: 8888
+        volumeMounts:
+        - name: hmac
+          mountPath: /etc/webhook
+          readOnly: true
+        - name: oauth
+          mountPath: /etc/github
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: hmac
+        secret:
+          secretName: hmac-token
+      - name: oauth
+        secret:
+          secretName: oauth-token
+      - name: tmp
+        emptyDir: {}
