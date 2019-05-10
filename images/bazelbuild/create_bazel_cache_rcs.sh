@@ -69,8 +69,6 @@ make_bazel_rc () {
     # this is the default for recent releases but we set it explicitly
     # since this is the only hash our cache supports
     echo "startup --host_jvm_args=-Dbazel.DigestFunction=sha256"
-    # use remote caching for all the things
-    echo "build --experimental_remote_spawn_cache"
     # don't fail if the cache is unavailable
     echo "build --remote_local_fallback"
     # point bazel at our http cache ...
