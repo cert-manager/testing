@@ -8,14 +8,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - bazel
@@ -38,7 +38,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -46,7 +46,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - make
@@ -68,14 +68,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - make
@@ -98,7 +98,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -108,7 +108,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -154,7 +154,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -164,7 +164,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -209,7 +209,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.7
+    - release-0.8
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -219,7 +219,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
