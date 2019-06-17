@@ -185,8 +185,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 4
+            memory: 8Gi
         env:
         # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
         - name: KIND_IMAGE
@@ -241,8 +241,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 4
+            memory: 8Gi
         env:
         # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
         - name: KIND_IMAGE
@@ -296,8 +296,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 4
+            memory: 8Gi
         env:
         # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
         - name: KIND_IMAGE
