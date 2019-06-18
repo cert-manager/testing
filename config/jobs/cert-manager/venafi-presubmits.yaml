@@ -17,8 +17,8 @@ presubmits:
         - ./start-demo.sh
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 4
+            memory: 8Gi
         securityContext:
           privileged: true
           capabilities:
