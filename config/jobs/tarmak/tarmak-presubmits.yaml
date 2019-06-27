@@ -342,7 +342,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: golang:1.11.10
+      - image: golang:1.11.11
         command:
         - make
         - all
