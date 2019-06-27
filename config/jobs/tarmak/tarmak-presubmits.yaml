@@ -251,6 +251,28 @@ presubmits:
     run_if_changed: "^(puppet/modules).*$"
     trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-ubuntu( v?1.11)?|)( \\[.+\\])?$"
     rerun_command: "/test puppet-tarmak-acceptance-ubuntu v1.11"
+    branches:
+    - release-0.6
+  - <<: *puppet_module_acceptance
+    name: tarmak-puppet-module-tarmak-acceptance-1-13-ubuntu
+    context: tarmak-puppet-module-tarmak-acceptance-1-13-ubuntu
+    always_run: false
+    run_if_changed: "^(puppet/modules).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-ubuntu( v?1.13)?|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-tarmak-acceptance-ubuntu v1.13"
+    branches:
+    - master
+    - release-0.7
+  - <<: *puppet_module_acceptance
+    name: tarmak-puppet-module-tarmak-acceptance-1-15-centos
+    context: tarmak-puppet-module-tarmak-acceptance-1-15-centos
+    always_run: false
+    run_if_changed: "^(puppet/modules).*$"
+    trigger: "(?m)^/test( all| puppet| puppet-tarmak| puppet-tarmak-acceptance-centos( v?1.15)?|)( \\[.+\\])?$"
+    rerun_command: "/test puppet-tarmak-acceptance-centos v1.15"
+    branches:
+    - master
+    - release-0.7
   - <<: *puppet_module_acceptance
     name: tarmak-puppet-module-tarmak-acceptance-1-14-centos
     context: tarmak-puppet-module-tarmak-acceptance-1-14-centos
