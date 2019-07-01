@@ -50,9 +50,12 @@ deck:
     size_limit: 500000000
     gcs_browser_prefix: https://console.cloud.google.com/storage/browser/
     viewers:
-      "started.json|finished.json": ["metadata-viewer"]
-      "build-log.txt": ["build-log-viewer"]
-      "artifacts/junit.*\\.xml": ["junit-viewer"] # Remember to escape your '\' in yaml strings!
+      "started.json|finished.json":
+      - "metadata"
+      "build-log.txt":
+      - "buildlog"
+      "artifacts/junit.*\\.xml": # Remember to escape your '\' in yaml strings!
+      - "junit"
 
 # deck:
 #   external_agent_logs:
