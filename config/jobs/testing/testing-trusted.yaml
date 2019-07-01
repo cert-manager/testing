@@ -75,7 +75,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -106,7 +106,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -137,7 +137,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -168,7 +168,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -199,7 +199,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -230,7 +230,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190507-8297f2a-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
