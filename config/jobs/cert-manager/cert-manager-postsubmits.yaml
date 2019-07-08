@@ -32,12 +32,12 @@ presets:
 postsubmits:
   jetstack/cert-manager:
 
-  # Publish releases for v0.8.x
+  # Publish releases for v0.9.x
   - name: post-cert-manager-release
     cluster: trusted
     branches:
-    # Only run this job on v0.8.x tags
-    - ^v?0\.8\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.9.x tags
+    - ^v?0\.9\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
@@ -84,12 +84,12 @@ postsubmits:
           path: /sys/fs/cgroup
           type: Directory
 
-  # Publish releases for v0.7.x
+  # Publish releases for v0.8.x
   - name: post-cert-manager-release-previous
     cluster: trusted
     branches:
-    # Only run this job on v0.7.x tags
-    - ^v?0\.7\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.8.x tags
+    - ^v?0\.8\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
@@ -97,19 +97,21 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
       preset-cert-manager-publish-bot-credentials: "true"
       preset-chart-museum-deploy-credentials: "true"
+      preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.21.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - hack/release.sh
-        env:
-        # Confirm we do want to push the image
-        - name: CONFIRM
-          value: "yes"
-        - name: SKIP_MANIFESTS
-          value: "yes"
+        - bazel
+        - run
+        - //hack/release
+        - --
+        - --images
+        - --chart
+        - --manifests
+        - --publish
         resources:
           requests:
             cpu: 1500m
