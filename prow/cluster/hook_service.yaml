@@ -17,6 +17,8 @@ kind: Service
 metadata:
   namespace: default
   name: hook
+  annotations:
+    prometheus.io/scrape: "true"
 spec:
   selector:
     app: hook
