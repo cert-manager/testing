@@ -25,6 +25,9 @@ spec:
     type: Recreate
   template:
     metadata:
+      annotations:
+         prometheus.io/scrape: "true"
+         prometheus.io/port: "9090"
       labels:
         app: plank
     spec:
