@@ -59,7 +59,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - bazel
@@ -69,8 +69,6 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
-    trigger: "(?m)^/test verify,?(\\s+|$)"
-    rerun_command: "/test verify"
 
   # Job that runs the release tooling *without* actually publishing the built
   # assets. This gives us visibility on whether the release tool works.
@@ -88,7 +86,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/release.sh
@@ -96,8 +94,6 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
-    trigger: "(?m)^/test release,?(\\s+|$)"
-    rerun_command: "/test release"
 
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
@@ -117,7 +113,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - make
@@ -129,8 +125,6 @@ presubmits:
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
-    trigger: "(?m)^/test( all| chart),?(\\s+|$)"
-    rerun_command: "/test chart"
 
   - name: pull-cert-manager-deps
     always_run: true
@@ -146,7 +140,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - make
@@ -155,8 +149,6 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
-    trigger: "(?m)^/test deps,?(\\s+|$)"
-    rerun_command: "/test deps"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
@@ -179,7 +171,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -209,8 +201,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.11"
 
   - name: pull-cert-manager-e2e-v1-12
     context: pull-cert-manager-e2e-v1-12
@@ -232,7 +222,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -262,8 +252,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.12"
 
   - name: pull-cert-manager-e2e-v1-13
     context: pull-cert-manager-e2e-v1-13
@@ -284,7 +272,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -314,8 +302,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.13)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.13"
 
   - name: pull-cert-manager-e2e-v1-14
     context: pull-cert-manager-e2e-v1-14
@@ -337,7 +323,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -367,8 +353,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.14)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.14"
 
   - name: pull-cert-manager-e2e-v1-15
     context: pull-cert-manager-e2e-v1-15
@@ -390,7 +374,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -420,8 +404,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.15)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.15"
 
   - name: pull-cert-manager-e2e-v1-16
     context: pull-cert-manager-e2e-v1-16
@@ -443,7 +425,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -473,5 +455,3 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.16)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.16"
