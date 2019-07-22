@@ -19,8 +19,12 @@ RUN apt-get -y update \
    ca-certificates \
    curl \
    unzip \
-&& curl https://releases.hashicorp.com/terraform/0.11.13/terraform_0.11.13_linux_amd64.zip -o terraform.zip \
-&& unzip terraform.zip \
-&& mv terraform /usr/local/bin/terraform \
-&& chmod +x /usr/local/bin/terraform \
+&& curl https://releases.hashicorp.com/terraform/0.11.14/terraform_0.11.14_linux_amd64.zip -o terraform-0.11.zip \
+&& unzip terraform-0.11.zip \
+&& mv terraform /usr/local/bin/terraform-0.11 \
+&& chmod +x /usr/local/bin/terraform-0.11 \
+&& curl https://releases.hashicorp.com/terraform/0.12.4/terraform_0.12.4_linux_amd64.zip -o terraform-0.12.zip \
+&& unzip terraform-0.12.zip \
+&& mv terraform /usr/local/bin/terraform-0.12 \
+&& chmod +x /usr/local/bin/terraform-0.12 \
 && rm -rf /var/lib/apt/lists/*
