@@ -177,8 +177,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.11"
@@ -228,8 +228,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.12"
@@ -278,8 +278,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.13"
@@ -329,8 +329,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.14"
@@ -380,8 +380,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.15"
@@ -431,8 +431,8 @@ presubmits:
         - hack/ci/run-e2e-kind.sh
         resources:
           requests:
-            cpu: 4
-            memory: 8Gi
+            cpu: 6
+            memory: 12Gi
         env:
         - name: K8S_VERSION
           value: "1.16"
