@@ -14,7 +14,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
       args:
       - runner
       - bazel
@@ -68,18 +68,15 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
       resources:
         requests:
-          cpu: 4
-          memory: 8Gi
+          cpu: 6
+          memory: 12Gi
       env:
-      # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
-      - name: KIND_IMAGE
-        value: eu.gcr.io/jetstack-build-infra-images/kind:1.11.4-1
       - name: K8S_VERSION
         value: "1.11"
       securityContext:
@@ -119,18 +116,15 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
       resources:
         requests:
-          cpu: 4
-          memory: 8Gi
+          cpu: 6
+          memory: 12Gi
       env:
-      # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
-      - name: KIND_IMAGE
-        value: eu.gcr.io/jetstack-build-infra-images/kind:1.12.2-1
       - name: K8S_VERSION
         value: "1.12"
       securityContext:
@@ -170,20 +164,161 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
       resources:
         requests:
-          cpu: 4
-          memory: 8Gi
+          cpu: 6
+          memory: 12Gi
       env:
-      # TODO: remove this after https://github.com/jetstack/cert-manager/pull/1215 merges
-      - name: KIND_IMAGE
-        value: kindest/node:v1.13.2
       - name: K8S_VERSION
         value: "1.13"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+
+- name: ci-cert-manager-e2e-v1-14
+  interval: 4h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+      args:
+      - runner
+      - hack/ci/run-e2e-kind.sh
+      resources:
+        requests:
+          cpu: 6
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.14"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+
+- name: ci-cert-manager-e2e-v1-15
+  interval: 4h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+      args:
+      - runner
+      - hack/ci/run-e2e-kind.sh
+      resources:
+        requests:
+          cpu: 6
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.15"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+
+- name: ci-cert-manager-e2e-v1-16
+  interval: 4h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+      args:
+      - runner
+      - hack/ci/run-e2e-kind.sh
+      resources:
+        requests:
+          cpu: 6
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.16"
       securityContext:
         privileged: true
         capabilities:
