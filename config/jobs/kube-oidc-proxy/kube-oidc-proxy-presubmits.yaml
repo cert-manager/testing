@@ -23,8 +23,6 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test( all| verify|)( \\[.+\\])?$"
-    rerun_command: "/test verify"
 
   - name: pull-kube-oidc-proxy-demo
     always_run: true
@@ -50,8 +48,6 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
-    trigger: "(?m)^/test demo,?(\\s+|$)"
-    rerun_command: "/test demo"
 
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-11
@@ -83,8 +79,8 @@ presubmits:
         - e2e-1.11
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 6
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
@@ -104,8 +100,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.11)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.11"
 
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-12
@@ -133,8 +127,8 @@ presubmits:
         - e2e-1.12
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 6
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
@@ -154,8 +148,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.12)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.12"
 
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-13
@@ -183,8 +175,8 @@ presubmits:
         - e2e-1.13
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 6
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
@@ -204,8 +196,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.13)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.13"
 
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-14
@@ -233,8 +223,8 @@ presubmits:
         - e2e-1.14
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 6
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
@@ -254,8 +244,6 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.14)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.14"
 
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-15
@@ -283,8 +271,8 @@ presubmits:
         - e2e-1.15
         resources:
           requests:
-            cpu: 2
-            memory: 6Gi
+            cpu: 6
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
@@ -304,5 +292,3 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
-    trigger: "(?m)^/test( e2e( v?1.15)?|)( \\[.+\\])?$"
-    rerun_command: "/test e2e v1.15"
