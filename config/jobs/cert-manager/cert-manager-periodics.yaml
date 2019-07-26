@@ -35,7 +35,6 @@ periodics:
     base_ref: master
   labels:
     preset-service-account: "true"
-    preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
