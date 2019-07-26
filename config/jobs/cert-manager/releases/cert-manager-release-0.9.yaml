@@ -1,0 +1,413 @@
+presubmits:
+  jetstack/cert-manager:
+
+  - name: pull-cert-manager-bazel
+    always_run: true
+    context: pull-cert-manager-bazel
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - bazel
+        - test
+        - //...
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+
+  # Job that runs the release tooling *without* actually publishing the built
+  # assets. This gives us visibility on whether the release tool works.
+  - name: pull-cert-manager-release-smoke
+    always_run: false
+    context: pull-cert-manager-release-smoke
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/release.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+
+  # Helm chart verification currently requires Docker.
+  # We maintain a standalone presubmit for running this.
+  # See https://github.com/helm/chart-testing/issues/53
+  - name: pull-cert-manager-chart
+    always_run: true
+    context: pull-cert-manager-chart
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - make
+        - verify_chart
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+        # docker-in-docker needs privileged mode
+        securityContext:
+          privileged: true
+
+  - name: pull-cert-manager-deps
+    always_run: true
+    context: pull-cert-manager-deps
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - make
+        - verify_deps
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+
+  # kind based cert-manager e2e job
+  - name: pull-cert-manager-e2e-v1-11
+    context: pull-cert-manager-e2e-v1-11
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.11"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  - name: pull-cert-manager-e2e-v1-12
+    context: pull-cert-manager-e2e-v1-12
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.12"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  - name: pull-cert-manager-e2e-v1-13
+    context: pull-cert-manager-e2e-v1-13
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.13"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  - name: pull-cert-manager-e2e-v1-14
+    context: pull-cert-manager-e2e-v1-14
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.14"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  - name: pull-cert-manager-e2e-v1-15
+    context: pull-cert-manager-e2e-v1-15
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.15"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  - name: pull-cert-manager-e2e-v1-16
+    context: pull-cert-manager-e2e-v1-16
+    # Match everything except PRs that only touch docs/
+    always_run: false
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.9
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.16"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
