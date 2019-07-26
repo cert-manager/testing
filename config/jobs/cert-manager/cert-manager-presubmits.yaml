@@ -88,8 +88,15 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
         args:
+        # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - hack/release.sh
+        - bazel
+        - run
+        - //hack/release
+        - --
+        - --images
+        - --chart
+        - --manifests
         resources:
           requests:
             cpu: 2
