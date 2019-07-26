@@ -264,7 +264,8 @@ presubmits:
     context: pull-cert-manager-e2e-v1-13
     # Match everything except PRs that only touch docs/
     always_run: false
-    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    optional: true
+    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -365,8 +366,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-15
     # Match everything except PRs that only touch docs/
     always_run: false
-    optional: true
-    # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
+    run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
