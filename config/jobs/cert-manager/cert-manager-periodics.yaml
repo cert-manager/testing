@@ -14,7 +14,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - bazel
@@ -35,7 +35,6 @@ periodics:
     base_ref: master
   labels:
     preset-service-account: "true"
-    preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
@@ -68,7 +67,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -116,7 +115,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -164,7 +163,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -212,7 +211,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -260,7 +259,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -308,7 +307,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.24.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
