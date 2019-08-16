@@ -15,7 +15,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - bazel
@@ -46,7 +46,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - make
@@ -75,7 +75,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - make
@@ -108,7 +108,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -164,7 +164,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -219,7 +219,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190816-cc581bd-0.24.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
