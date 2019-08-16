@@ -38,7 +38,7 @@ branch-protection:
             - pull-cert-manager-bazel
             - pull-cert-manager-deps
             - pull-cert-manager-chart
-            - pull-cert-manager-e2e-v1-13
+            - pull-cert-manager-e2e-v1-15
 
 sinker:
   resync_period: 1h
