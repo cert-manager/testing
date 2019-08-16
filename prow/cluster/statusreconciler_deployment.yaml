@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: default
@@ -21,6 +21,9 @@ metadata:
     app: statusreconciler
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: statusreconciler
   template:
     metadata:
       labels:
@@ -30,7 +33,7 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: statusreconciler
-        image: gcr.io/k8s-prow/status-reconciler:v20190628-ac9063df1
+        image: gcr.io/k8s-prow/status-reconciler:v20190814-9981dc3c5
         imagePullPolicy: Always
         args:
         - --dry-run=false
@@ -39,9 +42,7 @@ spec:
         - --config-path=/etc/config/config.yaml
         - --github-token-path=/etc/github/oauth
         - --job-config-path=/etc/job-config
-        ports:
-          - name: http
-            containerPort: 8888
+        - --blacklist=kubernetes/kubernetes
         volumeMounts:
         - name: oauth
           mountPath: /etc/github
