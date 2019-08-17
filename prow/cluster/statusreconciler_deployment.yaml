@@ -29,11 +29,11 @@ spec:
       labels:
         app: statusreconciler
     spec:
-      # serviceAccountName: "statusreconciler" # Uncomment for use with RBAC
+      serviceAccountName: "statusreconciler" # Uncomment for use with RBAC
       terminationGracePeriodSeconds: 180
       containers:
       - name: statusreconciler
-        image: gcr.io/k8s-prow/status-reconciler:v20190814-9981dc3c5
+        image: gcr.io/k8s-prow/status-reconciler:v20190817-700152258
         imagePullPolicy: Always
         args:
         - --dry-run=false
