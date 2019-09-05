@@ -46,6 +46,9 @@ spec:
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
         - --skip-report=true
+        ports:
+          - name: http
+            containerPort: 9090
         volumeMounts:
         - mountPath: /etc/cluster
           name: cluster
