@@ -32,12 +32,12 @@ presets:
 postsubmits:
   jetstack/cert-manager:
 
-  # Publish releases for v0.10.x
+  # Publish releases for v0.11.x
   - name: post-cert-manager-release
     cluster: trusted
     branches:
-    # Only run this job on v0.9.x tags
-    - ^v?0\.10\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.11.x tags
+    - ^v?0\.11\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
@@ -84,12 +84,12 @@ postsubmits:
           path: /sys/fs/cgroup
           type: Directory
 
-  # Publish releases for v0.9.x
+  # Publish releases for v0.10.x
   - name: post-cert-manager-release-previous
     cluster: trusted
     branches:
-    # Only run this job on v0.9.x tags
-    - ^v?0\.9\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.10.x tags
+    - ^v?0\.10\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
@@ -100,7 +100,7 @@ postsubmits:
       preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190618-486d6fe-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190708-96f6b4d-0.27.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
