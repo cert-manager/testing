@@ -65,10 +65,11 @@ repo_milestone:
 
 milestone_applier:
   jetstack/cert-manager:
-    master: v0.10
-    release-0.8: v0.8
-    release-0.9: v0.9
+    master: v0.11
+    release-0.11: v0.11
     release-0.10: v0.10
+    release-0.9: v0.9
+    release-0.8: v0.8
   jetstack/kube-oidc-proxy:
     master: v0.2
     release-0.1: v0.1
