@@ -69,6 +69,10 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Job that runs the release tooling *without* actually publishing the built
   # assets. This gives us visibility on whether the release tool works.
@@ -101,6 +105,10 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
@@ -132,6 +140,10 @@ presubmits:
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-deps
     always_run: true
@@ -156,6 +168,10 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
@@ -208,6 +224,10 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-12
     context: pull-cert-manager-e2e-v1-12
@@ -259,6 +279,10 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-13
     context: pull-cert-manager-e2e-v1-13
@@ -310,6 +334,10 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-14
     context: pull-cert-manager-e2e-v1-14
@@ -361,6 +389,10 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-15
     context: pull-cert-manager-e2e-v1-15
@@ -411,6 +443,10 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-16
     context: pull-cert-manager-e2e-v1-16
@@ -462,3 +498,7 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
