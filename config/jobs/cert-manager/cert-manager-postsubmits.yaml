@@ -83,6 +83,10 @@ postsubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Publish releases for v0.10.x
   - name: post-cert-manager-release-previous
@@ -135,6 +139,10 @@ postsubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Run postsubmit against the master branch
   - name: post-cert-manager-release-canary
@@ -183,3 +191,7 @@ postsubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
