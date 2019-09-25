@@ -47,6 +47,7 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
+    cluster: gke
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
@@ -78,6 +79,7 @@ presubmits:
   # assets. This gives us visibility on whether the release tool works.
   - name: pull-cert-manager-release-smoke
     always_run: false
+    cluster: gke
     context: pull-cert-manager-release-smoke
     max_concurrency: 4
     agent: kubernetes
@@ -115,6 +117,7 @@ presubmits:
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
     always_run: true
+    cluster: gke
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -147,6 +150,7 @@ presubmits:
 
   - name: pull-cert-manager-deps
     always_run: true
+    cluster: gke
     context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
@@ -175,6 +179,7 @@ presubmits:
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
+    cluster: gke
     context: pull-cert-manager-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -230,6 +235,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-12
+    cluster: gke
     context: pull-cert-manager-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -285,6 +291,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-13
+    cluster: gke
     context: pull-cert-manager-e2e-v1-13
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -340,6 +347,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-14
+    cluster: gke
     context: pull-cert-manager-e2e-v1-14
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -395,6 +403,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-15
+    cluster: gke
     context: pull-cert-manager-e2e-v1-15
     # Match everything except PRs that only touch docs/
     always_run: false
@@ -449,6 +458,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-16
+    cluster: gke
     context: pull-cert-manager-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: false

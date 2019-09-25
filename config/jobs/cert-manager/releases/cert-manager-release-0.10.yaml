@@ -3,6 +3,7 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
+    cluster: gke
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
@@ -30,6 +31,7 @@ presubmits:
   # assets. This gives us visibility on whether the release tool works.
   - name: pull-cert-manager-release-smoke
     always_run: false
+    cluster: gke
     context: pull-cert-manager-release-smoke
     max_concurrency: 4
     agent: kubernetes
@@ -63,6 +65,7 @@ presubmits:
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
     always_run: true
+    cluster: gke
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -91,6 +94,7 @@ presubmits:
 
   - name: pull-cert-manager-deps
     always_run: true
+    cluster: gke
     context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
@@ -118,6 +122,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
@@ -169,6 +174,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
@@ -220,6 +226,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-13
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
@@ -271,6 +278,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-14
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
@@ -322,6 +330,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-15
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
@@ -372,6 +381,7 @@ presubmits:
     context: pull-cert-manager-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
