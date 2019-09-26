@@ -75,6 +75,37 @@ presubmits:
           - name: ndots
             value: "1"
 
+  - name: pull-cert-manager-bazel-experimental
+    always_run: false
+    optional: true
+    cluster: gke
+    context: pull-cert-manager-bazel-experimental
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-experimental
+        args:
+        - runner
+        - bazel
+        - test
+        - //...
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
   # Job that runs the release tooling *without* actually publishing the built
   # assets. This gives us visibility on whether the release tool works.
   - name: pull-cert-manager-release-smoke
