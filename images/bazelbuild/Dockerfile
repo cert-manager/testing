@@ -92,8 +92,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && python -m pip install --upgrade pip setuptools wheel
 
 ARG BAZEL_VERSION
-RUN INSTALLER="bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"; \
-    DOWNLOAD_URL="https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/${INSTALLER}"; \
+ARG BAZEL_CHANNEL=release
+ARG INSTALLER_VERSION_NAME="${BAZEL_VERSION}"
+
+RUN INSTALLER="bazel-${INSTALLER_VERSION_NAME}-installer-linux-x86_64.sh"; \
+    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER};" \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
