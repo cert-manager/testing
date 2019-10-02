@@ -173,13 +173,13 @@ tide:
   pr_status_base_url: https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
-  - repos:
+  # Default tide config for all repos in the Jetstack org except cert-manager
+  - excludedRepos:
     - jetstack/cert-manager
-    - jetstack/navigator
-    - jetstack/tarmak
     labels:
     - lgtm
     - approved
+    - "dco-signoff: yes"
     missingLabels:
     - needs-ok-to-test
     - do-not-merge
@@ -190,15 +190,16 @@ tide:
     - do-not-merge/release-note-label-needed
     - do-not-merge/work-in-progress
     - needs-rebase
-  - orgs:
-    - jetstack
-    excludedRepos:
+  # Maintain separate cert-manager configuration to make it easy to enable code freeze
+  - repos:
     - jetstack/cert-manager
-    - jetstack/navigator
-    - jetstack/tarmak
+    excludedBranches:
+    - master
+    - release-0.11
     labels:
     - lgtm
     - approved
+    - "dco-signoff: yes"
     missingLabels:
     - needs-ok-to-test
     - do-not-merge
@@ -206,8 +207,30 @@ tide:
     - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
+    - do-not-merge/release-note-label-needed
     - do-not-merge/work-in-progress
     - needs-rebase
+  - repos:
+    - jetstack/cert-manager
+    includedBranches:
+    - master
+    - release-0.11
+    milestone: v0.11
+    labels:
+    - lgtm
+    - approved
+    - "dco-signoff: yes"
+    missingLabels:
+    - needs-ok-to-test
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/release-note-label-needed
+    - do-not-merge/work-in-progress
+    - needs-rebase
+
 
 # push_gateway:
 #   endpoint: pushgateway
