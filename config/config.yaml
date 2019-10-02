@@ -174,7 +174,9 @@ tide:
   squash_label: tide/squash
   queries:
   # Default tide config for all repos in the Jetstack org except cert-manager
-  - excludedRepos:
+  - orgs:
+    - jetstack
+    excludedRepos:
     - jetstack/cert-manager
     labels:
     - lgtm
