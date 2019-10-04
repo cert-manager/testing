@@ -3,6 +3,7 @@ presubmits:
 
   - name: pull-kube-oidc-proxy-verify
     always_run: true
+    cluster: gke
     context: pull-kube-oidc-proxy-verify
     max_concurrency: 8
     agent: kubernetes
@@ -26,6 +27,7 @@ presubmits:
 
   - name: pull-kube-oidc-proxy-demo
     always_run: true
+    cluster: gke
     context: pull-kube-oidc-proxy-demo
     max_concurrency: 2
     agent: kubernetes
@@ -54,6 +56,7 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     decoration_config:
       ssh_key_secrets:
       - jetstack-pulling-bot
@@ -106,6 +109,7 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     max_concurrency: 4
     agent: kubernetes
@@ -154,6 +158,7 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-13
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     max_concurrency: 4
     agent: kubernetes
@@ -202,6 +207,7 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-14
     # Match everything except PRs that only touch docs/
     always_run: false
+    cluster: gke
     optional: true
     max_concurrency: 4
     agent: kubernetes
@@ -250,6 +256,7 @@ presubmits:
     context: pull-kube-oidc-proxy-e2e-v1-15
     # Match everything except PRs that only touch docs/
     always_run: true
+    cluster: gke
     optional: false
     max_concurrency: 4
     agent: kubernetes
