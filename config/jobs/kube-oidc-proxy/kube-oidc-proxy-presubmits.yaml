@@ -8,10 +8,6 @@ presubmits:
     max_concurrency: 8
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     spec:
@@ -32,10 +28,6 @@ presubmits:
     max_concurrency: 2
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     spec:
@@ -57,18 +49,10 @@ presubmits:
     # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
@@ -114,10 +98,6 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
@@ -163,10 +143,6 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
@@ -212,10 +188,6 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
@@ -261,10 +233,6 @@ presubmits:
     max_concurrency: 4
     agent: kubernetes
     decorate: true
-    decoration_config:
-      ssh_key_secrets:
-      - jetstack-pulling-bot
-    clone_uri: "git@github.com:jetstack/kube-oidc-proxy.git"
     branches:
     - master
     labels:
