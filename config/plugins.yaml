@@ -65,7 +65,7 @@ repo_milestone:
 
 milestone_applier:
   jetstack/cert-manager:
-    master: v0.11
+    master: v0.12
     release-0.11: v0.11
     release-0.10: v0.10
     release-0.9: v0.9

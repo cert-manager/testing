@@ -1,6 +1,5 @@
 presubmits:
   jetstack/cert-manager:
-
   - name: pull-cert-manager-bazel
     always_run: true
     cluster: gke
@@ -9,14 +8,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - bazel
@@ -26,6 +25,41 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  - name: pull-cert-manager-bazel-experimental
+    always_run: false
+    optional: true
+    cluster: gke
+    context: pull-cert-manager-bazel-experimental
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.11
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-experimental
+        args:
+        - runner
+        - bazel
+        - test
+        - //...
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Job that runs the release tooling *without* actually publishing the built
   # assets. This gives us visibility on whether the release tool works.
@@ -37,14 +71,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -59,6 +93,10 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
@@ -71,7 +109,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -79,7 +117,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - make
@@ -91,6 +129,10 @@ presubmits:
         # docker-in-docker needs privileged mode
         securityContext:
           privileged: true
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-deps
     always_run: true
@@ -100,14 +142,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - make
@@ -116,20 +158,24 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-11
+    cluster: gke
     context: pull-cert-manager-e2e-v1-11
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -139,7 +185,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -169,19 +215,23 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-12
+    cluster: gke
     context: pull-cert-manager-e2e-v1-12
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -191,7 +241,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -221,19 +271,23 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-13
+    cluster: gke
     context: pull-cert-manager-e2e-v1-13
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -243,7 +297,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -273,19 +327,23 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-14
+    cluster: gke
     context: pull-cert-manager-e2e-v1-14
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -295,7 +353,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -325,18 +383,22 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-15
+    cluster: gke
     context: pull-cert-manager-e2e-v1-15
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -346,7 +408,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -376,19 +438,23 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-16
+    cluster: gke
     context: pull-cert-manager-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: false
-    cluster: gke
     optional: true
     # run_if_changed: (^[^d].*$)|(^.[^o].*$)|(^..[^c].*$)|(^...[^s].*$)|(^....[^/].*$)
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.10
+    - release-0.11
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -398,7 +464,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.29.1
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -428,3 +494,7 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
