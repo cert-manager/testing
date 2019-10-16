@@ -107,6 +107,8 @@ presets:
   env:
   - name: DOCKER_IN_DOCKER_ENABLED
     value: "true"
+  - name: DOCKER_CLI_EXPERIMENTAL
+    value: "enabled"
   volumes:
   - name: docker-graph
     emptyDir: {}
