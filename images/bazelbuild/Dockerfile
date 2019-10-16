@@ -52,8 +52,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
 
-# Move Docker's storage location
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph"' | \
+# Move Docker's storage location & enable experimental features
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental"' | \
     tee --append /etc/default/docker
 # NOTE this should be mounted and persisted as a volume ideally (!)
 # We will make a fallback one now just in case
