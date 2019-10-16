@@ -52,8 +52,8 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
 
-# Move Docker's storage location
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph"' | \
+# Move Docker's storage location & enable experimental features
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental"' | \
     tee --append /etc/default/docker
 # NOTE this should be mounted and persisted as a volume ideally (!)
 # We will make a fallback one now just in case
@@ -96,7 +96,7 @@ ARG BAZEL_CHANNEL=release
 ARG INSTALLER_VERSION_NAME="${BAZEL_VERSION}"
 
 RUN INSTALLER="bazel-${INSTALLER_VERSION_NAME}-installer-linux-x86_64.sh"; \
-    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER};" \
+    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER}" \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
