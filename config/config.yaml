@@ -47,15 +47,34 @@ sinker:
 
 deck:
   spyglass:
-    size_limit: 500000000
+    size_limit: 500000000 # 500MB
     gcs_browser_prefix: https://console.cloud.google.com/storage/browser/
-    viewers:
-      "started.json|finished.json":
-      - "metadata"
-      "build-log.txt":
-      - "buildlog"
-      "artifacts/junit.*\\.xml": # Remember to escape your '\' in yaml strings!
-      - "junit"
+    testgrid_config: gs://k8s-testgrid/config
+    testgrid_root: https://testgrid.k8s.io/
+    lenses:
+    - lens:
+        name: metadata
+      required_files:
+      - started.json|finished.json
+    - lens:
+        name: buildlog
+      required_files:
+        - build-log.txt
+    - lens:
+        name: junit
+      required_files:
+        - artifacts/junit.*\.xml
+    - lens:
+        name: coverage
+      required_files:
+        - artifacts/filtered.cov
+      optional_files:
+        - artifacts/filtered.html
+  tide_update_period: 1s
+  rerun_auth_config:
+    github_users:
+      - munnerz
+      - JoshVanL
 
 prowjob_namespace: default
 pod_namespace: test-pods
