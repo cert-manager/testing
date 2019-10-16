@@ -42,6 +42,12 @@ presets:
         name: venafi-tpp
         key: password
 
+- labels:
+    preset-retry-flakey-tests: "true"
+  env:
+  - name: FLAKE_ATTEMPTS
+    value: "2"
+
 presubmits:
   jetstack/cert-manager:
 
@@ -228,6 +234,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -284,6 +291,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -340,6 +348,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -396,6 +405,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -451,6 +461,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -507,6 +518,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
