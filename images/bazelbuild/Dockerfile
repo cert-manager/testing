@@ -96,7 +96,7 @@ ARG BAZEL_CHANNEL=release
 ARG INSTALLER_VERSION_NAME="${BAZEL_VERSION}"
 
 RUN INSTALLER="bazel-${INSTALLER_VERSION_NAME}-installer-linux-x86_64.sh"; \
-    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER}" \
+    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER}"; \
     wget -q "${DOWNLOAD_URL}" && \
     chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
 
