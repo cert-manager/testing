@@ -48,7 +48,7 @@ postsubmits:
       preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-5d3fe7c-1.0.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -104,7 +104,7 @@ postsubmits:
       preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-5d3fe7c-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -157,7 +157,7 @@ postsubmits:
       preset-cert-manager-publish-bot-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-5d3fe7c-1.0.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
