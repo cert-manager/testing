@@ -54,6 +54,13 @@ cleanup_dind() {
     (set -x; cleanup_binfmt_misc || true)
 }
 
+if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
+    echo "Building writable DOCKER_CONFIG directory..."
+    tmpdir="$(mktemp -d)"
+    ln -s "${DOCKER_CONFIG}/config.json" "${tmpdir}/config.json"
+    export DOCKER_CONFIG="${tmpdir}"
+fi
+
 # Check if the job has opted-in to docker-in-docker availability.
 export DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-false}
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
