@@ -156,6 +156,11 @@ repos:
       target: both
       addedBy: prow
     - color: 0052cc
+      description: Indicates a PR related to cert-manager-csi
+      name: area/cert-manager-csi
+      target: both
+      addedBy: prow
+    - color: 0052cc
       description: Indicates a PR related to tarmak
       name: area/tarmak
       target: both

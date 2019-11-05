@@ -1,17 +1,18 @@
 presubmits:
   jetstack/cert-manager-csi:
 
-  - name: pull-cert-manager-csi
+  - name: pull-cert-manager-csi-verify
     always_run: true
     cluster: gke
-    context: pull-cert-manager-csi
+    context: pull-cert-manager-csi-verify
     max_concurrency: 8
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - ^master$
     labels:
       preset-service-account: "true"
+      preset-dind-enabled: "true"
     spec:
       containers:
       - image: golang:1.13.4
@@ -44,9 +45,9 @@ presubmits:
           type: Directory
 
   # kind based cert-manager-csi e2e job for Kubernetes v1.16, cert-manager v1.11
-  - name: pull-cert-manager-csi-e2e-v16-v11
+  - name: pull-cert-manager-csi-e2e-v1-16
     cluster: gke
-    context: pull-cert-manager-csi-e2e-v16-v11
+    context: pull-cert-manager-csi-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -54,13 +55,13 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - master
+    - ^master$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
     spec:
       containers:
-        - image: golang:1.13.4
+      - image: golang:1.13.4
         args:
         - hack/docker-start-wrapper.sh
         - make
