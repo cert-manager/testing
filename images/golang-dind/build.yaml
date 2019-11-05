@@ -4,3 +4,8 @@ name: golang-dind # Name of the image to be built
 images:
 - ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}
 - ${_REGISTRY}/${_NAME}:latest
+
+variants:
+  "1.13.4":
+    arguments:
+      GO_VERSION: "1.13.4"

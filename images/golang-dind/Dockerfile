@@ -13,8 +13,9 @@
 # limitations under the License.
 
 # Includes golang, docker-in-docker and gcloud
-FROM golang:1.12.1
-LABEL maintainer="joshua.vanleeuwen@jetstack.io" 
+ARG GO_VERSION
+FROM golang:"${GO_VERSION}"
+LABEL maintainer="joshua.vanleeuwen@jetstack.io"
 
 #
 # BEGIN: DOCKER IN DOCKER SETUP
