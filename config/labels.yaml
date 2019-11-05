@@ -6,7 +6,6 @@
 #     target: one of issues, prs, or both (also TBD)
 #     addedBy: human? prow plugin? other?
 ---
-
 repos:
   jetstack/cert-manager:
     labels:
@@ -73,6 +72,35 @@ repos:
       name: area/ingress-shim
       target: both
       addedBy: prow
+
+  jetstack/cert-manager-csi:
+    labels:
+    - color: 0052cc
+      description: Indicates a PR directly modifies the 'pkg/apis' directory
+      name: area/api
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR modifies deployment configuration
+      name: area/deploy
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR modifies CSI driver code
+      name: area/driver
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR modifies cert-manager and renewal code
+      name: area/certificate
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR modifies e2e testing code
+      name: area/testing
+      target: both
+      addedBy: prow
+
 
   jetstack/kube-oidc-proxy:
     labels:
