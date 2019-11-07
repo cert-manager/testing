@@ -47,8 +47,7 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
 # the pod logs, so we just comment out the call to it... :shrug:
 # TODO(benthelder): update docker version. This is pinned because of
 # https://github.com/kubernetes/test-infra/issues/6187
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends docker-ce=17.09.1~ce-0~debian && \
+RUN apt-get update && apt-get install -y --no-install-recommends docker-ce && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
 
 
@@ -93,3 +92,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     patch \
     && apt-get clean \
     && python -m pip install --upgrade pip setuptools wheel
+
+# Install bazel
+ARG BAZEL_VERSION
+ARG BAZEL_CHANNEL=release
+ARG INSTALLER_VERSION_NAME="${BAZEL_VERSION}"
+RUN INSTALLER="bazel-${INSTALLER_VERSION_NAME}-installer-linux-x86_64.sh"; \
+    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER}"; \
+    wget -q "${DOWNLOAD_URL}" && \
+    chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
