@@ -14,7 +14,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: node:8.16.2-alpine
+      - image: node:13.0.1
         args:
         - ./scripts/verify
         resources:
