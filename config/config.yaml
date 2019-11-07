@@ -206,6 +206,8 @@ tide:
   # Default tide config for all repos in the Jetstack org except cert-manager
   - orgs:
     - jetstack
+    repos:
+    - cert-manager/website
     excludedRepos:
     - jetstack/cert-manager
     labels:
