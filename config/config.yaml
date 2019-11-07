@@ -22,6 +22,15 @@ plank:
 branch-protection:
   allow_disabled_policies: true
   orgs:
+    cert-manager:
+      repos:
+        website:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
+            - pull-cert-manager-website-verify
+
     jetstack:
       # TODO: enforce dco check org-wide
       # protect: true

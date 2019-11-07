@@ -1,0 +1,27 @@
+presubmits:
+  cert-manager/website:
+
+  - name: pull-cert-manager-website-verify
+    always_run: true
+    cluster: gke
+    context: pull-cert-manager-website-verify
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^master$
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: node:8.16.2-alpine
+        args:
+        - ./scripts/verify
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
