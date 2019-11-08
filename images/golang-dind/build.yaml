@@ -3,8 +3,8 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.13.4":
     arguments:
+      BASE_IMAGE: "${_REGISTRY}/bazelbuild:latest-1.0.0"
       GO_VERSION: "1.13.4"
-      BAZEL_VERSION: "1.0.0"
 
 # Image names to be tagged and pushed
 images:

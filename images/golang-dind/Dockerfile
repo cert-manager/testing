@@ -13,8 +13,8 @@
 # limitations under the License.
 
 # Includes golang, docker-in-docker and gcloud
-ARG GO_VERSION
-FROM golang:"${GO_VERSION}"
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
 LABEL maintainer="joshua.vanleeuwen@jetstack.io"
 
 #
@@ -31,40 +31,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gnupg2 \
     software-properties-common \
     lsb-release
-
-# Add the Docker apt-repository
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg \
-    | apt-key add - && \
-    add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-    $(lsb_release -cs) stable"
-
-# Install Docker
-# TODO(bentheelder): the `sed` is a bit of a hack, look into alternatives.
-# Why this exists: `docker service start` on debian runs a `cgroupfs_mount` method,
-# We're already inside docker though so we can be sure these are already mounted.
-# Trying to remount these makes for a very noisy error block in the beginning of
-# the pod logs, so we just comment out the call to it... :shrug:
-# TODO(benthelder): update docker version. This is pinned because of
-# https://github.com/kubernetes/test-infra/issues/6187
-RUN apt-get update && apt-get install -y --no-install-recommends docker-ce && \
-    sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
-
-
-# Move Docker's storage location
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph"' | \
-    tee --append /etc/default/docker
-# NOTE this should be mounted and persisted as a volume ideally (!)
-# We will make a fallback one now just in case
-RUN mkdir /docker-graph
-
-# add custom docker cleanup binary
-# TODO
-# COPY ["barnacle/barnacle", "/usr/local/bin/"]
-
-#
-# END: DOCKER IN DOCKER SETUP
-#
 
 # Add new repos to install google-cloud-sdk
 RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" | \
@@ -93,11 +59,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && python -m pip install --upgrade pip setuptools wheel
 
-# Install bazel
-ARG BAZEL_VERSION
-ARG BAZEL_CHANNEL=release
-ARG INSTALLER_VERSION_NAME="${BAZEL_VERSION}"
-RUN INSTALLER="bazel-${INSTALLER_VERSION_NAME}-installer-linux-x86_64.sh"; \
-    DOWNLOAD_URL="https://releases.bazel.build/${BAZEL_VERSION}/${BAZEL_CHANNEL}/${INSTALLER}"; \
-    wget -q "${DOWNLOAD_URL}" && \
-    chmod +x "${INSTALLER}" && "./${INSTALLER}" && rm "${INSTALLER}"
+# install golang
+ARG GO_VERSION
+RUN wget -O go${GO_VERSION}.amd64.tar.gz https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz
+RUN tar -C /usr/local -xzf go${GO_VERSION}.amd64.tar.gz
+ENV PATH "/usr/local/go/bin:${PATH}"
