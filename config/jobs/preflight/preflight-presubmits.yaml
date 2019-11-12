@@ -1,0 +1,23 @@
+presubmits:
+  jetstack/preflight:
+
+  - name: pull-preflight-unit
+    cluster: gke
+    agent: kubernetes
+    decorate: true
+    always_run: true
+    max_concurrency: 8
+    spec:
+      containers:
+      - image: golang:1.12.7
+        args:
+        - make
+        - test
+        resources:
+          requests:
+            cpu: 500m
+            memory: 200Mi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
