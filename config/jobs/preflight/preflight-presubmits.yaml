@@ -9,7 +9,7 @@ presubmits:
     max_concurrency: 8
     spec:
       containers:
-      - image: golang:1.12.7
+      - image: golang:1.13.4
         args:
         - make
         - test
