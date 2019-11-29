@@ -1,0 +1,12 @@
+name: golang-nodejs # Name of the image to be built
+
+variants:
+  "1.13.4":
+    arguments:
+      BASE_IMAGE: "node:13.0.1"
+      GO_VERSION: "1.13.4"
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${GO_VERSION}
+- ${_REGISTRY}/${_NAME}:latest-${GO_VERSION}
