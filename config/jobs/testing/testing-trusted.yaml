@@ -122,6 +122,37 @@ postsubmits:
           capabilities:
             add: ["SYS_ADMIN"]
 
+  - name: post-testing-push-golang-nodejs
+    cluster: trusted
+    run_if_changed: '^images/golang-nodejs/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-image-deploy: "true"
+      preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/builder/ci-runner.sh
+        - images/golang-nodejs
+        - --confirm=true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+
   - name: post-testing-push-katacoda-lint
     cluster: trusted
     run_if_changed: '^images/katacoda-lint/'
