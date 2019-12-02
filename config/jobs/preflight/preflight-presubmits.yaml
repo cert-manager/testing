@@ -12,7 +12,7 @@ presubmits:
       - image: golang:1.13.4
         args:
         - make
-        - test
+        - ci-test
         resources:
           requests:
             cpu: 500m
