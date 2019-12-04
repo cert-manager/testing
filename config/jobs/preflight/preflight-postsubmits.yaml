@@ -1,0 +1,108 @@
+presets:
+- labels:
+    preset-preflight-publish-bot-credentials: "true"
+  env:
+  - name: DOCKER_CONFIG
+    value: /etc/pusher-docker-config
+  volumes:
+  - name: pusher-config
+    secret:
+      secretName: preflight-publish-bot
+  volumeMounts:
+  - name: pusher-config
+    mountPath: /etc/pusher-docker-config
+    readOnly: true
+
+postsubmits:
+  jetstack/preflight:
+
+  # Publish releases for tagged versions
+  - name: post-preflight-release
+    cluster: trusted
+    branches:
+    # Only run this job on vX.Y.Z tags
+    - ^v\d\.\d\.\d+(-(alpha|beta)\.\d+)?$
+    always_run: true
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-preflight-publish-bot-credentials: "true"
+      preset-deployer-github-token: "true"
+    spec:
+      containers:
+      - image: golang:1.13.4
+        args:
+        - make
+        - ci-publish
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 2Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # Build master branch
+  - name: post-preflight-release-canary
+    cluster: trusted
+    branches:
+    - master
+    always_run: true
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-preflight-publish-bot-credentials: "true"
+      preset-deployer-github-token: "true"
+    spec:
+      containers:
+      - image: golang:1.13.4
+        args:
+        - make
+        - ci-build
+        resources:
+          requests:
+            cpu: 1500m
+            memory: 2Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
