@@ -30,7 +30,7 @@ postsubmits:
       preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: golang:1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         args:
         - make
         - ci-publish
@@ -75,7 +75,7 @@ postsubmits:
       preset-deployer-github-token: "true"
     spec:
       containers:
-      - image: golang:1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:v20190320-1080345
         args:
         - make
         - ci-build
