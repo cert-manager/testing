@@ -1,0 +1,100 @@
+presubmits:
+  jetstack/cert-manager-csi:
+
+  - name: pull-cert-manager-csi-verify
+    always_run: true
+    cluster: gke
+    context: pull-cert-manager-csi-verify
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^master$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
+        args:
+        - runner
+        - make
+        - all
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+
+  # kind based cert-manager-csi e2e job for Kubernetes v1.16, cert-manager v1.12
+  - name: pull-cert-manager-csi-e2e-v1-16
+    cluster: gke
+    context: pull-cert-manager-csi-e2e-v1-16
+    # Match everything except PRs that only touch docs/
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^master$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: CERT_MANAGER_CSI_K8S_VERSION
+          value: "1.16.1"
+        - name: CERT_MANAGER_CSI_CERT_MANAGER_VERSION
+          value: "0.12.0"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"

@@ -48,6 +48,8 @@ branch-protection:
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-15
+            - pull-cert-manager-csi-verify
+            - pull-cert-manager-csi-e2e-v1-16
 
 sinker:
   resync_period: 1h
