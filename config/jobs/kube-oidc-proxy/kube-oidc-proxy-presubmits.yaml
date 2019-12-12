@@ -12,7 +12,7 @@ presubmits:
     - master
     spec:
       containers:
-      - image: golang:1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
         - make
         - all
@@ -32,7 +32,7 @@ presubmits:
     - master
     spec:
       containers:
-      - image: golang:1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
         - make
         - -C
@@ -61,6 +61,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
@@ -108,6 +109,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
@@ -155,6 +157,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
@@ -202,6 +205,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
@@ -249,6 +253,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
@@ -296,6 +301,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20191205-e920769-1.13.4
         args:
+        - runner
         - make
         - e2e
         env:
