@@ -38,7 +38,6 @@ branch-protection:
       #   contexts:
       #   - dco
       repos:
-        # TODO: required contexts on a per-branch basis
         cert-manager:
           protect: true
           required_status_checks:
@@ -48,6 +47,11 @@ branch-protection:
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-15
+        cert-manager-csi:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
             - pull-cert-manager-csi-verify
             - pull-cert-manager-csi-e2e-v1-16
 
