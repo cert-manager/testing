@@ -8,14 +8,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - bazel
@@ -27,8 +27,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-bazel-experimental
     always_run: false
@@ -39,7 +39,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -58,8 +58,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   # Job that runs the release tooling *without* actually publishing the built
   # assets. This gives us visibility on whether the release tool works.
@@ -71,14 +71,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -95,8 +95,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
@@ -109,7 +109,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -117,7 +117,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - make
@@ -131,8 +131,8 @@ presubmits:
           privileged: true
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-deps
     always_run: true
@@ -142,14 +142,14 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - make
@@ -160,8 +160,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-12
@@ -175,7 +175,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -183,9 +183,10 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -217,8 +218,8 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-e2e-v1-13
     cluster: gke
@@ -231,7 +232,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -239,9 +240,10 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -273,8 +275,8 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-e2e-v1-14
     cluster: gke
@@ -287,7 +289,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -295,9 +297,10 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -329,8 +332,8 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-e2e-v1-15
     cluster: gke
@@ -342,7 +345,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -350,9 +353,10 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -384,8 +388,8 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
 
   - name: pull-cert-manager-e2e-v1-16
     cluster: gke
@@ -398,7 +402,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.11
+    - release-0.12
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -406,9 +410,10 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-0.29.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -440,5 +445,5 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"

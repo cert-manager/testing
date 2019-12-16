@@ -8,7 +8,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.12
+    base_ref: release-0.13
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -50,5 +50,5 @@ periodics:
         type: Directory
     dnsConfig:
       options:
-        - name: ndots
-          value: "1"
+      - name: ndots
+        value: "1"
