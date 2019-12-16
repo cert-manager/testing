@@ -1,48 +1,20 @@
-presets:
-- labels:
-    preset-cert-manager-publish-bot-credentials: "true"
-  env:
-  - name: DOCKER_CONFIG
-    value: /etc/pusher-docker-config
-  volumes:
-  - name: pusher-config
-    secret:
-      secretName: cert-manager-publish-bot
-  volumeMounts:
-  - name: pusher-config
-    mountPath: /etc/pusher-docker-config
-    readOnly: true
-
-- labels:
-    preset-chart-museum-deploy-credentials: "true"
-  env:
-  - name: CHART_SERVICE_ACCOUNT
-    value: /etc/chart-museum-service-account/service-account.json
-  - name: GOOGLE_APPLICATION_CREDENTIALS
-    value: /etc/chart-museum-service-account/service-account.json
-  volumes:
-  - name: chart-deploy-config
-    secret:
-      secretName: chart-museum-deploy-key
-  volumeMounts:
-  - name: chart-deploy-config
-    mountPath: /etc/chart-museum-service-account
-    readOnly: true
-
 postsubmits:
   jetstack/cert-manager:
 
-  # Run postsubmit against the master branch
-  - name: post-cert-manager-release-canary
+  # Publish releases for v0.13.x
+  - name: post-cert-manager-release
     cluster: trusted
     branches:
-    - master
+    # Only run this job on v0.12.x tags
+    - ^v?0\.13\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cert-manager-publish-bot-credentials: "true"
+      preset-chart-museum-deploy-credentials: "true"
+      preset-deployer-github-token: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20191016-eff358a-1.0.0
@@ -54,7 +26,8 @@ postsubmits:
         - //hack/release
         - --
         - --images
-        - --app-version=canary
+        - --chart
+        - --manifests
         - --publish
         resources:
           requests:
@@ -81,5 +54,5 @@ postsubmits:
           type: Directory
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
