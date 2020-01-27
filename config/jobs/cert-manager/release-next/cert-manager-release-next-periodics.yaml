@@ -8,7 +8,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.13
+    base_ref: release-0.14
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
