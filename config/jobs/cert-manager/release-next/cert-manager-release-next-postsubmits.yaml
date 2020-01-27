@@ -1,12 +1,12 @@
 postsubmits:
   jetstack/cert-manager:
 
-  # Publish releases for v0.13.x
+  # Publish releases for v0.14.x
   - name: post-cert-manager-release
     cluster: trusted
     branches:
-    # Only run this job on v0.12.x tags
-    - ^v?0\.13\.\d+(-(alpha|beta)\.\d+)?$
+    # Only run this job on v0.14.x tags
+    - ^v?0\.14\.\d+(-(alpha|beta)\.\d+)?$
     always_run: true
     decorate: true
     labels:
