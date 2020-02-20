@@ -22,7 +22,7 @@ periodics:
       - name: ALGOLIA_WRITE_KEY
         valueFrom:
           secretKeyRef:
-            name: cert-mamager-website-algolia-key
+            name: cert-manager-website-algolia-key
             key: ALGOLIA_WRITE_KEY
       resources:
         requests:
