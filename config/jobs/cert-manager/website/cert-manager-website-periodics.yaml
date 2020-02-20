@@ -1,0 +1,34 @@
+periodics:
+
+- name: cert-manager-website-update-index
+  cluster: trusted
+  interval: 12h
+  cluster: gke
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: website
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: "eu.gcr.io/jetstack-build-infra-images/golang-nodejs:20191129-c49853e-1.13.4"
+      args:
+      - bash
+      - scripts/index
+      env:
+      - name: ALGOLIA_WRITE_KEY
+        valueFrom:
+          secretKeyRef:
+            name: cert-manager-website-algolia-key
+            key: ALGOLIA_WRITE_KEY
+      resources:
+        requests:
+          cpu: 1
+          memory: 2Gi
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
