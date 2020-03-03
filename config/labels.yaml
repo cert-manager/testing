@@ -482,3 +482,27 @@ default:
     target: both
     prowPlugin: milestonestatus
     addedBy: "[@cert-manager/milestone-maintainers](https://github.com/orgs/cert-manager/teams/milestone-maintainers/members)"
+  - color: ffaa00
+    description: Denotes a PR that should be squashed by tide when it merges.
+    name: tide/merge-method-squash
+    target: prs
+    addedBy: humans
+    previously:
+      - name: tide/squash
+  - color: ffaa00
+    description: Denotes a PR that should be rebased by tide when it merges.
+    name: tide/merge-method-rebase
+    target: prs
+    addedBy: humans
+  - color: ffaa00
+    description: Denotes a PR that should use a standard merge by tide when it merges.
+    name: tide/merge-method-merge
+    target: prs
+    addedBy: humans
+  - color: e11d21
+    description: Denotes an issue that blocks the tide merge queue for a branch while it is open.
+    name: tide/merge-blocker
+    target: issues
+    addedBy: humans
+    previously:
+      - name: merge-blocker
