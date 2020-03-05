@@ -1,7 +1,5 @@
 approvers:
-- simonswine
-- munnerz
-reviewers:
+- meyskens
 - munnerz
 labels:
 - area/testing
