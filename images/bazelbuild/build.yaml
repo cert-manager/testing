@@ -20,7 +20,8 @@ variants:
     # Specify build arguments for this variant
     arguments:
       BAZEL_VERSION: "1.0.0"
-      DOCKER_VERSION: 5:18.09.4~3-0~debian-stretch
+      DEBIAN_VERSION: buster
+      DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
 
 # Image names to be tagged and pushed
 images:
