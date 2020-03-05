@@ -5,14 +5,14 @@ name: bazelbuild # Name of the image to be built
 variants:
   experimental:
     arguments:
-      BAZEL_VERSION: "2.0.0"
+      BAZEL_VERSION: "2.2.0"
       DEBIAN_VERSION: buster
       DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
 
-  "2.0.0":
+  "2.2.0":
     # Specify build arguments for this variant
     arguments:
-      BAZEL_VERSION: "2.0.0"
+      BAZEL_VERSION: "2.2.0"
       DOCKER_VERSION: 5:18.09.4~3-0~debian-stretch
 
   "1.0.0":
