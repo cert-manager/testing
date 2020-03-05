@@ -106,6 +106,13 @@ config_updater:
     config/jobs/**/*.yaml:
       name: job-config
 
+require_matching_label:
+- missing_label: needs-kind
+  org: jetstack
+  repo: cert-manager
+  prs: true
+  regexp: ^kind/
+
 plugins:
 
   jetstack:
