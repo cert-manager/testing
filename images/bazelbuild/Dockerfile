@@ -50,7 +50,10 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
 ARG DOCKER_VERSION="17.09.1~ce-0~debian"
 RUN apt-get update && \
     apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
-    sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
+    sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
+    && update-alternatives --set iptables /usr/sbin/iptables-legacy \
+    && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+
 
 # Move Docker's storage location & enable experimental features
 RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental"' | \
