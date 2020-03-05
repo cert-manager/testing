@@ -18,7 +18,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-a23a41b-1.0.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-1.0.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
