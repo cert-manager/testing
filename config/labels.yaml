@@ -372,11 +372,17 @@ default:
     target: prs
     prowPlugin: trigger
     addedBy: prow
-  - color: BDBDBD
+  - color: e11d21
     description: Indicates a PR cannot be merged because it has merge conflicts with HEAD.
     name: needs-rebase
     target: prs
     prowPlugin: needs-rebase
+    addedBy: prow
+  - color: ededed
+    description: Indicates a PR lacks a `kind/foo` label and requires one.
+    name: needs-kind
+    target: prs
+    prowPlugin: require-matching-label
     addedBy: prow
   - color: fef2c0
     description: Lowest priority. Possibly useful, but not yet enough support to actually get it done. # These are mostly place-holders for potentially good ideas, so that they don't get completely forgotten, and can be referenced /deduped every time they come up.
