@@ -114,44 +114,6 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # Job that runs the release tooling *without* actually publishing the built
-  # assets. This gives us visibility on whether the release tool works.
-  - name: pull-cert-manager-release-smoke
-    always_run: false
-    cluster: gke
-    context: pull-cert-manager-release-smoke
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    - release-0.14
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
-        args:
-        # Wrap the release script with the runner so we can use docker-in-docker
-        - runner
-        - bazel
-        - run
-        - //hack/release
-        - --
-        - --images
-        - --chart
-        - --manifests
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
   # See https://github.com/helm/chart-testing/issues/53
@@ -220,6 +182,62 @@ presubmits:
             value: "1"
 
   # kind based cert-manager e2e job
+  - name: pull-cert-manager-e2e-v1-11
+    cluster: gke
+    context: pull-cert-manager-e2e-v1-11
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-0.14
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.11"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
   - name: pull-cert-manager-e2e-v1-12
     cluster: gke
     context: pull-cert-manager-e2e-v1-12
@@ -498,3 +516,59 @@ presubmits:
         options:
           - name: ndots
             value: "1"
+
+  - name: pull-cert-manager-e2e-v1-17
+    cluster: gke
+    context: pull-cert-manager-e2e-v1-17
+    always_run: true
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-0.14
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.17"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
