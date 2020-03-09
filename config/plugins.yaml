@@ -42,6 +42,14 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
+  cert-manager:
+  - name: needs-rebase
+    events:
+    - pull_request
+  - name: cherrypick
+    events:
+    - issue_comment
+    - pull_request
 
 # heart:
 #   adorees:
@@ -178,9 +186,6 @@ plugins:
   - release-note
 
   jetstack/tarmak:
-  - release-note
-
-  jetstack/navigator:
   - release-note
 
   jetstack/testing:
