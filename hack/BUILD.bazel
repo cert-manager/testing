@@ -28,7 +28,7 @@ sh_test(
 
 genrule(
     name = "getkazel",
-    srcs = ["@io_kubernetes_build//kazel"],
+    srcs = ["@io_k8s_repo_infra//cmd/kazel"],
     outs = ["kazel"],
     cmd = "cp $(SRCS) $@",
     visibility = ["//visibility:public"],

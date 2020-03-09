@@ -17,35 +17,58 @@ load("@bazel_skylib//lib:versions.bzl", "versions")
 versions.check(minimum_bazel_version = "0.23.0")
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
 http_archive(
     name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.18.2/rules_go-0.18.2.tar.gz"],
-    sha256 = "31f959ecf3687f6e0bb9d01e1e7a7153367ecd82816c9c0ae149cd0e5a92bf8c",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.22.1/rules_go-v0.22.1.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.22.1/rules_go-v0.22.1.tar.gz",
+    ],
+    sha256 = "e6a6c016b0663e06fa5fccf1cd8152eab8aa8180c583ec20c872f4f9953a7ac5",
 )
 
 http_archive(
     name = "bazel_gazelle",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.17.0/bazel-gazelle-0.17.0.tar.gz"],
-    sha256 = "3c681998538231a2d24d0c07ed5a7658cb72bfb5fd4bf9911157c0e9ac6a2687",
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+    ],
+    sha256 = "d8c45ee70ec39a57e7a05e5027c32b1576cc7f16d9dd37135b0eddde45cf1b10",
 )
+
 load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
+
 go_rules_dependencies()
+
 go_register_toolchains()
+
 load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
+
 gazelle_dependencies()
 
-git_repository(
-    name = "io_kubernetes_build",
-    commit = "84d52408a061e87d45aebf5a0867246bdf66d180",
-    remote = "https://github.com/kubernetes/repo-infra.git",
-    shallow_since = "1535407978 -0700",
+http_archive(
+    name = "io_k8s_repo_infra",
+    strip_prefix = "repo-infra-0.0.2",
+    sha256 = "774e160ba1a2a66a736fdc39636dca799a09df015ac5e770a46ec43487ec5708",
+    urls = [
+        "https://github.com/kubernetes/repo-infra/archive/v0.0.2.tar.gz",
+    ],
 )
+
+load("@io_k8s_repo_infra//:load.bzl", "repositories")
+
+repositories()
+
+load("@io_k8s_repo_infra//:repos.bzl", "configure", repo_infra_go_repositories = "go_repositories")
+
+configure() # see repos.bzl for optional args
+repo_infra_go_repositories()
 
 git_repository(
     name = "io_bazel_rules_docker",
     remote = "https://github.com/bazelbuild/rules_docker.git",
-    commit = "3732c9d05315bef6a3dbd195c545d6fea3b86880",
-    shallow_since = "1547471117 +0100",
+    commit = "3772262910d1ac63563e5f1758f07df1f7857442",
+    shallow_since = "1579194217 -0800",
 )
 
 load("@io_bazel_rules_docker//container:container.bzl", "container_pull")
@@ -74,12 +97,23 @@ load(
 
 _go_repositories()
 
-git_repository(
+# This requires rules_docker to be fully instantiated before
+# it is pulled in.
+# Download the rules_k8s repository at release v0.3.1
+http_archive(
     name = "io_bazel_rules_k8s",
-    commit = "c861e4ea5a0b34e17fb682f60fa78a9c85050519",
-    remote = "https://github.com/bazelbuild/rules_k8s.git",
-    shallow_since = "1535029445 -0400",
+    sha256 = "cc75cf0d86312e1327d226e980efd3599704e01099b58b3c2fc4efe5e321fcd9",
+    strip_prefix = "rules_k8s-0.3.1",
+    urls = ["https://github.com/bazelbuild/rules_k8s/releases/download/v0.3.1/rules_k8s-v0.3.1.tar.gz"],
 )
+
+load("@io_bazel_rules_k8s//k8s:k8s.bzl", "k8s_repositories")
+
+k8s_repositories()
+
+load("@io_bazel_rules_k8s//k8s:k8s_go_deps.bzl", k8s_go_deps = "deps")
+
+k8s_go_deps()
 
 http_archive(
     name = "yaml",
