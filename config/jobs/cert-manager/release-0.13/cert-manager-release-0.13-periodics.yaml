@@ -16,6 +16,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'false'
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-1.0.0

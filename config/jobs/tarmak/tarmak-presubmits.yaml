@@ -8,6 +8,8 @@
   decorate: true
   labels:
     preset-service-account: "true"
+  annotations:
+    testgrid-create-test-group: 'false'
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/tarmak-ruby:v20180831-4ff2528-2.4.4
@@ -41,6 +43,8 @@
   labels:
     preset-service-account: "true"
     libvirt-socket: "true"
+  annotations:
+    testgrid-create-test-group: 'false'
   spec:
     nodeSelector:
       node-role.kubernetes.io/libvirt: ""
