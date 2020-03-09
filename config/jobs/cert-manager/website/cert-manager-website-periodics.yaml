@@ -14,7 +14,7 @@ periodics:
   annotations:
     testgrid-dashboards: jetstack-cert-manager-website
     testgrid-alert-email: james+alerts@munnelly.eu
-    description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
+    description: Updates the algolia search index for the cert-manager website
   spec:
     containers:
     - image: "eu.gcr.io/jetstack-build-infra-images/golang-nodejs:20191129-c49853e-1.13.4"
