@@ -1,4 +1,4 @@
-load("//prow:prow.bzl", "release", "component", "MULTI_KIND", "BUILD_CONTEXT")
+load("//prow:prow.bzl", "BUILD_CONTEXT", "MULTI_KIND", "component", "release")
 
 # Usage:
 #   bazel run //prow/cluster:production.apply
