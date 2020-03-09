@@ -1,23 +1,25 @@
 plank:
   job_url_template: 'https://prow.build-infra.jetstack.net/view/gcs/jetstack-logs/{{if eq .Spec.Type "presubmit"}}pr-logs/pull{{else if eq .Spec.Type "batch"}}pr-logs/pull{{else}}logs{{end}}{{if .Spec.Refs}}{{if ne .Spec.Refs.Org ""}}/{{.Spec.Refs.Org}}_{{.Spec.Refs.Repo}}{{end}}{{end}}{{if eq .Spec.Type "presubmit"}}/{{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}{{else if eq .Spec.Type "batch"}}/batch{{end}}/{{.Spec.Job}}/{{.Status.BuildID}}/'
   report_template: '[Full PR test history](https://prow.build-infra.jetstack.net/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://jetstack-build-infra.appspot.com/pr/{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/flaky-tests.md#filing-issues-for-flaky-tests) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
-  job_url_prefix: https://prow.build-infra.jetstack.net/view/gcs/
+  job_url_prefix_config:
+    '*': https://prow.build-infra.jetstack.net/view/gcs/
   pod_pending_timeout: 60m
-  default_decoration_config:
-    timeout: 7200000000000 # 2h
-    grace_period: 15000000000 # 15s
-    utility_images:
-      clonerefs: "gcr.io/k8s-prow/clonerefs:v20190817-700152258"
-      initupload: "gcr.io/k8s-prow/initupload:v20190817-700152258"
-      entrypoint: "gcr.io/k8s-prow/entrypoint:v20190817-700152258"
-      sidecar: "gcr.io/k8s-prow/sidecar:v20190817-700152258"
-    gcs_configuration:
-      bucket: "jetstack-logs"
-      path_strategy: "legacy"
-      # Leave this as k/k so that all logs use org_repo in the path
-      default_org: "kubernetes"
-      default_repo: "kubernetes"
-    gcs_credentials_secret: "service-account"
+  default_decoration_configs:
+    '*':
+      timeout: 7200000000000 # 2h
+      grace_period: 15000000000 # 15s
+      utility_images:
+        clonerefs: "gcr.io/k8s-prow/clonerefs:v20200309-37d3346c1"
+        initupload: "gcr.io/k8s-prow/initupload:v20200309-37d3346c1"
+        entrypoint: "gcr.io/k8s-prow/entrypoint:v20200309-37d3346c1"
+        sidecar: "gcr.io/k8s-prow/sidecar:v20200309-37d3346c1"
+      gcs_configuration:
+        bucket: "jetstack-logs"
+        path_strategy: "legacy"
+        # Leave this as k/k so that all logs use org_repo in the path
+        default_org: "kubernetes"
+        default_repo: "kubernetes"
+      gcs_credentials_secret: "service-account"
 
 branch-protection:
   allow_disabled_policies: true
@@ -206,22 +208,39 @@ presets:
     value: /etc/bazel-cache-credentials/credentials.json
 
 tide:
-  pr_status_base_url: https://prow.build-infra.jetstack.net/pr
+  pr_status_base_urls:
+    '*': https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
   # Default tide config for all repos in the Jetstack org except cert-manager
   - orgs:
     - jetstack
-    repos:
-    - cert-manager/website
+    - cert-manager
     excludedRepos:
     - jetstack/cert-manager
+    - jetstack/tarmak
+    - jetstack/cert-manager-csi
     labels:
     - lgtm
     - approved
     - "dco-signoff: yes"
     missingLabels:
-    - needs-ok-to-test
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+  # Repositories that enable the release-notes plugin (except cert-manager)
+  - repos:
+    - jetstack/tarmak
+    - jetstack/cert-manager-csi
+    labels:
+    - lgtm
+    - approved
+    - "dco-signoff: yes"
+    missingLabels:
     - do-not-merge
     - do-not-merge/blocked-paths
     - do-not-merge/cherry-pick-not-approved
@@ -238,7 +257,6 @@ tide:
     - approved
     - "dco-signoff: yes"
     missingLabels:
-    - needs-ok-to-test
     - do-not-merge
     - do-not-merge/blocked-paths
     - do-not-merge/cherry-pick-not-approved
