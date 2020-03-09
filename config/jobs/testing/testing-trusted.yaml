@@ -60,6 +60,30 @@ presets:
 postsubmits:
   jetstack/testing:
 
+  - name: post-testing-upload-testgrid-config
+    cluster: trusted
+    run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
+    decorate: true
+    branches:
+    - master
+    labels:
+      preset-deployer-github-token: "true"
+    annotations:
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+    spec:
+      containers:
+      - image: gcr.io/k8s-prow/transfigure
+        command:
+        - /transfigure.sh
+        args:
+        - /etc/github/token
+        - ./config/config.yaml # path to prow config.yaml
+        - ./config/jobs/ # path to prow job definitions
+        - ./config/testgrid/dashboards.yaml # path to testgrid config
+        - jetstack # name of the directory containing our testgrid configs
+        - jetstack/test-infra
+
   - name: post-testing-push-bazelbuild
     cluster: trusted
     run_if_changed: '^images/bazelbuild/'
@@ -73,6 +97,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'bazelbuild' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -104,6 +133,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'golang-dind' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -135,6 +169,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'golang-nodejs' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -166,6 +205,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'katacoda-lint' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -197,6 +241,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'tarmak-ruby' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -228,6 +277,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'tarmak-sphinx-docs' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1
@@ -259,6 +313,11 @@ postsubmits:
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: james+alerts@munnelly.eu
+      description: Build and push the 'terraform-google-gke-cluster' image
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20190925-a5657ed-0.24.1

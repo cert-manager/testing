@@ -79,3 +79,23 @@ presubmits:
           privileged: true
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
+
+  - name: pull-testing-check-testgrid-config
+    decorate: true
+    cluster: gke
+    run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
+    branches:
+    - master
+    annotations:
+      testgrid-create-test-group: "false"
+    spec:
+      containers:
+      - image: gcr.io/k8s-prow/transfigure
+        command:
+        - /transfigure.sh
+        args:
+        - test # run in test mode
+        - ./config/config.yaml # path to prow config.yaml
+        - ./config/jobs/ # path to prow job definitions
+        - ./config/testgrid/dashboards.yaml # path to testgrid config
+        - jetstack # name of the directory containing our testgrid configs

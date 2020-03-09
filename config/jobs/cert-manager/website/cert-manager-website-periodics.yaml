@@ -3,7 +3,6 @@ periodics:
 - name: cert-manager-website-update-index
   cluster: trusted
   interval: 12h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -12,6 +11,10 @@ periodics:
     base_ref: master
   labels:
     preset-service-account: "true"
+  annotations:
+    testgrid-dashboards: jetstack-cert-manager-website
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
   spec:
     containers:
     - image: "eu.gcr.io/jetstack-build-infra-images/golang-nodejs:20191129-c49853e-1.13.4"

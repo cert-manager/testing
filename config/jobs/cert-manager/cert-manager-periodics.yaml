@@ -13,6 +13,10 @@ periodics:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+    description: Runs 'bazel test //...'
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -42,6 +46,11 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-bazel-scratch-dir: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-experimental
@@ -76,6 +85,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -129,6 +143,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -183,6 +202,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -237,6 +261,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -291,6 +320,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -345,6 +379,11 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
@@ -391,6 +430,11 @@ periodics:
   - org: jetstack
     repo: cert-manager
     base_ref: master
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"

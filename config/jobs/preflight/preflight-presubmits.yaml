@@ -7,6 +7,8 @@ presubmits:
     decorate: true
     always_run: true
     max_concurrency: 8
+    annotations:
+      testgrid-create-test-group: 'false'
     spec:
       containers:
       - image: golang:1.13.4
