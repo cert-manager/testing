@@ -1,0 +1,17 @@
+# Dashboard Group
+dashboard_groups:
+- name: jetstack
+  dashboard_names:
+  - jetstack-cert-manager-master
+  - jetstack-cert-manager-release-blocking
+  - jetstack-cert-manager-presubmits-blocking
+  - jetstack-cert-manager-website
+  - jetstack-testing-janitors
+
+# Dashboards
+dashboards:
+- name: jetstack-cert-manager-master
+- name: jetstack-cert-manager-release-blocking
+- name: jetstack-cert-manager-presubmits-blocking
+- name: jetstack-cert-manager-website
+- name: jetstack-testing-janitors
