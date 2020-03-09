@@ -3,7 +3,6 @@ periodics:
 - name: cert-manager-website-update-index
   cluster: trusted
   interval: 12h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
