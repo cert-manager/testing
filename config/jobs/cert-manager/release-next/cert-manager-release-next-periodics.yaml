@@ -23,7 +23,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
