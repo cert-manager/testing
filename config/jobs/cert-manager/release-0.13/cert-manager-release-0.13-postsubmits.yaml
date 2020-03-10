@@ -19,7 +19,7 @@ postsubmits:
       testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200305-35c2a27-1.0.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-1.0.0
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
