@@ -82,7 +82,9 @@ postsubmits:
         - ./config/jobs/ # path to prow job definitions
         - ./config/testgrid/dashboards.yaml # path to testgrid config
         - jetstack # name of the directory containing our testgrid configs
-        - jetstack/test-infra
+        - test-infra # name of jetstack-bot's fork of test-infra
+        - jetstack-bot # username of the git user (used in commits)
+        - tech@jetstack.io # email of the git user (used in commits)
 
   - name: post-testing-push-bazelbuild
     cluster: trusted
