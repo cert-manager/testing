@@ -84,7 +84,7 @@ postsubmits:
         - jetstack # name of the directory containing our testgrid configs
         - test-infra # name of jetstack-bot's fork of test-infra
         - jetstack-bot # username of the git user (used in commits)
-        - tech@jetstack.io # email of the git user (used in commits)
+        - tech+github-bot@jetstack.io # email of the git user (used in commits)
 
   - name: post-testing-push-bazelbuild
     cluster: trusted
