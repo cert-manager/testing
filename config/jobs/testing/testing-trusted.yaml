@@ -68,6 +68,7 @@ postsubmits:
     - master
     labels:
       preset-deployer-github-token: "true"
+      preset-bazel-scratch-dir: "true"
     annotations:
       testgrid-dashboards: jetstack-testing-janitors
       testgrid-alert-email: james+alerts@munnelly.eu

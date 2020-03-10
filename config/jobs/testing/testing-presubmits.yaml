@@ -84,6 +84,9 @@ presubmits:
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
     branches:
     - master
+    labels:
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     annotations:
       testgrid-create-test-group: "false"
     spec:
