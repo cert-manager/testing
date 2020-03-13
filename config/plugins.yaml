@@ -83,7 +83,7 @@ repo_milestone:
 
 milestone_applier:
   jetstack/cert-manager:
-    master: v0.14
+    master: v0.15
     release-0.14: v0.14
     release-0.13: v0.13
     release-0.12: v0.12
@@ -92,10 +92,13 @@ milestone_applier:
     release-0.9: v0.9
     release-0.8: v0.8
   cert-manager/website:
-    # cert-manager/website uses master branch for 'current' version and a
-    # release branch for the 'next' version
-    master: v0.13
-    release-0.14: v0.14
+    # cert-manager/website uses master branch for 'current' version and the
+    # release-next branch for the 'next' version
+    release-next: v0.15
+    master: v0.14
+    # Older versions are archived into named release branches
+    release-0.13: v0.13
+    release-0.12: v0.12
   jetstack/kube-oidc-proxy:
     master: v0.2
     release-0.1: v0.1

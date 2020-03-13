@@ -15,7 +15,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+    testgrid-dashboards: jetstack-cert-manager-master
     description: Runs 'bazel test //...'
   spec:
     containers:
