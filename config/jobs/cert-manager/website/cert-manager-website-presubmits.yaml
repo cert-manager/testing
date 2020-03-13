@@ -10,6 +10,7 @@ presubmits:
     decorate: true
     branches:
     - ^master$
+    - ^release-next$
     labels:
       preset-service-account: "true"
     spec:
