@@ -561,7 +561,6 @@ presubmits:
     cluster: gke
     context: pull-cert-manager-e2e-v1-17
     always_run: true
-    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
