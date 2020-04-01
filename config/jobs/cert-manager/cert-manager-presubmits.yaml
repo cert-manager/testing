@@ -637,7 +637,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200121-1a8954b-1.0.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
         args:
         - runner
         - devel/ci-run-e2e.sh
