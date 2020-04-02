@@ -650,6 +650,8 @@ presubmits:
           value: "3.11"
         - name: IS_OPENSHIFT
           value: "true"
+        - name: EXTRA_DOCKER_OPTS
+          value: "--insecure-registries='172.30.0.0/16'"
         securityContext:
           privileged: true
           capabilities:
