@@ -71,7 +71,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - bazel
@@ -107,7 +107,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-experimental
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-experimental
         args:
         - runner
         - bazel
@@ -146,7 +146,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - make
@@ -183,7 +183,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - make
@@ -223,7 +223,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -283,7 +283,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -343,7 +343,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -403,7 +403,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -462,7 +462,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -522,7 +522,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -581,7 +581,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - hack/ci/run-e2e-kind.sh
@@ -637,7 +637,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200310-84c402b-2.2.0
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200402-ac530d0-2.2.0
         args:
         - runner
         - devel/ci-run-e2e.sh
