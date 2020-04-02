@@ -61,6 +61,10 @@ if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
     export DOCKER_CONFIG="${tmpdir}"
 fi
 
+if [[ "${EXTRA_DOCKER_OPTS:-}" != "" ]]; then
+    echo "DOCKER_OPTS=\"\$\{DOCKER_OPTS\} ${EXTRA_DOCKER_OPTS}\"">>/etc/default/docker
+fi
+
 # Check if the job has opted-in to docker-in-docker availability.
 export DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-false}
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
