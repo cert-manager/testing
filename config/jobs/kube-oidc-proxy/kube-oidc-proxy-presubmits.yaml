@@ -46,7 +46,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-11
     context: pull-kube-oidc-proxy-e2e-v1-11
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: true
@@ -94,7 +93,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-12
     context: pull-kube-oidc-proxy-e2e-v1-12
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: true
@@ -142,7 +140,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-13
     context: pull-kube-oidc-proxy-e2e-v1-13
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: true
@@ -190,7 +187,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-14
     context: pull-kube-oidc-proxy-e2e-v1-14
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: true
@@ -238,7 +234,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-15
     context: pull-kube-oidc-proxy-e2e-v1-15
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: true
@@ -286,7 +281,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-16
     context: pull-kube-oidc-proxy-e2e-v1-16
-    # Match everything except PRs that only touch docs/
     always_run: false
     cluster: gke
     optional: false
@@ -334,10 +328,9 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-17
     context: pull-kube-oidc-proxy-e2e-v1-17
-    # Match everything except PRs that only touch docs/
-    always_run: true
+    always_run: false
     cluster: gke
-    optional: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -382,7 +375,6 @@ presubmits:
   # kind based kube-oidc-proxy e2e job
   - name: pull-kube-oidc-proxy-e2e-v1-18
     context: pull-kube-oidc-proxy-e2e-v1-18
-    # Match everything except PRs that only touch docs/
     always_run: true
     cluster: gke
     optional: false
