@@ -62,7 +62,7 @@ if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
 fi
 
 if [[ "${EXTRA_DOCKER_OPTS:-}" != "" ]]; then
-    echo "DOCKER_OPTS=\"\$\{DOCKER_OPTS\} ${EXTRA_DOCKER_OPTS}\"">>/etc/default/docker
+    echo "DOCKER_OPTS=\"\${DOCKER_OPTS} ${EXTRA_DOCKER_OPTS}\"">>/etc/default/docker
 fi
 
 # Check if the job has opted-in to docker-in-docker availability.
