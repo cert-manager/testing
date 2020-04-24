@@ -68,6 +68,11 @@ repos:
       target: both
       addedBy: prow
     - color: 0052cc
+      description: Indicates a PR or issue relates to the cainjector component
+      name: area/cainjector
+      target: both
+      addedBy: prow
+    - color: 0052cc
       description: Indicates a PR or issue relates to the ingress-shim 'auto-certificate' component
       name: area/ingress-shim
       target: both
