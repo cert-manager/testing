@@ -19,7 +19,7 @@ periodics:
     description: Runs 'bazel test //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - bazel
@@ -53,7 +53,7 @@ periodics:
     description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-experimental
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-experimental
       args:
       - runner
       - bazel
@@ -92,7 +92,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -150,7 +150,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -209,7 +209,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -268,7 +268,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -327,7 +327,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -386,7 +386,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
@@ -444,7 +444,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200407-37ac701-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-8dbfcd2-2.2.0
       args:
       - runner
       - hack/ci/run-e2e-kind.sh
