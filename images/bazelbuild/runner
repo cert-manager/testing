@@ -52,6 +52,10 @@ cleanup_dind() {
     echo "Cleaning up binfmt_misc ..."
     # note: we run this in a subshell so we can trace it for now
     (set -x; cleanup_binfmt_misc || true)
+    echo "Cleaning up docker containers ..."
+    docker ps -aq | xargs -r docker rm -f || true
+    echo "Stopping docker ..."
+    service docker stop || true
 }
 
 if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
