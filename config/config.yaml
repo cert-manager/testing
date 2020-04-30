@@ -252,6 +252,29 @@ tide:
   # Maintain separate cert-manager configuration to make it easy to enable code freeze
   - repos:
     - jetstack/cert-manager
+    excludedBranches:
+    - master
+    - release-0.15
+    labels:
+    - lgtm
+    - approved
+    - "dco-signoff: yes"
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/release-note-label-needed
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    - needs-kind
+  - repos:
+    - jetstack/cert-manager
+    includedBranches:
+    - master
+    - release-0.15
+    milestone: v0.15
     labels:
     - lgtm
     - approved
