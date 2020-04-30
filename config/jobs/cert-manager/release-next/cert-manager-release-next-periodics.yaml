@@ -478,3 +478,61 @@ periodics:
       options:
       - name: ndots
         value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-18
+  interval: 2h
+  cluster: gke
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: release-0.15
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: james+alerts@munnelly.eu
+    description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+      args:
+      - runner
+      - hack/ci/run-e2e-kind.sh
+      resources:
+        requests:
+          cpu: 6
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.18"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
