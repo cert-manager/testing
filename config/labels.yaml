@@ -77,6 +77,11 @@ repos:
       name: area/ingress-shim
       target: both
       addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR or issue relates to the cert-manager-ctl CLI component
+      name: area/ctl
+      target: both
+      addedBy: prow
 
   jetstack/cert-manager-csi:
     labels:
