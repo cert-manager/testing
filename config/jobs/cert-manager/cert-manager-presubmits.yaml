@@ -60,7 +60,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -96,7 +96,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -134,7 +134,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -172,7 +172,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -208,7 +208,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -268,7 +268,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -328,7 +328,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -388,7 +388,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -447,7 +447,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -507,7 +507,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -566,7 +566,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -626,7 +626,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -687,7 +687,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -748,7 +748,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-0.15
+    - release-0.16
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"

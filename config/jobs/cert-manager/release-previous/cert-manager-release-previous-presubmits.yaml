@@ -9,7 +9,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -42,7 +42,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -77,7 +77,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -112,7 +112,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -145,7 +145,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -202,7 +202,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -316,7 +316,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -372,7 +372,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -429,7 +429,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -480,13 +480,13 @@ presubmits:
   - name: pull-cert-manager-e2e-v1-17
     cluster: gke
     context: pull-cert-manager-e2e-v1-17
-    always_run: true
+    always_run: false
     optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-0.14
+    - release-0.15
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -510,6 +510,63 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.17"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-v1-18
+    cluster: gke
+    context: pull-cert-manager-e2e-v1-18
+    optional: false
+    always_run: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-0.15
+    annotations:
+      testgrid-create-test-group: 'false'
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+        args:
+        - runner
+        - hack/ci/run-e2e-kind.sh
+        resources:
+          requests:
+            cpu: 6
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.18"
         securityContext:
           privileged: true
           capabilities:
