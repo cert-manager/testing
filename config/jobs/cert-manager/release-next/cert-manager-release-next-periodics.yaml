@@ -8,7 +8,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
@@ -16,6 +16,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs 'bazel test //...'
   spec:
     containers:
@@ -42,14 +43,14 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
     containers:
@@ -77,7 +78,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -88,7 +89,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
   spec:
     containers:
@@ -135,7 +136,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -146,7 +147,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
   spec:
     containers:
@@ -194,7 +195,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -205,7 +206,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
   spec:
     containers:
@@ -253,7 +254,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -264,7 +265,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
   spec:
     containers:
@@ -312,7 +313,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -323,7 +324,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
   spec:
     containers:
@@ -371,7 +372,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -382,7 +383,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
@@ -429,11 +430,11 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
   labels:
     preset-service-account: "true"
@@ -487,11 +488,11 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.15
+    base_ref: release-0.16
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
   labels:
     preset-service-account: "true"
