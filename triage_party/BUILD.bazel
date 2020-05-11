@@ -1,0 +1,22 @@
+load("//prow:prow.bzl", "component", "release")
+
+# Usage:
+#   bazel run //triage_party:production.apply
+release(
+    "production",
+    component("triageparty", "deployment", "configmap", "service", "ingress"),
+)
+
+filegroup(
+    name = "package-srcs",
+    srcs = glob(["**"]),
+    tags = ["automanaged"],
+    visibility = ["//visibility:private"],
+)
+
+filegroup(
+    name = "all-srcs",
+    srcs = [":package-srcs"],
+    tags = ["automanaged"],
+    visibility = ["//visibility:public"],
+)
