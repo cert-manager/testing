@@ -155,6 +155,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -212,6 +213,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -269,6 +271,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -326,6 +329,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -382,6 +386,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -439,6 +444,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -496,6 +502,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
@@ -553,6 +560,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
