@@ -2,6 +2,7 @@ periodics:
 
 - name: periodic-testing-retester
   interval: 20m  # Retest at most 1 PR per 20m, which should not DOS the queue.
+  cluster: gke
   agent: kubernetes
   decorate: true
   annotations:
@@ -49,6 +50,7 @@ periodics:
 
 - name: periodic-testing-close
   interval: 1h
+  cluster: gke
   agent: kubernetes
   decorate: true
   annotations:
@@ -85,6 +87,7 @@ periodics:
 
 - name: periodic-testing-rotten
   interval: 1h
+  cluster: gke
   agent: kubernetes
   decorate: true
   annotations:
@@ -124,6 +127,7 @@ periodics:
 
 - name: periodic-testing-stale
   interval: 1h
+  cluster: gke
   agent: kubernetes
   decorate: true
   annotations:
