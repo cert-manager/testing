@@ -1,6 +1,5 @@
 approvers:
 - munnerz
 - simonswine
-reviewers:
-- munnerz
-- simonswine
+- meyskens
+- zee-ahmed
