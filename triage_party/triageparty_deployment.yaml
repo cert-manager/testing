@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: triageparty
+  namespace: triageparty
+spec:
+  selector:
+    matchLabels:
+      app: triageparty
+  template:
+    metadata:
+      labels:
+        app: triageparty
+    spec:
+      containers:
+      - name: triageparty
+        # TODO: pin to specific image/ref
+        image: eu.gcr.io/jetstack-build-infra-images/triage-party
+        imagePullPolicy: Always
+        env:
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: triageparty-github-token
+              key: token
+        volumeMounts:
+        - name: config
+          mountPath: /app/config
+      volumes:
+      - name: config
+        configMap:
+          name: triageparty-config
