@@ -10,7 +10,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/checkconfig:v20200309-37d3346c1
+      - image: gcr.io/k8s-prow/checkconfig:v20200628-cc1c099dad
         args:
         - /app/prow/cmd/checkconfig/app.binary
         - -strict=true
