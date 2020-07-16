@@ -27,7 +27,7 @@ data:
         - https://github.com/cert-manager/website
         - https://github.com/cert-manager/release
 
-    strategies:
+    collections:
       - id: daily
         name: Daily Triage
         dedup: true
@@ -122,9 +122,65 @@ data:
         tactics:
           - open-prs
           - open-issues
+      - id: milestone
+        name: In Milestone
+        description: >
+          A Kanban visualization of milestones, showing the flow of issues through each stage.
+        display: kanban
+        overflow: 3
+        dedup: true
+        rules:
+          - milestone-not-started
+          - milestone-assignee-updated
+          - milestone-pr-needs-review
+          - milestone-pr-needs-work
+          - milestone-pr-needs-merge
+          - milestone-recently-closed
 
 
-    tactics:
+    rules:
+      ### Milestone Kanban ###
+      milestone-not-started:
+        name: "Not started"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "!assignee-updated"
+          - tag: "!(assignee-open-pr|assignee-closed-pr)"
+      milestone-assignee-updated:
+        name: "In Progress"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "assignee-updated"
+          - tag: "!(pr-changes-requested|pr-reviewer-comment|pr-unreviewed|pr-new-commits|pr-approved|pr-changes-requested)"
+      milestone-pr-needs-work:
+        name: "PR needs work"
+        type: issue
+        filters:
+          - tag: !pr-reviewable
+          - tag: open-milestone
+          - tag: "(pr-changes-requested|pr-reviewer-comment)"
+      milestone-pr-needs-review:
+        name: "PR needs Review"
+        type: issue
+        filters:
+          - tag: pr-reviewable
+          - tag: open-milestone
+          - tag: "(pr-unreviewed|pr-new-commits)"
+      milestone-pr-needs-merge:
+        name: "PR needs Merge"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "(pr-approved|pr-approved-but-pushed)"
+      milestone-recently-closed:
+        name: "Finish Line"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - state: closed
+          - updated: -30d
       ### Daily Triage ####
       issue-needs-priority-overdue:
         name: "Unprioritized issues older than 7 days"
@@ -169,7 +225,7 @@ data:
           - label: "!do-not-merge.*"
           - label: "!needs-rebase"
           - label: "!cncf-cla: no"
-          - tag: "!requested-changes"
+          - tag: "!changes-requested"
           - tag: "!send"
           # Temporarily workaround inability to track PR eligibility
           - updated: +1d
