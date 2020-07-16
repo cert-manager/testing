@@ -538,7 +538,7 @@ periodics:
       - name: ndots
         value: "1"
 # OpenShift e2e tests
-- name: ci-cert-manager-openshift-v3-11
+- name: ci-cert-manager-next-openshift-v3-11
   interval: 2h
   cluster: gke
   agent: kubernetes
