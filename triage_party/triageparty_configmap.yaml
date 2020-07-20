@@ -27,13 +27,13 @@ data:
         - https://github.com/cert-manager/website
         - https://github.com/cert-manager/release
 
-    strategies:
+    collections:
       - id: daily
         name: Daily Triage
         dedup: true
         description: >
           queue to be emptied once a day
-        tactics:
+        rules:
           - issue-needs-priority-overdue
           - issue-needs-comment-overdue
           - issue-soon-overdue
@@ -56,7 +56,7 @@ data:
         dedup: true
         description: >
           queue to be emptied once a week in a team triage meeting
-        tactics:
+        rules:
           # SLO
           - issue-near-soon-overdue
           - issue-near-longterm-overdue
@@ -79,13 +79,13 @@ data:
         name: Quarterly Scrub
         dedup: true
         description: Once every quarter, look for stale issues, reprioritize, and de-duplicate.
-        tactics:
+        rules:
           - lifecycle-stale
-          - features-recv
+          - features-old-recv
           - features-old
-          - bugs-recv
+          - bugs-old-recv
           - bugs-old
-          - other-recv
+          - other-old-recv
           - other-old
 
       - id: recv
@@ -94,7 +94,7 @@ data:
           Issues that may be waiting for our response
 
           NOTE: for this to work properly, GitHub token must have read access to read organization members
-        tactics:
+        rules:
           - question-recv
           - bugs-recv
           - enhancement-recv
@@ -103,13 +103,13 @@ data:
       - id: urgent
         name: Urgent
         description: All hands on deck!
-        tactics:
+        rules:
           - urgent-prs
           - urgent-issues
 
       - id: soon
         name: Important Soon
-        tactics:
+        rules:
           - soon-prs
           - soon-features
           - soon-bugs
@@ -119,12 +119,68 @@ data:
         name: All open PR's and Issues that should be considered for repository stats (hidden)
         used_for_statistics: true
         hidden: true
-        tactics:
+        rules:
           - open-prs
           - open-issues
+      - id: milestone
+        name: In Milestone
+        description: >
+          A Kanban visualization of milestones, showing the flow of issues through each stage.
+        display: kanban
+        overflow: 3
+        dedup: true
+        rules:
+          - milestone-not-started
+          - milestone-assignee-updated
+          - milestone-pr-needs-review
+          - milestone-pr-needs-work
+          - milestone-pr-needs-merge
+          - milestone-recently-closed
 
 
-    tactics:
+    rules:
+      ### Milestone Kanban ###
+      milestone-not-started:
+        name: "Not started"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "!assignee-updated"
+          - tag: "!(assignee-open-pr|assignee-closed-pr)"
+      milestone-assignee-updated:
+        name: "In Progress"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "assignee-updated"
+          - tag: "!(pr-changes-requested|pr-reviewer-comment|pr-unreviewed|pr-new-commits|pr-approved|pr-changes-requested)"
+      milestone-pr-needs-work:
+        name: "PR needs work"
+        type: issue
+        filters:
+          - tag: !pr-reviewable
+          - tag: open-milestone
+          - tag: "(pr-changes-requested|pr-reviewer-comment)"
+      milestone-pr-needs-review:
+        name: "PR needs Review"
+        type: issue
+        filters:
+          - tag: pr-reviewable
+          - tag: open-milestone
+          - tag: "(pr-unreviewed|pr-new-commits)"
+      milestone-pr-needs-merge:
+        name: "PR needs Merge"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "(pr-approved|pr-approved-but-pushed)"
+      milestone-recently-closed:
+        name: "Finish Line"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - state: closed
+          - updated: -30d
       ### Daily Triage ####
       issue-needs-priority-overdue:
         name: "Unprioritized issues older than 7 days"
@@ -169,10 +225,8 @@ data:
           - label: "!do-not-merge.*"
           - label: "!needs-rebase"
           - label: "!cncf-cla: no"
-          - tag: "!requested-changes"
+          - tag: "!changes-requested"
           - tag: "!send"
-          # Temporarily workaround inability to track PR eligibility
-          - updated: +1d
 
       # Issues missing initial feedback
       issue-needs-kind:
@@ -231,16 +285,16 @@ data:
           - tag: recv
 
       issue-updated-has-question:
-          name: "Recently updated issue has a question"
-          resolution: "Add an answer"
-          type: issue
-          filters:
-            - tag: recv-q
-            - label: "!triage/needs-information"
-            - tag: "!member-last"
-            - tag: "!contributor-last"
-            - responded: +3d
-            - updated: -7d
+        name: "Recently updated issue has a question"
+        resolution: "Add an answer"
+        type: issue
+        filters:
+          - tag: recv-q
+          - label: "!triage/needs-information"
+          - tag: "!member-last"
+          - tag: "!contributor-last"
+          - responded: +3d
+          - updated: -7d
 
       ####### Weekly Triage #########
       # SLO nearing
@@ -357,8 +411,100 @@ data:
           - tag: "!contributor-last"
           - responded: +6d
 
+      ### Milestone Kanban ###
+      milestone-not-started:
+        name: "Not started"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "!assignee-updated"
+          - tag: "!(assignee-open-pr|assignee-closed-pr)"
+      milestone-assignee-updated:
+        name: "In Progress"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "assignee-updated"
+          - tag: "!(pr-changes-requested|pr-reviewer-comment|pr-unreviewed|pr-new-commits|pr-approved|pr-changes-requested)"
+      milestone-pr-needs-work:
+        name: "PR needs work"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "(pr-changes-requested|pr-reviewer-comment)"
+      milestone-pr-needs-review:
+        name: "PR needs Review"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "(pr-unreviewed|pr-new-commits)"
+      milestone-pr-needs-merge:
+        name: "PR needs Merge"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - tag: "(pr-approved|pr-approved-but-pushed)"
+      milestone-recently-closed:
+        name: "Finish Line"
+        type: issue
+        filters:
+          - tag: open-milestone
+          - state: closed
+          - updated: -30d
+
+      # Urgent
+      urgent-prs:
+        name: "Urgent Pull Requests"
+        type: pull_request
+        resolution: Merge em
+        filters:
+          - label: "priority/critical-urgent"
+      urgent-issues:
+        name: "Urgent Issues"
+        type: issue
+        resolution: Close or deprioritize
+        filters:
+          - label: "priority/critical-urgent"
+      
+      # Soon
+      soon-bugs:
+        name: "bugs labelled important/soon"
+        type: issue
+        resolution: Close or deprioritize
+        filters:
+          - label: "priority/important-soon"
+          - label: "kind/bug"
+      soon-features:
+        name: "features labelled important/soon"
+        type: issue
+        resolution: Close or deprioritize
+        filters:
+          - label: "priority/important-soon"
+          - label: "kind/feature-request"
+      soon-other:
+        name: "other issues labelled important-soon"
+        type: issue
+        resolution: Close or deprioritize
+        filters:
+          - label: "priority/important-soon"
+          - label: "!kind/feature-request"
+          - label: "!kind/bug"
+      soon-prs:
+        name: "PR's labelled important-soon"
+        type: pull_request
+        resolution: Merge em
+        filters:
+          - label: "priority/important-soon"
+      # for stastistics generation
+      open-issues:
+        name: "Open Issues"
+        type: issue
+      open-prs:
+        name: "Open PRs"
+        type: pull_request
+
       ## Bug Scrub ##
-      bugs-recv:
+      bugs-old-recv:
         name: "Bugs that deserve a follow-up comment"
         resolution: "Comment or close the issue"
         type: issue
@@ -368,7 +514,7 @@ data:
           - created: +60d
           - label: "kind/bug"
 
-      features-recv:
+      features-old-recv:
         name: "Features that deserve a follow-up comment"
         resolution: "Comment or close the issue"
         type: issue
@@ -378,7 +524,7 @@ data:
           - created: +30d
           - label: "kind/feature"
 
-      other-recv:
+      other-old-recv:
         name: "Items that deserve a follow-up comment"
         resolution: "Comment or close the issue"
         type: issue
@@ -461,60 +607,3 @@ data:
           - label: "!.*(feature|enhancement).*"
           - label: "!.*bug"
           - label: ".*question"
-
-      # Urgent
-      urgent-prs:
-        name: "Urgent Pull Requests"
-        type: pull_request
-        resolution: Merge em
-        filters:
-          - label: "priority/critical-urgent"
-
-      urgent-issues:
-        name: "Urgent Issues"
-        type: issue
-        resolution: Close or deprioritize
-        filters:
-          - label: "priority/critical-urgent"
-
-      # Soon
-      soon-bugs:
-        name: "bugs labelled important/soon"
-        type: issue
-        resolution: Close or deprioritize
-        filters:
-          - label: "priority/important-soon"
-          - label: "kind/bug"
-
-      soon-features:
-        name: "features labelled important/soon"
-        type: issue
-        resolution: Close or deprioritize
-        filters:
-          - label: "priority/important-soon"
-          - label: "kind/feature-request"
-
-      soon-other:
-        name: "other issues labelled important-soon"
-        type: issue
-        resolution: Close or deprioritize
-        filters:
-          - label: "priority/important-soon"
-          - label: "!kind/feature-request"
-          - label: "!kind/bug"
-
-      soon-prs:
-        name: "PR's labelled important-soon"
-        type: pull_request
-        resolution: Merge em
-        filters:
-          - label: "priority/important-soon"
-
-      # for stastistics generation
-      open-issues:
-        name: "Open Issues"
-        type: issue
-
-      open-prs:
-        name: "Open PRs"
-        type: pull_request

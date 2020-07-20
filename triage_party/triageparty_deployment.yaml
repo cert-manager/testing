@@ -14,11 +14,9 @@ spec:
     spec:
       containers:
       - name: triageparty
-        # TODO: pin to specific image/ref
-        image: eu.gcr.io/jetstack-build-infra-images/triage-party
-        imagePullPolicy: Always
+        image: triageparty/triage-party:1.2.1
         env:
-        - name: TOKEN
+        - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
               name: triageparty-github-token
