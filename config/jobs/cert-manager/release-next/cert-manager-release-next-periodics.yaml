@@ -8,7 +8,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
@@ -43,7 +43,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-bazel-scratch-dir: "true"
@@ -78,7 +78,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -136,7 +136,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -195,7 +195,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -254,7 +254,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -313,7 +313,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -372,7 +372,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -430,7 +430,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -488,7 +488,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-0.16
+    base_ref: release-1.0
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
