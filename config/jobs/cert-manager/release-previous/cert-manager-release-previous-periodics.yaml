@@ -1,6 +1,6 @@
 periodics:
 
-- name: ci-cert-manager-next-bazel
+- name: ci-cert-manager-previous-bazel
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -15,7 +15,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs 'bazel test //...'
   spec:
@@ -35,7 +35,7 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-next-bazel-experimental
+- name: ci-cert-manager-previous-previous-experimental
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -49,7 +49,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
@@ -70,7 +70,7 @@ periodics:
         value: "1"
 
 # kind based cert-manager e2e job
-- name: ci-cert-manager-next-e2e-v1-11
+- name: ci-cert-manager-previous-e2e-v1-11
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -88,7 +88,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
   spec:
@@ -128,7 +128,7 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-next-e2e-v1-12
+- name: ci-cert-manager-previous-e2e-v1-12
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -146,7 +146,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
   spec:
@@ -187,7 +187,7 @@ periodics:
         value: "1"
 
 
-- name: ci-cert-manager-next-e2e-v1-13
+- name: ci-cert-manager-previous-e2e-v1-13
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -205,7 +205,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
   spec:
@@ -246,7 +246,7 @@ periodics:
         value: "1"
 
 
-- name: ci-cert-manager-next-e2e-v1-14
+- name: ci-cert-manager-previous-e2e-v1-14
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -264,7 +264,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
   spec:
@@ -305,7 +305,7 @@ periodics:
         value: "1"
 
 
-- name: ci-cert-manager-next-e2e-v1-15
+- name: ci-cert-manager-previous-e2e-v1-15
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -323,7 +323,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
   spec:
@@ -364,7 +364,7 @@ periodics:
         value: "1"
 
 
-- name: ci-cert-manager-next-e2e-v1-16
+- name: ci-cert-manager-previous-e2e-v1-16
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -382,7 +382,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
@@ -422,7 +422,7 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-next-e2e-v1-17
+- name: ci-cert-manager-previous-e2e-v1-17
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -433,7 +433,7 @@ periodics:
     base_ref: release-1.0
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
   labels:
@@ -480,7 +480,7 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-next-e2e-v1-18
+- name: ci-cert-manager-previous-e2e-v1-18
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -491,7 +491,7 @@ periodics:
     base_ref: release-1.0
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
   labels:
@@ -538,7 +538,7 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-next-e2e-v1-19
+- name: ci-cert-manager-previous-e2e-v1-19
   interval: 2h
   cluster: gke
   agent: kubernetes
@@ -549,7 +549,7 @@ periodics:
     base_ref: release-1.0
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-dashboards: jetstack-cert-manager-previous
     testgrid-alert-email: james+alerts@munnelly.eu,maartje.eyskens+alerts@jetstack.io
     description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
   labels:
@@ -597,7 +597,7 @@ periodics:
         value: "1"
       
 # OpenShift e2e tests
-- name: ci-cert-manager-next-openshift-v3-11
+- name: ci-cert-manager-previous-openshift-v3-11
   interval: 2h
   cluster: gke
   agent: kubernetes
