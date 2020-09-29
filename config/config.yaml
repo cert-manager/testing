@@ -222,20 +222,18 @@ tide:
     - jetstack/cert-manager-csi
     labels:
     - lgtm
-    - approved
-    - "dco-signoff: yes"
     missingLabels:
     - do-not-merge
     - do-not-merge/blocked-paths
     - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
-    - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
   # Repositories that enable the release-notes plugin (except cert-manager)
   - repos:
     - jetstack/tarmak
     - jetstack/cert-manager-csi
+    - jetstack/preflight
     labels:
     - lgtm
     - approved
