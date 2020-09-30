@@ -249,6 +249,8 @@ tide:
     - jetstack/tarmak
     - jetstack/cert-manager-csi
     - jetstack/preflight
+    - jetstack/kube-oidc-proxy
+    - jetstack/version-checker
     labels:
     - lgtm
     - approved
