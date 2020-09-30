@@ -221,7 +221,6 @@ tide:
     - jetstack/cert-manager-csi
     labels:
     - lgtm
-    - approved
     missingLabels:
     - do-not-merge
     - do-not-merge/blocked-paths

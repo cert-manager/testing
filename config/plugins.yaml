@@ -156,7 +156,6 @@ plugins:
   - size
   - skip
   - trigger
-  - verify-owners
   - wip
   - yuks
 
@@ -190,15 +189,32 @@ plugins:
 
   jetstack/cert-manager:
   - release-note
+  - verify-owners
 
   jetstack/cert-manager-csi:
   - release-note
+  - verify-owners
 
   jetstack/tarmak:
   - release-note
+  - verify-owners
+
+  jetstack/kube-oidc-proxy:
+  - release-note
+  - verify-owners
+
+  jetstack/preflight:
+  - release-note
+  - verify-owners
+
+  jetstack/version-checker:
+  - release-note
+  - verify-owners
 
   jetstack/testing:
   - config-updater
+  - verify-owners
+  - release-note
 
   munnerz/venafi-cm-demo:
   - trigger
