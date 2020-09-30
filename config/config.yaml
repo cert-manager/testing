@@ -251,6 +251,7 @@ tide:
     - jetstack/preflight
     - jetstack/kube-oidc-proxy
     - jetstack/version-checker
+    - jetstack/testing
     labels:
     - lgtm
     - approved
