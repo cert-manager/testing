@@ -215,11 +215,22 @@ tide:
   # Default tide config for all repos in the Jetstack org except cert-manager
   - orgs:
     - jetstack
-    - cert-manager
     excludedRepos:
     - jetstack/cert-manager
     - jetstack/tarmak
     - jetstack/cert-manager-csi
+    labels:
+    - lgtm
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/work-in-progress
+    - needs-rebase
+  # Default tide config for all repos in the cert-manager org
+  - orgs:
+    - cert-manager
     labels:
     - lgtm
     - approved
@@ -236,6 +247,10 @@ tide:
   - repos:
     - jetstack/tarmak
     - jetstack/cert-manager-csi
+    - jetstack/preflight
+    - jetstack/kube-oidc-proxy
+    - jetstack/version-checker
+    - jetstack/testing
     labels:
     - lgtm
     - approved
