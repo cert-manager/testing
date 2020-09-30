@@ -136,7 +136,6 @@ plugins:
   - assign
   - blockade
   - cherry-pick-unapproved
-  - dco
   - golint
   - heart
   - help
@@ -187,6 +186,7 @@ plugins:
   jetstack/cert-manager:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -194,6 +194,7 @@ plugins:
   jetstack/cert-manager-csi:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -201,6 +202,7 @@ plugins:
   jetstack/tarmak:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -208,6 +210,7 @@ plugins:
   jetstack/kube-oidc-proxy:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -215,6 +218,7 @@ plugins:
   jetstack/preflight:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -222,6 +226,7 @@ plugins:
   jetstack/version-checker:
   - approve
   - blunderbuss
+  - dco
   - owners-label
   - release-note
   - verify-owners
@@ -230,6 +235,7 @@ plugins:
   - approve
   - blunderbuss
   - config-updater
+  - dco
   - owners-label
   - release-note
   - verify-owners
