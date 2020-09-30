@@ -133,10 +133,8 @@ require_matching_label:
 plugins:
 
   jetstack:
-  - approve
   - assign
   - blockade
-  - blunderbuss
   - cherry-pick-unapproved
   - dco
   - golint
@@ -150,7 +148,6 @@ plugins:
   - milestonestatus
   - milestoneapplier
   - override
-  - owners-label
   - require-matching-label
   - shrug
   - size
@@ -188,33 +185,54 @@ plugins:
   - yuks
 
   jetstack/cert-manager:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/cert-manager-csi:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/tarmak:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/kube-oidc-proxy:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/preflight:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/version-checker:
+  - approve
+  - blunderbuss
+  - owners-label
   - release-note
   - verify-owners
 
   jetstack/testing:
+  - approve
+  - blunderbuss
   - config-updater
-  - verify-owners
+  - owners-label
   - release-note
+  - verify-owners
 
   munnerz/venafi-cm-demo:
   - trigger
