@@ -522,3 +522,8 @@ default:
     addedBy: humans
     previously:
       - name: merge-blocker
+  - color: ef1607
+    description: Indicates a PR is of bad quality and probably automated.
+    name: spam
+    target: prs
+    addedBy: member or author
