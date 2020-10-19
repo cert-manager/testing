@@ -283,6 +283,7 @@ tide:
     - needs-kind
   merge_method:
     jetstack/preflight: squash
+    jetstack/preflight-platform: squash
 
 # push_gateway:
 #   endpoint: pushgateway
