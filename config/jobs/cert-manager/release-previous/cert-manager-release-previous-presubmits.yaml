@@ -9,7 +9,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -42,7 +42,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -77,7 +77,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -112,7 +112,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -145,7 +145,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -203,7 +203,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -319,7 +319,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -376,7 +376,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -434,7 +434,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -492,7 +492,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -550,7 +550,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.0
+    - release-1.1
     annotations:
       testgrid-create-test-group: 'false'
     labels:
