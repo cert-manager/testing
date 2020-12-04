@@ -208,13 +208,6 @@ plugins:
   - release-note
   - verify-owners
 
-  cert-manager/istio-csr:
-  - approve
-  - blunderbuss
-  - dco
-  - owners-label
-  - verify-owners
-
   jetstack/tarmak:
   - approve
   - blunderbuss
