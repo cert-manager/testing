@@ -111,6 +111,19 @@ repos:
       target: both
       addedBy: prow
 
+  cert-manager/istio-csr:
+    labels:
+    - color: 0052cc
+      description: Indicates a PR modifies deployment configuration
+      name: area/deploy
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR modifies e2e testing code
+      name: area/testing
+      target: both
+      addedBy: prow
+
 
   jetstack/kube-oidc-proxy:
     labels:
@@ -168,6 +181,11 @@ repos:
     - color: 0052cc
       description: Indicates a PR related to cert-manager-csi
       name: area/cert-manager-csi
+      target: both
+      addedBy: prow
+    - color: 0052cc
+      description: Indicates a PR related to istio-csr
+      name: area/istio-csr
       target: both
       addedBy: prow
     - color: 0052cc

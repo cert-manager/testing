@@ -32,6 +32,13 @@ branch-protection:
             contexts:
             - dco
             - pull-cert-manager-website-verify
+        istio-csr:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
+            - pull-istio-csr-verify
+            - pull-istio-csr-k8s-v1-19-istio-v1-7
 
     jetstack:
       # TODO: enforce dco check org-wide

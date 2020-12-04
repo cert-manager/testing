@@ -26,6 +26,7 @@ triggers:
   - jetstack/cert-manager
   - cert-manager/website
   - jetstack/cert-manager-csi
+  - cert-manager/istio-csr
   trusted_org: cert-manager
   only_org_members: true
 
@@ -80,6 +81,10 @@ repo_milestone:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
+  cert-manager/istio-csr:
+    # https://github.com/orgs/cert-manager/teams/milestone-maintainers
+    maintainers_id: 2805308
+    maintainers_team: milestone-maintainers
 
 milestone_applier:
   jetstack/cert-manager:
@@ -113,6 +118,8 @@ milestone_applier:
     release-0.2: v0.2
   jetstack/cert-manager-csi:
     master: v0.1
+  cert-manager/istio-csr:
+    master: v0.0
 
 config_updater:
   maps:
