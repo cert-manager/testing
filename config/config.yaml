@@ -55,7 +55,7 @@ branch-protection:
             - pull-cert-manager-bazel
             - pull-cert-manager-deps
             - pull-cert-manager-chart
-            - pull-cert-manager-e2e-v1-19
+            - pull-cert-manager-e2e-v1-20
         cert-manager-csi:
           protect: true
           required_status_checks:
