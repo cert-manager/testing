@@ -332,7 +332,7 @@ periodics:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
       args:
       - runner
-      - hack/ci/run-e2e-kind.sh
+      - devel/ci-run-e2e.sh
       resources:
         requests:
           cpu: 6
