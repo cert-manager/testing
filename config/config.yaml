@@ -226,6 +226,7 @@ tide:
     - jetstack/cert-manager
     - jetstack/tarmak
     - jetstack/cert-manager-csi
+    - jetstack/preflight-platform
     labels:
     - lgtm
     missingLabels:
