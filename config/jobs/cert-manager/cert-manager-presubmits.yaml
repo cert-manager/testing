@@ -18,33 +18,29 @@ presets:
         name: cloudflare-api-key
         key: domain
 
-# The Venafi TPP test server is currently offline.
-# Commenting out these pod presets when will cause the Venafi Issuer E2E tests
-# to be skipped.
-#
-# - labels:
-#     preset-venafi-tpp-credentials: "true"
-#   env:
-#   - name: VENAFI_TPP_URL
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-tpp
-#         key: url
-#   - name: VENAFI_TPP_ZONE
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-tpp
-#         key: zone
-#   - name: VENAFI_TPP_USERNAME
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-tpp
-#         key: username
-#   - name: VENAFI_TPP_PASSWORD
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-tpp
-#         key: password
+- labels:
+    preset-venafi-tpp-credentials: "true"
+  env:
+  - name: VENAFI_TPP_URL
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: url
+  - name: VENAFI_TPP_ZONE
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: zone
+  - name: VENAFI_TPP_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: username
+  - name: VENAFI_TPP_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: venafi-tpp
+        key: password
 
 - labels:
     preset-venafi-cloud-credentials: "true"
