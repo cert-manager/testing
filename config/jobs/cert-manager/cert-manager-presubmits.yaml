@@ -1,3 +1,6 @@
+# TODO: These Pod presets are used by all the cert-manager tests (not just those in this file).
+# Move the presets to a separate file to make it obvious that they are shared.
+# See https://github.com/jetstack/testing/issues/411
 presets:
 - labels:
     preset-cloudflare-credentials: "true"
