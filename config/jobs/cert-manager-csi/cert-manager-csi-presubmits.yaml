@@ -15,7 +15,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20200504-c7fefcd-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210122-46f3dbf-1.13.4
         args:
         - runner
         - make
@@ -61,7 +61,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20200504-c7fefcd-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210122-46f3dbf-1.13.4
         args:
         - runner
         - make
