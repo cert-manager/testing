@@ -38,7 +38,9 @@ branch-protection:
             contexts:
             - dco
             - pull-istio-csr-verify
-            - pull-istio-csr-k8s-v1-19-istio-v1-7
+            - pull-istio-csr-k8s-v1-20-istio-v1-6
+            - pull-istio-csr-k8s-v1-20-istio-v1-7
+            - pull-istio-csr-k8s-v1-20-istio-v1-8
 
     jetstack:
       # TODO: enforce dco check org-wide
