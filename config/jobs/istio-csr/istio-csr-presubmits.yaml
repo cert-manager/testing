@@ -20,61 +20,6 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
-  # kind based istio-csr e2e job for Kubernetes v1.20, istio v1.6
-  - name: pull-istio-csr-k8s-v1-20-istio-v1-6
-    cluster: gke
-    context: pull-istio-csr-k8s-v1-20-istio-v1-6
-    # Match everything except PRs that only touch docs/
-    always_run: true
-    optional: false
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    - ^master$
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210122-46f3dbf-1.15.7
-        args:
-        - runner
-        - make
-        - e2e
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.20.0"
-        - name: ISTIO_VERSION
-          value: "1.6.14"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
   # kind based istio-csr e2e job for Kubernetes v1.20, istio v1.7
   - name: pull-istio-csr-k8s-v1-20-istio-v1-7
     cluster: gke
@@ -105,7 +50,7 @@ presubmits:
         - name: K8S_VERSION
           value: "1.20.0"
         - name: ISTIO_VERSION
-          value: "1.7.3"
+          value: "1.7.6"
         securityContext:
           privileged: true
           capabilities:
