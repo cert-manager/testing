@@ -228,6 +228,10 @@ tide:
     - jetstack/tarmak
     - jetstack/cert-manager-csi
     - jetstack/preflight-platform
+    - jetstack/terraform-jetstack
+    - jetstack/terraform-flightdeck
+    - jetstack/terraform-sendgrid
+    - jetstack/terraform-auth0
     labels:
     - lgtm
     missingLabels:
