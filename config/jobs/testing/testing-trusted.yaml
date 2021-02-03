@@ -71,7 +71,7 @@ postsubmits:
       preset-bazel-scratch-dir: "true"
     annotations:
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     spec:
       containers:
       - image: gcr.io/k8s-prow/transfigure
@@ -103,7 +103,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'bazelbuild' image
     spec:
       containers:
@@ -139,7 +139,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'golang-dind' image
     spec:
       containers:
@@ -175,7 +175,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'golang-nodejs' image
     spec:
       containers:
@@ -211,7 +211,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'katacoda-lint' image
     spec:
       containers:
@@ -247,7 +247,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'tarmak-ruby' image
     spec:
       containers:
@@ -283,7 +283,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'tarmak-sphinx-docs' image
     spec:
       containers:
@@ -319,7 +319,7 @@ postsubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-testing-janitors
-      testgrid-alert-email: james+alerts@munnelly.eu
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'terraform-google-gke-cluster' image
     spec:
       containers:
