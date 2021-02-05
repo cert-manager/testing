@@ -16,7 +16,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs 'bazel test //...'
   spec:
     containers:
@@ -50,7 +50,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
     containers:
@@ -90,7 +90,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
   spec:
     containers:
@@ -149,7 +149,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
   spec:
     containers:
@@ -209,7 +209,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
   spec:
     containers:
@@ -269,7 +269,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
   spec:
     containers:
@@ -329,7 +329,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
   spec:
     containers:
@@ -389,7 +389,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
@@ -440,7 +440,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
   labels:
     preset-service-account: "true"
@@ -499,7 +499,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
   labels:
     preset-service-account: "true"
@@ -558,7 +558,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
   labels:
     preset-service-account: "true"
@@ -618,7 +618,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com,maartje+alerts@eyskens.me
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against an Openshift v3.11 cluster
   labels:
     preset-service-account: "true"
