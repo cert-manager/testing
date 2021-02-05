@@ -13,7 +13,7 @@ periodics:
     preset-service-account: "true"
   annotations:
     testgrid-dashboards: jetstack-cert-manager-website
-    testgrid-alert-email: james+alerts@munnelly.eu
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Updates the algolia search index for the cert-manager website
   spec:
     containers:
