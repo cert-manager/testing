@@ -8,7 +8,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
@@ -43,7 +43,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   labels:
     preset-service-account: "true"
     preset-bazel-scratch-dir: "true"
@@ -69,306 +69,6 @@ periodics:
       - name: ndots
         value: "1"
 
-# kind based cert-manager e2e job
-- name: ci-cert-manager-previous-e2e-v1-11
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: release-1.1
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.11 cluster
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.11"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-
-- name: ci-cert-manager-previous-e2e-v1-12
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: release-1.1
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.12 cluster
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.12"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-
-
-- name: ci-cert-manager-previous-e2e-v1-13
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: release-1.1
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.13 cluster
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.13"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-
-
-- name: ci-cert-manager-previous-e2e-v1-14
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: release-1.1
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.14 cluster
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.14"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-
-
-- name: ci-cert-manager-previous-e2e-v1-15
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: release-1.1
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.15 cluster
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.15"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-
-
 - name: ci-cert-manager-previous-e2e-v1-16
   interval: 2h
   cluster: gke
@@ -377,7 +77,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -436,7 +136,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -495,7 +195,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -554,7 +254,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.1
+    base_ref: release-1.2
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -581,70 +281,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.19"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
-    volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-      
-# OpenShift e2e tests
-- name: ci-cert-manager-previous-openshift-v3-11
-  interval: 2h
-  cluster: gke
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: master
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against an Openshift v3.11 cluster
-  labels:
-    preset-service-account: "true"
-    preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-    preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 6
-          memory: 12Gi
-      env:
-      - name: OPENSHIFT_VERSION
-        value: "3.11"
-      - name: IS_OPENSHIFT
-        value: "true"
-      - name: EXTRA_DOCKER_OPTS
-        value: "--insecure-registry=172.30.0.0/16"
       securityContext:
         privileged: true
         capabilities:
