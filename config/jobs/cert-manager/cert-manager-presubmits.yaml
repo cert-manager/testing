@@ -48,26 +48,19 @@ presets:
 #         name: venafi-tpp
 #         key: password
 
-# The Venafi Cloud API token has expired or has been revoked.
-# Jetstack Infra team are setting up a new user and API token but we're
-# temporarily disabling these tests so that we can get cert-manager PRs merged
-# Commenting out these pod presets when will cause the Venafi Cloud Issuer E2E tests
-# to be skipped. See:
-# * https://github.com/jetstack/cert-manager/issues/3555
-#
-# - labels:
-#     preset-venafi-cloud-credentials: "true"
-#   env:
-#   - name: VENAFI_CLOUD_ZONE
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-cloud
-#         key: zone
-#   - name: VENAFI_CLOUD_APITOKEN
-#     valueFrom:
-#       secretKeyRef:
-#         name: venafi-cloud
-#         key: apitoken
+- labels:
+    preset-venafi-cloud-credentials: "true"
+  env:
+  - name: VENAFI_CLOUD_ZONE
+    valueFrom:
+      secretKeyRef:
+        name: venafi-cloud
+        key: zone
+  - name: VENAFI_CLOUD_APITOKEN
+    valueFrom:
+      secretKeyRef:
+        name: venafi-cloud
+        key: apitoken
 
 - labels:
     preset-retry-flakey-tests: "true"
