@@ -485,7 +485,7 @@ presubmits:
         - runner
         - devel/ci-run-e2e.sh
         - -ginkgo.focus
-        - '\[Feature:VenafiIssuer:TPP\]'
+        - '\[Feature:Issuers:Venafi:TPP\]'
         resources:
           requests:
             cpu: 6
