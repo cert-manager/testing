@@ -9,7 +9,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -42,7 +42,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -77,7 +77,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -112,7 +112,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -135,296 +135,6 @@ presubmits:
         - name: ndots
           value: "1"
 
-  # kind based cert-manager e2e job
-  - name: pull-cert-manager-e2e-v1-11
-    cluster: gke
-    context: pull-cert-manager-e2e-v1-11
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.1
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.11"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-12
-    cluster: gke
-    context: pull-cert-manager-e2e-v1-12
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.1
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.12"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-13
-    cluster: gke
-    context: pull-cert-manager-e2e-v1-13
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-0.14
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.13"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-14
-    cluster: gke
-    context: pull-cert-manager-e2e-v1-14
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.1
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.14"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-15
-    cluster: gke
-    context: pull-cert-manager-e2e-v1-15
-    always_run: false
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.1
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 6
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.15"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
   - name: pull-cert-manager-e2e-v1-16
     cluster: gke
     context: pull-cert-manager-e2e-v1-16
@@ -434,7 +144,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -492,7 +202,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -550,7 +260,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.2
     annotations:
       testgrid-create-test-group: 'false'
     labels:
