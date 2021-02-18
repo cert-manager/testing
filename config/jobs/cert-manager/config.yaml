@@ -1,0 +1,66 @@
+presets:
+- labels:
+    preset-cloudflare-credentials: "true"
+  env:
+  - name: CLOUDFLARE_E2E_API_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: api-token
+  - name: CLOUDFLARE_E2E_EMAIL
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: email
+  - name: CLOUDFLARE_E2E_DOMAIN
+    valueFrom:
+      secretKeyRef:
+        name: cloudflare-api-key
+        key: domain
+
+# The Venafi TPP test server is currently offline.
+# Commenting out these pod presets when will cause the Venafi Issuer E2E tests
+# to be skipped.
+# - labels:
+#     preset-venafi-tpp-credentials: "true"
+#   env:
+#   - name: VENAFI_TPP_URL
+#     valueFrom:
+#       secretKeyRef:
+#         name: venafi-tpp
+#         key: url
+#   - name: VENAFI_TPP_ZONE
+#     valueFrom:
+#       secretKeyRef:
+#         name: venafi-tpp
+#         key: zone
+#   - name: VENAFI_TPP_USERNAME
+#     valueFrom:
+#       secretKeyRef:
+#         name: venafi-tpp
+#         key: username
+#   - name: VENAFI_TPP_PASSWORD
+#     valueFrom:
+#       secretKeyRef:
+#         name: venafi-tpp
+#         key: password
+
+- labels:
+    preset-venafi-cloud-credentials: "true"
+  env:
+  - name: VENAFI_CLOUD_ZONE
+    valueFrom:
+      secretKeyRef:
+        name: venafi-cloud
+        key: zone
+  - name: VENAFI_CLOUD_APITOKEN
+    valueFrom:
+      secretKeyRef:
+        name: venafi-cloud
+        key: apitoken
+
+- labels:
+    preset-retry-flakey-tests: "true"
+  env:
+  - name: FLAKE_ATTEMPTS
+    value: "2"
