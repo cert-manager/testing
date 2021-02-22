@@ -1,0 +1,22 @@
+presubmits:
+  jetstack/cert-manager-webook-example:
+
+  - name: pull-cert-manager-webhook-example-verify
+    always_run: true
+    cluster: gke
+    context: pull-cert-manager-csi-verify
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^master$
+    spec:
+      containers:
+      - image: golang:1.16-buster
+        args:
+        - make
+        - test
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
