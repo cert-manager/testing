@@ -41,6 +41,12 @@ branch-protection:
             - pull-istio-csr-verify
             - pull-istio-csr-k8s-v1-20-istio-v1-7
             - pull-istio-csr-k8s-v1-20-istio-v1-8
+        cert-manager-webhook-example:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
+            - pull-cert-manager-webhook-example-verify
 
     jetstack:
       # TODO: enforce dco check org-wide
@@ -65,12 +71,6 @@ branch-protection:
             - dco
             - pull-cert-manager-csi-verify
             - pull-cert-manager-csi-e2e-v1-16
-        cert-manager-webhook-example:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-webhook-example-verify
 
 sinker:
   resync_period: 1h
