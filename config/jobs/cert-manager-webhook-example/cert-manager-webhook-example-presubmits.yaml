@@ -1,10 +1,10 @@
 presubmits:
-  jetstack/cert-manager-webook-example:
+  jetstack/cert-manager-webhook-example:
 
   - name: pull-cert-manager-webhook-example-verify
     always_run: true
     cluster: gke
-    context: pull-cert-manager-csi-verify
+    context: pull-cert-manager-webhook-example-verify
     max_concurrency: 8
     agent: kubernetes
     decorate: true
