@@ -210,6 +210,9 @@ plugins:
   - release-note
   - verify-owners
 
+  jetstack/cert-manager-webhook-example:
+  - dco
+
   jetstack/tarmak:
   - approve
   - blunderbuss
