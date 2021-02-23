@@ -1,5 +1,5 @@
 presubmits:
-  jetstack/cert-manager-webhook-example:
+  cert-manager/webhook-example:
 
   - name: pull-cert-manager-webhook-example-verify
     always_run: true
