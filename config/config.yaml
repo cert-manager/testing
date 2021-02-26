@@ -27,6 +27,15 @@ branch-protection:
   orgs:
     cert-manager:
       repos:
+        cert-manager:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
+            - pull-cert-manager-bazel
+            - pull-cert-manager-deps
+            - pull-cert-manager-chart
+            - pull-cert-manager-e2e-v1-20
         website:
           protect: true
           required_status_checks:
@@ -55,15 +64,6 @@ branch-protection:
       #   contexts:
       #   - dco
       repos:
-        cert-manager:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-bazel
-            - pull-cert-manager-deps
-            - pull-cert-manager-chart
-            - pull-cert-manager-e2e-v1-20
         cert-manager-csi:
           protect: true
           required_status_checks:
@@ -231,7 +231,6 @@ tide:
   - orgs:
     - jetstack
     excludedRepos:
-    - jetstack/cert-manager
     - jetstack/tarmak
     - jetstack/cert-manager-csi
     - jetstack/preflight-platform
@@ -286,7 +285,7 @@ tide:
     - needs-rebase
   # Maintain separate cert-manager configuration to make it easy to enable code freeze
   - repos:
-    - jetstack/cert-manager
+    - cert-manager/cert-manager
     labels:
     - lgtm
     - approved

@@ -7,7 +7,7 @@
 #     addedBy: human? prow plugin? other?
 ---
 repos:
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     labels:
     - color: 0052cc
       description: Indicates a PR directly modifies the 'pkg/apis' directory

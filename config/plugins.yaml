@@ -23,7 +23,7 @@ triggers:
   trusted_org: jetstack
   only_org_members: true
 - repos:
-  - jetstack/cert-manager
+  - cert-manager/cert-manager
   - cert-manager/website
   - jetstack/cert-manager-csi
   - cert-manager/istio-csr
@@ -69,7 +69,7 @@ repo_milestone:
   # You can curl the following endpoint in order to determine the github ID of your team
   # responsible for maintaining the milestones:
   # curl -H "Authorization: token <token>" https://api.github.com/orgs/<org-name>/teams
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
@@ -87,7 +87,7 @@ repo_milestone:
     maintainers_team: milestone-maintainers
 
 milestone_applier:
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     master: v1.3
     release-1.2: v1.2
     release-1.1: v1.1
@@ -194,13 +194,8 @@ plugins:
   - wip
   - yuks
 
-  jetstack/cert-manager:
-  - approve
-  - blunderbuss
-  - dco
-  - owners-label
+  cert-manager/cert-manager:
   - release-note
-  - verify-owners
 
   jetstack/cert-manager-csi:
   - approve
@@ -209,9 +204,6 @@ plugins:
   - owners-label
   - release-note
   - verify-owners
-
-  jetstack/cert-manager-webhook-example:
-  - dco
 
   jetstack/tarmak:
   - approve

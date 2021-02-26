@@ -1,5 +1,5 @@
 presubmits:
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
 
   - name: pull-cert-manager-bazel
     always_run: true
