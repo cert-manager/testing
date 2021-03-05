@@ -41,7 +41,7 @@ branch-protection:
             - pull-istio-csr-verify
             - pull-istio-csr-k8s-v1-20-istio-v1-7
             - pull-istio-csr-k8s-v1-20-istio-v1-8
-        cert-manager-webhook-example:
+        webhook-example:
           protect: true
           required_status_checks:
             contexts:
