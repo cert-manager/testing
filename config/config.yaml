@@ -239,6 +239,7 @@ tide:
     - jetstack/terraform-flightdeck
     - jetstack/terraform-sendgrid
     - jetstack/terraform-auth0
+    - jetstack/terraform-jetstack-secure-platform
     labels:
     - lgtm
     missingLabels:
