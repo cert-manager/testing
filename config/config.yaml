@@ -227,27 +227,6 @@ tide:
     '*': https://prow.build-infra.jetstack.net/pr
   squash_label: tide/squash
   queries:
-  # Default tide config for all repos in the Jetstack org except cert-manager
-  - orgs:
-    - jetstack
-    excludedRepos:
-    - jetstack/cert-manager
-    - jetstack/tarmak
-    - jetstack/cert-manager-csi
-    - jetstack/preflight-platform
-    - jetstack/terraform-jetstack
-    - jetstack/terraform-flightdeck
-    - jetstack/terraform-sendgrid
-    - jetstack/terraform-auth0
-    labels:
-    - lgtm
-    missingLabels:
-    - do-not-merge
-    - do-not-merge/blocked-paths
-    - do-not-merge/cherry-pick-not-approved
-    - do-not-merge/hold
-    - do-not-merge/work-in-progress
-    - needs-rebase
   # Default tide config for all repos in the cert-manager org
   - orgs:
     - cert-manager
