@@ -20,7 +20,7 @@ periodics:
     description: Runs 'bazel test //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - bazel
@@ -54,7 +54,7 @@ periodics:
     description: Runs 'bazel test //...' using the 'experimental' Bazel version
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-056d642-experimental
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-experimental
       args:
       - runner
       - bazel
@@ -93,7 +93,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -152,7 +152,7 @@ periodics:
     preset-venafi-cloud-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -211,7 +211,7 @@ periodics:
     preset-venafi-cloud-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -270,7 +270,7 @@ periodics:
     preset-venafi-cloud-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20200428-6b034c1-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - devel/ci-run-e2e.sh
