@@ -32,7 +32,7 @@ triggers:
 
 blunderbuss:
   # Only request a review from 1 reviewer
-  request_count: 1
+  request_count: 0
 
 external_plugins:
   jetstack:
