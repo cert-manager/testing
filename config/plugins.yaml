@@ -32,7 +32,7 @@ triggers:
 
 blunderbuss:
   # Only request a review from 1 reviewer
-  request_count: 0
+  request_count: 1
 
 external_plugins:
   jetstack:
@@ -170,7 +170,6 @@ plugins:
   - approve
   - assign
   - blockade
-  - blunderbuss
   - cherry-pick-unapproved
   - dco
   - golint
@@ -196,7 +195,6 @@ plugins:
 
   jetstack/cert-manager:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -204,7 +202,6 @@ plugins:
 
   jetstack/cert-manager-csi:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -215,7 +212,6 @@ plugins:
 
   jetstack/tarmak:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -223,7 +219,6 @@ plugins:
 
   jetstack/kube-oidc-proxy:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -231,7 +226,6 @@ plugins:
 
   jetstack/preflight:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -239,7 +233,6 @@ plugins:
 
   jetstack/version-checker:
   - approve
-  - blunderbuss
   - dco
   - owners-label
   - release-note
@@ -247,7 +240,6 @@ plugins:
 
   jetstack/testing:
   - approve
-  - blunderbuss
   - config-updater
   - dco
   - owners-label
