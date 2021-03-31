@@ -1,6 +1,12 @@
 approvers:
+- munnerz
+- simplyzee
 - joshvanl
-- simonswine
+- irbekrm
+- jakexks
+- maelvls
+- wallrj
+- sgtcodfish
 reviewers:
 - joshvanl
 labels:
