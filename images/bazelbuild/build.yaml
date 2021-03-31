@@ -15,10 +15,10 @@ variants:
       DEBIAN_VERSION: buster
       DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
 
-  "3.7.2":
+  "3.5.0":
     # Specify build arguments for this variant
     arguments:
-      BAZEL_VERSION: "3.7.2"
+      BAZEL_VERSION: "3.5.0"
       DEBIAN_VERSION: buster
       DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
 
