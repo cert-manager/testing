@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-csi-verify
     always_run: true
-    cluster: gke
     context: pull-cert-manager-csi-verify
     max_concurrency: 8
     agent: kubernetes
@@ -46,7 +45,6 @@ presubmits:
 
   # kind based cert-manager-csi e2e job for Kubernetes v1.16, cert-manager v1.12
   - name: pull-cert-manager-csi-e2e-v1-16
-    cluster: gke
     context: pull-cert-manager-csi-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: true

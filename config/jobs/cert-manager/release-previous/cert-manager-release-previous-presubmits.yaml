@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
-    cluster: gke
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
@@ -36,7 +35,6 @@ presubmits:
   - name: pull-cert-manager-bazel-experimental
     always_run: false
     optional: true
-    cluster: gke
     context: pull-cert-manager-bazel-experimental
     max_concurrency: 8
     agent: kubernetes
@@ -71,7 +69,6 @@ presubmits:
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
     always_run: true
-    cluster: gke
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -106,7 +103,6 @@ presubmits:
 
   - name: pull-cert-manager-deps
     always_run: true
-    cluster: gke
     context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
@@ -136,7 +132,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-16
-    cluster: gke
     context: pull-cert-manager-e2e-v1-16
     always_run: false
     optional: true
@@ -194,7 +189,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-17
-    cluster: gke
     context: pull-cert-manager-e2e-v1-17
     always_run: false
     optional: true
@@ -252,7 +246,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-19
-    cluster: gke
     context: pull-cert-manager-e2e-v1-19
     optional: false
     always_run: true
@@ -310,7 +303,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-20
-    cluster: gke
     context: pull-cert-manager-e2e-v1-20
     optional: false
     always_run: true

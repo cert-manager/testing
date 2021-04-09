@@ -2,7 +2,6 @@ presubmits:
   jetstack/preflight:
 
   - name: pull-preflight-unit
-    cluster: gke
     agent: kubernetes
     decorate: true
     always_run: true

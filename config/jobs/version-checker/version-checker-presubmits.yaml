@@ -2,7 +2,6 @@ presubmits:
   jetstack/version-checker:
 
   - name: pull-version-checker-verify
-    cluster: gke
     agent: kubernetes
     decorate: true
     always_run: true

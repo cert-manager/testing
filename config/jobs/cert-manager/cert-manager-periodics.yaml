@@ -2,7 +2,6 @@ periodics:
 
 - name: ci-cert-manager-bazel
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -36,7 +35,6 @@ periodics:
 
 - name: ci-cert-manager-bazel-experimental
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -71,7 +69,6 @@ periodics:
 # kind based cert-manager e2e job
 - name: ci-cert-manager-e2e-v1-16
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -130,7 +127,6 @@ periodics:
 
 - name: ci-cert-manager-e2e-v1-17
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -189,7 +185,6 @@ periodics:
 
 - name: ci-cert-manager-e2e-v1-18
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -248,7 +243,6 @@ periodics:
 
 - name: ci-cert-manager-e2e-v1-19
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -307,7 +301,6 @@ periodics:
 
 - name: ci-cert-manager-e2e-v1-20
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:

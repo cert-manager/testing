@@ -2,7 +2,6 @@ periodics:
 
 - name: ci-cert-manager-next-bazel
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -37,7 +36,6 @@ periodics:
 
 - name: ci-cert-manager-next-bazel-experimental
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -71,7 +69,6 @@ periodics:
 
 - name: ci-cert-manager-next-e2e-v1-16
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -130,7 +127,6 @@ periodics:
 
 - name: ci-cert-manager-next-e2e-v1-17
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -189,7 +185,6 @@ periodics:
 
 - name: ci-cert-manager-next-e2e-v1-18
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -248,7 +243,6 @@ periodics:
 
 - name: ci-cert-manager-next-e2e-v1-19
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -307,7 +301,6 @@ periodics:
 
 - name: ci-cert-manager-next-e2e-v1-20
   interval: 2h
-  cluster: gke
   agent: kubernetes
   decorate: true
   extra_refs:

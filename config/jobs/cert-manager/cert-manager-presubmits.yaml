@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
-    cluster: gke
     context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
@@ -39,7 +38,6 @@ presubmits:
   - name: pull-cert-manager-bazel-experimental
     always_run: false
     optional: true
-    cluster: gke
     context: pull-cert-manager-bazel-experimental
     max_concurrency: 8
     agent: kubernetes
@@ -77,7 +75,6 @@ presubmits:
   # See https://github.com/helm/chart-testing/issues/53
   - name: pull-cert-manager-chart
     always_run: true
-    cluster: gke
     context: pull-cert-manager-chart
     max_concurrency: 8
     agent: kubernetes
@@ -115,7 +112,6 @@ presubmits:
 
   - name: pull-cert-manager-deps
     always_run: true
-    cluster: gke
     context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
@@ -149,7 +145,6 @@ presubmits:
 
   # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-16
-    cluster: gke
     context: pull-cert-manager-e2e-v1-16
     always_run: false
     optional: true
@@ -210,7 +205,6 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-e2e-v1-17
-    cluster: gke
     context: pull-cert-manager-e2e-v1-17
     always_run: false
     optional: true
@@ -271,7 +265,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-18
-    cluster: gke
     context: pull-cert-manager-e2e-v1-18
     always_run: false
     optional: true
@@ -331,7 +324,6 @@ presubmits:
         - name: ndots
           value: "1"
   - name: pull-cert-manager-e2e-v1-19
-    cluster: gke
     context: pull-cert-manager-e2e-v1-19
     always_run: false
     optional: true
@@ -391,7 +383,6 @@ presubmits:
         - name: ndots
           value: "1"
   - name: pull-cert-manager-e2e-v1-20
-    cluster: gke
     context: pull-cert-manager-e2e-v1-20
     always_run: true
     optional: false
@@ -459,7 +450,6 @@ presubmits:
   # See https://github.com/jetstack/cert-manager/issues/3555
   #
   - name: pull-cert-manager-e2e-v1-20-feature-issuers-venafi-tpp
-    cluster: gke
     always_run: false
     optional: true
     max_concurrency: 4

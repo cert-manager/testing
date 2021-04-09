@@ -2,7 +2,6 @@ presubmits:
   cert-manager/istio-csr:
 
   - name: pull-istio-csr-verify
-    cluster: gke
     agent: kubernetes
     decorate: true
     always_run: true
@@ -22,7 +21,6 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.20, istio v1.7
   - name: pull-istio-csr-k8s-v1-20-istio-v1-7
-    cluster: gke
     context: pull-istio-csr-k8s-v1-20-istio-v1-7
     # Match everything except PRs that only touch docs/
     always_run: true
@@ -77,7 +75,6 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.20, istio v1.8
   - name: pull-istio-csr-k8s-v1-20-istio-v1-8
-    cluster: gke
     context: pull-istio-csr-k8s-v1-20-istio-v1-8
     # Match everything except PRs that only touch docs/
     always_run: true
@@ -132,7 +129,6 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.20, istio v1.9
   - name: pull-istio-csr-k8s-v1-20-istio-v1-9
-    cluster: gke
     context: pull-istio-csr-k8s-v1-20-istio-v1-9
     # Match everything except PRs that only touch docs/
     always_run: true
