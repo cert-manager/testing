@@ -80,7 +80,6 @@ presubmits:
 
   - name: pull-testing-check-testgrid-config
     decorate: true
-    cluster: gke
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
     branches:
     - master
