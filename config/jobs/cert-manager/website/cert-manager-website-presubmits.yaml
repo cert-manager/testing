@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-website-verify
     always_run: true
-    cluster: gke
     context: pull-cert-manager-website-verify
     max_concurrency: 8
     agent: kubernetes
