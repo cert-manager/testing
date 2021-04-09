@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: cherrypick
-        image: gcr.io/k8s-prow/cherrypicker:v20200628-cc1c099dad
+        image: gcr.io/k8s-prow/cherrypicker:v20210409-985ef5e721
         args:
         - --dry-run=false
         ports:

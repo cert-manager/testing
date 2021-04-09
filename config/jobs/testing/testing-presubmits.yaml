@@ -10,7 +10,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/checkconfig:v20200628-cc1c099dad
+      - image: gcr.io/k8s-prow/checkconfig:v20210409-985ef5e721
         args:
         - /app/prow/cmd/checkconfig/app.binary
         - -strict=true
@@ -80,7 +80,6 @@ presubmits:
 
   - name: pull-testing-check-testgrid-config
     decorate: true
-    cluster: gke
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
     branches:
     - master
