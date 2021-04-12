@@ -247,8 +247,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-19
     context: pull-cert-manager-e2e-v1-19
-    optional: false
-    always_run: true
+    optional: true
+    always_run: false
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -310,7 +310,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.1
+    - release-1.3
     annotations:
       testgrid-create-test-group: 'false'
     labels:
