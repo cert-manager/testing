@@ -49,8 +49,8 @@ Here is the process to upgrade Prow:
    the target commit to which you will be upgrading to (Prow does not have
    "releases").
 
-4. Look at the current build of Prow stored in the file `prow/version`. For
-   example:
+4. Find out what is the "current commit" of the current deployment of Prow. This
+   is stored in the file `prow/version`. For example:
 
    ```sh
    % cat prow/version
@@ -61,22 +61,41 @@ Here is the process to upgrade Prow:
 
    At this point, you know that:
 
-   | Current commit                                                           | Target commit                                                            |
-   | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
-   | [cc1c099dad](https://github.com/kubernetes/test-infra/commit/cc1c099dad) | [ed35ec0cee](https://github.com/kubernetes/test-infra/commit/ed35ec0cee) |
+   |                 | image tag            | commit         |
+   | --------------- | -------------------- | -------------- |
+   | current version | v20200628-cc1c099dad | [cc1c099dad][] |
+   | target version  | v20210412-ed35ec0cee | [ed35ec0cee][] |
 
-   Now, open
+   [cc1c099dad]: https://github.com/kubernetes/test-infra/commit/cc1c099dad
+   [ed35ec0cee]: https://github.com/kubernetes/test-infra/commit/ed35ec0cee
+
+5. Open
    [ANNOUNCEMENTS.md](https://github.com/kubernetes/test-infra/blob/master/prow/ANNOUNCEMENTS.md)
    and look for anything that changed between the current commit and the target
    commit.
+6. Update the file `prow/version` with your target image tag, and open a PR to
+   [jetstack/infra](https://github.com/jetstack/infra). For example:
 
-5. Update the file `prow/version` with your target commit, and open a PR to
-   [jetstack/infra](https://github.com/jetstack/infra).
-6. Get the PR merged. Merging the PR will not do anything, we do not do rolling
+   ```diff
+   diff --git a/prow/version b/prow/version
+   --- a/prow/version
+   +++ b/prow/version
+   @@ -1 +1 @@
+   -v20200628-cc1c099dad
+   +v20210412-ed35ec0cee
+   ```
+
+7. Get the PR merged. Merging the PR will not do anything, we do not do rolling
    deployments.
-7. Pull the latest changes from `master`. From now on, you must be on the
-   `master` branch.
-8. Make sure you have a context in your KUBECONFIG that is called `build-infra`
+8. Pull the latest changes from `master`. From now on, **you must be on the
+   `master` branch**:
+
+   ```sh
+   git checkout master
+   git pull origin master
+   ```
+
+9. Make sure you have a context in your KUBECONFIG that is called `build-infra`
    (this context name is defined in
    [print-workspace-status.sh](https://github.com/jetstack/testing/blob/master/hack/print-workspace-status.sh#L28).
    Create the `build-infra` context with:
@@ -87,8 +106,8 @@ Here is the process to upgrade Prow:
    kubectl config rename-context gke_jetstack-build-infra_europe-west1-b_github-build-infra build-infra
    ```
 
-9. Generate and apply the Prow manifests to the `github-build-infra` cluster:
+10. Generate and apply the Prow manifests to the `github-build-infra` cluster:
 
-   ```sh
-   bazel run //prow/cluster:production.apply
-   ```
+    ```sh
+    bazel run //prow/cluster:production.apply
+    ```
