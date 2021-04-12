@@ -24,36 +24,58 @@ Here is the process to upgrade Prow:
    cd testing
    ```
 
-3. Pick a commit of Prow on
-   [kubernetes/test-infra](https://github.com/kubernetes/test-infra). That's the
-   commit to which you will be upgrading to. We use a commit instead of a git
-   tag due to Prow not having releases. For example, let's pick
-   [eca83d2ac](https://github.com/kubernetes/test-infra/commit/eca83d2ac).
-4. Review
-   [ANNOUNCEMENTS.md](https://github.com/kubernetes/test-infra/blob/master/prow/ANNOUNCEMENTS.md)
-   and look for anything that changed between the previous commit and your new
-   commit.
-5. Open a PR to [jetstack/infra](https://github.com/jetstack/infra) with the
-   update to the `commit` field in the file [WORKSPACE](../WORKSPACE). For
-   example, if you want to be upgrading from Prow
-   [a8cee5a60](https://github.com/kubernetes/test-infra/commit/a8cee5a60) to
-   [eca83d2ac](https://github.com/kubernetes/test-infra/commit/eca83d2ac), the
-   change to WORKSPACE is:
+3. Pick a build of Prow by running:
 
-   ```diff
-   git_repository(
-       name = "test_infra",
-   -   commit = "a8cee5a60a2d9476341cf843867221a8bd18a3e8",
-   +   commit = "eca83d2ac2b48c2732aab0c90c6eff6e564d4a21",
-       remote = "https://github.com/kubernetes/test-infra.git",
-   )
+   ```sh
+   % gcloud container images list-tags gcr.io/k8s-prow/deck | head
+   DIGEST       TAGS                                     TIMESTAMP
+   96dba717b1f3 latest,latest-root,v20210412-ed35ec0cee  2021-04-12T16:17:11
+   255fe5a57fb4 v20210412-176e4b678c                     2021-04-12T15:39:17
+   53107953d93e v20210412-f0c722e283                     2021-04-12T14:59:15
+   f2eca760c0f9 v20210410-57fae234ba                     2021-04-10T02:55:02
    ```
 
+   For example, let us pick the latest one. What we call the "target commit" in
+   the next steps is the commit hash that appears in the image tag:
+
+   ```sh
+   v20210412-ed35ec0cee
+   #         <-------->
+   #        target commit
+   ```
+
+   In this example,
+   [ed35ec0cee](https://github.com/kubernetes/test-infra/commit/ed35ec0cee) is
+   the target commit to which you will be upgrading to (Prow does not have
+   "releases").
+
+4. Look at the current build of Prow stored in the file `prow/version`. For
+   example:
+
+   ```sh
+   % cat prow/version
+   v20200628-cc1c099dad
+   #         <-------->
+   #        current commit
+   ```
+
+   At this point, you know that:
+
+   | Current commit                                                           | Target commit                                                            |
+   | ------------------------------------------------------------------------ | ------------------------------------------------------------------------ |
+   | [cc1c099dad](https://github.com/kubernetes/test-infra/commit/cc1c099dad) | [ed35ec0cee](https://github.com/kubernetes/test-infra/commit/ed35ec0cee) |
+
+   Now, open
+   [ANNOUNCEMENTS.md](https://github.com/kubernetes/test-infra/blob/master/prow/ANNOUNCEMENTS.md)
+   and look for anything that changed between the current commit and the target
+   commit.
+
+5. Update the file `prow/version` with your target commit, and open a PR to
+   [jetstack/infra](https://github.com/jetstack/infra).
 6. Get the PR merged. Merging the PR will not do anything, we do not do rolling
    deployments.
-7. Pull the latest changes from master. From now on, you must be on the master
-   branch.
-
+7. Pull the latest changes from `master`. From now on, you must be on the
+   `master` branch.
 8. Make sure you have a context in your KUBECONFIG that is called `build-infra`
    (this context name is defined in
    [print-workspace-status.sh](https://github.com/jetstack/testing/blob/master/hack/print-workspace-status.sh#L28).
