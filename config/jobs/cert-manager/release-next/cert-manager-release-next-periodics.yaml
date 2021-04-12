@@ -264,7 +264,7 @@ periodics:
     preset-venafi-cloud-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-056d642-2.2.0
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
       args:
       - runner
       - devel/ci-run-e2e.sh
