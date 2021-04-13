@@ -41,6 +41,7 @@ spec:
         - --github-endpoint=https://api.github.com
         - --kubernetes-blob-storage-workers=1
         - --gcs-credentials-file=/etc/gcp/service-account.json
+        - --kubeconfig=/etc/kube/config
         volumeMounts:
         - name: config
           mountPath: /etc/config
@@ -53,6 +54,9 @@ spec:
           readOnly: true
         - name: gcp-sa-creds
           mountPath: /etc/gcp
+          readOnly: true
+        - name: kubeconfig
+          mountPath: /etc/kube
           readOnly: true
       volumes:
       - name: config
@@ -67,3 +71,6 @@ spec:
       - name: gcp-sa-creds
         secret:
           secretName: service-account
+      - name: kubeconfig
+        secret:
+          secretName: crier-kubeconfig
