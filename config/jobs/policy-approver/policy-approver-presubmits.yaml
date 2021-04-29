@@ -19,9 +19,9 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
-  # kind based policy-approver e2e job for Kubernetes v1.21
-  - name: pull-policy-approver-k8s-v1-21
-    context: pull-policy-approver-k8s-v1-21
+  # kind based policy-approver e2e job for Kubernetes v1.20
+  - name: pull-policy-approver-k8s-v1-20
+    context: pull-policy-approver-k8s-v1-20
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -46,7 +46,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.20.2"
         securityContext:
           privileged: true
           capabilities:
