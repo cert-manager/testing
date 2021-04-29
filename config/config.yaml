@@ -47,7 +47,7 @@ branch-protection:
             contexts:
             - dco
             - pull-policy-approver-verify
-            - pull-policy-approver-k8s-v1-21
+            - pull-policy-approver-k8s-v1-20
         webhook-example:
           protect: true
           required_status_checks:
