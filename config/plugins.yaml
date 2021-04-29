@@ -229,8 +229,6 @@ plugins:
   jetstack/preflight:
   - approve
   - dco
-  - owners-label
-  - release-note
   - verify-owners
 
   jetstack/version-checker:
