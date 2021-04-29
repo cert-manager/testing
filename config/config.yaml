@@ -246,7 +246,6 @@ tide:
   - repos:
     - jetstack/tarmak
     - jetstack/cert-manager-csi
-    - jetstack/preflight
     - jetstack/kube-oidc-proxy
     - jetstack/version-checker
     - jetstack/testing
@@ -282,7 +281,6 @@ tide:
     - needs-kind
   merge_method:
     jetstack/preflight: squash
-    jetstack/preflight-platform: squash
 
 # push_gateway:
 #   endpoint: pushgateway
