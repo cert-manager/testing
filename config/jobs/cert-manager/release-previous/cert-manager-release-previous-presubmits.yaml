@@ -304,8 +304,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-20
     context: pull-cert-manager-e2e-v1-20
-    optional: false
-    always_run: true
+    optional: true
+    always_run: false
     max_concurrency: 4
     agent: kubernetes
     decorate: true
