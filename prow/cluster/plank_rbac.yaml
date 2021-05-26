@@ -19,6 +19,8 @@ rules:
       - create
       - list
       - update
+      - patch
+      - watch
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1beta1
