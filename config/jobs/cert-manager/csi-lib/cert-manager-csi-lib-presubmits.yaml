@@ -1,0 +1,26 @@
+presubmits:
+  cert-manager/csi-lib:
+
+  - name: pull-cert-manager-csi-lib-verify
+    always_run: true
+    context: pull-cert-manager-csi-lib-verify
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - main
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: golang:1.16.4
+        args:
+        - ./hack/verify-all.sh
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
