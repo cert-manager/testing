@@ -4,7 +4,9 @@ plank:
     '*': '[Full PR test history](https://prow.build-infra.jetstack.net/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://jetstack-build-infra.appspot.com/pr/{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#github-issues-for-known-flakes) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
   job_url_prefix_config:
     '*': https://prow.build-infra.jetstack.net/view/gcs/
-  pod_pending_timeout: 60m
+  pod_pending_timeout: 120m
+  pod_unscheduled_timeout: 60m
+  pod_running_timeout: 48h0m0s
   default_decoration_configs:
     '*':
       timeout: 7200000000000 # 2h
