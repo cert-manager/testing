@@ -42,7 +42,7 @@ presubmits:
         - e2e
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION

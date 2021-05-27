@@ -159,7 +159,7 @@ presubmits:
         - devel/ci-run-e2e.sh
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION
@@ -216,7 +216,7 @@ presubmits:
         - devel/ci-run-e2e.sh
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION
@@ -273,7 +273,7 @@ presubmits:
         - devel/ci-run-e2e.sh
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION
@@ -330,7 +330,7 @@ presubmits:
         - devel/ci-run-e2e.sh
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION
@@ -387,7 +387,7 @@ presubmits:
         - devel/ci-run-e2e.sh
         resources:
           requests:
-            cpu: 6
+            cpu: 3500m
             memory: 12Gi
         env:
         - name: K8S_VERSION
