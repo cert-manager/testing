@@ -20,7 +20,7 @@ presubmits:
         - ./test/presubmit.sh
         resources:
           requests:
-            cpu: 2
+            cpu: 3500m
             memory: 4Gi
       dnsConfig:
         options:
