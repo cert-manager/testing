@@ -356,3 +356,24 @@ periodics:
       options:
       - name: ndots
         value: "1"
+
+- name: eks-http01-tests
+    always_run: false
+    optional: true
+    spec:
+      containers:
+      - image: hashicorp/terraform
+        command:
+        - /bin/bash
+        args:
+        - -c
+        - |
+          set -euo; \
+          git clone https://github.com/cert-manager/test-infra.git; \
+          cd test-infra/aws; \
+          terraform init; \
+          terraform apply -auto-approve;
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-master
+      description: Runs the end-to-end test suite against a EKS cluster
