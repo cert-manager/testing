@@ -23,6 +23,7 @@ periodics:
       - runner
       - bazel
       - test
+      - --jobs=1
       - //...
       resources:
         requests:
@@ -56,6 +57,7 @@ periodics:
       - runner
       - bazel
       - test
+      - --jobs=1
       - //...
       resources:
         requests:

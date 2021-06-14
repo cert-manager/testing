@@ -25,6 +25,7 @@ presubmits:
         - runner
         - bazel
         - test
+        - --jobs=1
         - //...
         resources:
           requests:
@@ -60,6 +61,7 @@ presubmits:
         - runner
         - bazel
         - test
+        - --jobs=1
         - //...
         resources:
           requests:
