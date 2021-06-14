@@ -180,6 +180,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.16"
+        # Disable CertificateSigningRequest e2e tests for pre v1.18 clusters
+        - name: FEATURE_GATES
+          value: ""
         securityContext:
           privileged: true
           capabilities:
@@ -240,6 +243,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.17"
+        # Disable CertificateSigningRequest e2e tests for pre v1.18 clusters
+        - name: FEATURE_GATES
+          value: ""
         securityContext:
           privileged: true
           capabilities:
@@ -300,6 +306,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.18"
+        # Enable CertificateSigningRequest e2e tests for v1.18+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
@@ -359,6 +368,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.19"
+        # Enable CertificateSigningRequest e2e tests for v1.18+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
@@ -418,6 +430,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.20"
+        # Enable CertificateSigningRequest e2e tests for v1.18+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
@@ -477,6 +492,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.21"
+        # Enable CertificateSigningRequest e2e tests for v1.18+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
@@ -539,6 +557,9 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.20"
+        # Enable CertificateSigningRequest e2e tests for v1.18+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
