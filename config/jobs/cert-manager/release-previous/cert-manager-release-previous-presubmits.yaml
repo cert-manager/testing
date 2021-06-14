@@ -54,8 +54,8 @@ presubmits:
         args:
         - runner
         - bazel
-        - --jobs=1
         - test
+        - --jobs=1
         - //...
         resources:
           requests:
