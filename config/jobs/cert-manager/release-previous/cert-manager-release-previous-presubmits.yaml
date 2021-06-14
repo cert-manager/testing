@@ -166,7 +166,7 @@ presubmits:
           value: "1.16"
         # Disable CertificateSigningRequest e2e tests for pre v1.18 clusters
         - name: FEATURE_GATES
-          value: ""
+          value: "ExperimentalCertificateSigningRequestControllers=false"
         securityContext:
           privileged: true
           capabilities:
@@ -226,7 +226,7 @@ presubmits:
           value: "1.17"
         # Disable CertificateSigningRequest e2e tests for pre v1.18 clusters
         - name: FEATURE_GATES
-          value: ""
+          value: "ExperimentalCertificateSigningRequestControllers=false"
         securityContext:
           privileged: true
           capabilities:
