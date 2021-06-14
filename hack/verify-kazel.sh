@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script should only be executed via bazel, with 'bazel test //hack:verify-bazel'
+# This script should only be executed via bazel, with 'bazel test //hack:verify-kazel'
 
 set -o errexit
 set -o nounset
