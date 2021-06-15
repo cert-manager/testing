@@ -13,7 +13,7 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs 'bazel test //...'
+      description: Runs 'bazel test --jobs=1 //...'
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -49,7 +49,7 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs 'bazel test //...' using the 'experimental' Bazel version
+      description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -396,6 +396,7 @@ presubmits:
         options:
         - name: ndots
           value: "1"
+
   - name: pull-cert-manager-e2e-v1-20
     context: pull-cert-manager-e2e-v1-20
     always_run: false
@@ -458,6 +459,7 @@ presubmits:
         options:
         - name: ndots
           value: "1"
+
   - name: pull-cert-manager-e2e-v1-21
     context: pull-cert-manager-e2e-v1-21
     always_run: true

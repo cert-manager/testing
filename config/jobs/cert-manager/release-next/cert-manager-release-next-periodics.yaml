@@ -16,7 +16,7 @@ periodics:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs 'bazel test //...'
+    description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -50,7 +50,7 @@ periodics:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs 'bazel test //...' using the 'experimental' Bazel version
+    description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210331-363c37a-experimental
