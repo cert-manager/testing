@@ -531,7 +531,7 @@ presubmits:
   #
   # See https://github.com/jetstack/cert-manager/issues/3555
   #
-  - name: pull-cert-manager-e2e-v1-20-feature-issuers-venafi-tpp
+  - name: pull-cert-manager-e2e-v1-21-feature-issuers-venafi-tpp
     always_run: false
     optional: true
     max_concurrency: 4
@@ -539,7 +539,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:TPP] against a Kubernetes v1.20 cluster
+      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:TPP] against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -561,7 +561,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.20"
+          value: "1.21"
         # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
         - name: FEATURE_GATES
           value: "ExperimentalCertificateSigningRequestControllers=true"
