@@ -382,7 +382,7 @@ periodics:
           aws-iam-authenticator help; \
           cd test-infra/aws; \
           terraform init; \
-          terraform apply -var credentials.access_key=$AWS_ACCESS_KEY -var credentials.secret_key=$AWS_SECRET_KEY -auto-approve; \
+          terraform apply -auto-approve; \
           cd..; \
           cd..; \
           go get github.com/onsi/ginkgo/ginkgo; \
