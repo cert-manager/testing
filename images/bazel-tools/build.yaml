@@ -5,6 +5,9 @@ variants:
     arguments:
       BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:bf41f2a8f6191842ad3ff56a071448ed6a8bdcece4d6d62c5d91733c2f1f3541"
       NODE_VERSION: "10.24.0~dfsg-1~deb10u1"
+      # This DOCKER_TAG is the Docker tag that corresponds to the Node version
+      # we use. We don't use the Node version directly because it is not a valid
+      # Docker tag.
       DOCKER_TAG: "10.24.0"
 
 # Image names to be tagged and pushed
