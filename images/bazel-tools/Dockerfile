@@ -22,6 +22,9 @@ LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 # install goversion
 RUN go get github.com/rsc/goversion@v1.2.0
 
+# Add GOPATH/bin to PATH
+ENV PATH=/root/go/bin:$PATH
+
 ARG NODE_VERSION
 
 # install jq, nodejs
