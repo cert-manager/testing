@@ -610,7 +610,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
     spec:
       containers:
