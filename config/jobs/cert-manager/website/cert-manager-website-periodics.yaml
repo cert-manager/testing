@@ -14,6 +14,7 @@ periodics:
   annotations:
     testgrid-dashboards: jetstack-cert-manager-website
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-disable-prowjob-analysis: "true"
     description: Updates the algolia search index for the cert-manager website
   spec:
     containers:
