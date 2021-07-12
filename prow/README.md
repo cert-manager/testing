@@ -111,3 +111,24 @@ Here is the process to upgrade Prow:
     ```sh
     bazel run //prow/cluster:production.apply
     ```
+
+## Creating new Prowjobs
+
+See documentation for ProwJobs in [k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/jobs.md).
+
+### Testing locally
+
+ProwJobs can be tested locally by running the (interactive) `./prow/pj-on-kind.sh` script.
+This script will spin up a local KIND cluster and create a new ProwJob instance for which there will be a Pod created that will be running the actual test.
+
+See [documentation in k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/build_test_update.md#How-to-test-a-ProwJob) for how the script works.
+
+An example of running `pull-cert-manager-upgrade-v1-21` job locally:
+
+1. Remove Bazel presets from job config, so it doesn't look for Bazel cache creds
+2. Run `./prow/pj-on-kind.sh pull-cert-manager-upgrade-v1-21`
+3. Pass some cert-manager PR number when requested. This will be checked out.
+4. Pass 'empty' for any storage volumes when requested.
+5. Retrieve kubeconfig for the kind cluster `kind get kubeconfig --name mkpod` and set KUBECONFIG
+6. `kubectl get pods` - to get the name of the pod that is running the test
+7. `kubectl logs <pod-name> -c test -f` stream the logs
