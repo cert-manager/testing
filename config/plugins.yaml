@@ -139,7 +139,7 @@ milestone_applier:
   cert-manager/policy-approver:
     master: v0.0
   cert-manager/trust:
-    master: v0.0
+    master: v0.1
 
 config_updater:
   maps:
