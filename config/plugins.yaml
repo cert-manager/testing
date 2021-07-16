@@ -28,6 +28,7 @@ triggers:
   - jetstack/cert-manager-csi
   - cert-manager/istio-csr
   - cert-manager/policy-approver
+  - cert-manager/trust
   trusted_org: cert-manager
   only_org_members: true
 
@@ -86,6 +87,10 @@ repo_milestone:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
+  cert-manager/trust:
+    # https://github.com/orgs/cert-manager/teams/milestone-maintainers
+    maintainers_id: 2805308
+    maintainers_team: milestone-maintainers
   cert-manager/policy-approver:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
@@ -132,6 +137,8 @@ milestone_applier:
   cert-manager/istio-csr:
     master: v0.0
   cert-manager/policy-approver:
+    master: v0.0
+  cert-manager/trust:
     master: v0.0
 
 config_updater:

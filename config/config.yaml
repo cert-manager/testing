@@ -58,6 +58,13 @@ branch-protection:
             contexts:
             - dco
             - pull-cert-manager-webhook-example-verify
+        trust:
+          protect: true
+          required_status_checks:
+            contexts:
+            - dco
+            - pull-cert-manager-trust-verify
+            - pull-cert-manager-trust-smoke
 
     jetstack:
       # TODO: enforce dco check org-wide
