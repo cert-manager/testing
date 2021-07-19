@@ -29,7 +29,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
