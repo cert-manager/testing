@@ -37,7 +37,7 @@ git clone --branch ${KUBERNETES_VERSION} \
 	https://github.com/kubernetes/kubernetes \
 	${kube_path}
 
-image_tag=gcr.io/jetstack-build-infra-images/kind:${KUBERNETES_VERSION}
+image_tag=eu.gcr.io/jetstack-build-infra-images/kind:${KUBERNETES_VERSION}
 
 echo "Building $image_tag..."
 kind build node-image \
