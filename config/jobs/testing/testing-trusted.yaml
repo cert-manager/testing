@@ -382,3 +382,39 @@ postsubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+
+  - name: post-testing-push-kind
+    cluster: trusted
+    run_if_changed: '^images/kind/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      # Mount Bazel scratch dir.
+      preset-bazel-scratch-dir: "true"
+      preset-image-deploy: "true"
+      # Mount GCP SA creds and export GOOGLE_APPLICATION_CREDENTIALS env var
+      # pointing to the creds file.
+      preset-deployer-service-account: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      testgrid-disable-prowjob-analysis: "true"
+      description: Build and push the 'kind' image
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:ac1c44a3bb2781258e570a9e2ec25b3a8464a8112f46703b1769510940612344
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/kind/build.sh
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
