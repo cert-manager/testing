@@ -10,4 +10,7 @@ RUN apt-get -y update \
     mv aws-iam-authenticator /usr/local/bin/; \
     curl -O https://releases.hashicorp.com/terraform/1.0.3/terraform_1.0.3_linux_amd64.zip; \
     unzip terraform_1.0.3_linux_amd64.zip;  \
-    mv terraform /usr/local/bin/;
+    mv terraform /usr/local/bin/; \
+    go get github.com/bazelbuild/bazelisk; \
+    bazelisk; \
+    ln -s /go/bin/bazelisk /usr/local/bin/bazel;
