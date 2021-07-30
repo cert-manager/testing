@@ -418,3 +418,38 @@ postsubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+  - name: aws-testing
+    cluster: trusted
+    run_if_changed: '^images/golang-aws/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-image-deploy: "true"
+      preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      description: Build and push the 'golang-aws' image
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-056d642-2.2.0
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/builder/ci-runner.sh
+        - images/golang-aws
+        - --confirm=true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
