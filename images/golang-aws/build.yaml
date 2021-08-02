@@ -26,5 +26,5 @@ variants:
 
 # Image names to be tagged and pushed
 images:
-- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}
-- ${_REGISTRY}/${_NAME}:latest
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${GO_VERSION}
+- ${_REGISTRY}/${_NAME}:latest-${GO_VERSION}
