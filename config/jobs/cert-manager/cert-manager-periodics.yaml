@@ -374,7 +374,7 @@ periodics:
     preset-aws-credentials: "true"
   spec:
     containers:
-    - image: <to-be-replaced>
+    - image: eu.gcr.io/jetstack-build-infra-images/golang-aws@sha256:1f330e4c9552ca383d157067b73fb0e090b64b0777939fd59e58b60e06020d66
       args:
       - -c
       - |
@@ -387,7 +387,7 @@ periodics:
         cd.. && \
         cd.. && \
         cd cert-manager && \
-        ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=<need-to-replace-this> --kubernetes-config=../test-infra/aws/kubeconfig_cert-manager-cluster;
+        ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=../test-infra/aws/kubeconfig_cert-manager-cluster;
       resources:
         requests:
           cpu: 3500m
