@@ -20,7 +20,7 @@ set -o pipefail
 
 # Tag to check out in k/k repo. Kind will build Kubernetes binaries from that
 # tag and include in the built KIND image.
-KUBERNETES_VERSION=v1.22.0-rc.0
+KUBERNETES_VERSION=v1.22.0
 # Version of the kind CLI to use to build the kind image.
 KIND_BASE_VERSION=v0.11.1
 
