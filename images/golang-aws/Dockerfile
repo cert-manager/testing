@@ -39,5 +39,5 @@ RUN mkdir -p /tmp/setup && \
     rm -rf /tmp/setup && \
     aws --version && \
     aws-iam-authenticator version && \
-    terraform version && \
-    bazel --version
+    bazel --version && \
+    terraform version
