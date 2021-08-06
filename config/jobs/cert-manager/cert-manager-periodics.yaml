@@ -288,7 +288,7 @@ periodics:
         value: "1.19"
       # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true\\,ExperimentalGatewayAPISupport=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true\\\\,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -349,7 +349,7 @@ periodics:
         value: "1.20"
       # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true\\,ExperimentalGatewayAPISupport=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true\\\\,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -410,7 +410,7 @@ periodics:
         value: "1.21"
       # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true\\,ExperimentalGatewayAPISupport=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true\\\\,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
