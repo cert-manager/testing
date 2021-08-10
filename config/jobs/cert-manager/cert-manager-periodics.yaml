@@ -512,7 +512,8 @@ periodics:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/golang-aws@sha256:1f330e4c9552ca383d157067b73fb0e090b64b0777939fd59e58b60e06020d66
       args:
-      - bash -c
+      - bash 
+      - -c
       - |
         set -euo && \
         git clone https://github.com/jetstack/cert-manager.git && \
