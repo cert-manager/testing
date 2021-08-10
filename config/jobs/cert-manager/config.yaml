@@ -61,3 +61,22 @@ presets:
   env:
   - name: FLAKE_ATTEMPTS
     value: "2"
+
+- labels:
+    preset-aws-credentials: "true"
+  env:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: aws
+        key: accesskey
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: aws
+        key: secretkey
+  - name: AWS_DEFAULT_REGION
+    valueFrom:
+      secretKeyRef:
+        name: aws
+        key: region
