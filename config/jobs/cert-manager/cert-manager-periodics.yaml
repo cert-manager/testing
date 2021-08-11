@@ -520,8 +520,8 @@ periodics:
         git clone https://github.com/cert-manager/test-infra.git && \
         cd test-infra/aws && \
         terraform init && \
-        terraform apply -auto-approve && \
         trap 'terraform destroy -auto-approve' ERR && \
+        terraform apply -auto-approve && \
         ls && \
         pwd && \
         cd .. && \
