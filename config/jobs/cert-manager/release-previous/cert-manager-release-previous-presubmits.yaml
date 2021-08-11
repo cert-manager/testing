@@ -8,7 +8,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -41,7 +41,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -76,7 +76,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -110,7 +110,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -141,7 +141,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -201,7 +201,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -261,7 +261,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -321,7 +321,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -381,7 +381,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.4
+    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
