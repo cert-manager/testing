@@ -813,7 +813,7 @@ presubmits:
           cd .. && \
           cd .. && \
           cd cert-manager && \
-          ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/go/test-infra/aws/kubeconfig_cert-manager-cluster;
+          ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/jetstack/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster;
         resources:
           requests:
             cpu: 3500m
