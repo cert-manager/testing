@@ -463,8 +463,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-21
     context: pull-cert-manager-e2e-v1-21
-    always_run: true
-    optional: false
+    always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -524,6 +524,70 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-22
+    context: pull-cert-manager-e2e-v1-22
+    # This is the default e2e test ran for all PRs to master.
+    always_run: true
+    optional: false
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.6
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
+      preset-retry-flakey-tests: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22"
+        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
+        - name: FEATURE_GATES
+          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
   # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
   # with the following GitHub comment:
   #
@@ -531,7 +595,7 @@ presubmits:
   #
   # See https://github.com/jetstack/cert-manager/issues/3555
   #
-  - name: pull-cert-manager-e2e-v1-21-feature-issuers-venafi-tpp
+  - name: pull-cert-manager-e2e-v1-22-feature-issuers-venafi-tpp
     always_run: false
     optional: true
     max_concurrency: 4
@@ -539,7 +603,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:TPP] against a Kubernetes v1.21 cluster
+      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:TPP] against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -561,7 +625,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21"
+          value: "1.22"
         # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
         - name: FEATURE_GATES
           value: "ExperimentalCertificateSigningRequestControllers=true"
@@ -604,7 +668,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:Cloud] against a Kubernetes v1.21 cluster
+      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:Cloud] against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -626,7 +690,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21"
+          value: "1.22"
         # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
         - name: FEATURE_GATES
           value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
@@ -656,7 +720,7 @@ presubmits:
 
   # Verifies upgrade from the latest published release with both Helm chart and
   # static manifests. This is an optional test.
-  - name: pull-cert-manager-upgrade-v1-21
+  - name: pull-cert-manager-upgrade
     # Run only when requested.
     always_run: false
     optional: true
@@ -689,70 +753,7 @@ presubmits:
         env:
         # Used by https://github.com/jetstack/cert-manager/blob/master/devel/cluster/create-kind.sh
         - name: K8S_VERSION
-          value: "1.21"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-22
-    context: pull-cert-manager-e2e-v1-22
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    - release-1.6
-    annotations:
-      testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
           value: "1.22"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:
