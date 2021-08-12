@@ -780,6 +780,7 @@ presubmits:
   - name: aws-tests-pre
     always_run: false
     optional: true
+    max_concurrency: 1
     agent: kubernetes
     decorate: true
     branches:
