@@ -103,9 +103,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.16"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
+      # Disable CertificateSigningRequest and Gateway API e2e tests for pre v1.19 clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
+        value: "ExperimentalCertificateSigningRequestControllers=false,ExperimentalGatewayAPISupport=false"
       securityContext:
         privileged: true
         capabilities:
@@ -164,9 +164,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.17"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
+      # Disable CertificateSigningRequest and Gateway API e2e tests for pre v1.19 clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
+        value: "ExperimentalCertificateSigningRequestControllers=false,ExperimentalGatewayAPISupport=false"
       securityContext:
         privileged: true
         capabilities:
@@ -225,9 +225,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.18"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
+      # Disable CertificateSigningRequest and Gateway API e2e tests for pre v1.19 clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
+        value: "ExperimentalCertificateSigningRequestControllers=false,ExperimentalGatewayAPISupport=false"
       securityContext:
         privileged: true
         capabilities:
@@ -286,9 +286,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.19"
-      # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
+      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -347,9 +347,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.20"
-      # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
+      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -408,9 +408,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.21"
-      # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
+      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -469,9 +469,9 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.22"
-      # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
+      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
       - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true"
+        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
