@@ -562,7 +562,7 @@ periodics:
   extra_refs:            # Periodic job doesn't clone any repo by default, needs to be added explicitly
     - org: cert-manager
       repo: test-infra
-      base_ref: master
+      base_ref: main
     - org: jetstack
       repo: cert-manager
       base_ref: master
