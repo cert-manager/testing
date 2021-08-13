@@ -784,6 +784,10 @@ presubmits:
     max_concurrency: 1
     agent: kubernetes
     decorate: true
+    extra_refs:            # Periodic job doesn't clone any repo by default, needs to be added explicitly
+    - org: cert-manager
+      repo: test-infra
+      base_ref: master
     branches:
     - master
     annotations:
@@ -805,19 +809,19 @@ presubmits:
         - -c
         - |
           set -euo && \
-          git clone https://github.com/jetstack/cert-manager.git && \
-          git clone https://github.com/cert-manager/test-infra.git && \
-          cd test-infra/aws && \
+          ls && \
+          pwd && \
+          cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
           terraform init && \
           trap 'terraform destroy -auto-approve' ERR && \
           terraform apply -auto-approve && \
           ls && \
           pwd && \
-          cd .. && \
-          cd .. && \
-          cd cert-manager && \
-          ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/jetstack/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
-          cd /home/prow/go/src/github.com/jetstack/cert-manager/test-infra/aws && \
+          cd /home && \
+          ls && \
+          cd /home/prow/go/src/github.com/jetstack/cert-manager && \
+          ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
+          cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
           terraform destroy -auto-approve;
         resources:
           requests:
