@@ -1,0 +1,24 @@
+presubmits:
+  cert-manager/policy-approver:
+
+  - name: pull-policy-approver-verify
+    agent: kubernetes
+    decorate: true
+    always_run: true
+    max_concurrency: 8
+    annotations:
+      testgrid-create-test-group: 'false'
+    spec:
+      containers:
+      - image: golang:1.17
+        args:
+        - make
+        - verify
+        resources:
+          requests:
+            cpu: 2
+            memory: 1Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
