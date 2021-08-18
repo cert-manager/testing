@@ -24,6 +24,12 @@ variants:
       TERRAFORM_VERSION: "1.0.3"
       BAZEL_VERSION: "4.0.0"
       GO_VERSION: "1.16.6"
+  "1.17":
+    arguments:
+      BASE_IMAGE: "golang:1.17-buster"
+      TERRAFORM_VERSION: "1.0.3"
+      BAZEL_VERSION: "4.0.0"
+      GO_VERSION: "1.17"
 
 
 # Image names to be tagged and pushed
