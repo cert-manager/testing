@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Includes bazel, docker-in-docker and gcloud
-ARG DEBIAN_VERSION=stretch
+ARG DEBIAN_VERSION=buster
 FROM debian:"${DEBIAN_VERSION}"
 LABEL maintainer="james@jetstack.io"
 
@@ -74,6 +74,7 @@ RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 
 # make is installed simply because a lot of things use it - it is not required
 # by Bazel
+# moreutils is used to get timestamping on stdout
 RUN apt-get update && apt-get install -y --no-install-recommends \
     google-cloud-sdk \
     pkg-config \
@@ -91,6 +92,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rsync \
     patch \
     openssh-client \
+    moreutils \
     && apt-get clean \
     && python -m pip install --upgrade pip setuptools wheel
 
