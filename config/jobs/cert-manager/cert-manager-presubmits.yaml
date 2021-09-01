@@ -167,8 +167,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-pre-v19-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -182,9 +182,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.16"
-        # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=false"
         securityContext:
           privileged: true
           capabilities:
@@ -230,8 +227,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-pre-v19-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -245,9 +242,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.17"
-        # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=false"
         securityContext:
           privileged: true
           capabilities:
@@ -293,8 +287,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-pre-v19-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -308,9 +302,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.18"
-        # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=false"
         securityContext:
           privileged: true
           capabilities:
@@ -356,8 +347,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-v19-plus-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -371,9 +362,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.19"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:
@@ -419,8 +407,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-v19-plus-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -434,9 +422,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.20"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:
@@ -482,8 +467,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-v19-plus-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -497,9 +482,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.21"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:
@@ -546,8 +528,8 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-venafi-tpp-credentials: "true"
-      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-k8s-v19-plus-env: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -561,9 +543,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.22"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:
@@ -603,7 +582,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:TPP] against a Kubernetes v1.22 cluster
+      description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -611,14 +590,13 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-ginkgo-focus-venafi-tpp: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
         args:
         - runner
         - devel/ci-run-e2e.sh
-        - -ginkgo.focus
-        - '\[Feature:Issuers:Venafi:TPP\]'
         resources:
           requests:
             cpu: 3500m
@@ -626,9 +604,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.22"
-        # Enable CertificateSigningRequest e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true"
         securityContext:
           privileged: true
           capabilities:
@@ -668,7 +643,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests labelled [Feature:Issuers:Venafi:Cloud] against a Kubernetes v1.22 cluster
+      description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -676,6 +651,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
+      preset-ginkgo-focus-venafi-cloud: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -683,7 +659,6 @@ presubmits:
         - runner
         - devel/ci-run-e2e.sh
         - -ginkgo.focus
-        - '\[Feature:Issuers:Venafi:Cloud\]'
         resources:
           requests:
             cpu: 3500m
@@ -691,9 +666,6 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.22"
-        # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-        - name: FEATURE_GATES
-          value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
         securityContext:
           privileged: true
           capabilities:

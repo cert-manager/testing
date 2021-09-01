@@ -84,7 +84,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-pre-v19-env: "true"
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
@@ -103,9 +103,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.16"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
       securityContext:
         privileged: true
         capabilities:
@@ -150,7 +147,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-pre-v19-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -164,9 +161,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.17"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
       securityContext:
         privileged: true
         capabilities:
@@ -211,7 +205,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-pre-v19-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -225,9 +219,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.18"
-      # Disable CertificateSigningRequest e2e tests for pre v1.19 clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=false"
       securityContext:
         privileged: true
         capabilities:
@@ -272,7 +263,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-v19-plus-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -286,9 +277,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.19"
-      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -333,7 +321,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-v19-plus-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -347,9 +335,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.20"
-      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -394,7 +379,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-v19-plus-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -408,9 +393,6 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.21"
-      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
       securityContext:
         privileged: true
         capabilities:
@@ -455,7 +437,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
+    preset-k8s-v19-plus-env: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -469,9 +451,65 @@ periodics:
       env:
       - name: K8S_VERSION
         value: "1.22"
-      # Enable CertificateSigningRequest and Gateway API e2e tests for v1.19+ clusters
-      - name: FEATURE_GATES
-        value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+
+# This test runs Venafi Cloud tests once every 24hrs.
+# This is the only CI test job that runs those.
+- name: ci-cert-manager-venafi-cloud
+  interval: 24h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: master
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-ginkgo-focus-venafi-cloud: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      args:
+      - runner
+      - devel/ci-run-e2e.sh
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.22"
       securityContext:
         privileged: true
         capabilities:
@@ -577,6 +615,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-aws-credentials: "true"
+    preset-ginkgo-focus-http01-ingress: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/golang-aws@sha256:1f330e4c9552ca383d157067b73fb0e090b64b0777939fd59e58b60e06020d66
@@ -596,7 +635,7 @@ periodics:
         cd /home && \
         ls && \
         cd /home/prow/go/src/github.com/jetstack/cert-manager && \
-        ./devel/run-e2e.sh --ginkgo.focus "Public ACME Server HTTP01 Issuer" --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
+        ./devel/run-e2e.sh --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
         cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
         terraform destroy -auto-approve;
       resources:
