@@ -81,25 +81,26 @@ presets:
         name: aws
         key: region
 
-# Specific cert-manager e2e test suites can be skipped here by setting
-# GINKGO_SKIP value.
 - labels:
-    preset-k8s-pre-v19-env: "true"
+    preset-disable-all-feature-gates: "true"
   env:
-  - name: GINKGO_SKIP
-    value: "Venafi Cloud"
   - name: FEATURE_GATES
     value: "ExperimentalCertificateSigningRequestControllers=false,ExperimentalGatewayAPISupport=false"
 
-# Specific cert-manager e2e test suites can be skipped here by setting
-# GINKGO_SKIP value.
 - labels:
-    preset-k8s-v19-plus-env: "true"
+    preset-enable-all-feature-gates: "true"
+  env:
+  - name: FEATURE_GATES
+    value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
+
+# Specific cert-manager e2e test suites can be skipped for all e2e tests here by setting
+# GINKGO_SKIP value
+# i.e 'Venafi Cloud|Gateway' will skip all Venafi Cloud and Gateway tests.
+- labels:
+    preset-ginkgo-skip-default: "true"
   env:
   - name: GINKGO_SKIP
     value: "Venafi Cloud"
-  - name: FEATURE_GATES
-    value: "ExperimentalCertificateSigningRequestControllers=true,ExperimentalGatewayAPISupport=true"
 
 - labels:
     preset-ginkgo-focus-http01-ingress: "true"

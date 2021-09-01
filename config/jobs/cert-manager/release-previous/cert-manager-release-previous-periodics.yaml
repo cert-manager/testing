@@ -85,7 +85,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-pre-v19-env: "true"
+    preset-disable-all-feature-gates: "true"
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -149,7 +149,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-pre-v19-env: "true"
+    preset-disable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -208,7 +208,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-pre-v19-env: "true"
+    preset-disable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -267,7 +267,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-v19-plus-env: "true"
+    preset-enable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -326,7 +326,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-v19-plus-env: "true"
+    preset-enable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -385,7 +385,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-v19-plus-env: "true"
+    preset-enable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
@@ -444,7 +444,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-k8s-v19-plus-env: "true"
+    preset-enable-all-feature-gates: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
