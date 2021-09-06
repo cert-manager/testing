@@ -45,12 +45,6 @@ branch-protection:
             - pull-istio-csr-k8s-v1-21-istio-v1-8
             - pull-istio-csr-k8s-v1-21-istio-v1-9
             - pull-istio-csr-k8s-v1-21-istio-v1-10
-        policy-approver:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-policy-approver-verify
         webhook-example:
           protect: true
           required_status_checks:

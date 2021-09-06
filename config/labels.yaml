@@ -124,19 +124,6 @@ repos:
       target: both
       addedBy: prow
 
-  cert-manager/policy-approver:
-    labels:
-    - color: 0052cc
-      description: Indicates a PR modifies deployment configuration
-      name: area/deploy
-      target: both
-      addedBy: prow
-    - color: 0052cc
-      description: Indicates a PR modifies e2e testing code
-      name: area/testing
-      target: both
-      addedBy: prow
-
   cert-manager/trust:
     labels:
     - color: 0052cc
