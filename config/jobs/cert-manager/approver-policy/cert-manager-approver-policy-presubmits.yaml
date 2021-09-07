@@ -24,6 +24,7 @@ presubmits:
     context: pull-cert-manager-approver-policy-smoke
     agent: kubernetes
     decorate: true
+    always_run: true
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
