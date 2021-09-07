@@ -1,8 +1,8 @@
 presubmits:
-  cert-manager/policy-approver:
+  cert-manager/approver-policy:
 
-  - name: pull-cert-manager-policy-approver-verify
-    context: pull-cert-manager-policy-approver-verify
+  - name: pull-cert-manager-approver-policy-verify
+    context: pull-cert-manager-approver-policy-verify
     agent: kubernetes
     decorate: true
     always_run: true
@@ -20,7 +20,8 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
-  - name: pull-cert-manager-policy-approver-smoke
+  - name: pull-cert-manager-approver-policy-smoke
+    context: pull-cert-manager-approver-policy-smoke
     agent: kubernetes
     decorate: true
     labels:
