@@ -47,10 +47,12 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: tot
-        image: gcr.io/k8s-prow/tot:v20210409-985ef5e721
+        image: gcr.io/k8s-prow/tot:v20210906-cccc01c95c
         imagePullPolicy: Always
         args:
         - -storage=/store/tot.json
+        - --config-path=/etc/config/config.yaml
+        - --job-config-path=/etc/job-config
         - -fallback
         ports:
           - name: http
@@ -58,7 +60,19 @@ spec:
         volumeMounts:
         - mountPath: /store
           name: tot-volume
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+        - name: job-config
+          mountPath: /etc/job-config
+          readOnly: true
       volumes:
         - name: tot-volume
           persistentVolumeClaim:
             claimName: tot-storage
+        - name: config
+          configMap:
+            name: config
+        - name: job-config
+          configMap:
+            name: job-config
