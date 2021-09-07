@@ -33,6 +33,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210907-aa51283-1.17
         args:
+        - runner
         - make
         - smoke
         resources:
