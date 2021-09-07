@@ -2,7 +2,7 @@ name: golang-dind # Name of the image to be built
 
 variants:
   "1.17":
-  arguments:
+    arguments:
       BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210331-363c37a-3.5.0"
       GO_VERSION: "1.17"
   "1.16.6":
