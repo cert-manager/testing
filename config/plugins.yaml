@@ -51,19 +51,6 @@ external_plugins:
     - issue_comment
     - pull_request
 
-# heart:
-#   adorees:
-#   - k8s-merge-robot
-
-# slack:
-#   mergewarnings:
-#   - repos:
-#     - kubernetes/kubernetes
-#     channels:
-#     - kubernetes-dev
-#     whitelist:
-#     - k8s-merge-robot
-
 repo_milestone:
   # You can curl the following endpoint in order to determine the github ID of your team
   # responsible for maintaining the milestones:
