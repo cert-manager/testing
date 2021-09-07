@@ -114,8 +114,11 @@ deck:
       optional_files:
         - artifacts/filtered.html
   tide_update_period: 1s
-  rerun_auth_config:
-    github_users:
+  rerun_auth_configs:
+    '*':
+      github_team_ids:
+      - 2805308 # cert-manager milestone-maintainers
+      github_users:
       - munnerz
       - JoshVanL
 
