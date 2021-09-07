@@ -20,7 +20,6 @@ triggers:
   - jetstack/vault-helper
   - jetstack/vault-unsealer
   - jetstack/vault-plugin-auth-templated-aws
-  trusted_org: jetstack
   only_org_members: true
 - repos:
   - jetstack/cert-manager
@@ -28,7 +27,6 @@ triggers:
   - jetstack/cert-manager-csi
   - cert-manager/istio-csr
   - cert-manager/trust
-  trusted_org: cert-manager
   only_org_members: true
 
 blunderbuss:
