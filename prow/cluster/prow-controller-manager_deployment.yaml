@@ -1,4 +1,4 @@
-# Copyright 2017 The Kubernetes Authors All rights reserved.
+# Copyright 2021 The Kubernetes Authors All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,44 +16,40 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: default
-  name: plank
+  name: prow-controller-manager
   labels:
-    app: plank
+    app: prow-controller-manager
 spec:
-  replicas: 1 # Do not scale up.
-  strategy:
-    type: Recreate
+  # Mutually exclusive with plank. Only one of them may have more than zero replicas.
+  replicas: 1
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: plank
+      app: prow-controller-manager
   template:
     metadata:
-      annotations:
-         prometheus.io/scrape: "true"
-         prometheus.io/port: "9090"
       labels:
-        app: plank
+        app: prow-controller-manager
     spec:
-      serviceAccountName: "plank" # Uncomment for use with RBAC
+      serviceAccountName: prow-controller-manager
       containers:
-      - name: plank
-        image: gcr.io/k8s-prow/plank:v20210409-985ef5e721
+      - name: prow-controller-manager
+        image: gcr.io/k8s-prow/prow-controller-manager:v20210906-6cb55987fb
         args:
-        - --kubeconfig=/etc/kubeconfig/config
-        - --deck-url=https://prow.build-infra.jetstack.net
-        - --dry-run=false
         - --config-path=/etc/config/config.yaml
+        - --dry-run=false
+        - --enable-controller=plank
         - --job-config-path=/etc/job-config
-        - --skip-report=true
+        env:
+        # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
+        - name: KUBECONFIG
+          value: "/etc/kubeconfig/config"
         ports:
-          - name: http
-            containerPort: 9090
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - mountPath: /etc/kubeconfig
           name: kubeconfig
-          readOnly: true
-        - name: oauth
-          mountPath: /etc/github
           readOnly: true
         - name: config
           mountPath: /etc/config
@@ -66,9 +62,6 @@ spec:
         secret:
           defaultMode: 420
           secretName: kubeconfig
-      - name: oauth
-        secret:
-          secretName: oauth-token
       - name: config
         configMap:
           name: config
