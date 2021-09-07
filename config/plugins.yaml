@@ -20,7 +20,6 @@ triggers:
   - jetstack/vault-helper
   - jetstack/vault-unsealer
   - jetstack/vault-plugin-auth-templated-aws
-  trusted_org: jetstack
   only_org_members: true
 - repos:
   - jetstack/cert-manager
@@ -28,7 +27,6 @@ triggers:
   - jetstack/cert-manager-csi
   - cert-manager/istio-csr
   - cert-manager/trust
-  trusted_org: cert-manager
   only_org_members: true
 
 blunderbuss:
@@ -52,19 +50,6 @@ external_plugins:
     events:
     - issue_comment
     - pull_request
-
-# heart:
-#   adorees:
-#   - k8s-merge-robot
-
-# slack:
-#   mergewarnings:
-#   - repos:
-#     - kubernetes/kubernetes
-#     channels:
-#     - kubernetes-dev
-#     whitelist:
-#     - k8s-merge-robot
 
 repo_milestone:
   # You can curl the following endpoint in order to determine the github ID of your team
@@ -157,105 +142,116 @@ require_matching_label:
 plugins:
 
   jetstack:
-  - assign
-  - blockade
-  - cherry-pick-unapproved
-  - golint
-  - heart
-  - help
-  - hold
-  - label
-  - lgtm
-  - lifecycle
-  - milestone
-  - milestonestatus
-  - milestoneapplier
-  - override
-  - require-matching-label
-  - shrug
-  - size
-  - skip
-  - trigger
-  - wip
-  - yuks
+    plugins:
+    - assign
+    - blockade
+    - cherry-pick-unapproved
+    - golint
+    - heart
+    - help
+    - hold
+    - label
+    - lgtm
+    - lifecycle
+    - milestone
+    - milestonestatus
+    - milestoneapplier
+    - override
+    - require-matching-label
+    - shrug
+    - size
+    - skip
+    - trigger
+    - wip
+    - yuks
 
   cert-manager:
-  - approve
-  - assign
-  - blockade
-  - cherry-pick-unapproved
-  - dco
-  - golint
-  - heart
-  - help
-  - hold
-  - label
-  - lgtm
-  - lifecycle
-  - milestone
-  - milestonestatus
-  - milestoneapplier
-  - override
-  - owners-label
-  - require-matching-label
-  - shrug
-  - size
-  - skip
-  - trigger
-  - verify-owners
-  - wip
-  - yuks
+    plugins:
+    - approve
+    - assign
+    - blockade
+    - cherry-pick-unapproved
+    - dco
+    - golint
+    - heart
+    - help
+    - hold
+    - label
+    - lgtm
+    - lifecycle
+    - milestone
+    - milestonestatus
+    - milestoneapplier
+    - override
+    - owners-label
+    - require-matching-label
+    - shrug
+    - size
+    - skip
+    - trigger
+    - verify-owners
+    - wip
+    - yuks
 
   jetstack/cert-manager:
-  - approve
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   jetstack/cert-manager-csi:
-  - approve
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   jetstack/cert-manager-webhook-example:
-  - dco
+    plugins:
+    - dco
 
   jetstack/tarmak:
-  - approve
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   jetstack/kube-oidc-proxy:
-  - approve
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   jetstack/preflight:
-  - approve
-  - dco
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - verify-owners
 
   jetstack/version-checker:
-  - approve
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   jetstack/testing:
-  - approve
-  - config-updater
-  - dco
-  - owners-label
-  - release-note
-  - verify-owners
+    plugins:
+    - approve
+    - config-updater
+    - dco
+    - owners-label
+    - release-note
+    - verify-owners
 
   munnerz/venafi-cm-demo:
-  - trigger
+    plugins:
+    - trigger
