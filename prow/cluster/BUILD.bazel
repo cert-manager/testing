@@ -1,4 +1,4 @@
-load("//prow:prow.bzl", "BUILD_CONTEXT", "MULTI_KIND", "component", "release")
+load("//prow:prow.bzl", "MULTI_KIND", "component", "release")
 
 # Usage:
 #   bazel run //prow/cluster:production.apply
@@ -22,8 +22,8 @@ release(
     component("needs-rebase", "deployment", "service"),
     component("pipeline", "deployment"),
     component("pipeline_rbac", MULTI_KIND),
-    component("plank", "deployment", "service"),
-    component("plank_rbac", MULTI_KIND),
+    component("prow-controller-manager", "deployment", "service"),
+    component("prow-controller-manager_rbac", MULTI_KIND),
     component("prowjob", "customresourcedefinition"),
     component("pushgateway", MULTI_KIND),
     component("sinker", "deployment", "service"),
