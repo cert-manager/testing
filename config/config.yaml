@@ -75,14 +75,6 @@ branch-protection:
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-22
-        cert-manager-csi:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-csi-verify
-            - pull-cert-manager-csi-e2e-v1-16
-
 sinker:
   resync_period: 1h
   max_prowjob_age: 48h
@@ -259,7 +251,6 @@ tide:
   # Repositories that enable the release-notes plugin (except cert-manager)
   - repos:
     - jetstack/tarmak
-    - jetstack/cert-manager-csi
     - jetstack/kube-oidc-proxy
     - jetstack/version-checker
     - jetstack/testing

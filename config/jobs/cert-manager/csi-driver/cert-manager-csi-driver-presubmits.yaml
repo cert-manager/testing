@@ -1,65 +1,40 @@
 presubmits:
-  jetstack/cert-manager-csi:
+  cert-manager/csi-driver:
 
-  - name: pull-cert-manager-csi-verify
-    always_run: true
-    context: pull-cert-manager-csi-verify
-    max_concurrency: 8
+  - name: pull-cert-manager-csi-driver-verify
+    context: pull-cert-manager-csi-driver-verify
     agent: kubernetes
     decorate: true
-    branches:
-    - ^master$
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
+    always_run: true
+    max_concurrency: 8
+    annotations:
+      testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: golang:1.17
         args:
-        - runner
         - make
-        - all
+        - verify
         resources:
           requests:
-            cpu: 2
-            memory: 4Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
+            cpu: 1
+            memory: 1Gi
 
-  # kind based cert-manager-csi e2e job for Kubernetes v1.16, cert-manager v1.12
-  - name: pull-cert-manager-csi-e2e-v1-16
-    context: pull-cert-manager-csi-e2e-v1-16
+  - name: pull-cert-manager-csi-driver-e2e-v1-16
+    context: pull-cert-manager-csi-driver-e2e-v1-16
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
     agent: kubernetes
     decorate: true
-    branches:
-    - ^master$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210907-aa51283-1.17
         args:
         - runner
         - make
@@ -70,9 +45,9 @@ presubmits:
             memory: 12Gi
         env:
         - name: CERT_MANAGER_CSI_K8S_VERSION
-          value: "1.20.2"
+          value: "1.22.2"
         - name: CERT_MANAGER_CSI_CERT_MANAGER_VERSION
-          value: "1.3.1"
+          value: "1.5.3"
         securityContext:
           privileged: true
           capabilities:
