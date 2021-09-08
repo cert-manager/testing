@@ -2,5 +2,3 @@ approvers:
 - joshvanl
 reviewers:
 - joshvanl
-labels:
-- area/cert-manager-csi
