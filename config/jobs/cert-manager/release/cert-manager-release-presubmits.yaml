@@ -17,7 +17,8 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
         args:
         - runner
-        - make presubmit
+        - make
+        - presubmit
         resources:
           requests:
             # 3500m was chosen because that allows us to fit two jobs onto one
