@@ -10,9 +10,9 @@ periodics:
     description: Periodically comments /retest against approved and lgtm'd PRs that are failing
   spec:
     containers:
-    - image: gcr.io/k8s-testimages/commenter:v20181130-0587c4793
+    - image: gcr.io/k8s-prow/commenter@sha256:dd5f3091c86f04dbca29f68de8cba21f6be4485281b0985aed4879450928001a
       args:
-      - /app/robots/commenter/commenter-image.binary
+      - /app/robots/commenter/app.binary
       - |-
         --query=is:pr
         -label:do-not-merge
@@ -57,9 +57,9 @@ periodics:
     description: Closes PRs and issues that are marked 'rotten' and have been inactive for 30d
   spec:
     containers:
-    - image: gcr.io/k8s-testimages/commenter:v20181130-0587c4793
+    - image: gcr.io/k8s-prow/commenter@sha256:dd5f3091c86f04dbca29f68de8cba21f6be4485281b0985aed4879450928001a
       args:
-      - /app/robots/commenter/commenter-image.binary
+      - /app/robots/commenter/app.binary
       - |-
         --query=repo:jetstack/cert-manager
         -label:lifecycle/frozen
@@ -93,9 +93,9 @@ periodics:
     description: Marks PRs and issues that are marked 'stale' and have been inactive for 30d as 'rotten'
   spec:
     containers:
-    - image: gcr.io/k8s-testimages/commenter:v20181130-0587c4793
+    - image: gcr.io/k8s-prow/commenter@sha256:dd5f3091c86f04dbca29f68de8cba21f6be4485281b0985aed4879450928001a
       args:
-      - /app/robots/commenter/commenter-image.binary
+      - /app/robots/commenter/app.binary
       - |-
         --query=repo:jetstack/cert-manager
         -label:lifecycle/frozen
@@ -132,9 +132,9 @@ periodics:
     description: Marks PRs and issues that have been inactive for 30d as 'stale'
   spec:
     containers:
-    - image: gcr.io/k8s-testimages/commenter:v20181130-0587c4793
+    - image: gcr.io/k8s-prow/commenter@sha256:dd5f3091c86f04dbca29f68de8cba21f6be4485281b0985aed4879450928001a
       args:
-      - /app/robots/commenter/commenter-image.binary
+      - /app/robots/commenter/app.binary
       - |-
         --query=repo:jetstack/cert-manager
         -label:lifecycle/frozen
