@@ -33,7 +33,7 @@ spec:
               - --config=/etc/config/labels.yaml
               - --confirm=true
               # TODO: enable label_sync across the whole org
-              - --only=jetstack/cert-manager,jetstack/testing,jetstack/kube-oidc-proxy,jetstack/tarmak,jetstack/terraform-google-gke-cluster,cert-manager/release,cert-manager/webhook-example,cert-manager/website,jetstack/cert-manager-nginx-plus-lab,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver
+              - --only=jetstack/cert-manager,jetstack/testing,jetstack/kube-oidc-proxy,jetstack/tarmak,jetstack/terraform-google-gke-cluster,cert-manager/release,cert-manager/webhook-example,cert-manager/website,jetstack/cert-manager-nginx-plus-lab,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr
               - --token=/etc/github/oauth
               volumeMounts:
               - name: oauth
