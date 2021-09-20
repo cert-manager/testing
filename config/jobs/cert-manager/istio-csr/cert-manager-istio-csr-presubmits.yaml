@@ -1,13 +1,15 @@
 presubmits:
   cert-manager/istio-csr:
 
-  - name: pull-istio-csr-verify
+  - name: pull-cert-manager-istio-csr-verify
     agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
     annotations:
       testgrid-create-test-group: 'false'
+    branches:
+    - ^main$
     spec:
       containers:
       - image: golang:1.16
@@ -19,9 +21,55 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
+  - name: pull-cert-manager-istio-csr-ca-rotation
+    context: pull-cert-manager-istio-csr-ca-rotation
+    agent: kubernetes
+    decorate: true
+    always_run: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210907-aa51283-1.17
+        args:
+        - runner
+        - make
+        - carotation
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 4Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.7
-  - name: pull-istio-csr-k8s-v1-21-istio-v1-7
-    context: pull-istio-csr-k8s-v1-21-istio-v1-7
+  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
+    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -29,7 +77,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -74,8 +122,8 @@ presubmits:
             value: "1"
 
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.8
-  - name: pull-istio-csr-k8s-v1-21-istio-v1-8
-    context: pull-istio-csr-k8s-v1-21-istio-v1-8
+  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
+    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -83,7 +131,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -128,8 +176,8 @@ presubmits:
             value: "1"
 
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.9
-  - name: pull-istio-csr-k8s-v1-21-istio-v1-9
-    context: pull-istio-csr-k8s-v1-21-istio-v1-9
+  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
+    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -137,7 +185,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -182,8 +230,8 @@ presubmits:
             value: "1"
 
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.10
-  - name: pull-istio-csr-k8s-v1-21-istio-v1-10
-    context: pull-istio-csr-k8s-v1-21-istio-v1-10
+  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
+    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
@@ -191,7 +239,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
