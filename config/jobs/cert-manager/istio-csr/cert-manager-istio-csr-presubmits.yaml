@@ -8,6 +8,8 @@ presubmits:
     max_concurrency: 8
     annotations:
       testgrid-create-test-group: 'false'
+    branches:
+    - ^main$
     spec:
       containers:
       - image: golang:1.16
@@ -24,6 +26,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     always_run: true
+    branches:
+    - ^main$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
