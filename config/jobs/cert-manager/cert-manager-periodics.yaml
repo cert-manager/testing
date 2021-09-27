@@ -18,7 +18,7 @@ periodics:
     description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - bazel
@@ -34,39 +34,8 @@ periodics:
         - name: ndots
           value: "1"
 
-- name: ci-cert-manager-bazel-experimental
-  interval: 2h
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: master
-  labels:
-    preset-service-account: "true"
-    preset-bazel-scratch-dir: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-experimental
-      args:
-      - runner
-      - bazel
-      - test
-      - --jobs=1
-      - //...
-      resources:
-        requests:
-          cpu: 2
-          memory: 4Gi
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+# Re-add bazel-experimental periodics once Bazel v5.0.0 is released and we have
+# a bazelbuild image with that https://github.com/bazelbuild/bazel/releases
 
 # kind based cert-manager e2e job
 - name: ci-cert-manager-e2e-v1-16
@@ -93,7 +62,7 @@ periodics:
     description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -152,7 +121,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -211,7 +180,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -270,7 +239,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -329,7 +298,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -388,7 +357,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -447,7 +416,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -496,7 +465,7 @@ periodics:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    description: Runs Venafi Cloud e2e tests against Kubernetes v1.22 cluster
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -506,7 +475,7 @@ periodics:
     preset-ginkgo-focus-venafi-cloud: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -563,7 +532,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
       args:
       - runner
       - make
