@@ -34,39 +34,8 @@ periodics:
         - name: ndots
           value: "1"
 
-- name: ci-cert-manager-bazel-experimental
-  interval: 2h
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: jetstack
-    repo: cert-manager
-    base_ref: master
-  labels:
-    preset-service-account: "true"
-    preset-bazel-scratch-dir: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-experimental
-      args:
-      - runner
-      - bazel
-      - test
-      - --jobs=1
-      - //...
-      resources:
-        requests:
-          cpu: 2
-          memory: 4Gi
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
+# Re-add bazel-experimental periodics once Bazel v5.0.0 is released and we have
+# a bazelbuild image with that https://github.com/bazelbuild/bazel/releases
 
 # kind based cert-manager e2e job
 - name: ci-cert-manager-e2e-v1-16
