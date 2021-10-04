@@ -30,7 +30,6 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210907-aa51283-1.17
