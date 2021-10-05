@@ -14,7 +14,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: "eu.gcr.io/jetstack-build-infra-images/golang-nodejs:20210713-2212311-1.16.6"
+      - image: "eu.gcr.io/jetstack-build-infra-images/golang-nodejs:20210923-fe8699b-1.16.6"
         args:
         - ./scripts/verify-release
         resources:
