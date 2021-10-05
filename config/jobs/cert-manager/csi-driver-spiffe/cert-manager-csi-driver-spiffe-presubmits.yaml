@@ -9,6 +9,8 @@ presubmits:
     max_concurrency: 8
     annotations:
       testgrid-create-test-group: 'false'
+    branches:
+    - ^main$
     spec:
       containers:
       - image: golang:1.17
@@ -30,6 +32,8 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
+    branches:
+    - ^main$
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210907-aa51283-1.17
