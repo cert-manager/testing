@@ -71,6 +71,43 @@ presubmits:
           - name: ndots
             value: "1"
 
+  - name: pull-cert-manager-bazel-gocache
+    description: Run cert-manager unit tests with Bazel using a Go cache on the local node
+    always_run: false
+    optional: true
+    context: pull-cert-manager-bazel-gocache
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.6
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs 'bazel test --jobs=1 //...'
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-bazel-go-cache: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bazel
+        - test
+        - --jobs=1
+        - //...
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
   - name: pull-cert-manager-bazel-experimental
     always_run: false
     optional: true
@@ -613,8 +650,8 @@ presubmits:
   # static manifests. This is an optional test.
   - name: pull-cert-manager-upgrade
     # Run always
-    always_run: true 
-    optional: false 
+    always_run: true
+    optional: false
     # No more than 4 instances of this job at the same time.
     max_concurrency: 4
     # This job will run on Kubernetes cluster.
