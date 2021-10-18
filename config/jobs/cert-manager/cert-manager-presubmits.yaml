@@ -774,7 +774,7 @@ presubmits:
   #
   #  /test pull-cert-manager-e2e-v1-21-feature-issuers-venafi-cloud
   #
-  # This is useful as we sometimes disable regular runs of Venafi Cloud tests due to some issues.
+  # The regular presubmit jobs do not run Venafi Cloud e2e tests.
   #
   - name: pull-cert-manager-e2e-v1-21-feature-issuers-venafi-cloud
     always_run: false
@@ -799,7 +799,6 @@ presubmits:
         args:
         - runner
         - devel/ci-run-e2e.sh
-        - -ginkgo.focus
         resources:
           requests:
             cpu: 3500m

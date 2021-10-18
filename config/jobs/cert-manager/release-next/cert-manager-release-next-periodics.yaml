@@ -53,8 +53,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-disable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -117,8 +117,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-disable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -176,8 +176,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-disable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -235,8 +235,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -294,8 +294,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -353,8 +353,8 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -412,8 +412,67 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-venafi-tpp-credentials: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      args:
+      - runner
+      - devel/ci-run-e2e.sh
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      env:
+      - name: K8S_VERSION
+        value: "1.22"
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+
+# This test runs Venafi Cloud tests once every 24hrs. This is the only CI test
+# job that runs those periodically against release-1.6.
+- name: ci-cert-manager-next-venafi-cloud
+  interval: 24h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: jetstack
+    repo: cert-manager
+    base_ref: release-1.6
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs Venafi Cloud e2e tests against Kubernetes v1.22 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-ginkgo-focus-venafi-cloud: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
