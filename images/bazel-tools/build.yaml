@@ -9,12 +9,12 @@ variants:
       # Version of Go that is bundled in the BASE_IMAGE
       GO_VERSION: "1.17"
       NODE_VERSION: "10.24.0~dfsg-1~deb10u1"
-      # This DOCKER_TAG is the Docker tag that corresponds to the Node version
+      # This NODE_DOCKER_TAG is the Docker tag that corresponds to the Node version
       # we use. We don't use the Node version directly because it is not a valid
       # Docker tag.
       NODE_DOCKER_TAG: "10.24.0"
 
 # Image names to be tagged and pushed
 images:
-- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${DOCKER_TAG}
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${NODE_DOCKER_TAG}
 - ${_REGISTRY}/${_NAME}:bazel${BAZEL_VERSION}-go${GO_VERSION}-node${NODE_DOCKER_TAG}
