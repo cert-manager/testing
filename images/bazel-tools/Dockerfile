@@ -19,16 +19,17 @@ FROM ${BASE_IMAGE}
 
 LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
-# install goversion
-RUN go get github.com/rsc/goversion@v1.2.0
+ARG NODE_VERSION
+# install goversion, gcrane, gh cli, jq and node
+RUN go install github.com/rsc/goversion@v1.2.0 && \
+    go install github.com/google/go-containerregistry/cmd/gcrane@v0.6.0 && \
+    curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
+    apt-get update && \
+    apt-get install -y \
+    gh=2.1.0 \
+    jq=1.5+dfsg-2+b1 \
+    nodejs=${NODE_VERSION}
 
 # Add GOPATH/bin to PATH
 ENV PATH=/root/go/bin:$PATH
-
-ARG NODE_VERSION
-
-# install jq, nodejs
-RUN apt-get install -y \ 
-    jq \
-    nodejs=${NODE_VERSION}
-
