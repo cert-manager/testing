@@ -227,7 +227,6 @@ plugins:
     - config-updater
     - dco
     - owners-label
-    - release-note
     - verify-owners
 
   munnerz/venafi-cm-demo:
