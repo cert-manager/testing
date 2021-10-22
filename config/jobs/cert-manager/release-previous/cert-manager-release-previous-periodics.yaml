@@ -83,7 +83,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-disable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   annotations:
@@ -147,7 +146,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-disable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -206,7 +204,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-disable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -265,7 +262,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -324,7 +320,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -383,7 +378,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -442,7 +436,6 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-venafi-tpp-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
@@ -482,9 +475,9 @@ periodics:
       - name: ndots
         value: "1"
 
-# This test runs Venafi Cloud tests once every 24hrs. This is the only CI test
+# This test runs Venafi (VaaS and TPP) tests once every 12hrs. This is the only CI test
 # job that runs those periodically against release-previous.
-- name: ci-cert-manager-previous-venafi-cloud
+- name: ci-cert-manager-previous-venafi
   interval: 24h
   agent: kubernetes
   decorate: true
@@ -503,7 +496,8 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-venafi-cloud-credentials: "true"
-    preset-ginkgo-focus-venafi-cloud: "true"
+    preset-venafi-tpp-credentials: "true"
+    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
