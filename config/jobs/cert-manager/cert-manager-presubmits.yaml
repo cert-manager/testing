@@ -238,7 +238,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-disable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -299,7 +298,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-disable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -360,7 +358,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-disable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -421,7 +418,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -482,7 +478,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -543,7 +538,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -605,7 +599,6 @@ presubmits:
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
-      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -708,14 +701,14 @@ presubmits:
         - name: ndots
           value: "1"
 
-  # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
+  # An E2E test job to allow us to manually trigger the Venafi  TPP E2E tests
   # with the following GitHub comment:
   #
-  #  /test pull-cert-manager-e2e-v1-21-feature-issuers-venafi-tpp
+  #  /test pull-cert-manager-issuers-venafi-tpp
   #
   # See https://github.com/jetstack/cert-manager/issues/3555
   #
-  - name: pull-cert-manager-e2e-v1-22-feature-issuers-venafi-tpp
+  - name: pull-cert-manager-issuers-venafi-tpp
     always_run: false
     optional: true
     max_concurrency: 4
@@ -772,11 +765,11 @@ presubmits:
   # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
   # with the following GitHub comment:
   #
-  #  /test pull-cert-manager-e2e-v1-21-feature-issuers-venafi-cloud
+  #  /test pull-cert-manager-issuers-venafi-cloud
   #
-  # The regular presubmit jobs do not run Venafi Cloud e2e tests.
+  # The regular presubmit jobs do not run Venafi e2e tests.
   #
-  - name: pull-cert-manager-e2e-v1-21-feature-issuers-venafi-cloud
+  - name: pull-cert-manager-e2e-issuers-venafi-cloud
     always_run: false
     optional: true
     max_concurrency: 4
@@ -784,7 +777,7 @@ presubmits:
     decorate: true
     branches: []
     annotations:
-      description: Runs the E2E tests with 'Venafi TPP' in name
+      description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
