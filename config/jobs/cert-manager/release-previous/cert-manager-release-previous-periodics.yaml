@@ -7,7 +7,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
@@ -42,7 +42,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   labels:
     preset-service-account: "true"
     preset-bazel-scratch-dir: "true"
@@ -76,7 +76,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -134,7 +134,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -192,7 +192,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -250,7 +250,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -308,7 +308,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -366,7 +366,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -424,7 +424,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
@@ -484,7 +484,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.5
+    base_ref: release-1.6
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
