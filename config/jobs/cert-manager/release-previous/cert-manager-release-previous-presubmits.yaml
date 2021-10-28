@@ -17,7 +17,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - bazel
@@ -30,8 +30,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-bazel-experimental
     always_run: false
@@ -44,6 +44,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -63,8 +64,8 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
 
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
@@ -79,6 +80,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Verifies the Helm chart passes linting checks
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -86,7 +88,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - make
@@ -100,8 +102,8 @@ presubmits:
           privileged: true
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-deps
     always_run: true
@@ -113,13 +115,14 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Verifies dependency related files are up to date
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - make
@@ -130,9 +133,10 @@ presubmits:
             memory: 4Gi
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
 
+  # kind based cert-manager e2e job
   - name: pull-cert-manager-e2e-v1-16
     context: pull-cert-manager-e2e-v1-16
     always_run: false
@@ -144,6 +148,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.16 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -155,7 +160,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -187,8 +192,8 @@ presubmits:
           type: Directory
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
 
   - name: pull-cert-manager-e2e-v1-17
     context: pull-cert-manager-e2e-v1-17
@@ -201,6 +206,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -212,7 +218,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -258,6 +264,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -269,7 +276,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -306,8 +313,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-19
     context: pull-cert-manager-e2e-v1-19
-    optional: true
     always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -315,6 +322,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -326,7 +334,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -363,8 +371,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-20
     context: pull-cert-manager-e2e-v1-20
-    optional: true
     always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -372,6 +380,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -383,7 +392,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -420,8 +429,8 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-21
     context: pull-cert-manager-e2e-v1-21
-    optional: true
     always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -429,6 +438,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -436,11 +446,11 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-disable-all-feature-gates: "true"
+      preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -477,8 +487,9 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
-    optional: false
+    # This is the default e2e test ran for all PRs to master.
     always_run: true
+    optional: false
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -486,6 +497,7 @@ presubmits:
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -497,7 +509,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -548,18 +560,18 @@ presubmits:
     branches:
     - release-1.6
     annotations:
-      description: Runs the E2E tests with 'Venafi Cloud' in name
+      description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-venafi-cloud-credentials: "true"
+      preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-ginkgo-focus-venafi-cloud: "true"
+      preset-ginkgo-focus-venafi-tpp: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -610,18 +622,18 @@ presubmits:
     branches:
     - release-1.6
     annotations:
-      description: Runs the E2E tests with 'Venafi TPP' in name
+      description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-venafi-tpp-credentials: "true"
+      preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-ginkgo-focus-venafi-tpp: "true"
+      preset-ginkgo-focus-venafi-cloud: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210323-ad5071a-3.7.2
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
