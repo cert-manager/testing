@@ -1,7 +1,7 @@
 periodics:
 
 - name: ci-cert-manager-next-bazel
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -39,7 +39,7 @@ periodics:
 # a bazelbuild image with that https://github.com/bazelbuild/bazel/releases
 
 - name: ci-cert-manager-next-e2e-v1-18
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -97,7 +97,7 @@ periodics:
         value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-19
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -155,7 +155,7 @@ periodics:
         value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-20
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -213,7 +213,7 @@ periodics:
         value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-21
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -271,7 +271,7 @@ periodics:
         value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-22
-  interval: 2h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -331,7 +331,7 @@ periodics:
 # This test runs Venafi (VaaS and TPP) tests once every 24hrs.
 # This is the only CI test job that runs those.
 - name: ci-cert-manager-next-venafi
-  interval: 24h
+  interval: 168h  # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
