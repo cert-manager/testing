@@ -9,7 +9,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -46,7 +46,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs 'bazel test --jobs=1 //...'
@@ -81,7 +81,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs 'bazel test --jobs=1 //...'
@@ -117,7 +117,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -155,7 +155,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -192,7 +192,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -227,7 +227,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -287,7 +287,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -347,7 +347,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -407,7 +407,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -467,7 +467,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -527,7 +527,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -580,7 +580,7 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
-    # This is the default e2e test ran for all PRs to master.
+    # This is the default e2e test for all PRs.
     always_run: true
     optional: false
     max_concurrency: 4
@@ -588,7 +588,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
@@ -653,7 +653,7 @@ presubmits:
     decorate: true
     branches:
     - master
-    - release-1.6
+    - release-1.7
     annotations:
       description: Runs cert-manager upgrade from latest published release
     labels:

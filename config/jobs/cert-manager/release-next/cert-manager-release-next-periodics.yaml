@@ -7,7 +7,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
@@ -32,8 +32,8 @@ periodics:
           memory: 4Gi
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 # Re-add bazel-experimental periodics once Bazel v5.0.0 is released and we have
 # a bazelbuild image with that https://github.com/bazelbuild/bazel/releases
@@ -45,7 +45,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -93,8 +93,8 @@ periodics:
         type: Directory
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-17
   interval: 2h
@@ -103,7 +103,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -161,7 +161,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -219,7 +219,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -277,7 +277,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -335,7 +335,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -393,7 +393,7 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-next
@@ -444,8 +444,8 @@ periodics:
       - name: ndots
         value: "1"
 
-# This test runs Venafi (VaaS and TPP) tests once every 12hrs. This is the only CI test
-# job that runs those periodically against release-1.6.
+# This test runs Venafi (VaaS and TPP) tests once every 24hrs.
+# This is the only CI test job that runs those.
 - name: ci-cert-manager-next-venafi
   interval: 24h
   agent: kubernetes
@@ -453,12 +453,12 @@ periodics:
   extra_refs:
   - org: jetstack
     repo: cert-manager
-    base_ref: release-1.6
+    base_ref: release-1.7
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs Venafi Cloud e2e tests against Kubernetes v1.22 cluster
+    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.22 cluster
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
