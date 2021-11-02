@@ -70,7 +70,6 @@ presubmits:
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.7
   - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
     context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
-    # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
@@ -124,7 +123,6 @@ presubmits:
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.8
   - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
     context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
-    # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
@@ -178,7 +176,6 @@ presubmits:
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.9
   - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
     context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
-    # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
@@ -232,7 +229,6 @@ presubmits:
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.10
   - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
     context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
-    # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
@@ -286,7 +282,6 @@ presubmits:
   # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.11
   - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-11
     context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-11
-    # Match everything except PRs that only touch docs/
     always_run: true
     optional: false
     max_concurrency: 8
