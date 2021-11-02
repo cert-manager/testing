@@ -67,9 +67,9 @@ presubmits:
         - name: ndots
           value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.7
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.7
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-7
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-7
     always_run: true
     optional: false
     max_concurrency: 8
@@ -93,7 +93,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.7.6"
         securityContext:
@@ -120,9 +120,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.8
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.8
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-8
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-8
     always_run: true
     optional: false
     max_concurrency: 8
@@ -146,7 +146,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.8.2"
         securityContext:
@@ -173,9 +173,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.9
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.9
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-9
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-9
     always_run: true
     optional: false
     max_concurrency: 8
@@ -199,7 +199,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.9.1"
         securityContext:
@@ -226,9 +226,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.10
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.10
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-10
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-10
     always_run: true
     optional: false
     max_concurrency: 8
@@ -252,7 +252,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.10.0"
         securityContext:
@@ -279,9 +279,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.11
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-11
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-11
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.11
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-11
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-11
     always_run: true
     optional: false
     max_concurrency: 8
@@ -305,7 +305,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.11.4"
         securityContext:
