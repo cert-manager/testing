@@ -12,7 +12,7 @@ presubmits:
     - ^main$
     spec:
       containers:
-      - image: golang:1.16
+      - image: golang:1.17
         args:
         - make
         - verify
@@ -67,10 +67,9 @@ presubmits:
         - name: ndots
           value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.7
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-7
-    # Match everything except PRs that only touch docs/
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.7
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-7
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-7
     always_run: true
     optional: false
     max_concurrency: 8
@@ -83,7 +82,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
         args:
         - runner
         - make
@@ -94,7 +93,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.7.6"
         securityContext:
@@ -121,10 +120,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.8
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-8
-    # Match everything except PRs that only touch docs/
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.8
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-8
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-8
     always_run: true
     optional: false
     max_concurrency: 8
@@ -137,7 +135,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
         args:
         - runner
         - make
@@ -148,7 +146,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.8.2"
         securityContext:
@@ -175,10 +173,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.9
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-9
-    # Match everything except PRs that only touch docs/
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.9
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-9
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-9
     always_run: true
     optional: false
     max_concurrency: 8
@@ -191,7 +188,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
         args:
         - runner
         - make
@@ -202,7 +199,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.9.1"
         securityContext:
@@ -229,10 +226,9 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # kind based istio-csr e2e job for Kubernetes v1.21, istio v1.10
-  - name: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
-    context: pull-cert-manager-istio-csr-k8s-v1-21-istio-v1-10
-    # Match everything except PRs that only touch docs/
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.10
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-10
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-10
     always_run: true
     optional: false
     max_concurrency: 8
@@ -245,7 +241,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210331-a8721c1-1.16
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
         args:
         - runner
         - make
@@ -256,9 +252,62 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.21.1"
+          value: "1.22.3"
         - name: ISTIO_VERSION
           value: "1.10.0"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.11
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-11
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-11
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22.3"
+        - name: ISTIO_VERSION
+          value: "1.11.4"
         securityContext:
           privileged: true
           capabilities:
