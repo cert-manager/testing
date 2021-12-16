@@ -1,10 +1,12 @@
 approvers:
-- JoshVanL
-- irbekrm
+- joshvanl
+- wallrj
 - jakexks
 - maelvls
+- irbekrm
+- sgtcodfish
+- jahrlin
 - meyskens
 - munnerz
-- wallrj
 labels:
 - area/cert-manager
