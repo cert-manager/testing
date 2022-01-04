@@ -418,7 +418,7 @@ periodics:
           memory: 12Gi
       env:
       - name: K8S_VERSION
-        value: "1.22"
+        value: "1.23"
       securityContext:
         privileged: true
         capabilities:
@@ -476,7 +476,7 @@ periodics:
           memory: 12Gi
       env:
       - name: K8S_VERSION
-        value: "1.22"
+        value: "1.23"
       securityContext:
         privileged: true
         capabilities:
