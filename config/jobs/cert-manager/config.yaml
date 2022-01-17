@@ -88,6 +88,12 @@ presets:
     value: "AllAlpha=false"
 
 - labels:
+    preset-disable-all-output-formats-enable-feature-gates: "true"
+  env:
+  - name: FEATURE_GATES
+    value: "AllAlpha=false,AdditionalCertificateOutputFormats=true"
+
+- labels:
     preset-enable-all-feature-gates: "true"
   env:
   - name: FEATURE_GATES
