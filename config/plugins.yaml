@@ -68,7 +68,8 @@ repo_milestone:
 
 milestone_applier:
   jetstack/cert-manager:
-    master: v1.7
+    master: v1.8
+    release-1.7: v1.7
     release-1.6: v1.6
     release-1.5: v1.5
     release-1.4: v1.4
@@ -88,9 +89,10 @@ milestone_applier:
   cert-manager/website:
     # cert-manager/website uses master branch for 'current' version and the
     # release-next branch for the 'next' version
-    release-next: v1.7
-    master: v1.6
+    release-next: v1.8
+    master: v1.7
     # Older versions are archived into named release branches
+    release-1.6: v1.6
     release-1.5: v1.5
     release-1.4: v1.4
     release-1.3: v1.3

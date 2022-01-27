@@ -8,8 +8,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -42,8 +42,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
@@ -79,8 +79,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Verifies the Helm chart passes linting checks
@@ -115,8 +115,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Verifies dependency related files are up to date
@@ -140,16 +140,17 @@ presubmits:
           - name: ndots
             value: "1"
 
+  # 1.7 requires at least K8S 1.18 so this will be run only for the release-1.6
+  # branch.
   - name: pull-cert-manager-e2e-v1-17
     context: pull-cert-manager-e2e-v1-17
-    always_run: false
+    always_run: true
     optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
@@ -207,8 +208,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
@@ -266,8 +267,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
@@ -325,8 +326,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
@@ -384,8 +385,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
@@ -437,18 +438,17 @@ presubmits:
 
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
-    # This is the default e2e test for all PRs.
-    always_run: true
-    optional: false
+    always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -495,6 +495,66 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-23
+    context: pull-cert-manager-e2e-v1-23
+    # This is the default e2e test for all PRs.
+    always_run: true
+    optional: false
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    - release-1.6
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.23"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
   # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
   # with the following GitHub comment:
   #
@@ -509,8 +569,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
@@ -533,7 +593,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.22"
+          value: "1.23"
         securityContext:
           privileged: true
           capabilities:
@@ -572,8 +632,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
@@ -596,7 +656,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.22"
+          value: "1.23"
         securityContext:
           privileged: true
           capabilities:
