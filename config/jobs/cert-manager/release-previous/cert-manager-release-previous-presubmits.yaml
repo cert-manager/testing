@@ -8,8 +8,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -42,8 +42,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
@@ -79,8 +79,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Verifies the Helm chart passes linting checks
@@ -115,8 +115,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Verifies dependency related files are up to date
@@ -148,8 +148,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
@@ -207,8 +207,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
@@ -266,8 +266,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
@@ -325,8 +325,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
@@ -384,8 +384,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
@@ -444,8 +444,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
@@ -509,8 +509,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
@@ -572,8 +572,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.7
     - release-1.6
-    - release-1.5
     annotations:
       description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
