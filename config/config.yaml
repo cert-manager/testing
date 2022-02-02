@@ -27,43 +27,32 @@ plank:
 branch-protection:
   allow_disabled_policies: true
   orgs:
-    # TODO: enforce dco check org-wide
-    # protect: true
-    # required_status_checks:
-    #   contexts:
-    #   - dco
     cert-manager:
+      protect: true
+      required_status_checks:
+        contexts:
+        - dco
       repos:
         cert-manager:
-          protect: true
           required_status_checks:
             contexts:
-            - dco
             - pull-cert-manager-bazel
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-23
         website:
-          protect: true
           required_status_checks:
             contexts:
-            - dco
             - pull-cert-manager-website-verify
         webhook-example:
-          protect: true
           required_status_checks:
             contexts:
-            - dco
             - pull-cert-manager-webhook-example-verify
         trust:
-          protect: true
           required_status_checks:
             contexts:
-            - dco
             - pull-cert-manager-trust-verify
             - pull-cert-manager-trust-smoke
-    jetstack:
-      repos: {}
 sinker:
   resync_period: 1h
   max_prowjob_age: 48h
