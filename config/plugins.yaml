@@ -124,7 +124,7 @@ config_updater:
 
 require_matching_label:
 - missing_label: needs-kind
-  org: jetstack
+  org: cert-manager
   repo: cert-manager
   prs: true
   regexp: ^kind/
