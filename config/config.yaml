@@ -259,6 +259,12 @@ tide:
     - do-not-merge/work-in-progress
     - needs-rebase
     - needs-kind
+  # cert-manager/cert-manager is the only repo in the cert-manager org which
+  # currently uses the release-note plugin.
+  - repos:
+      - cert-manager/cert-manager
+    missingLabels:
+    - do-not-merge/release-note-label-needed
   # Repositories that enable the release-notes plugin (except cert-manager)
   - repos:
     - jetstack/tarmak
