@@ -187,10 +187,6 @@ plugins:
     plugins:
     - release-note
 
-  jetstack/cert-manager-webhook-example:
-    plugins:
-    - dco
-
   jetstack/tarmak:
     plugins:
     - approve
