@@ -22,7 +22,7 @@ triggers:
   - jetstack/vault-plugin-auth-templated-aws
   only_org_members: true
 - repos:
-  - jetstack/cert-manager
+  - cert-manager/cert-manager
   - cert-manager/website
   - cert-manager/trust
   only_org_members: true
