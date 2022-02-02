@@ -183,13 +183,9 @@ plugins:
     - wip
     - yuks
 
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     plugins:
-    - approve
-    - dco
-    - owners-label
     - release-note
-    - verify-owners
 
   jetstack/cert-manager-webhook-example:
     plugins:
