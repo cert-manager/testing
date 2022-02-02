@@ -5,7 +5,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   labels:
@@ -43,7 +43,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -101,7 +101,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -159,7 +159,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -217,7 +217,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -275,7 +275,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -333,7 +333,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -393,7 +393,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:
@@ -453,7 +453,7 @@ periodics:
   decorate: true
   # extra refs specify what repo should be cloned
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: release-1.7
   annotations:

@@ -23,7 +23,7 @@ data:
       name: generic
       min_similarity: 0.65
       repos:
-        - https://github.com/jetstack/cert-manager
+        - https://github.com/cert-manager/cert-manager
         - https://github.com/cert-manager/website
         - https://github.com/cert-manager/release
 
@@ -465,7 +465,7 @@ data:
         resolution: Close or deprioritize
         filters:
           - label: "priority/critical-urgent"
-      
+
       # Soon
       soon-bugs:
         name: "bugs labelled important/soon"

@@ -28,43 +28,31 @@ branch-protection:
   allow_disabled_policies: true
   orgs:
     cert-manager:
-      repos:
-        website:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-website-verify
-        webhook-example:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-webhook-example-verify
-        trust:
-          protect: true
-          required_status_checks:
-            contexts:
-            - dco
-            - pull-cert-manager-trust-verify
-            - pull-cert-manager-trust-smoke
-
-    jetstack:
-      # TODO: enforce dco check org-wide
-      # protect: true
-      # required_status_checks:
-      #   contexts:
-      #   - dco
+      protect: true
+      required_status_checks:
+        contexts:
+        - dco
       repos:
         cert-manager:
-          protect: true
           required_status_checks:
             contexts:
-            - dco
             - pull-cert-manager-bazel
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-23
+        website:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-website-verify
+        webhook-example:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-webhook-example-verify
+        trust:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-trust-verify
+            - pull-cert-manager-trust-smoke
 sinker:
   resync_period: 1h
   max_prowjob_age: 48h
@@ -259,6 +247,28 @@ tide:
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
+  # cert-manager/cert-manager is the only repo in the cert-manager org which
+  # currently uses the release-note plugin so we duplicate the organization
+  # query parameters here and add the do-not-merge/release-note-label-needed to
+  # the list of labels which block a PR from being merged.
+  # TODO: Find out whether the org-wide defaults are added to the repo specific
+  # query fields here, in which case the fields can be de-duplicated.
+  - repos:
+    - cert-manager/cert-manager
+    labels:
+    - lgtm
+    - approved
+    - "dco-signoff: yes"
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    - needs-kind
+    - do-not-merge/release-note-label-needed
   # Repositories that enable the release-notes plugin (except cert-manager)
   - repos:
     - jetstack/tarmak
@@ -287,28 +297,11 @@ tide:
     missingLabels:
     - do-not-merge
     - do-not-merge/blocked-paths
-    - do-not-merge/hold
-    - do-not-merge/invalid-owners-file
-    - do-not-merge/cherry-pick-not-approved
-    - do-not-merge/work-in-progress
-    - needs-rebase
-  # Maintain separate cert-manager configuration to make it easy to enable code freeze
-  - repos:
-    - jetstack/cert-manager
-    labels:
-    - lgtm
-    - approved
-    - "dco-signoff: yes"
-    missingLabels:
-    - do-not-merge
-    - do-not-merge/blocked-paths
     - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
-    - do-not-merge/release-note-label-needed
     - do-not-merge/work-in-progress
     - needs-rebase
-    - needs-kind
   merge_method:
     jetstack/preflight: squash
 

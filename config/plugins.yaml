@@ -22,7 +22,7 @@ triggers:
   - jetstack/vault-plugin-auth-templated-aws
   only_org_members: true
 - repos:
-  - jetstack/cert-manager
+  - cert-manager/cert-manager
   - cert-manager/website
   - cert-manager/trust
   only_org_members: true
@@ -53,7 +53,7 @@ repo_milestone:
   # You can curl the following endpoint in order to determine the github ID of your team
   # responsible for maintaining the milestones:
   # curl -H "Authorization: token <token>" https://api.github.com/orgs/<org-name>/teams
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
@@ -67,7 +67,7 @@ repo_milestone:
     maintainers_team: milestone-maintainers
 
 milestone_applier:
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     master: v1.8
     release-1.7: v1.7
     release-1.6: v1.6
@@ -124,7 +124,7 @@ config_updater:
 
 require_matching_label:
 - missing_label: needs-kind
-  org: jetstack
+  org: cert-manager
   repo: cert-manager
   prs: true
   regexp: ^kind/
@@ -183,17 +183,9 @@ plugins:
     - wip
     - yuks
 
-  jetstack/cert-manager:
+  cert-manager/cert-manager:
     plugins:
-    - approve
-    - dco
-    - owners-label
     - release-note
-    - verify-owners
-
-  jetstack/cert-manager-webhook-example:
-    plugins:
-    - dco
 
   jetstack/tarmak:
     plugins:

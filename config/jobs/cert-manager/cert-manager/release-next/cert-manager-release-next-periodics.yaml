@@ -1,20 +1,24 @@
+# These tests are configured to only run weekly for now.
+# Why? Because there's no point testing the release-1.8 branch until we do the first 1.8 release: 1.8.0-alpha.0
+# See Step 13.3 in https://cert-manager.io/docs/contributing/release-process/
+#
 periodics:
-
-- name: ci-cert-manager-bazel
-  interval: 2h
+- name: ci-cert-manager-next-bazel
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   labels:
     preset-service-account: "true"
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
@@ -34,20 +38,17 @@ periodics:
         - name: ndots
           value: "1"
 
-# Re-add bazel-experimental periodics once Bazel v5.0.0 is released and we have
-# a bazelbuild image with that https://github.com/bazelbuild/bazel/releases
-
-- name: ci-cert-manager-e2e-v1-18
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-18
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
   labels:
@@ -56,7 +57,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-disable-all-output-formats-enable-feature-gates: "true"
+    preset-disable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
@@ -95,17 +96,17 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-e2e-v1-19
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-19
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
   labels:
@@ -153,17 +154,17 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-e2e-v1-20
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-20
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
   labels:
@@ -211,17 +212,17 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-e2e-v1-21
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-21
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
   labels:
@@ -269,17 +270,17 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-e2e-v1-22
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-22
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
   labels:
@@ -327,17 +328,17 @@ periodics:
       - name: ndots
         value: "1"
 
-- name: ci-cert-manager-e2e-v1-23
-  interval: 2h
+- name: ci-cert-manager-next-e2e-v1-23
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
   labels:
@@ -385,17 +386,16 @@ periodics:
       - name: ndots
         value: "1"
 
-
-# This test runs Venafi (VaaS and TPP) tests once every 12hrs.
+# This test runs Venafi (VaaS and TPP) tests
 # This is the only CI test job that runs those.
-- name: ci-cert-manager-venafi
-  interval: 12h
+- name: ci-cert-manager-next-venafi
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
@@ -446,21 +446,20 @@ periodics:
       - name: ndots
         value: "1"
 
-
-- name: ci-cert-manager-upgrade
-  interval: 8h
+- name: ci-cert-manager-next-upgrade
+  interval: 168h # 1 week
   agent: kubernetes
   decorate: true
   # extra refs specify what repo should be cloned
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
-    base_ref: master
+    base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs cert-manager upgrade test every 8 hours
+    description: Runs cert-manager upgrade test.
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -504,54 +503,3 @@ periodics:
       options:
       - name: ndots
         value: "1"
-
-# TODO: find a permanent home for the AWS periodics and reinstate this job
-# - name: aws-tests
-#   interval: 48h
-#   agent: kubernetes
-#   decorate: true
-#   extra_refs:            # Periodic job doesn't clone any repo by default, needs to be added explicitly
-#     - org: cert-manager
-#       repo: test-infra
-#       base_ref: main
-#     - org: jetstack
-#       repo: cert-manager
-#       base_ref: master
-#   annotations:
-#     testgrid-create-test-group: 'true'
-#     testgrid-dashboards: jetstack-cert-manager-master
-#     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-#     description: Runs the end-to-end test suite against a EKS cluster
-#   labels:
-#     preset-service-account: "true"
-#     preset-dind-enabled: "true"
-#     preset-bazel-remote-cache-enabled: "true"
-#     preset-bazel-scratch-dir: "true"
-#     preset-aws-credentials: "true"
-#     preset-ginkgo-focus-http01-ingress: "true"
-#   spec:
-#     containers:
-#     - image: eu.gcr.io/jetstack-build-infra-images/golang-aws@sha256:1f330e4c9552ca383d157067b73fb0e090b64b0777939fd59e58b60e06020d66
-#       args:
-#       - bash 
-#       - -c
-#       - |
-#         set -euo && \
-#         ls && \
-#         pwd && \
-#         cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
-#         terraform init && \
-#         trap 'terraform destroy -auto-approve' ERR && \
-#         terraform apply -auto-approve && \
-#         ls && \
-#         pwd && \
-#         cd /home && \
-#         ls && \
-#         cd /home/prow/go/src/github.com/jetstack/cert-manager && \
-#         ./devel/run-e2e.sh --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
-#         cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
-#         terraform destroy -auto-approve;
-#       resources:
-#         requests:
-#           cpu: 3500m
-#           memory: 12Gi
