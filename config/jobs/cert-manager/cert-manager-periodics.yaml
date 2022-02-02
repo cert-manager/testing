@@ -5,7 +5,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   labels:
@@ -42,7 +42,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -100,7 +100,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -158,7 +158,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -216,7 +216,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -274,7 +274,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -332,7 +332,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -393,7 +393,7 @@ periodics:
   agent: kubernetes
   decorate: true
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -453,7 +453,7 @@ periodics:
   decorate: true
   # extra refs specify what repo should be cloned
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: cert-manager
     base_ref: master
   annotations:
@@ -514,7 +514,7 @@ periodics:
 #     - org: cert-manager
 #       repo: test-infra
 #       base_ref: main
-#     - org: jetstack
+#     - org: cert-manager
 #       repo: cert-manager
 #       base_ref: master
 #   annotations:
@@ -533,7 +533,7 @@ periodics:
 #     containers:
 #     - image: eu.gcr.io/jetstack-build-infra-images/golang-aws@sha256:1f330e4c9552ca383d157067b73fb0e090b64b0777939fd59e58b60e06020d66
 #       args:
-#       - bash 
+#       - bash
 #       - -c
 #       - |
 #         set -euo && \
@@ -547,7 +547,7 @@ periodics:
 #         pwd && \
 #         cd /home && \
 #         ls && \
-#         cd /home/prow/go/src/github.com/jetstack/cert-manager && \
+#         cd /home/prow/go/src/github.com/cert-manager/cert-manager && \
 #         ./devel/run-e2e.sh --acme-server-url=https://acme-staging-v02.api.letsencrypt.org/directory --ingress-controller-domain=aws.e2e-tests.cert-manager.io --testing-acme-email=cert-manager-dev-alerts@googlegroups.com --kubernetes-config=/home/prow/go/src/github.com/cert-manager/test-infra/aws/kubeconfig_cert-manager-cluster || true && \
 #         cd /home/prow/go/src/github.com/cert-manager/test-infra/aws && \
 #         terraform destroy -auto-approve;
