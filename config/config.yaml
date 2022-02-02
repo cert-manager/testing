@@ -297,9 +297,9 @@ tide:
     missingLabels:
     - do-not-merge
     - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
-    - do-not-merge/cherry-pick-not-approved
     - do-not-merge/work-in-progress
     - needs-rebase
   merge_method:
