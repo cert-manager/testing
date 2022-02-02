@@ -28,7 +28,7 @@ periodics:
         -label:needs-ok-to-test
         -label:"cncf-cla: no"
         repo:jetstack/navigator
-        repo:jetstack/cert-manager
+        repo:cert-manager/cert-manager
       - --token=/etc/token/bot-github-token
       - |-
         --comment=/retest
@@ -61,7 +61,7 @@ periodics:
       args:
       - /app/robots/commenter/app.binary
       - |-
-        --query=repo:jetstack/cert-manager
+        --query=repo:cert-manager/cert-manager
         -label:lifecycle/frozen
         label:lifecycle/rotten
       - --updated=720h
@@ -97,7 +97,7 @@ periodics:
       args:
       - /app/robots/commenter/app.binary
       - |-
-        --query=repo:jetstack/cert-manager
+        --query=repo:cert-manager/cert-manager
         -label:lifecycle/frozen
         label:lifecycle/stale
         -label:lifecycle/rotten
@@ -136,7 +136,7 @@ periodics:
       args:
       - /app/robots/commenter/app.binary
       - |-
-        --query=repo:jetstack/cert-manager
+        --query=repo:cert-manager/cert-manager
         -label:lifecycle/frozen
         -label:lifecycle/stale
         -label:lifecycle/rotten
