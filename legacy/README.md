@@ -17,7 +17,7 @@ You can run jobs using the bootstrap.py script like so:
 ```
 $ bootstrap/bootstrap.py \
     --job=pull-cert-manager-verify \
-    --repo=github.com/jetstack/cert-manager=master \
+    --repo=github.com/cert-manager/cert-manager=master \
     --scenario=execute \
     -- \
     make verify
