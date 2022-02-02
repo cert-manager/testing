@@ -247,7 +247,6 @@ tide:
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
-    - needs-kind
   # cert-manager/cert-manager is the only repo in the cert-manager org which
   # currently uses the release-note plugin so we duplicate the organization
   # query parameters here and add the do-not-merge/release-note-label-needed to
