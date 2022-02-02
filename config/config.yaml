@@ -255,7 +255,7 @@ tide:
   # TODO: Find out whether the org-wide defaults are added to the repo specific
   # query fields here, in which case the fields can be de-duplicated.
   - repos:
-      - cert-manager/cert-manager
+    - cert-manager/cert-manager
     labels:
     - lgtm
     - approved
