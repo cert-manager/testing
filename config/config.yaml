@@ -249,10 +249,26 @@ tide:
     - needs-rebase
     - needs-kind
   # cert-manager/cert-manager is the only repo in the cert-manager org which
-  # currently uses the release-note plugin.
+  # currently uses the release-note plugin so we duplicate the organization
+  # query parameters here and add the do-not-merge/release-note-label-needed to
+  # the list of labels which block a PR from being merged.
+  # TODO: Find out whether the org-wide defaults are added to the repo specific
+  # query fields here, in which case the fields can be de-duplicated.
   - repos:
       - cert-manager/cert-manager
+    labels:
+    - lgtm
+    - approved
+    - "dco-signoff: yes"
     missingLabels:
+    - do-not-merge
+    - do-not-merge/blocked-paths
+    - do-not-merge/cherry-pick-not-approved
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    - needs-kind
     - do-not-merge/release-note-label-needed
   # Repositories that enable the release-notes plugin (except cert-manager)
   - repos:
