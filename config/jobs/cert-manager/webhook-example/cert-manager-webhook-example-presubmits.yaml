@@ -11,7 +11,7 @@ presubmits:
     - ^master$
     spec:
       containers:
-      - image: golang:1.16-buster
+      - image: golang:1.17-buster
         args:
         - make
         - test
