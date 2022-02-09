@@ -60,33 +60,42 @@ presets:
 postsubmits:
   jetstack/testing:
 
+  # TestGrid (https://github.com/GoogleCloudPlatform/testgrid) is a UI
+  # for Prow. We and some other kubernetes-related projects use a hosted TestGrid
+  # instance at https://testgrid.k8s.io/. We have a ProwJob that generates
+  # TestGrid configuration on ProwJob config changes and pushes it to the
+  # jetstack-testgrid GCS bucket. TestGrid reads it from this bucket via [Config
+  # Merger](https://github.com/GoogleCloudPlatform/testgrid/tree/master/cmd/config_merge)
+  #
+  # See https://github.com/kubernetes/test-infra/blob/master/testgrid/merging.md
   - name: post-testing-upload-testgrid-config
     cluster: trusted
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
     decorate: true
     branches:
     - master
-    labels:
-      preset-deployer-github-token: "true"
-      preset-bazel-scratch-dir: "true"
     annotations:
       testgrid-dashboards: jetstack-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-      testgrid-disable-prowjob-analysis: "true"
+    max_concurrency: 1
     spec:
+      serviceAccountName: testgrid-updater
       containers:
-      - image: gcr.io/k8s-prow/transfigure:v20210601-16a04c27e3
+      - image: gcr.io/k8s-prow/configurator
         command:
-        - /transfigure.sh
+        - /app/testgrid/cmd/configurator/app.binary
         args:
-        - /etc/github/token
-        - ./config/config.yaml # path to prow config.yaml
-        - ./config/jobs/ # path to prow job definitions
-        - ./config/testgrid/dashboards.yaml # path to testgrid config
-        - jetstack # name of the directory containing our testgrid configs
-        - test-infra # name of jetstack-bot's fork of test-infra
-        - jetstack-bot # username of the git user (used in commits)
-        - tech+github-bot@jetstack.io # email of the git user (used in commits)
+        - --yaml=config/testgrid/dashboards.yaml
+        - --default=config/testgrid/default.yaml
+        - --prow-config=config/config.yaml
+        - --prow-job-config=config/jobs
+        - --prowjob-url-prefix=https://github.com/jetstack/testing/tree/master/config/jobs
+        - --update-description
+        - --output=gs://jetstack-testgrid/config
+        - --oneshot
+        resources:
+          requests:
+            memory: "1Gi"
 
   - name: post-testing-push-bazelbuild
     cluster: trusted
