@@ -8,7 +8,7 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
-    - ^master$
+    - master
     spec:
       containers:
       - image: golang:1.17-buster
