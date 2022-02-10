@@ -238,7 +238,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-disable-all-output-formats-enable-feature-gates: "true"
+      preset-disable-alpha-enable-output-formats-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
     spec:
       containers:

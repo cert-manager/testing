@@ -57,7 +57,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-disable-all-feature-gates: "true"
+    preset-disable-all-alpha-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
