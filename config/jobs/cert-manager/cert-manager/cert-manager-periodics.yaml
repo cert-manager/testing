@@ -576,9 +576,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -636,9 +634,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -696,9 +692,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -756,9 +750,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -816,9 +808,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -876,9 +866,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-venafi-cloud-credentials: "true"
     preset-retry-flakey-tests: "true"
-    preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
