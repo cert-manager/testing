@@ -82,13 +82,13 @@ presets:
         key: region
 
 - labels:
-    preset-disable-all-feature-gates: "true"
+    preset-disable-all-alpha-feature-gates: "true"
   env:
   - name: FEATURE_GATES
     value: "AllAlpha=false"
 
 - labels:
-    preset-disable-all-output-formats-enable-feature-gates: "true"
+    preset-disable-alpha-enable-output-formats-feature-gates: "true"
   env:
   - name: FEATURE_GATES
     value: "AllAlpha=false,AdditionalCertificateOutputFormats=true"
@@ -98,6 +98,12 @@ presets:
   env:
   - name: FEATURE_GATES
     value: "AllAlpha=true"
+
+- labels:
+    preset-disable-all-alpha-beta-feature-gates: "true"
+  env:
+  - name: FEATURE_GATES
+    value: "AllAlpha=false,AllBeta=false"
 
 # Specific cert-manager e2e test suites can be skipped for all e2e tests here by
 # setting GINKGO_SKIP value i.e 'Venafi Cloud|Gateway' will skip all Venafi
