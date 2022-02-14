@@ -331,3 +331,109 @@ presubmits:
         options:
           - name: ndots
             value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.12
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-12
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-12
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22.3"
+        - name: ISTIO_VERSION
+          value: "1.12.2"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.22, istio v1.13
+  - name: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-13
+    context: pull-cert-manager-istio-csr-k8s-v1-22-istio-v1-13
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.17
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22.3"
+        - name: ISTIO_VERSION
+          value: "1.13.0"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
