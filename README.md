@@ -244,3 +244,22 @@ The bootstrap approach relies on a Python script in this repository, under [lega
 
 A number of our jobs still rely on this 'bootstrap' approach, and as such we
 maintain a copy of all required files within this configuration repository.
+
+### Debugging e2e tests run with Prow
+
+-  For each e2e test run, Prow will create a new `ProwJob` custom resource in
+   `build-infra` cluster. For the actual test, a pod will be spun up in
+   `build-infra-workers` cluster in `test-pods` namespace. You can find the pod's
+   name from the `ProwJob`'s yaml `kubectl get prowjob <prowjob-name> -ojsonpath='{.status.pod_name}'`
+
+- When debugging a periodic Prow test, a new test run can be triggered by
+  deleting the latest `ProwJob` for that test
+
+- The image used for the test container has bash, so a running test can be
+  easily debugged by execing the container `kubectl exec -it  <pod-name> -ctest
+  -ntest-pods -- bash`
+
+
+- When execed to test container, you can find tools such as `kubectl`, `kind`, `helm`,
+  `jq` in `~/bazel-out/k8-fastbuild/bin/hack/bin/`. The current kube context will
+  already be that of the kind cluster that runs the e2e tests
