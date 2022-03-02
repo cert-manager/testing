@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: cherrypick
-        image: gcr.io/k8s-prow/cherrypicker:v20210906-cccc01c95c
+        image: gcr.io/k8s-prow/cherrypicker:v20220301-2a7bee07aa
         args:
         - --dry-run=false
         - --github-token-path=/etc/github/oauth
