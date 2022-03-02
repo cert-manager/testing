@@ -4,7 +4,7 @@ variants:
   "1.17":
     arguments:
       BASE_IMAGE: "node:16.3.0"
-      GO_VERSION: "1.17"
+      GO_VERSION: "1.17.7"
   "1.16.6":
     arguments:
       BASE_IMAGE: "node:16.3.0"
