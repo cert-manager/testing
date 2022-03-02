@@ -11,7 +11,7 @@ presubmits:
     - master
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - make
         - all
@@ -30,7 +30,7 @@ presubmits:
     - master
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - make
         - -C
@@ -55,7 +55,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -101,7 +101,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -147,7 +147,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -193,7 +193,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -239,7 +239,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -285,7 +285,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -331,7 +331,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
@@ -377,7 +377,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20210927-4d1bd69-1.13.4
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220302-b57c609-1.13.4
         args:
         - runner
         - make
