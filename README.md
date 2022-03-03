@@ -58,94 +58,10 @@ files.
 
 ### Deploying a new version of Prow
 
-Prow's deployment on our build-infra cluster is completely managed via Bazel too.
+Prow's deployment on our build-infra cluster is done manually using Bazel
+scripts in ./prow/cluster.
 
-Bazel will take care of building docker images for each Prow component, as well
-as pushing those images to a remote repository and rolling them out to our Prow
-cluster.
-
-The code for the Prow components themselves exists in our fork of [test-infra](https://github.com/jetstack/test-infra).
-
-After changes have been made in our *test-infra* fork, you will need to perform
-a few steps in this repository to roll them out:
-
-#### 0. Correctly configure your local KUBECONFIG
-
-Bazel **will not** automatically configure your KUBECONFIG file to point to our
-build clusters. This is by design.
-
-In order to be able to deploy Prow itself, we must ensure our KUBECONFIG is
-configured with **two** contexts with appropriate names.
-
-* **build-infra** - this context should be configured with credentials to talk
-to the cluster running **the Prow control plane**. The credentials here will be
-used to deploy Prow itself.
-
-You can configure this with:
-
-```
-$ gcloud container clusters get-credentials \
-    github-build-infra \
-    --zone europe-west1-b \
-    --project jetstack-build-infra
-
-$ kubectl config rename-context gke_jetstack-build-infra_europe-west1-b_github-build-infra build-infra
-```
-
-* **libvirt** - this context should be configured with credentials to talk to
-the cluster running the **Prow CI jobs** (i.e. our 'libvirt' cluster).
-As this cluster is currently deployed on GCE, exact details for obtaining these
-credentials vary. You will need to obtain them from the Terraform project used
-to deploy the cluster. This may then require some manual 'merging' of KUBECONFIG
-files in order to make both contexts available in the same kubeconfig file.
-
-The names of these two contexts is defined in `hack/print-workspace-status.sh`.
-In the unlikely event you need to change them, you can do so there.
-
-This step will likely only need to be done once, provided you do not regularly
-delete your KUBECONFIG!
-
-#### 1. Bump the test-infra version in our WORKSPACE file
-
-First, we must bump the version of test-infra that we reference in our
-[WORKSPACE](WORKSPACE) file. If you open the file, you should see a rule that
-looks something like:
-
-```python
-git_repository(
-    name = "test_infra",
-    commit = "24b536d5e1714637e4433bacddffd9efeb1044cb",
-    remote = "https://github.com/jetstack/test-infra.git",
-)
-```
-
-Change the commit ref that is referenced here to the new reference in the *test-infra*
-repository.
-
-#### 2. Build, push and deploy the new Prow components
-
-The entire build/push/deploy workflow is handled by Bazel rules defined in
-[prow/](prow/).
-
-Now that we have updated our WORKSPACE file to point to the new version of *test-infra*,
-we can run the following command which will automatically roll out the new version
-of Prow:
-
-```bash
-# Obtain credentials for the docker registry
-$ gcloud docker -a
-# Build, push and deploy the new Prow components
-$ bazel run //prow/cluster:production.apply
-```
-
-After this has run to completion, the new version should be running.
-This command will deploy resources to both the **build-infra** and **libvirt**
-clusters as appropriate.
-
-Please manually verify the Prow deployment is 'healthy' after rolling out changes.
-We do not currently have an automated process for this, aside from Prometheus
-alerting/monitoring.
-You should attempt to run at least one presubmit/postsubmit/periodic to verify.
+See more detailed information about upgrading Prow in [./prow/cluster/README.md](./prow/cluster/README.md)
 
 ### Building an image and exporting to your local Docker daemon
 
@@ -228,7 +144,9 @@ configuration to reflect what is in the repository.
 
 This directory contains image defintions for images used as part of Prow jobs.
 
-These images are currently manually pushed as and when required.
+New images will be built and pushed on changes to the relevant files (i.e
+Dockerfile for the image).
+
 
 ### legacy/
 
@@ -263,3 +181,24 @@ maintain a copy of all required files within this configuration repository.
 - When execed to test container, you can find tools such as `kubectl`, `kind`, `helm`,
   `jq` in `~/bazel-out/k8-fastbuild/bin/hack/bin/`. The current kube context will
   already be that of the kind cluster that runs the e2e tests
+
+## Creating new Prowjobs
+
+See documentation for ProwJobs in [k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/jobs.md).
+
+### Testing locally
+
+ProwJobs can be tested locally by running the (interactive) `./prow/pj-on-kind.sh` script.
+This script will spin up a local KIND cluster and create a new ProwJob instance for which there will be a Pod created that will be running the actual test.
+
+See [documentation in k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/build_test_update.md#How-to-test-a-ProwJob) for how the script works.
+
+An example of running `pull-cert-manager-upgrade-v1-21` job locally:
+
+1. Remove Bazel presets from job config, so it doesn't look for Bazel cache creds
+2. Run `./prow/pj-on-kind.sh pull-cert-manager-upgrade-v1-21`
+3. Pass some cert-manager PR number when requested. This will be checked out.
+4. Pass 'empty' for any storage volumes when requested.
+5. Retrieve kubeconfig for the kind cluster `kind get kubeconfig --name mkpod` and set KUBECONFIG
+6. `kubectl get pods` - to get the name of the pod that is running the test
+7. `kubectl logs <pod-name> -c test -f` stream the logs
