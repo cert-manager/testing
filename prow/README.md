@@ -1,30 +1,40 @@
 # Prow deployment
 
-This directory contains the manifests used for the deployment of the Prow
-cluster.
+Currently our Prow instance is deployed manually with Bazel using the static manifests in [./cluster](./cluster).
+
+Prow's 'control plane' is deployed to `github-build-infra` (referred to as `build-infra`) cluster in `jetstack-build-infra` project.
+
+Prow will spin up test pods in `jetstack-build-infra-workers-gke` (also referred to as 'default') cluster in `jetstack-build-infra-gke` project and in `jetstack-build-infra-workers-trusted` (also referred to as 'trusted) cluster in `jetstack-build-infra-internal` project depending on the type of the job.
 
 ## Upgrading Prow
 
-The Kubernetes [Prow
-deployment](https://github.com/kubernetes/test-infra/tree/master/prow) is
-automatically deployed, but all the other projects like Knative, Istio, and
-cert-manager do the deployment manually.
+New images for Prow components are built upstream on all commits to [k/test-infra/prow](https://github.com/kubernetes/test-infra/tree/master/prow)
 
-Here is the process to upgrade Prow:
+Upgrade steps:
 
-1. ⚠️ You must be given the role `roles/container.developer` on the
+1. Checkout the master branch of this repo. **All commands must be run from the master branch* and from the root of this repo**. You can make the version-related changes on your locally on master branch, upgrade the components in cluster using the local changes and push your changes to Git once you have verified that the upgrade worked.
+
+1. Ensure that you have been granted `roles/container.developer` role on the
    [jetstack-build-infra](https://console.cloud.google.com/home/dashboard?project=jetstack-build-infra)
-   project. You must be able to run `kubectl` commands on the
-   [github-build-infra](https://console.cloud.google.com/kubernetes/clusters/details/europe-west1-b/github-build-infra/details?project=jetstack-build-infra)
-   cluster.
-2. Clone this repo:
+   project
 
-   ```sh
-   git clone https://github.com/jetstack/testing
-   cd testing
-   ```
+2. Configure your KUBECONFIG to point at `build-infra` cluster. The context **must** be named 'build-infra'.
+Bazel **will not** automatically configure your KUBECONFIG file. This is by design.
 
-3. Pick a build of Prow by running:
+```sh
+$ gcloud container clusters get-credentials \
+    github-build-infra \
+    --zone europe-west1-b \
+    --project jetstack-build-infra
+
+$ kubectl config rename-context gke_jetstack-build-infra_europe-west1-b_github-build-infra build-infra
+```
+The name of this context is defined in `hack/print-workspace-status.sh`.
+In the unlikely event you need to change it, you can do so there.
+
+3. Ensure that you can access the cluster and view Prow components, might be worth checking component logs at this point, so you are aware which warnings/errors were present already before the upgrade.
+
+4. Find out the latest version of upstream components:
 
    ```sh
    % gcloud container images list-tags gcr.io/k8s-prow/deck | head
@@ -35,100 +45,37 @@ Here is the process to upgrade Prow:
    f2eca760c0f9 v20210410-57fae234ba                     2021-04-10T02:55:02
    ```
 
-   For example, let us pick the latest one. What we call the "target commit" in
-   the next steps is the commit hash that appears in the image tag:
+5. Check the release notes.
+Prow does not have semver-versioned releases, but the image tags contain the SHA of the commit from which the image was built- so you can use commit times to detemine the relevant new changes from [k/test-infra/ANNOUNCEMENTS.md](https://github.com/kubernetes/test-infra/blob/master/prow/ANNOUNCEMENTS.md)
 
-   ```sh
-   v20210412-ed35ec0cee
-   #         <-------->
-   #        target commit
-   ```
+6. Update the [./prow/version](./version) file with the selected image tag.
 
-   In this example,
-   [ed35ec0cee](https://github.com/kubernetes/test-infra/commit/ed35ec0cee) is
-   the target commit to which you will be upgrading to (Prow does not have
-   "releases").
+7. Bump the image tags in static manifests using [./prow/bump](./bump)
+This tool will read the version from `./prow/version` file.
 
-4. Find out what is the "current commit" of the current deployment of Prow. This
-   is stored in the file `prow/version`. For example:
+```go
+go run prow/bump/main.go
+```
 
-   ```sh
-   % cat prow/version
-   v20200628-cc1c099dad
-   #         <-------->
-   #        current commit
-   ```
+This should have updated image tags in the static manifest files in [./prow/cluster](./cluster).
 
-   At this point, you know that:
+8. Apply the updated manifests to `build-infra` cluster.
 
-   |                 | image tag            | commit         |
-   | --------------- | -------------------- | -------------- |
-   | current version | v20200628-cc1c099dad | [cc1c099dad][] |
-   | target version  | v20210412-ed35ec0cee | [ed35ec0cee][] |
+```sh
+bazel run //prow/cluster:production.apply
+```
 
-   [cc1c099dad]: https://github.com/kubernetes/test-infra/commit/cc1c099dad
-   [ed35ec0cee]: https://github.com/kubernetes/test-infra/commit/ed35ec0cee
+9. Verify the upgrade:
 
-5. Open
-   [ANNOUNCEMENTS.md](https://github.com/kubernetes/test-infra/blob/master/prow/ANNOUNCEMENTS.md)
-   and look for anything that changed between the current commit and the target
-   commit.
-6. Update the file `prow/version` with your target image tag, and open a PR to
-   [jetstack/infra](https://github.com/jetstack/infra). For example:
+- Check that all `Deployment`s and `Daemonset`s are up and running and up to date
 
-   ```diff
-   diff --git a/prow/version b/prow/version
-   --- a/prow/version
-   +++ b/prow/version
-   @@ -1 +1 @@
-   -v20200628-cc1c099dad
-   +v20210412-ed35ec0cee
-   ```
+- Check Prow component pod logs for any errors
 
-7. Get the PR merged. Merging the PR will not do anything, we do not do rolling
-   deployments.
-8. Pull the latest changes from `master`. From now on, **you must be on the
-   `master` branch**:
+- Trigger an e2e test and see it succeed
 
-   ```sh
-   git checkout master
-   git pull origin master
-   ```
+- Ensure you can access `https://prow.build-infra.jetstack.net/` (and see logs for the tests there) and `https://triage.build-infra.jetstack.net/s/daily`
 
-9. Make sure you have a context in your KUBECONFIG that is called `build-infra`
-   (this context name is defined in
-   [print-workspace-status.sh](https://github.com/jetstack/testing/blob/master/hack/print-workspace-status.sh#L28).
-   Create the `build-infra` context with:
+10. Commit and PR in your change
 
-   ```sh
-   gcloud auth login
-   gcloud container clusters get-credentials --project jetstack-build-infra --region europe-west1-b github-build-infra
-   kubectl config rename-context gke_jetstack-build-infra_europe-west1-b_github-build-infra build-infra
-   ```
 
-10. Generate and apply the Prow manifests to the `github-build-infra` cluster:
-
-    ```sh
-    bazel run //prow/cluster:production.apply
-    ```
-
-## Creating new Prowjobs
-
-See documentation for ProwJobs in [k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/jobs.md).
-
-### Testing locally
-
-ProwJobs can be tested locally by running the (interactive) `./prow/pj-on-kind.sh` script.
-This script will spin up a local KIND cluster and create a new ProwJob instance for which there will be a Pod created that will be running the actual test.
-
-See [documentation in k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/build_test_update.md#How-to-test-a-ProwJob) for how the script works.
-
-An example of running `pull-cert-manager-upgrade-v1-21` job locally:
-
-1. Remove Bazel presets from job config, so it doesn't look for Bazel cache creds
-2. Run `./prow/pj-on-kind.sh pull-cert-manager-upgrade-v1-21`
-3. Pass some cert-manager PR number when requested. This will be checked out.
-4. Pass 'empty' for any storage volumes when requested.
-5. Retrieve kubeconfig for the kind cluster `kind get kubeconfig --name mkpod` and set KUBECONFIG
-6. `kubectl get pods` - to get the name of the pod that is running the test
-7. `kubectl logs <pod-name> -c test -f` stream the logs
+* TODO: check if that is the case and why
