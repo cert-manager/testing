@@ -37,9 +37,11 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-make-test
+    context: pull-cert-manager-make-test
+    # TODO: set to "always_run: true" and "optional: false" as soon as
+    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
     always_run: false
     optional: true
-    context: pull-cert-manager-make-test
     max_concurrency: 8
     agent: kubernetes
     decorate: true
@@ -54,6 +56,9 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
+        # TODO: change to a custom image that embeds the system tools we need
+        # (jq, make, bash, Go, etc). Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
         - runner
@@ -612,6 +617,8 @@ presubmits:
 
   - name: pull-cert-manager-make-e2e-v1-23
     context: pull-cert-manager-make-e2e-v1-23
+    # TODO: set to "always_run: true" and "optional: false" as soon as
+    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
     always_run: false
     optional: true
     max_concurrency: 4
@@ -635,6 +642,9 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
+        # TODO: change to a custom image that embeds the system tools we need
+        # (jq, make, bash, Go, etc). Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
         - runner
