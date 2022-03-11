@@ -59,7 +59,7 @@ presubmits:
         # TODO: change to a custom image that embeds the system tools we need
         # (jq, make, bash, Go, etc). Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
         - runner
         - make
@@ -642,7 +642,7 @@ presubmits:
         # TODO: change to a custom image that embeds the system tools we need
         # (jq, make, bash, Go, etc). Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
         - runner
         - make/ci.sh 1.23
