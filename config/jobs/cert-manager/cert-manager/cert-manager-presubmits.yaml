@@ -56,13 +56,14 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we need
-        # (jq, make, bash, Go, etc). Tracked at
+        # TODO: remove the "apk add" command and change to a custom image that
+        # embeds the system tools we need (jq, make, bash, Go, etc). Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
-        - make
-        - test-ci
+        - sh
+        - -c
+        - apk add bash make curl python3 perl jq git docker && make test-ci
         resources:
           requests:
             cpu: 2
@@ -638,12 +639,14 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we need
-        # (jq, make, bash, Go, etc). Tracked at
+        # TODO: remove "apk add" and change to a custom image that embeds the
+        # system tools we need (jq, make, bash, Go, etc). Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
-        - make/ci.sh 1.23
+        - sh
+        - -c
+        - apk add bash make curl python3 perl jq git docker && make e2e-ci K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
