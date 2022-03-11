@@ -63,7 +63,7 @@ presubmits:
         args:
         - runner
         - make
-        - test
+        - test-ci
         resources:
           requests:
             cpu: 2
