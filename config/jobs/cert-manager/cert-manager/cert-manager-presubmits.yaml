@@ -630,12 +630,9 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
