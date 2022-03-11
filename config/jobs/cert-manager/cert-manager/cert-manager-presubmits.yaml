@@ -61,7 +61,6 @@ presubmits:
         # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
-        - runner
         - make
         - test-ci
         resources:
@@ -644,7 +643,6 @@ presubmits:
         # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
         args:
-        - runner
         - make/ci.sh 1.23
         resources:
           requests:
