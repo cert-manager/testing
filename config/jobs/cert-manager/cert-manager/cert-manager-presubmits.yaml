@@ -36,6 +36,38 @@ presubmits:
           - name: ndots
             value: "1"
 
+  - name: pull-cert-manager-make-test
+    always_run: false
+    optional: true
+    context: pull-cert-manager-make-test
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs 'bazel test --jobs=1 //...'
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+        args:
+        - runner
+        - make
+        - test
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
   - name: pull-cert-manager-bazel-nocache
     description: Run cert-manager unit tests with Bazel remote-caching disabled
     always_run: false
@@ -554,6 +586,63 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.23"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-make-e2e-v1-23
+    context: pull-cert-manager-make-e2e-v1-23
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: 1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+        args:
+        - runner
+        - make/ci.sh --k8s-version 1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
