@@ -51,7 +51,7 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs 'bazel test --jobs=1 //...'
+      description: Runs 'make test-ci'
     labels:
       preset-service-account: "true"
     spec:
@@ -630,6 +630,7 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs 'make e2e-ci K8S_VERSION=1.23'
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
