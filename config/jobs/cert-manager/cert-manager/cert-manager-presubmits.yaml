@@ -36,6 +36,43 @@ presubmits:
           - name: ndots
             value: "1"
 
+  - name: pull-cert-manager-make-test
+    context: pull-cert-manager-make-test
+    # TODO: set to "always_run: true" and "optional: false" as soon as
+    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
+    always_run: false
+    optional: true
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs 'make test-ci'
+    labels:
+      preset-service-account: "true"
+    spec:
+      containers:
+        # TODO: remove the "apk add" command and change to a custom image that
+        # embeds the system tools we need (jq, make, bash, Go, etc). Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+        args:
+        - sh
+        - -c
+        - apk add bash make curl python3 perl jq git docker && make test-ci
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
   - name: pull-cert-manager-bazel-nocache
     description: Run cert-manager unit tests with Bazel remote-caching disabled
     always_run: false
@@ -554,6 +591,67 @@ presubmits:
         env:
         - name: K8S_VERSION
           value: "1.23"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-make-e2e-v1-23
+    context: pull-cert-manager-make-e2e-v1-23
+    # TODO: set to "always_run: true" and "optional: false" as soon as
+    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - master
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
+      description: Runs 'make e2e-ci K8S_VERSION=1.23'
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+        # TODO: remove "apk add" and change to a custom image that embeds the
+        # system tools we need (jq, make, bash, Go, etc). Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+        args:
+        - sh
+        - -c
+        - apk add bash make curl python3 perl jq git docker && make e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
         securityContext:
           privileged: true
           capabilities:
