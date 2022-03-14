@@ -413,7 +413,7 @@ presubmits:
         - name: K8S_VERSION
           value: "1.22.3"
         - name: ISTIO_VERSION
-          value: "1.13.0"
+          value: "1.13.1"
         securityContext:
           privileged: true
           capabilities:
