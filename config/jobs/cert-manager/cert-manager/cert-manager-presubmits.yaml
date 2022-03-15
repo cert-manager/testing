@@ -56,16 +56,15 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-        # TODO: remove the "apk add" command and change to a custom image
-        # that embeds the system tools we need (jq, make, bash, Go, etc).
-        # Note that grep and tar have been added because BusyBox's grep
-        # lacks --null-data and tar lacks --append. Tracked at
+        # TODO: change to a custom image that embeds the system tools we
+        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
+        - runner
         - sh
         - -c
-        - apk add bash make curl python3 perl jq git docker tar grep && make test-ci
+        - sudo apt install jq -y && make test-ci
         resources:
           requests:
             cpu: 2
@@ -642,16 +641,15 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-        # TODO: remove the "apk add" command and change to a custom image
-        # that embeds the system tools we need (jq, make, bash, Go, etc).
-        # Note that grep and tar have been added because BusyBox's grep
-        # lacks --null-data and tar lacks --append. Tracked at
+        # TODO: change to a custom image that embeds the system tools we
+        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
         # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: docker.io/library/golang:1.17.8-alpine@sha256:e2e68a9cdd5da82458652fdac3908a3a270686b38039f2829855398e2e06019d
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
+        - runner
         - sh
         - -c
-        - apk add bash make curl python3 perl jq git docker tar grep && make e2e-ci K8S_VERSION=1.23
+        - sudo apt install jq -y && make e2e-ci K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
