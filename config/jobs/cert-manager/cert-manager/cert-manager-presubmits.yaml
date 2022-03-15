@@ -64,7 +64,7 @@ presubmits:
         - runner
         - sh
         - -c
-        - sudo apt install jq -y && make test-ci
+        - apt install jq -y && make -j vendor-go test-ci
         resources:
           requests:
             cpu: 2
@@ -649,7 +649,7 @@ presubmits:
         - runner
         - sh
         - -c
-        - sudo apt install jq -y && make e2e-ci K8S_VERSION=1.23
+        - apt install jq -y && make -j vendor-go e2e-ci K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
