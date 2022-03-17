@@ -38,10 +38,8 @@ presubmits:
 
   - name: pull-cert-manager-make-test
     context: pull-cert-manager-make-test
-    # TODO: set to "always_run: true" and "optional: false" as soon as
-    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
-    always_run: false
-    optional: true
+    always_run: true
+    optional: false
     max_concurrency: 8
     agent: kubernetes
     decorate: true
@@ -618,10 +616,8 @@ presubmits:
 
   - name: pull-cert-manager-make-e2e-v1-23
     context: pull-cert-manager-make-e2e-v1-23
-    # TODO: set to "always_run: true" and "optional: false" as soon as
-    # https://github.com/cert-manager/cert-manager/pull/4914 is merged.
-    always_run: false
-    optional: true
+    always_run: true
+    optional: false
     max_concurrency: 4
     agent: kubernetes
     decorate: true
