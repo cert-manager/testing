@@ -140,7 +140,7 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # 1.7 requires at least K8S 1.18 so this will be run only for the release-1.6
+  # cert-manager 1.7 requires at least K8S 1.18 so this will be run only for the release-1.6
   # branch.
   - name: pull-cert-manager-e2e-v1-17
     context: pull-cert-manager-e2e-v1-17
@@ -436,19 +436,19 @@ presubmits:
         - name: ndots
           value: "1"
 
+
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
-    always_run: false
-    optional: true
+    always_run: true
+    optional: false # for release-1.6 v1.22 is the latest k8s version supported
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.7
     - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -495,9 +495,68 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-22
+    context: pull-cert-manager-e2e-v1-22
+    always_run: true
+    optional: true # for release-1.7 testing against v1.22 is optional because v1.23 is the latest version supported
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+
   - name: pull-cert-manager-e2e-v1-23
     context: pull-cert-manager-e2e-v1-23
-    # This is the default e2e test for all PRs.
+    # This is the default e2e test for cert-manager 1.7 but is unsupported for cert-manager 1.6
     always_run: true
     optional: false
     max_concurrency: 4
@@ -505,10 +564,9 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+      description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -593,7 +651,8 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.23"
+          value: "1.22" # since this job is rarely run, just use 1.22 for both release-1.6 and release-1.7
+                        # since both support that version of k8s
         securityContext:
           privileged: true
           capabilities:
@@ -656,7 +715,8 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.23"
+          value: "1.22" # since this job is rarely run, just use 1.22 for both release-1.6 and release-1.7
+                        # since both support that version of k8s
         securityContext:
           privileged: true
           capabilities:
