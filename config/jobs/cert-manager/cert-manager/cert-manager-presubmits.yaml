@@ -60,13 +60,35 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
-        - sh
+        - bash
         - -c
-        - apt install jq -y && make -j vendor-go test-ci
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go test-ci
         resources:
           requests:
             cpu: 2
             memory: 4Gi
+        volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
+      volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       dnsConfig:
         options:
           - name: ndots
@@ -643,9 +665,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
-        - sh
+        - bash
         - -c
-        - apt install jq -y && make -j vendor-go e2e-ci K8S_VERSION=1.23
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
@@ -660,6 +684,12 @@ presubmits:
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
       volumes:
       - name: modules
         hostPath:
@@ -669,6 +699,18 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       dnsConfig:
         options:
         - name: ndots
