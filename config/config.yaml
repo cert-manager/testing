@@ -40,8 +40,9 @@ branch-protection:
             - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-23
-            - pull-cert-manager-make-test
-            - pull-cert-manager-make-e2e-v1-23
+            # TODO: re-enable these when they can pass on backport branches
+            # - pull-cert-manager-make-test
+            # - pull-cert-manager-make-e2e-v1-23
         website:
           required_status_checks:
             contexts:
