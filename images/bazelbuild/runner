@@ -24,7 +24,6 @@ if [[ "${BAZEL_REMOTE_CACHE_ENABLED}" == "true" ]]; then
     /usr/local/bin/create_bazel_cache_rcs.sh
 fi
 
-
 # used by cleanup_dind to ensure binfmt_misc entries are not persisted
 # TODO(bentheelder): consider moving *all* cleanup into a more robust program
 cleanup_binfmt_misc() {
@@ -42,44 +41,40 @@ cleanup_binfmt_misc() {
     ls -al /proc/sys/fs/binfmt_misc
 }
 
-# runs custom docker data root cleanup binary and debugs remaining resources
+# Runs custom docker data root cleanup binary and debugs remaining
+# resources.
 cleanup_dind() {
-    # list what images and volumes remain
     echo "Remaining docker images and volumes are:"
     docker images --all || true
     docker volume ls || true
-    # cleanup binfmt_misc
-    echo "Cleaning up binfmt_misc ..."
-    # note: we run this in a subshell so we can trace it for now
-    (set -x; cleanup_binfmt_misc || true)
+    cleanup_binfmt_misc || true
 }
 
 if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
-    echo "Building writable DOCKER_CONFIG directory..."
+    echo "A writable DOCKER_CONFIG was requested."
     tmpdir="$(mktemp -d)"
     ln -s "${DOCKER_CONFIG}/config.json" "${tmpdir}/config.json"
     export DOCKER_CONFIG="${tmpdir}"
 fi
 
 if [[ "${EXTRA_DOCKER_OPTS:-}" != "" ]]; then
-    echo "DOCKER_OPTS=\"\${DOCKER_OPTS} ${EXTRA_DOCKER_OPTS}\"">>/etc/default/docker
+    echo "DOCKER_OPTS=\"\${DOCKER_OPTS} ${EXTRA_DOCKER_OPTS}\"" >>/etc/default/docker
 fi
 
-# Check if the job has opted-in to docker-in-docker availability.
 export DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-false}
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
-    echo "Docker in Docker enabled, initializing..."
-    printf '=%.0s' {1..80}; echo
-    # If we have opted in to docker in docker, start the docker daemon,
+    echo "Initializing Docker in Docker."
+
     service docker start
-    # the service can be started but the docker socket not ready, wait for ready
+    # The service may be marked as ready but the Docker socket may not be
+    # ready yet.
     WAIT_N=0
     MAX_WAIT=5
     while true; do
         # docker ps -q should only work if the daemon is ready
-        docker ps -q > /dev/null 2>&1 && break
+        docker ps -q >/dev/null 2>&1 && break
         if [[ ${WAIT_N} -lt ${MAX_WAIT} ]]; then
-            WAIT_N=$((WAIT_N+1))
+            WAIT_N=$((WAIT_N + 1))
             echo "Waiting for docker to be ready, sleeping for ${WAIT_N} seconds."
             sleep ${WAIT_N}
         else
@@ -88,11 +83,9 @@ if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
         fi
     done
     cleanup_dind
-    printf '=%.0s' {1..80}; echo
-    echo "Done setting up docker in docker."
 fi
 
-# disable error exit so we can run post-command cleanup
+# Disable error exit so we can run post-command cleanup.
 set +o errexit
 # actually start bootstrap and the job
 "$@"
@@ -103,9 +96,11 @@ coalesce.py || true
 # cleanup after job
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo "Cleaning up after docker in docker."
-    printf '=%.0s' {1..80}; echo
+    printf '=%.0s' {1..80}
+    echo
     cleanup_dind
-    printf '=%.0s' {1..80}; echo
+    printf '=%.0s' {1..80}
+    echo
     echo "Cleaning up docker containers ..."
     docker ps -aq | xargs -r docker rm -f || true
     echo "Stopping docker ..."
