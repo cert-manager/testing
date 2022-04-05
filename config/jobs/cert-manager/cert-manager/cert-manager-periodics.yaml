@@ -114,7 +114,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-enable-all-feature-gates: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
@@ -172,7 +172,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-enable-all-feature-gates: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
@@ -230,7 +230,7 @@ periodics:
     preset-bazel-remote-cache-enabled: "true"
     preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
-    preset-enable-all-feature-gates: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:

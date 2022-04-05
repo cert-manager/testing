@@ -356,7 +356,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
@@ -416,7 +416,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
@@ -476,7 +476,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
