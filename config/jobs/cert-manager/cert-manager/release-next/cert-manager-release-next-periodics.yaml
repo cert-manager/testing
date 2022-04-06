@@ -3,7 +3,7 @@
 # See Step 13.3 in https://cert-manager.io/docs/contributing/release-process/
 #
 periodics:
-- name: ci-cert-manager-next-bazel
+- name: ci-cert-manager-next-make-test
   interval: 168h # 1 week
   agent: kubernetes
   decorate: true
@@ -18,47 +18,47 @@ periodics:
     testgrid-dashboards: jetstack-cert-manager-next
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs 'make test-ci'
-    spec:
-      containers:
-        # TODO: change to a custom image that embeds the system tools we
-        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-        # https://github.com/cert-manager/cert-manager/issues/4939.
-        - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-          args:
-            - runner
-            - bash
-            - -c
-            - |
-              apt-get install jq -y >/dev/null
-              make -j vendor-go test-ci
-          resources:
-            requests:
-              cpu: 2
-              memory: 4Gi
-          volumeMounts:
-            - mountPath: /root/.cache/go-build
-              name: gocache
-            - mountPath: /home/prow/go/pkg/mod
-              name: gopkgmod
-            - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-              name: bindownloaded
-      volumes:
-        - name: gocache
-          hostPath:
-            path: /tmp/gocache
-            type: DirectoryOrCreate
-        - name: gopkgmod
-          hostPath:
-            path: /tmp/gopkgmod
-            type: DirectoryOrCreate
-        - name: bindownloaded
-          hostPath:
-            path: /tmp/bindownloaded
-            type: DirectoryOrCreate
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+  spec:
+    containers:
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go test-ci
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+        volumeMounts:
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
+    volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-18
   interval: 168h # 1 week
@@ -619,7 +619,7 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-spec:
+  spec:
     containers:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
