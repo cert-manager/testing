@@ -10,25 +10,47 @@ periodics:
     base_ref: master
   labels:
     preset-service-account: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
-    description: Runs 'bazel test --jobs=1 //...'
+    description: Runs 'make test-ci'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - bazel
-      - test
-      - --jobs=1
-      - //...
-      resources:
-        requests:
-          cpu: 2
-          memory: 4Gi
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go test-ci
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+        volumeMounts:
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
+    volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
         - name: ndots
@@ -53,47 +75,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-alpha-enable-output-formats-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.18"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.18
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-v1-19
   interval: 2h
@@ -111,47 +153,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.19"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.19
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-v1-20
   interval: 2h
@@ -169,47 +231,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.20"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-v1-21
   interval: 2h
@@ -227,47 +309,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.21"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.21
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-v1-22
   interval: 2h
@@ -285,48 +387,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.22"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.18
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
-
+        - name: ndots
+          value: "1"
 - name: ci-cert-manager-e2e-v1-23
   interval: 2h
   agent: kubernetes
@@ -343,47 +464,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.23"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 
 # This test runs Venafi (VaaS and TPP) tests once every 12hrs.
@@ -400,51 +541,71 @@ periodics:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.22 cluster
+    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.23 cluster
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-venafi-cloud-credentials: "true"
     preset-venafi-tpp-credentials: "true"
     preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.23"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 
 - name: ci-cert-manager-upgrade
@@ -464,46 +625,64 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - make
-      - cluster
-      - verify_upgrade
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.23"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j e2e-setup-kind && ./hack/verify-upgrade.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 # TODO: find a permanent home for the AWS periodics and reinstate this job
 # - name: aws-tests
@@ -572,47 +751,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.18"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.18
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-19
   interval: 24h
@@ -630,47 +829,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.19"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.19
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-20
   interval: 24h
@@ -688,47 +907,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.20"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-21
   interval: 24h
@@ -746,47 +985,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.21"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.21
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-22
   interval: 24h
@@ -804,47 +1063,67 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.22"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.22
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-23
   interval: 24h
@@ -862,44 +1141,64 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-      args:
-      - runner
-      - devel/ci-run-e2e.sh
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      env:
-      - name: K8S_VERSION
-        value: "1.23"
-      securityContext:
-        privileged: true
-        capabilities:
-          add: ["SYS_ADMIN"]
-      volumeMounts:
-      - mountPath: /lib/modules
-        name: modules
-        readOnly: true
-      - mountPath: /sys/fs/cgroup
-        name: cgroup
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
     volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
     dnsConfig:
       options:
-      - name: ndots
-        value: "1"
+        - name: ndots
+          value: "1"
