@@ -402,7 +402,7 @@ periodics:
           - -c
           - |
             apt-get install jq -y >/dev/null
-            make -j vendor-go e2e-ci K8S_VERSION=1.18
+            make -j vendor-go e2e-ci K8S_VERSION=1.22
         resources:
           requests:
             cpu: 3500m
