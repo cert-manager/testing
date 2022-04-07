@@ -1,10 +1,13 @@
-# These tests are configured to only run weekly for now.
-# Why? Because there's no point testing the release-1.9 branch until we do the first 1.9 release: 1.9.0-alpha.0
-# See Step 13.3 in https://cert-manager.io/docs/contributing/release-process/
-#
+
+# We don't need periodically testing the release-next breanch (e.g., the
+# "release-1.9" branch) until we release the first alpha (e.g.,
+# "1.9.0-alpha.0"). Since we can't "deactivate" the release-next periodics jobs
+# until we have an alpha (there is no "skip" field on the ProwJob object), we
+# set an arbitrarily large interval of 6 month. See Step 13.3 in
+# https://cert-manager.io/docs/contributing/release-process/
 periodics:
 - name: ci-cert-manager-next-make-test
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -61,7 +64,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-19
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -138,7 +141,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-20
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -215,7 +218,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-21
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -292,7 +295,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-22
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -369,7 +372,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-e2e-v1-23
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -448,7 +451,7 @@ periodics:
 # This test runs Venafi (VaaS and TPP) tests
 # This is the only CI test job that runs those.
 - name: ci-cert-manager-next-venafi
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -526,7 +529,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-upgrade
-  interval: 168h # 1 week
+  interval: 4320h # arbitrarily large interval (6 month)
   agent: kubernetes
   decorate: true
   # extra refs specify what repo should be cloned

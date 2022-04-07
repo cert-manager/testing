@@ -4,7 +4,8 @@ presubmits:
   # Why do we have only have presubmits on "master" but not on the
   # to-be-released branch, e.g. "release-1.9"? Because we don't need to be
   # testing e.g. release-1.9 before we have made the first alpha release, e.g.,
-  # "1.9.0-alpha.0".
+  # "1.9.0-alpha.0". See Step 13.3 in
+  # https://cert-manager.io/docs/contributing/release-process/
 
   - name: pull-cert-manager-bazel
     always_run: true
