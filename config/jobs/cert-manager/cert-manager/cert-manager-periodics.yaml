@@ -1,5 +1,97 @@
 periodics:
 
+# We can't remove this job in favor of "make" because "bazel test" runs the
+# scripts in ./hack/verify-crds.sh that have not been ported to "make" yet.
+- name: ci-cert-manager-bazel
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    description: Runs 'bazel test --jobs=1 //...'
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      args:
+      - runner
+      - bazel
+      - test
+      - --jobs=1
+      - //...
+      resources:
+        requests:
+          cpu: 2
+          memory: 4Gi
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-make-test
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
+  labels:
+    preset-service-account: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    description: Runs 'make test-ci'
+  spec:
+    containers:
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+          - runner
+          - bash
+          - -c
+          - |
+            apt-get install jq -y >/dev/null
+            make -j vendor-go test-ci
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+        volumeMounts:
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
+    volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
 - name: ci-cert-manager-make-test
   interval: 2h
   agent: kubernetes
