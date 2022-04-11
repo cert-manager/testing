@@ -1,6 +1,6 @@
 periodics:
 
-- name: ci-cert-manager-bazel
+- name: ci-cert-manager-make-test
   interval: 2h
   agent: kubernetes
   decorate: true
