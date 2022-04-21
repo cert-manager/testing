@@ -588,11 +588,9 @@ periodics:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
           - runner
-          - bash
-          - -c
-          - |
-            apt-get install jq -y >/dev/null
-            make -j e2e-setup-kind && ./hack/verify-upgrade.sh
+          - make
+          - cluster
+          - verify_upgrade
         resources:
           requests:
             cpu: 3500m
