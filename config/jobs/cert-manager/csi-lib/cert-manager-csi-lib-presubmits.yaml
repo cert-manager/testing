@@ -13,7 +13,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: golang:1.17.6
+      - image: golang:1.18.1
         args:
         - ./hack/verify-all.sh
         resources:
