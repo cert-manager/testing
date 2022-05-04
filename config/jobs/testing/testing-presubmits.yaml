@@ -79,23 +79,30 @@ presubmits:
     rerun_command: "/test verify"
 
   - name: pull-testing-check-testgrid-config
-    decorate: true
+    # TODO: Temporarily optional and disabled by default so that we can iterate
+    # on getting this test working before making it mandatory again.
+    always_run: false
+    optional: true
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
+    decorate: true
     branches:
     - master
-    labels:
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
     annotations:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/transfigure:v20210601-16a04c27e3
+      - image: gcr.io/k8s-prow/configurator
         command:
-        - /transfigure.sh
+        - /app/testgrid/cmd/configurator/app.binary
         args:
-        - test # run in test mode
-        - ./config/config.yaml # path to prow config.yaml
-        - ./config/jobs/ # path to prow job definitions
-        - ./config/testgrid/dashboards.yaml # path to testgrid config
-        - jetstack # name of the directory containing our testgrid configs
+        - --yaml=config/testgrid/dashboards.yaml
+        - --default=config/testgrid/default.yaml
+        - --prow-config=config/config.yaml
+        - --prow-job-config=config/jobs
+        - --prowjob-url-prefix=https://github.com/jetstack/testing/tree/master/config/jobs
+        - --update-description
+        - --validate-config-file
+        - --oneshot
+        resources:
+          requests:
+            memory: "1Gi"
