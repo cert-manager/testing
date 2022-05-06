@@ -6,6 +6,9 @@ Prow's 'control plane' is deployed to `github-build-infra` (referred to as `buil
 
 Prow will spin up test pods in `jetstack-build-infra-workers-gke` (also referred to as 'default') cluster in `jetstack-build-infra-gke` project and in `jetstack-build-infra-workers-trusted` (also referred to as 'trusted) cluster in `jetstack-build-infra-internal` project depending on the type of the job.
 
+The separation between 'trusted' and 'default' cluster allows us to use `ProwJob`s to perform actions that require authentication to other parts of our infrastructure (i.e push images to GCR) and at the same time protects us from a possible attack where after a maintainer has labelled a PR with 'ok-to-test', a change is made to the PR code that attacks some part of the infrastructure, i.e attempts to read `Secret`s in the cluster.`
+This protection works because all jobs that run in the 'trusted' cluster are periodics or postsubmit jobs- so they would not run in between a PR being 'ok-to-test'-ed and approved and merged. It is therefore important that we do not add presubmit jobs to the 'trusted' cluster.
+
 ## Upgrading Prow
 
 New images for Prow components are built upstream on all commits to [k/test-infra/prow](https://github.com/kubernetes/test-infra/tree/master/prow)
