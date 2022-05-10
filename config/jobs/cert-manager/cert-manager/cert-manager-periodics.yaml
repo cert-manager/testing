@@ -49,7 +49,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
-    description: Runs 'make test-ci'
+    description: Runs unit tests and verification scripts
   spec:
     containers:
       # TODO: change to a custom image that embeds the system tools we
@@ -62,7 +62,7 @@ periodics:
           - -c
           - |
             apt-get install jq -y >/dev/null
-            make -j vendor-go test-ci
+            make -j vendor-go ci-presubmit test-ci
         resources:
           requests:
             cpu: 2

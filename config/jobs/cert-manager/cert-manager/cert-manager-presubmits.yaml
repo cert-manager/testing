@@ -53,7 +53,7 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'true'
       testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Runs 'make test-ci'
+      description: Runs unit tests and verification scripts
     labels:
       preset-service-account: "true"
     spec:
@@ -68,7 +68,7 @@ presubmits:
         - -c
         - |
           apt-get install jq -y >/dev/null
-          make -j vendor-go test-ci
+          make -j vendor-go ci-presubmit test-ci
         resources:
           requests:
             cpu: 2
