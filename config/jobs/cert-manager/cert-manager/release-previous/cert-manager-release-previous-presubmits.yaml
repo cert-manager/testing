@@ -8,8 +8,10 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    # release-1.8 is tested via make, but there were still some leftover tests which were bazel-only
+    # as of the release of 1.8, so we need to run bazel test for 1.8 too.
+    - release-1.8
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
     labels:
@@ -29,80 +31,6 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  - name: pull-cert-manager-bazel-experimental
-    always_run: false
-    optional: true
-    context: pull-cert-manager-bazel-experimental
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.6
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs 'bazel test --jobs=1 //...' using the 'experimental' Bazel version
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-experimental
-        args:
-        - runner
-        - bazel
-        - test
-        - --jobs=1
-        - //...
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  # Helm chart verification currently requires Docker.
-  # We maintain a standalone presubmit for running this.
-  # See https://github.com/helm/chart-testing/issues/53
-  - name: pull-cert-manager-chart
-    always_run: true
-    context: pull-cert-manager-chart
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.6
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Verifies the Helm chart passes linting checks
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-        args:
-        - runner
-        - make
-        - verify_chart
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-        # docker-in-docker needs privileged mode
-        securityContext:
-          privileged: true
       dnsConfig:
         options:
           - name: ndots
@@ -115,8 +43,10 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    # this test is not really valuable for release-1.8 since bazel isn't really used there
+    # still, we might as well run it just in case
+    - release-1.8
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
       description: Verifies dependency related files are up to date
@@ -140,65 +70,63 @@ presubmits:
           - name: ndots
             value: "1"
 
-  # cert-manager 1.7 requires at least K8S 1.18 so this will be run only for the release-1.6
-  # branch.
-  - name: pull-cert-manager-e2e-v1-17
-    context: pull-cert-manager-e2e-v1-17
+  - name: pull-cert-manager-make-test
+    context: pull-cert-manager-make-test
     always_run: true
-    optional: true
-    max_concurrency: 4
+    optional: false
+    max_concurrency: 8
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.6
+    # make testing not supported on release-1.7
+    - release-1.8
     annotations:
       testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.17 cluster
     labels:
       preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-disable-all-alpha-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
     spec:
       containers:
+        # TODO: change to a custom image that embeds the system tools we
+        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
-        - devel/ci-run-e2e.sh
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go test-ci
         resources:
           requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.17"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
+            cpu: 2
+            memory: 4Gi
         volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
       volumes:
-      - name: modules
+      - name: gocache
         hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
         hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       dnsConfig:
         options:
-        - name: ndots
-          value: "1"
+          - name: ndots
+            value: "1"
+
+### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates enabled ###
 
   - name: pull-cert-manager-e2e-v1-18
     context: pull-cert-manager-e2e-v1-18
@@ -208,8 +136,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    # cert-manager 1.8 supports k8s 1.19+, so no need to run against release-1.8 here
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
@@ -259,6 +187,7 @@ presubmits:
         - name: ndots
           value: "1"
 
+# Run with Bazel for release-1.7 where make was not available
   - name: pull-cert-manager-e2e-v1-19
     context: pull-cert-manager-e2e-v1-19
     always_run: false
@@ -268,7 +197,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
@@ -318,6 +246,66 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-19
+    context: pull-cert-manager-e2e-v1-19
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.19
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel for release-1.7 where make was not available
   - name: pull-cert-manager-e2e-v1-20
     context: pull-cert-manager-e2e-v1-20
     always_run: false
@@ -327,7 +315,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
@@ -377,6 +364,66 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-20
+    context: pull-cert-manager-e2e-v1-20
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-21
     context: pull-cert-manager-e2e-v1-21
     always_run: false
@@ -386,7 +433,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    - release-1.6
     annotations:
       testgrid-create-test-group: 'false'
       description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
@@ -436,19 +482,18 @@ presubmits:
         - name: ndots
           value: "1"
 
-
-  - name: pull-cert-manager-e2e-v1-22
-    context: pull-cert-manager-e2e-v1-22
-    always_run: true
-    optional: false # for release-1.6 v1.22 is the latest k8s version supported
+  - name: pull-cert-manager-e2e-v1-21
+    context: pull-cert-manager-e2e-v1-21
+    always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
     branches:
-    - release-1.6
+    - release-1.8
     annotations:
       testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -463,14 +508,15 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
         args:
         - runner
-        - devel/ci-run-e2e.sh
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.21
         resources:
           requests:
             cpu: 3500m
             memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.22"
         securityContext:
           privileged: true
           capabilities:
@@ -495,10 +541,11 @@ presubmits:
         - name: ndots
           value: "1"
 
+# Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
     always_run: true
-    optional: true # for release-1.7 testing against v1.22 is optional because v1.23 is the latest version supported
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -553,10 +600,68 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-22
+    context: pull-cert-manager-e2e-v1-22
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'false'
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.22
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
 
+# Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-23
     context: pull-cert-manager-e2e-v1-23
-    # This is the default e2e test for cert-manager 1.7 but is unsupported for cert-manager 1.6
     always_run: true
     optional: false
     max_concurrency: 4
@@ -613,14 +718,87 @@ presubmits:
         - name: ndots
           value: "1"
 
-  # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
-  # with the following GitHub comment:
-  #
-  #  /test pull-cert-manager-e2e-issuers-venafi-cloud-previous
-  #
-  # The regular presubmit jobs do not run Venafi Cloud e2e tests.
-  #
-  - name: pull-cert-manager-e2e-issuers-venafi-cloud-previous
+  - name: pull-cert-manager-e2e-v1-23
+    context: pull-cert-manager-make-e2e-v1-23
+    always_run: true
+    optional: false
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'false'
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+        # TODO: change to a custom image that embeds the system tools we
+        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+        # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates disabled ###
+
+# Run with Bazel against release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-feature-gates-disabled-23
     always_run: false
     optional: true
     max_concurrency: 4
@@ -628,17 +806,17 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    - release-1.6
     annotations:
-      description: Runs the E2E tests with 'Venafi TPP' in name
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.23
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
       preset-bazel-remote-cache-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-venafi-tpp-credentials: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
-      preset-ginkgo-focus-venafi-tpp: "true"
+      preset-ginkgo-skip-default: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
@@ -651,8 +829,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.22" # since this job is rarely run, just use 1.22 for both release-1.6 and release-1.7
-                        # since both support that version of k8s
+          value: "1.23"
         securityContext:
           privileged: true
           capabilities:
@@ -677,6 +854,642 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-feature-gates-disabled-23
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.23
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel for release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-feature-gates-disabled-22
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.22
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.22"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-22
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.22
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.22
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel against release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-feature-gates-disabled-21
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.21
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.21"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-21
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.21
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.21
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel on release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-feature-gates-disabled-20
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.20
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.20"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-20
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.20
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel for release-1.7 where make was not yet available
+  - name: pull-cert-manager-e2e-feature-gates-disabled-19
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.19
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.19"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-19
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.19
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - bash
+        - -c
+        - |
+          apt-get install jq -y >/dev/null
+          make -j vendor-go e2e-ci K8S_VERSION=1.19
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-18
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    # not needed for release-1.8 as cert-manager 1.8 no longer supports Kubernetes 1.8
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.18
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.18"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+#### E2E tests that are not included in the default test runs ###
+
+  # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
+  # with the following GitHub comment:
+  #
+  #  /test pull-cert-manager-e2e-issuers-venafi-cloud-previous
+  #
+  # The regular presubmit jobs do not run Venafi Cloud e2e tests.
+  #
+  - name: pull-cert-manager-e2e-issuers-venafi-cloud-previous
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with 'Venafi TPP' in name
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-venafi-tpp-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-focus-venafi-tpp: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.23"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+        
+
   # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
   # with the following GitHub comment:
   #
@@ -691,8 +1504,8 @@ presubmits:
     agent: kubernetes
     decorate: true
     branches:
+    - release-1.8
     - release-1.7
-    - release-1.6
     annotations:
       description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
@@ -715,8 +1528,7 @@ presubmits:
             memory: 12Gi
         env:
         - name: K8S_VERSION
-          value: "1.22" # since this job is rarely run, just use 1.22 for both release-1.6 and release-1.7
-                        # since both support that version of k8s
+          value: "1.23"
         securityContext:
           privileged: true
           capabilities:
