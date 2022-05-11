@@ -1,8 +1,8 @@
-# We don't need periodically testing the release-next breanch (e.g., the
-# "release-1.9" branch) until we release the first alpha (e.g.,
-# "1.9.0-alpha.0"). Since we can't "deactivate" the release-next periodics
-# jobs until we have an alpha (there is no "skip" field on the ProwJob
-# object), we just remove all of the jobs from this file. That's why the
-# below array is empty. See Step 13.3 in
-# https://cert-manager.io/docs/contributing/release-process/
+# We don't need to periodically test the release-next branch
+# (e.g., the "release-1.9" branch when release-1.8 is the latest version)
+# until we release the first alpha (e.g. "1.9.0-alpha.0").
+# Since we can't "deactivate" the release-next periodic jobs (there is no "skip"
+# field on the ProwJob object), we just remove all of the jobs from this file and leave
+# an empty array.
+# See step 13.3 in https://cert-manager.io/docs/contributing/release-process/
 periodics: []

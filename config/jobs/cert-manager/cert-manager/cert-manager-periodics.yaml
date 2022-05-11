@@ -641,7 +641,6 @@ periodics:
         - name: ndots
           value: "1"
 
-
 - name: ci-cert-manager-upgrade
   interval: 8h
   agent: kubernetes
