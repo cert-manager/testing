@@ -20,7 +20,7 @@ periodics:
     description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bazel
@@ -55,7 +55,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -116,7 +116,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -194,7 +194,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -272,7 +272,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -350,7 +350,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -428,7 +428,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -506,7 +506,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -587,7 +587,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -663,7 +663,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - make
@@ -790,7 +790,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -868,7 +868,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -946,7 +946,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -1024,7 +1024,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -1102,7 +1102,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash
@@ -1180,7 +1180,7 @@ periodics:
       # TODO: change to a custom image that embeds the system tools we
       # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
       # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - bash

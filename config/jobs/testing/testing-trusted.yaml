@@ -118,7 +118,7 @@ postsubmits:
       description: Build and push the 'bazelbuild' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -155,7 +155,7 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -192,7 +192,7 @@ postsubmits:
       description: Build and push the 'golang-nodejs' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -228,7 +228,7 @@ postsubmits:
       description: Build and push the 'bazel-tools' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -265,7 +265,7 @@ postsubmits:
       description: Build and push the 'katacoda-lint' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -302,7 +302,7 @@ postsubmits:
       description: Build and push the 'tarmak-ruby' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -339,7 +339,7 @@ postsubmits:
       description: Build and push the 'tarmak-sphinx-docs' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -376,7 +376,7 @@ postsubmits:
       description: Build and push the 'terraform-google-gke-cluster' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -447,7 +447,7 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
