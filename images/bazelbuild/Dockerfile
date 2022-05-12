@@ -93,6 +93,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     patch \
     openssh-client \
     moreutils \
+    jq \
     && apt-get clean \
     && python -m pip install --upgrade pip setuptools wheel
 
