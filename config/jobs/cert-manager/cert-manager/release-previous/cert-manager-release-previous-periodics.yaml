@@ -19,7 +19,7 @@ periodics:
     description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bazel
@@ -48,20 +48,16 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-previous
-    description: Runs 'make test-ci'
+    description: Runs unit and integration tests # NB: for release-1.9, add "and verification scripts" to the end here
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-        args:
-          - runner
-          - bash
-          - -c
-          - |
-            apt-get install jq -y >/dev/null
-            make -j vendor-go test-ci
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args: # NB: for release-1.9 onwards, we'll also want to run the ci-presubmit target here, but that work is done by bazel for 1.8
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - test-ci
         resources:
           requests:
             cpu: 2
@@ -110,7 +106,7 @@ periodics:
     preset-dind-enabled: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - make
@@ -187,7 +183,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bash
@@ -246,7 +242,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bash
@@ -305,7 +301,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bash
@@ -364,7 +360,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bash
@@ -423,7 +419,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
       args:
       - runner
       - bash
@@ -482,17 +478,14 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.19
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.19
         resources:
           requests:
             cpu: 3500m
@@ -560,17 +553,14 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.20
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.20
         resources:
           requests:
             cpu: 3500m
@@ -638,17 +628,14 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.21
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.21
         resources:
           requests:
             cpu: 3500m
@@ -716,17 +703,14 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
-          - runner
-          - bash
-          - -c
-          - |
-            apt-get install jq -y >/dev/null
-            make -j vendor-go e2e-ci K8S_VERSION=1.22
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.22
         resources:
           requests:
             cpu: 3500m
@@ -794,17 +778,14 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
-          - runner
-          - bash
-          - -c
-          - |
-            apt-get install jq -y >/dev/null
-            make -j vendor-go e2e-ci K8S_VERSION=1.23
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
@@ -873,17 +854,14 @@ periodics:
     preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
-      # TODO: change to a custom image that embeds the system tools we
-      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-      # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
-          - runner
-          - bash
-          - -c
-          - |
-            apt-get install jq -y >/dev/null
-            make -j vendor-go e2e-ci K8S_VERSION=1.23
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m

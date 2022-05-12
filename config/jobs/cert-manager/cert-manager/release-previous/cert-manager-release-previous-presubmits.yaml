@@ -20,7 +20,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bazel
@@ -56,7 +56,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - make
@@ -86,17 +86,13 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we
-        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-        # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-        args:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args: # NB: for release-1.9 onwards, we'll also want to run the ci-presubmit target here, but that work is done by bazel for 1.8
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go test-ci
+        - make
+        - -j
+        - vendor-go
+        - test-ci
         resources:
           requests:
             cpu: 2
@@ -152,7 +148,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -211,7 +207,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -269,7 +265,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -329,7 +325,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -387,7 +383,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -447,7 +443,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -505,7 +501,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -565,7 +561,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -623,7 +619,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -683,7 +679,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -738,17 +734,14 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we
-        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-        # https://github.com/cert-manager/cert-manager/issues/4939.
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.23
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
@@ -819,7 +812,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -875,7 +868,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -933,7 +926,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -989,7 +982,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -1047,7 +1040,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -1103,7 +1096,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -1161,7 +1154,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -1217,7 +1210,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -1275,7 +1268,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -1331,7 +1324,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - bash
@@ -1389,7 +1382,7 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -1454,7 +1447,7 @@ presubmits:
       preset-ginkgo-focus-venafi-tpp: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -1488,7 +1481,7 @@ presubmits:
         options:
         - name: ndots
           value: "1"
-        
+
 
   # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
   # with the following GitHub comment:
@@ -1518,7 +1511,7 @@ presubmits:
       preset-ginkgo-focus-venafi-cloud: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
