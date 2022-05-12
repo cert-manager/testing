@@ -455,6 +455,124 @@ periodics:
       - name: ndots
         value: "1"
 
+- name: ci-cert-manager-previous-e2e-v1-24
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+
+# This periodic is here to temporarily test release-1.7 against Kubernetes 1.24
+# to verify that it works as we have not tested with 1.24 coming up to releasing
+# 1.7. Remove this job altogether when removing tests for 1.7
+- name: ci-cert-manager-previous-previous-e2e-v1-24
+  interval: 24h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.7
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-bazel-remote-cache-enabled: "true"
+    preset-bazel-scratch-dir: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - devel/ci-run-e2e.sh
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+      - mountPath: /lib/modules
+        name: modules
+        readOnly: true
+      - mountPath: /sys/fs/cgroup
+        name: cgroup
+    volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+
+
 ### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates disabled ###
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-19-previous
@@ -786,6 +904,161 @@ periodics:
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
+    volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-e2e-feature-gates-disabled-v1-24-previous
+  interval: 24h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster with all feature gates disabled
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-retry-flakey-tests: "true"
+  spec:
+    containers:
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+          - mountPath: /lib/modules
+            name: modules
+            readOnly: true
+          - mountPath: /sys/fs/cgroup
+            name: cgroup
+          - mountPath: /root/.cache/go-build
+            name: gocache
+          - mountPath: /home/prow/go/pkg/mod
+            name: gopkgmod
+          - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+            name: bindownloaded
+    volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+# This periodic is here to temporarily test release-1.7 against Kubernetes 1.24
+# to verify that it works as we have not tested with 1.24 coming up to releasing
+# 1.7. Remove this job altogether when removing tests for 1.7
+- name: ci-cert-manager-e2e-feature-gates-disabled-v1-24-previous-prev
+  interval: 24h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.7
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster with all feature gates disabled
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-retry-flakey-tests: "true"
+  spec:
+    containers:
+      # TODO: change to a custom image that embeds the system tools we
+      # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
+      # https://github.com/cert-manager/cert-manager/issues/4939.
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
         resources:
           requests:
             cpu: 3500m
