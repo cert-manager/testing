@@ -634,6 +634,9 @@ periodics:
       args:
       - runner
       - devel/ci-run-e2e.sh
+      env:
+      - name: K8S_VERSION
+        value: "1.24"
       resources:
         requests:
           cpu: 3500m
@@ -1149,6 +1152,9 @@ periodics:
         args:
         - runner
         - devel/ci-run-e2e.sh
+        env:
+        - name: K8S_VERSION
+          value: "1.24"
         resources:
           requests:
             cpu: 3500m
