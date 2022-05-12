@@ -880,9 +880,6 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we
-        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-        # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
@@ -958,9 +955,6 @@ presubmits:
       preset-ginkgo-skip-default: "true"
     spec:
       containers:
-        # TODO: change to a custom image that embeds the system tools we
-        # need (jq, make, bash, Go, etc) but without Bazel. Tracked at
-        # https://github.com/cert-manager/cert-manager/issues/4939.
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
