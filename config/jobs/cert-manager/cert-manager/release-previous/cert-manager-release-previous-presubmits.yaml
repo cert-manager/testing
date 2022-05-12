@@ -282,6 +282,12 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
@@ -296,6 +302,18 @@ presubmits:
         hostPath:
           path: /sys/fs/cgroup
           type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       dnsConfig:
         options:
         - name: ndots
@@ -400,12 +418,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -518,12 +554,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -636,12 +690,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -788,7 +860,269 @@ presubmits:
         - name: ndots
           value: "1"
 
+  - name: pull-cert-manager-e2e-v1-24
+    context: pull-cert-manager-make-e2e-v1-24
+    always_run: true
+    optional: false
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      testgrid-create-test-group: 'false'
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+# Run with Bazel for release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-v1-24
+    context: pull-cert-manager-make-e2e-v1-24
+    always_run: true
+    optional: false
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      testgrid-create-test-group: 'false'
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        env:
+        - name: K8S_VERSION
+          value: "1.24"
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
 ### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates disabled ###
+
+# Run with Bazel against release-1.7 where make was not available yet
+  - name: pull-cert-manager-e2e-feature-gates-disabled-24
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.7
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.24
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - devel/ci-run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.24"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
+  - name: pull-cert-manager-e2e-feature-gates-disabled-24
+    always_run: false
+    optional: true
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    branches:
+    - release-1.8
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.24
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-cloudflare-credentials: "true"
+      preset-retry-flakey-tests: "true"
+      preset-ginkgo-skip-default: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1 
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
 
 # Run with Bazel against release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-feature-gates-disabled-23
@@ -885,12 +1219,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -999,12 +1351,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -1113,12 +1483,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -1232,7 +1620,25 @@ presubmits:
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
@@ -1341,12 +1747,30 @@ presubmits:
           capabilities:
             add: ["SYS_ADMIN"]
         volumeMounts:
+        - mountPath: /root/.cache/go-build
+          name: gocache
+        - mountPath: /home/prow/go/pkg/mod
+          name: gopkgmod
+        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+          name: bindownloaded
         - mountPath: /lib/modules
           name: modules
           readOnly: true
         - mountPath: /sys/fs/cgroup
           name: cgroup
       volumes:
+      - name: gocache
+        hostPath:
+          path: /tmp/gocache
+          type: DirectoryOrCreate
+      - name: gopkgmod
+        hostPath:
+          path: /tmp/gopkgmod
+          type: DirectoryOrCreate
+      - name: bindownloaded
+        hostPath:
+          path: /tmp/bindownloaded
+          type: DirectoryOrCreate
       - name: modules
         hostPath:
           path: /lib/modules
