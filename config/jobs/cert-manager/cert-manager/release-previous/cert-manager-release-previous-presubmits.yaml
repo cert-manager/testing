@@ -268,11 +268,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.19
+        - make
+        - j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.19
         resources:
           requests:
             cpu: 3500m
@@ -404,11 +404,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.20
+        - make
+        - j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.19
         resources:
           requests:
             cpu: 3500m
@@ -540,11 +540,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.21
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.21
         resources:
           requests:
             cpu: 3500m
@@ -676,11 +676,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.22
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.22
         resources:
           requests:
             cpu: 3500m
@@ -1205,11 +1205,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.23
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
         resources:
           requests:
             cpu: 3500m
@@ -1337,11 +1337,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.22
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.22
         resources:
           requests:
             cpu: 3500m
@@ -1469,11 +1469,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.21
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.21
         resources:
           requests:
             cpu: 3500m
@@ -1601,11 +1601,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.20
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.20
         resources:
           requests:
             cpu: 3500m
@@ -1733,11 +1733,11 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
-        - bash
-        - -c
-        - |
-          apt-get install jq -y >/dev/null
-          make -j vendor-go e2e-ci K8S_VERSION=1.19
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.19
         resources:
           requests:
             cpu: 3500m
