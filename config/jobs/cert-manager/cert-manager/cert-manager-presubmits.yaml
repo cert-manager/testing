@@ -662,6 +662,8 @@ presubmits:
     branches:
     - master
     annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
       description: Runs cert-manager upgrade from latest published release
     labels:
       preset-service-account: "true"
@@ -723,6 +725,8 @@ presubmits:
     decorate: true
     branches: []
     annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
       description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
       preset-service-account: "true"
@@ -784,6 +788,8 @@ presubmits:
     decorate: true
     branches: []
     annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
       description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
       preset-service-account: "true"
@@ -838,6 +844,8 @@ presubmits:
     decorate: true
     branches: []
     annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
       description: Runs the E2E tests with all feature gates disabled
     labels:
       preset-service-account: "true"

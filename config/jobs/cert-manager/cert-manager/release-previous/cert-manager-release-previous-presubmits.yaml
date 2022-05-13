@@ -11,8 +11,6 @@ presubmits:
     # as of the release of 1.8, so we need to run bazel test for 1.8 too.
     - release-1.8
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -45,9 +43,6 @@ presubmits:
     # still, we might as well run it just in case
     - release-1.8
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Verifies dependency related files are up to date
     labels:
       preset-service-account: "true"
       preset-bazel-remote-cache-enabled: "true"
@@ -77,8 +72,6 @@ presubmits:
     branches:
     # make testing not supported on release-1.7
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
       preset-service-account: "true"
     spec:
@@ -130,9 +123,6 @@ presubmits:
     branches:
     # cert-manager 1.8 supports k8s 1.19+, so no need to run against release-1.8 here
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.18 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -188,9 +178,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -245,9 +232,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -322,9 +306,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -379,9 +360,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -456,9 +434,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -513,9 +488,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -590,9 +562,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -647,9 +616,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -724,9 +690,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-      description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -781,8 +744,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -854,8 +815,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -928,8 +887,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -985,8 +942,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.24
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1041,8 +996,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.24
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1117,8 +1070,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.23
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1173,8 +1124,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.23
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1249,8 +1198,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.22
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1305,8 +1252,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.22
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1381,8 +1326,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.21
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1437,8 +1380,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.21
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1513,8 +1454,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.20
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1569,8 +1508,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.20
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1645,8 +1582,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.19
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1701,8 +1636,6 @@ presubmits:
     decorate: true
     branches:
     - release-1.8
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.19
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1777,8 +1710,6 @@ presubmits:
     branches:
     # not needed for release-1.8 as cert-manager 1.8 no longer supports Kubernetes 1.8
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with all feature gates disabled against Kubernetes 1.18
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1843,8 +1774,6 @@ presubmits:
     branches:
     - release-1.8
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
@@ -1907,8 +1836,6 @@ presubmits:
     branches:
     - release-1.8
     - release-1.7
-    annotations:
-      description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
