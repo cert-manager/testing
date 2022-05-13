@@ -585,7 +585,7 @@ presubmits:
 # Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-22
     context: pull-cert-manager-e2e-v1-22
-    always_run: true
+    always_run: false
     optional: true
     max_concurrency: 4
     agent: kubernetes
