@@ -506,7 +506,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-21
-    context: pull-cert-manager-e2e-v1-21
     always_run: false
     optional: true
     max_concurrency: 4
@@ -584,7 +583,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-22
-    context: pull-cert-manager-e2e-v1-22
     always_run: false
     optional: true
     max_concurrency: 4
@@ -642,7 +640,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-22
-    context: pull-cert-manager-e2e-v1-22
     always_run: false
     optional: true
     max_concurrency: 4
@@ -720,7 +717,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-23
-    context: pull-cert-manager-e2e-v1-23
     always_run: true
     optional: false
     max_concurrency: 4
@@ -778,7 +774,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-23
-    context: pull-cert-manager-e2e-v1-23
     always_run: true
     optional: false
     max_concurrency: 4
@@ -852,7 +847,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-24
-    context: pull-cert-manager-e2e-v1-24
     always_run: true
     optional: false
     max_concurrency: 4
@@ -927,7 +921,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-24
-    context: pull-cert-manager-make-e2e-v1-24
     always_run: true
     optional: false
     max_concurrency: 4
