@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-bazel
     always_run: true
-    context: pull-cert-manager-bazel
     max_concurrency: 8
     agent: kubernetes
     decorate: true
@@ -38,7 +37,6 @@ presubmits:
 
   - name: pull-cert-manager-deps
     always_run: true
-    context: pull-cert-manager-deps
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -71,7 +69,6 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-make-test
-    context: pull-cert-manager-make-test
     always_run: true
     optional: false
     max_concurrency: 8
@@ -125,7 +122,6 @@ presubmits:
 ### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates enabled ###
 
   - name: pull-cert-manager-e2e-v1-18
-    context: pull-cert-manager-e2e-v1-18
     always_run: false
     optional: true
     max_concurrency: 4
@@ -185,7 +181,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available
   - name: pull-cert-manager-e2e-v1-19
-    context: pull-cert-manager-e2e-v1-19
     always_run: false
     optional: true
     max_concurrency: 4
@@ -243,7 +238,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-19
-    context: pull-cert-manager-e2e-v1-19
     always_run: false
     optional: true
     max_concurrency: 4
@@ -321,7 +315,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available
   - name: pull-cert-manager-e2e-v1-20
-    context: pull-cert-manager-e2e-v1-20
     always_run: false
     optional: true
     max_concurrency: 4
@@ -379,7 +372,6 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-20
-    context: pull-cert-manager-e2e-v1-20
     always_run: false
     optional: true
     max_concurrency: 4
@@ -457,7 +449,6 @@ presubmits:
 
 # Run with Bazel for release-1.7 where make was not available yet
   - name: pull-cert-manager-e2e-v1-21
-    context: pull-cert-manager-e2e-v1-21
     always_run: false
     optional: true
     max_concurrency: 4
@@ -787,7 +778,7 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-23
-    context: pull-cert-manager-make-e2e-v1-23
+    context: pull-cert-manager-e2e-v1-23
     always_run: true
     optional: false
     max_concurrency: 4
@@ -861,7 +852,7 @@ presubmits:
           value: "1"
 
   - name: pull-cert-manager-e2e-v1-24
-    context: pull-cert-manager-make-e2e-v1-24
+    context: pull-cert-manager-e2e-v1-24
     always_run: true
     optional: false
     max_concurrency: 4
