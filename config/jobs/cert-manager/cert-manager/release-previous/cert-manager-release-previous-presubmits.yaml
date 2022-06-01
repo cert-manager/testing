@@ -111,6 +111,7 @@ presubmits:
     - release-1.8
     labels:
       preset-service-account: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -124,26 +125,6 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
       dnsConfig:
         options:
           - name: ndots
@@ -169,6 +150,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-disable-all-alpha-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -186,21 +168,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -224,6 +191,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -241,21 +209,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -278,6 +231,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -296,39 +251,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
       dnsConfig:
         options:
         - name: ndots
@@ -352,6 +274,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -369,21 +292,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -406,6 +314,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -424,39 +334,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -480,6 +357,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -497,21 +375,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -534,6 +397,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -552,39 +417,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -608,6 +440,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -625,21 +458,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -662,6 +480,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -680,39 +500,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -736,6 +523,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -753,21 +541,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -788,6 +561,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -806,39 +581,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
       dnsConfig:
         options:
         - name: ndots
@@ -859,6 +601,8 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -877,39 +621,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
       dnsConfig:
         options:
         - name: ndots
@@ -931,6 +642,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -948,21 +660,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -988,6 +685,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1005,21 +703,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1042,6 +725,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1 
@@ -1060,39 +745,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1116,6 +768,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1133,21 +786,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1170,6 +808,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1188,39 +828,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1244,6 +851,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1261,21 +869,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1298,6 +891,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1316,39 +911,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1372,6 +934,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1389,21 +952,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1426,6 +974,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1444,39 +994,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1500,6 +1017,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1517,21 +1035,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1554,6 +1057,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1572,39 +1077,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1628,6 +1100,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1645,21 +1118,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1682,6 +1140,8 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1700,39 +1160,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /root/.cache/go-build
-          name: gocache
-        - mountPath: /home/prow/go/pkg/mod
-          name: gopkgmod
-        - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
-          name: bindownloaded
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: gocache
-        hostPath:
-          path: /tmp/gocache
-          type: DirectoryOrCreate
-      - name: gopkgmod
-        hostPath:
-          path: /tmp/gopkgmod
-          type: DirectoryOrCreate
-      - name: bindownloaded
-        hostPath:
-          path: /tmp/bindownloaded
-          type: DirectoryOrCreate
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1756,6 +1183,7 @@ presubmits:
       preset-cloudflare-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1773,21 +1201,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1819,6 +1232,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1836,21 +1250,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -1881,6 +1280,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
       preset-retry-flakey-tests: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
+      preset-default-e2e-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -1898,21 +1298,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots

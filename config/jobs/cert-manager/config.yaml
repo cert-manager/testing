@@ -147,3 +147,48 @@ presets:
   env:
   - name: GINKGO_FOCUS
     value: 'Venafi Cloud'
+
+# This preset should be added to all tests that are run with make. It ensures
+# that gocache, go module cache and make cache are mounted to the Job's pod
+- labels:
+    preset-make-volumes: "true"
+  volumeMounts:
+  - mountPath: /root/.cache/go-build
+    name: gocache
+  - mountPath: /home/prow/go/pkg/mod
+    name: gopkgmod
+  - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+    name: bindownloaded
+  volumes:
+  - name: gocache
+    hostPath:
+      path: /tmp/gocache
+      type: DirectoryOrCreate
+  - name: gopkgmod
+    hostPath:
+      path: /tmp/gopkgmod
+      type: DirectoryOrCreate
+  - name: bindownloaded
+    hostPath:
+      path: /tmp/bindownloaded
+      type: DirectoryOrCreate
+
+# This preset should be added to all e2e tests to ensure Docker (used to spin up
+# Kind clusters) can be set up.
+- labels:
+    preset-default-e2e-volumes: "true"
+  volumes:
+    - name: modules
+      hostPath:
+        path: /lib/modules
+        type: Directory
+    - name: cgroup
+      hostPath:
+        path: /sys/fs/cgroup
+        type: Directory
+  volumeMounts:
+    - mountPath: /lib/modules
+      name: modules
+      readOnly: true
+    - mountPath: /sys/fs/cgroup
+      name: cgroup
