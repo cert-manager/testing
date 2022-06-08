@@ -305,7 +305,7 @@ periodics:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.23 cluster
+    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.24 cluster
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
@@ -323,7 +323,7 @@ periodics:
         - -j
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.23
+        - K8S_VERSION=1.24
         resources:
           requests:
             cpu: 3500m

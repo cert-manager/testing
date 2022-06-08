@@ -39,7 +39,7 @@ branch-protection:
             - pull-cert-manager-bazel
             - pull-cert-manager-deps
             - pull-cert-manager-chart
-            - pull-cert-manager-e2e-v1-23
+            - pull-cert-manager-e2e-v1-24
             # - pull-cert-manager-make-test
         website:
           required_status_checks:

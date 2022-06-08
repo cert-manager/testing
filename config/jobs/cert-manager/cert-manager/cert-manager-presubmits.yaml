@@ -275,10 +275,9 @@ presubmits:
         - name: ndots
           value: "1"
 
-    # This is the default e2e test for all PRs.
   - name: pull-cert-manager-e2e-v1-23
-    always_run: true
-    optional: false
+    always_run: false
+    optional: true
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -320,9 +319,10 @@ presubmits:
         - name: ndots
           value: "1"
 
+  # This is the default e2e test for all PRs against cert-manager master branch
   - name: pull-cert-manager-e2e-v1-24
-    always_run: false
-    optional: true
+    always_run: true
+    optional: false
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -403,7 +403,7 @@ presubmits:
         env:
         # Used by https://github.com/cert-manager/cert-manager/blob/master/devel/cluster/create-kind.sh
         - name: K8S_VERSION
-          value: "1.23"
+          value: "1.24"
         securityContext:
           privileged: true
           capabilities:
@@ -448,7 +448,7 @@ presubmits:
         - -j
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.23
+        - K8S_VERSION=1.24
         resources:
           requests:
             cpu: 3500m
