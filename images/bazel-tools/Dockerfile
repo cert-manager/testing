@@ -23,16 +23,16 @@ COPY semversort.sh /usr/local/bin/semversort
 
 ARG NODE_VERSION
 # install goversion, gcrane, gh cli, jq and node
-RUN go install github.com/rsc/goversion@v1.2.0 && \
-    go install github.com/google/go-containerregistry/cmd/gcrane@v0.6.0 && \
+RUN go install github.com/cert-manager/goversion@v1.3.0 && \
+    go install github.com/google/go-containerregistry/cmd/gcrane@v0.9.0 && \
+    apt-get update && \
     apt-get install -y \
     jq=1.5+dfsg-2+b1 \
     nodejs=${NODE_VERSION} && \
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
     apt update && \
-    apt install gh=2.9.0
-
+    apt install gh=2.12.1
 
 # Add GOPATH/bin to PATH
 ENV PATH=/root/go/bin:$PATH
