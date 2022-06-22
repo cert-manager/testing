@@ -157,7 +157,7 @@ presets:
     name: gocache
   - mountPath: /home/prow/go/pkg/mod
     name: gopkgmod
-  - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+  - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/_bin/downloaded
     name: bindownloaded
   volumes:
   - name: gocache
