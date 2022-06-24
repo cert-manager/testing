@@ -1,8 +1,347 @@
-# We don't need to periodically test the release-next branch
-# (e.g., the "release-1.9" branch when release-1.8 is the latest version)
-# until we release the first alpha (e.g. "1.9.0-alpha.0").
-# Since we can't "deactivate" the release-next periodic jobs (there is no "skip"
-# field on the ProwJob object), we just remove all of the jobs from this file and leave
-# an empty array.
-# See step 13.3 in https://cert-manager.io/docs/contributing/release-process/
-periodics: []
+# We don't need periodically testing the release-next breanch (e.g., the
+# "release-1.9" branch) until we release the first alpha (e.g.,
+# "1.9.0-alpha.0"). Since we can't "deactivate" the release-next periodics jobs
+# until we have an alpha (there is no "skip" field on the ProwJob object), we
+# set an arbitrarily large interval of 6 month. See Step 13.3 in
+# https://cert-manager.io/docs/contributing/release-process/
+
+# Since we're in an alpha phase now, we'll enable these tests
+
+periodics:
+- name: ci-cert-manager-next-make-test
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  labels:
+    preset-service-account: "true"
+    preset-make-volumes: "true"
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    description: Runs unit and integration tests and verification scripts
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+          - runner
+          - make
+          - -j
+          - vendor-go
+          - ci-presubmit
+          - test-ci
+        resources:
+          requests:
+            cpu: 2
+            memory: 4Gi
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-20
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-21
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.21
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-22
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.22
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-23
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-e2e-v1-24
+  interval: 2h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-cloudflare-credentials: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-venafi
+  interval: 12h
+  agent: kubernetes
+  decorate: true
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-next
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.24 cluster
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+    preset-ginkgo-focus-venafi: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
+
+- name: ci-cert-manager-next-upgrade
+  interval: 8h
+  agent: kubernetes
+  decorate: true
+  # extra refs specify what repo should be cloned
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  annotations:
+    testgrid-create-test-group: 'true'
+    testgrid-dashboards: jetstack-cert-manager-master
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs cert-manager upgrade test every 8 hours
+  labels:
+    preset-service-account: "true"
+    preset-dind-enabled: "true"
+    preset-make-volumes: "true"
+    preset-default-e2e-volumes: "true"
+  spec:
+    containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+          - runner
+          - make
+          - cluster
+          - verify_upgrade
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+    dnsConfig:
+      options:
+        - name: ndots
+          value: "1"
