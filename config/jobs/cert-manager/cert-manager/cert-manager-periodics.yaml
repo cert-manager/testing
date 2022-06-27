@@ -1,7 +1,6 @@
 periodics:
 
-# We can't remove this job in favor of "make" because "bazel test" runs the
-# scripts in ./hack/verify-crds.sh that have not been ported to "make" yet.
+# The bazel test has only a couple of older tests which haven't been ported to make yet
 - name: ci-cert-manager-bazel
   interval: 2h
   agent: kubernetes
@@ -17,7 +16,7 @@ periodics:
   annotations:
     testgrid-create-test-group: 'true'
     testgrid-dashboards: jetstack-cert-manager-master
-    description: Runs 'bazel test --jobs=1 //...'
+    description: Runs some older bazel-only tests
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -26,11 +25,11 @@ periodics:
       - bazel
       - test
       - --jobs=1
-      - //...
+      - //hack/...
       resources:
         requests:
-          cpu: 2
-          memory: 4Gi
+          cpu: 1
+          memory: 2Gi
     dnsConfig:
       options:
         - name: ndots
