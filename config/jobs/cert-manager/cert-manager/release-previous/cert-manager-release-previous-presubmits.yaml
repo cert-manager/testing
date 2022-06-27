@@ -1,15 +1,13 @@
 presubmits:
   cert-manager/cert-manager:
 
-  - name: pull-cert-manager-bazel
+  - name: pull-cert-manager-bazel-1.7
     always_run: true
     max_concurrency: 8
     agent: kubernetes
     decorate: true
     branches:
-    # release-1.8 is tested via make, but there were still some leftover tests which were bazel-only
-    # as of the release of 1.8, so we need to run bazel test for 1.8 too.
-    - release-1.8
+    # release-1.7 was released + built with bazel so we need to run all tests using bazel
     - release-1.7
     labels:
       preset-service-account: "true"
@@ -28,6 +26,39 @@ presubmits:
           requests:
             cpu: 2
             memory: 4Gi
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  - name: pull-cert-manager-bazel-1.8
+    always_run: true
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    # release-1.8 is tested via make, but there were still some leftover tests which were bazel-only
+    # as of the release of 1.8, so we need to run bazel test for 1.8 too.
+    # Still, the unit and integration tests _are_ running in make so we only need to run a subset of tests
+    # here
+    - release-1.8
+    labels:
+      preset-service-account: "true"
+      preset-bazel-remote-cache-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - bazel
+        - test
+        - --jobs=1
+        - //hack/...
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
       dnsConfig:
         options:
           - name: ndots
@@ -520,7 +551,7 @@ presubmits:
       preset-make-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1 
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
         - runner
         - make
