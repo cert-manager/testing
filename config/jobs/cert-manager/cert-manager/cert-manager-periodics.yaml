@@ -1,40 +1,5 @@
 periodics:
 
-# The bazel test has only a couple of older tests which haven't been ported to make yet
-- name: ci-cert-manager-bazel
-  interval: 2h
-  agent: kubernetes
-  decorate: true
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: master
-  labels:
-    preset-service-account: "true"
-    preset-bazel-remote-cache-enabled: "true"
-    preset-bazel-scratch-dir: "true"
-  annotations:
-    testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-master
-    description: Runs some older bazel-only tests
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-      args:
-      - runner
-      - bazel
-      - test
-      - --jobs=1
-      - //hack/...
-      resources:
-        requests:
-          cpu: 1
-          memory: 2Gi
-    dnsConfig:
-      options:
-        - name: ndots
-          value: "1"
-
 - name: ci-cert-manager-make-test
   interval: 2h
   agent: kubernetes
