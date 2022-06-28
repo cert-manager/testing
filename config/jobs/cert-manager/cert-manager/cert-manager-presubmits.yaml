@@ -112,37 +112,6 @@ presubmits:
           - name: ndots
             value: "1"
 
-  - name: pull-cert-manager-deps
-    always_run: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - master
-    annotations:
-      testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-cert-manager-presubmits-blocking
-      description: Verifies dependency related files are up to date
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - verify_deps
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
   - name: pull-cert-manager-e2e-v1-20
     always_run: false
     optional: true
