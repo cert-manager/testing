@@ -15,7 +15,8 @@
 # Includes golang, docker-in-docker and gcloud
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
-LABEL maintainer="joshua.vanleeuwen@jetstack.io"
+LABEL maintainer="cert-manager-maintainers@googlegroups.com"
+
 
 # install golang
 ARG GO_VERSION
