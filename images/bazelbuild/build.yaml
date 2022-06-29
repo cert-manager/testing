@@ -12,7 +12,7 @@ variants:
   "4.2.1":
     arguments:
       BAZEL_VERSION: "4.2.1"
-      DEBIAN_VERSION: buster
+      DEBIAN_VERSION: bullseye
       DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
 
   "3.5.0":
