@@ -13,7 +13,7 @@
 # limitations under the License.
 
 # Includes bazel, docker-in-docker and gcloud
-ARG DEBIAN_VERSION=buster
+ARG DEBIAN_VERSION
 FROM debian:"${DEBIAN_VERSION}"
 LABEL maintainer="james@jetstack.io"
 
@@ -45,9 +45,7 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
 # We're already inside docker though so we can be sure these are already mounted.
 # Trying to remount these makes for a very noisy error block in the beginning of
 # the pod logs, so we just comment out the call to it... :shrug:
-# TODO(benthelder): update docker version. This is pinned because of
-# https://github.com/kubernetes/test-infra/issues/6187
-ARG DOCKER_VERSION="17.09.1~ce-0~debian"
+ARG DOCKER_VERSION
 RUN apt-get update && \
     apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
