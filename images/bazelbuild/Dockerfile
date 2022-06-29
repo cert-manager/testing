@@ -15,7 +15,7 @@
 # Includes bazel, docker-in-docker and gcloud
 ARG DEBIAN_VERSION
 FROM debian:"${DEBIAN_VERSION}"
-LABEL maintainer="james@jetstack.io"
+LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
 #
 # BEGIN: DOCKER IN DOCKER SETUP
