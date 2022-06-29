@@ -13,9 +13,9 @@
 # limitations under the License.
 
 # Includes bazel, docker-in-docker and gcloud
-ARG DEBIAN_VERSION=buster
+ARG DEBIAN_VERSION
 FROM debian:"${DEBIAN_VERSION}"
-LABEL maintainer="james@jetstack.io"
+LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
 #
 # BEGIN: DOCKER IN DOCKER SETUP
@@ -33,11 +33,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     lsb-release
 
 # Add the Docker apt-repository
-RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg \
-    | apt-key add - && \
-    add-apt-repository \
-    "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
-    $(lsb_release -cs) stable"
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+    $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker
 # TODO(bentheelder): the `sed` is a bit of a hack, look into alternatives.
@@ -45,9 +45,7 @@ RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID"
 # We're already inside docker though so we can be sure these are already mounted.
 # Trying to remount these makes for a very noisy error block in the beginning of
 # the pod logs, so we just comment out the call to it... :shrug:
-# TODO(benthelder): update docker version. This is pinned because of
-# https://github.com/kubernetes/test-infra/issues/6187
-ARG DOCKER_VERSION="17.09.1~ce-0~debian"
+ARG DOCKER_VERSION
 RUN apt-get update && \
     apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" && \
     sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
@@ -83,7 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zlib1g-dev \
     unzip \
     python \
-    python-pip \
+    python3-pip \
     wget \
     ca-certificates \
     git \
@@ -95,7 +93,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     moreutils \
     jq \
     && apt-get clean \
-    && python -m pip install --upgrade pip setuptools wheel
+    && python3 -m pip install --upgrade pip setuptools wheel
 
 ARG BAZEL_VERSION
 ARG BAZEL_CHANNEL=release
