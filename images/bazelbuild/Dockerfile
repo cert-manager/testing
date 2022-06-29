@@ -81,7 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     zlib1g-dev \
     unzip \
     python \
-    python-pip \
+    python3-pip \
     wget \
     ca-certificates \
     git \
@@ -93,7 +93,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     moreutils \
     jq \
     && apt-get clean \
-    && python -m pip install --upgrade pip setuptools wheel
+    && python3 -m pip install --upgrade pip setuptools wheel
 
 ARG BAZEL_VERSION
 ARG BAZEL_CHANNEL=release
