@@ -17,7 +17,7 @@ periodics:
     description: Runs unit and integration tests and verification scripts
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
           - runner
           - make
@@ -57,7 +57,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -101,7 +101,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -145,7 +145,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -189,7 +189,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -233,7 +233,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -280,7 +280,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -322,7 +322,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
           - runner
           - make
@@ -415,7 +415,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -459,7 +459,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -503,7 +503,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -547,7 +547,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -591,7 +591,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make

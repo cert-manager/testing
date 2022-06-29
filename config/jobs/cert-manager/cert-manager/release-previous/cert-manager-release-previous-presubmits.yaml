@@ -15,7 +15,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - bazel
@@ -48,7 +48,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - bazel
@@ -80,7 +80,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -114,7 +114,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -145,7 +145,7 @@ presubmits:
       preset-make-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args: # NB: for release-1.9 onwards, we'll also want to run the ci-presubmit target here, but that work is done by bazel for 1.8
         - runner
         - make
@@ -184,7 +184,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -225,7 +225,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -266,7 +266,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -307,7 +307,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -348,7 +348,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -389,7 +389,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -428,7 +428,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -468,7 +468,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -510,7 +510,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -551,7 +551,7 @@ presubmits:
       preset-make-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - make
@@ -593,7 +593,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -634,7 +634,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -675,7 +675,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -716,7 +716,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -757,7 +757,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -798,7 +798,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -847,7 +847,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh
@@ -895,7 +895,7 @@ presubmits:
       preset-default-e2e-volumes: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
         - runner
         - devel/ci-run-e2e.sh

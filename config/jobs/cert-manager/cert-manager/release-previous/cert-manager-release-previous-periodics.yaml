@@ -19,7 +19,7 @@ periodics:
     description: Runs 'bazel test --jobs=1 //...'
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - bazel
@@ -61,7 +61,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -119,7 +119,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -177,7 +177,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -235,7 +235,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -293,7 +293,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -351,7 +351,7 @@ periodics:
     preset-ginkgo-skip-default: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -413,7 +413,7 @@ periodics:
     preset-make-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
           - runner
           - make
@@ -459,7 +459,7 @@ periodics:
     preset-ginkgo-focus-venafi: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -516,7 +516,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - make
@@ -576,7 +576,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -634,7 +634,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -692,7 +692,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -750,7 +750,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -808,7 +808,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -866,7 +866,7 @@ periodics:
     preset-retry-flakey-tests: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
       args:
       - runner
       - devel/ci-run-e2e.sh
@@ -926,7 +926,7 @@ periodics:
     preset-default-e2e-volumes: "true"
   spec:
     containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220629-ee75d11-4.2.1
         args:
           - runner
           - make
