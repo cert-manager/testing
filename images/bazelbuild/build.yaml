@@ -13,7 +13,7 @@ variants:
     arguments:
       BAZEL_VERSION: "4.2.1"
       DEBIAN_VERSION: bullseye
-      DOCKER_VERSION: 5:19.03.3~3-0~debian-buster
+      DOCKER_VERSION: 5:20.10.17~3-0~debian-bullseye
 
   "3.5.0":
     # Specify build arguments for this variant
