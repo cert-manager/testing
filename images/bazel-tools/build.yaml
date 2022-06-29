@@ -3,7 +3,7 @@ name: bazel-tools # Name of the image to be built
 variants:
   "10.24":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:a71c5e6e8cb6875e9f6a43b722254693759b5db77566e25ba9eb52ca74b92e08"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
       # Version of Bazel that is bundled in the BASE_IMAGE
       BAZEL_VERSION: "4.2.1"
       # Version of Go that is bundled in the BASE_IMAGE
