@@ -59,8 +59,7 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -68,7 +67,7 @@ presubmits:
         - runner
         - make
         - vendor-go
-        - verify_chart
+        - verify-chart
         resources:
           requests:
             cpu: 1
@@ -303,7 +302,6 @@ presubmits:
           value: "1"
 
   # Verifies upgrade from the latest published release with both Helm chart and static manifests.
-  # NB: This is the last test which currently requires bazel!
   # Explicitly calls vendor-go because of this gotcha: https://github.com/cert-manager/cert-manager/blob/066fcbbbfa0e9840632a5dc3a5c36f6261c53405/make/tools.mk#L423-L426
   - name: pull-cert-manager-upgrade
     # Run always
@@ -324,9 +322,8 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-default-e2e-volumes: "true"
+      preset-make-volumes: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -334,8 +331,7 @@ presubmits:
         - runner
         - make
         - vendor-go
-        - cluster
-        - verify_upgrade
+        - test-upgrade
         resources:
           requests:
             cpu: 3500m
