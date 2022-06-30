@@ -36,7 +36,6 @@ branch-protection:
         cert-manager:
           required_status_checks:
             contexts:
-            - pull-cert-manager-deps
             - pull-cert-manager-chart
             - pull-cert-manager-e2e-v1-24
             - pull-cert-manager-make-test
