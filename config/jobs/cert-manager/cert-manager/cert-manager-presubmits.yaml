@@ -44,6 +44,7 @@ presubmits:
   # Helm chart verification currently requires Docker.
   # We maintain a standalone presubmit for running this.
   # See https://github.com/helm/chart-testing/issues/53
+  # Explicitly calls vendor-go because of this gotcha: https://github.com/cert-manager/cert-manager/blob/066fcbbbfa0e9840632a5dc3a5c36f6261c53405/make/tools.mk#L423-L426
   - name: pull-cert-manager-chart
     always_run: true
     max_concurrency: 8
@@ -66,6 +67,7 @@ presubmits:
         args:
         - runner
         - make
+        - vendor-go
         - verify_chart
         resources:
           requests:
@@ -302,6 +304,7 @@ presubmits:
 
   # Verifies upgrade from the latest published release with both Helm chart and static manifests.
   # NB: This is the last test which currently requires bazel!
+  # Explicitly calls vendor-go because of this gotcha: https://github.com/cert-manager/cert-manager/blob/066fcbbbfa0e9840632a5dc3a5c36f6261c53405/make/tools.mk#L423-L426
   - name: pull-cert-manager-upgrade
     # Run always
     always_run: true
@@ -330,6 +333,7 @@ presubmits:
         args:
         - runner
         - make
+        - vendor-go
         - cluster
         - verify_upgrade
         resources:
