@@ -318,16 +318,17 @@ periodics:
   labels:
     preset-service-account: "true"
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
     preset-default-e2e-volumes: "true"
+    preset-make-volumes: "true"
   spec:
     containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
         args:
           - runner
           - make
-          - cluster
-          - verify_upgrade
+          - K8S_VERSION=1.24
+          - vendor-go
+          - test-upgrade
         resources:
           requests:
             cpu: 3500m
