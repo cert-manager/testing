@@ -330,16 +330,13 @@ presubmits:
         args:
         - runner
         - make
+        - K8S_VERSION=1.24
         - vendor-go
         - test-upgrade
         resources:
           requests:
             cpu: 3500m
             memory: 12Gi
-        env:
-        # Used by https://github.com/cert-manager/cert-manager/blob/master/devel/cluster/create-kind.sh
-        - name: K8S_VERSION
-          value: "1.24"
         securityContext:
           privileged: true
           capabilities:
