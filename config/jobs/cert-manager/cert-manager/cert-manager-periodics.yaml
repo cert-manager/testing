@@ -394,7 +394,9 @@ periodics:
 #           memory: 12Gi
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-20
-  interval: 24h
+  cron: "25 */24 * * *" # this is a manual test to check if our current prow deployment supports cron style periodics
+                       # instead of only intervals
+  # interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -438,7 +440,9 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-21
-  interval: 24h
+  cron: "20 */24 * * *" # this is a manual test to check if our current prow deployment supports cron style periodics
+                       # instead of only intervals
+  # interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -482,7 +486,9 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-22
-  interval: 24h
+  cron: "15 */24 * * *" # this is a manual test to check if our current prow deployment supports cron style periodics
+                       # instead of only intervals
+  # interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -526,7 +532,9 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-23
-  interval: 24h
+  cron: "10 */24 * * *" # this is a manual test to check if our current prow deployment supports cron style periodics
+                       # instead of only intervals
+  # interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
@@ -570,7 +578,9 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-e2e-feature-gates-disabled-v1-24
-  interval: 24h
+  cron: "5 */24 * * *" # this is a manual test to check if our current prow deployment supports cron style periodics
+                       # instead of only intervals
+  #interval: 24h
   agent: kubernetes
   decorate: true
   extra_refs:
