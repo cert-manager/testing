@@ -1,916 +1,907 @@
 presubmits:
   cert-manager/cert-manager:
-
-  - name: pull-cert-manager-bazel-1.7
-    always_run: true
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    # release-1.7 was released + built with bazel so we need to run all tests using bazel
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - bazel
-        - test
-        - --jobs=1
-        - //...
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  - name: pull-cert-manager-bazel-1.8
-    always_run: true
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    # release-1.8 is tested via make, but there were still some leftover tests which were bazel-only
-    # as of the release of 1.8, so we need to run bazel test for 1.8 too.
-    # Still, the unit and integration tests _are_ running in make so we only need to run a subset of tests
-    # here
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - bazel
-        - test
-        - --jobs=1
-        - //hack/...
-        resources:
-          requests:
-            cpu: 1
-            memory: 2Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  - name: pull-cert-manager-deps
-    always_run: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    # this test is not really valuable for release-1.8 since bazel isn't really used there
-    # still, we might as well run it just in case
-    - release-1.8
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - verify_deps
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  # Helm chart verification currently requires Docker.
-  # We maintain a standalone presubmit for running this.
-  # See https://github.com/helm/chart-testing/issues/53
-  - name: pull-cert-manager-chart
-    always_run: true
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.8
-    - release-1.7
-    annotations:
-      testgrid-create-test-group: 'false'
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - verify_chart
-        resources:
-          requests:
-            cpu: 1
-            memory: 1Gi
-        # docker-in-docker needs privileged mode
-        securityContext:
-          privileged: true
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  - name: pull-cert-manager-make-test
-    always_run: true
-    optional: false
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    # make testing not supported on release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-make-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args: # NB: for release-1.9 onwards, we'll also want to run the ci-presubmit target here, but that work is done by bazel for 1.8
-        - runner
-        - make
-        - -j
-        - vendor-go
-        - test-ci
-        resources:
-          requests:
-            cpu: 2
-            memory: 4Gi
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates enabled ###
-
-  - name: pull-cert-manager-e2e-v1-18
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    # cert-manager 1.8 supports k8s 1.19+, so no need to run against release-1.8 here
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-disable-alpha-enable-output-formats-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.18"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-19
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates-disable-ssa: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.19"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-20
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates-disable-ssa: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.20"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-21
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates-disable-ssa: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.21"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-22
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.22"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-23
-    always_run: true
-    optional: false
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.23"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-v1-24
-    always_run: true
-    optional: false
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - -j
-        - vendor-go
-        - e2e-ci
-        - K8S_VERSION=1.24
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-# Run with Bazel for release-1.7 where make was not available yet
-  - name: pull-cert-manager-e2e-v1-24
-    always_run: true
-    optional: false
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        env:
-        - name: K8S_VERSION
-          value: "1.24"
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates disabled ###
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-24
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.24"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-24
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-      preset-make-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - -j
-        - vendor-go
-        - e2e-ci
-        - K8S_VERSION=1.24
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-23
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.23"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-22
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.22"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-21
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.21"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-20
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.20"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-19
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.7
-    - release-1.8
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.19"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-  - name: pull-cert-manager-e2e-feature-gates-disabled-18
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    # not needed for release-1.8 as cert-manager 1.8 no longer supports Kubernetes 1.8
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-disable-all-alpha-beta-feature-gates: "true"
-      preset-cloudflare-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.18"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-#### E2E tests that are not included in the default test runs ###
-
-  # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
-  # with the following GitHub comment:
-  #
-  #  /test pull-cert-manager-e2e-issuers-venafi-cloud-previous
-  #
-  # The regular presubmit jobs do not run Venafi Cloud e2e tests.
-  #
-  - name: pull-cert-manager-e2e-issuers-venafi-cloud-previous
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.8
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-venafi-tpp-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-focus-venafi-tpp: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.23"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-
-
-  # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
-  # with the following GitHub comment:
-  #
-  #  /test pull-cert-manager-e2e-issuers-venafi-tpp-previous
-  #
-  # The regular presubmit jobs do not run Venafi TPP e2e tests.
-  #
-  - name: pull-cert-manager-e2e-issuers-venafi-tpp-previous
-    always_run: false
-    optional: true
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    branches:
-    - release-1.8
-    - release-1.7
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-      preset-venafi-cloud-credentials: "true"
-      preset-retry-flakey-tests: "true"
-      preset-ginkgo-focus-venafi-cloud: "true"
-      preset-default-e2e-volumes: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - devel/ci-run-e2e.sh
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.23"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        # release-1.7 was released + built with bazel so we need to run all tests using bazel
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-service-account: "true"
+      max_concurrency: 8
+      name: pull-cert-manager-bazel-1.7
+      spec:
+        containers:
+          - args:
+              - runner
+              - bazel
+              - test
+              - --jobs=1
+              - //...
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 2
+                memory: 4Gi
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        # release-1.8 is tested via make, but there were still some leftover tests which were bazel-only
+        # as of the release of 1.8, so we need to run bazel test for 1.8 too.
+        # Still, the unit and integration tests _are_ running in make so we only need to run a subset of tests
+        # here
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-service-account: "true"
+      max_concurrency: 8
+      name: pull-cert-manager-bazel-1.8
+      spec:
+        containers:
+          - args:
+              - runner
+              - bazel
+              - test
+              - --jobs=1
+              - //hack/...
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 1
+                memory: 2Gi
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        # this test is not really valuable for release-1.8 since bazel isn't really used there
+        # still, we might as well run it just in case
+        - release-1.8
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-deps
+      spec:
+        containers:
+          - args:
+              - runner
+              - make
+              - verify_deps
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 2
+                memory: 4Gi
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    # Helm chart verification currently requires Docker.
+    # We maintain a standalone presubmit for running this.
+    # See https://github.com/helm/chart-testing/issues/53
+    - agent: kubernetes
+      always_run: true
+      annotations:
+        testgrid-create-test-group: "false"
+      branches:
+        - release-1.8
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-dind-enabled: "true"
+        preset-service-account: "true"
+      max_concurrency: 8
+      name: pull-cert-manager-chart
+      spec:
+        containers:
+          - args:
+              - runner
+              - make
+              - verify_chart
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 1
+                memory: 1Gi
+            # docker-in-docker needs privileged mode
+            securityContext:
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        # make testing not supported on release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-make-volumes: "true"
+        preset-service-account: "true"
+      max_concurrency: 8
+      name: pull-cert-manager-make-test
+      optional: false
+      spec:
+        containers:
+          - args: # NB: for release-1.9 onwards, we'll also want to run the ci-presubmit target here, but that work is done by bazel for 1.8
+              - runner
+              - make
+              - -j
+              - vendor-go
+              - test-ci
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 2
+                memory: 4Gi
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+              ### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates enabled ###
+    - agent: kubernetes
+      always_run: false
+      branches:
+        # cert-manager 1.8 supports k8s 1.19+, so no need to run against release-1.8 here
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-alpha-enable-output-formats-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-18
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.18"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates-disable-ssa: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-19
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.19"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates-disable-ssa: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-20
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.20"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates-disable-ssa: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-21
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.21"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-22
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.22"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-23
+      optional: false
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.23"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: true
+      branches:
+        - release-1.8
+      decorate: true
+      labels:
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-make-volumes: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-24
+      optional: false
+      spec:
+        containers:
+          - args:
+              - runner
+              - make
+              - -j
+              - vendor-go
+              - e2e-ci
+              - K8S_VERSION=1.24
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+              # Run with Bazel for release-1.7 where make was not available yet
+    - agent: kubernetes
+      always_run: true
+      branches:
+        - release-1.7
+      decorate: true
+      labels:
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-enable-all-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-v1-24
+      optional: false
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.24"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+              ### E2E tests against all supported Kubernetes versions with all cert-manager alpha/beta feature gates disabled ###
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-24
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.24"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-make-volumes: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-24
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - make
+              - -j
+              - vendor-go
+              - e2e-ci
+              - K8S_VERSION=1.24
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-23
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.23"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-22
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.22"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-21
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.21"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-20
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.20"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.7
+        - release-1.8
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-19
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.19"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    - agent: kubernetes
+      always_run: false
+      branches:
+        # not needed for release-1.8 as cert-manager 1.8 no longer supports Kubernetes 1.8
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-cloudflare-credentials: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-disable-all-alpha-beta-feature-gates: "true"
+        preset-ginkgo-skip-default: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-feature-gates-disabled-18
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.18"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+              #### E2E tests that are not included in the default test runs ###
+    # An E2E test job to allow us to manually trigger the Venafi Cloud E2E tests
+    # with the following GitHub comment:
+    #
+    #  /test pull-cert-manager-e2e-issuers-venafi-cloud-previous
+    #
+    # The regular presubmit jobs do not run Venafi Cloud e2e tests.
+    #
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.8
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-ginkgo-focus-venafi-tpp: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+        preset-venafi-tpp-credentials: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-issuers-venafi-cloud-previous
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.23"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
+    # An E2E test job to allow us to manually trigger the Venafi TPP E2E tests
+    # with the following GitHub comment:
+    #
+    #  /test pull-cert-manager-e2e-issuers-venafi-tpp-previous
+    #
+    # The regular presubmit jobs do not run Venafi TPP e2e tests.
+    #
+    - agent: kubernetes
+      always_run: false
+      branches:
+        - release-1.8
+        - release-1.7
+      decorate: true
+      labels:
+        preset-bazel-remote-cache-enabled: "true"
+        preset-bazel-scratch-dir: "true"
+        preset-default-e2e-volumes: "true"
+        preset-dind-enabled: "true"
+        preset-ginkgo-focus-venafi-cloud: "true"
+        preset-retry-flakey-tests: "true"
+        preset-service-account: "true"
+        preset-venafi-cloud-credentials: "true"
+      max_concurrency: 4
+      name: pull-cert-manager-e2e-issuers-venafi-tpp-previous
+      optional: true
+      spec:
+        containers:
+          - args:
+              - runner
+              - devel/ci-run-e2e.sh
+            env:
+              - name: K8S_VERSION
+                value: "1.23"
+            image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+            resources:
+              requests:
+                cpu: 3500m
+                memory: 12Gi
+            securityContext:
+              capabilities:
+                add:
+                  - SYS_ADMIN
+              privileged: true
+        dnsConfig:
+          options:
+            - name: ndots
+              value: "1"
