@@ -304,7 +304,7 @@ periodics:
           value: "1"
 
 - name: ci-cert-manager-next-upgrade
-  interval: 8h
+  cron: "45 */1 * * *"
   agent: kubernetes
   decorate: true
   # extra refs specify what repo should be cloned
