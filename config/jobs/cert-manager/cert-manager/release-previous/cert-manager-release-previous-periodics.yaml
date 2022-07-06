@@ -410,7 +410,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-default-e2e-volumes: "true"
-    preset-make-volumes: "true"
+    preset-make-volumes-oldbindir: "true"
   spec:
     containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -922,7 +922,7 @@ periodics:
     preset-cloudflare-credentials: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-retry-flakey-tests: "true"
-    preset-make-volumes: "true"
+    preset-make-volumes-oldbindir: "true"
     preset-default-e2e-volumes: "true"
   spec:
     containers:

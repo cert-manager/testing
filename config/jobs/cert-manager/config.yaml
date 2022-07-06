@@ -173,6 +173,32 @@ presets:
       path: /tmp/bindownloaded
       type: DirectoryOrCreate
 
+
+# Similar to preset-make-volumes but mounts the directory as "bin" rather than "_bin", to
+# match how the directories were used for release-1.8
+- labels:
+    preset-make-volumes-oldbindir: "true"
+  volumeMounts:
+  - mountPath: /root/.cache/go-build
+    name: gocache
+  - mountPath: /home/prow/go/pkg/mod
+    name: gopkgmod
+  - mountPath: /home/prow/go/src/github.com/cert-manager/cert-manager/bin/downloaded
+    name: bindownloaded
+  volumes:
+  - name: gocache
+    hostPath:
+      path: /tmp/gocache
+      type: DirectoryOrCreate
+  - name: gopkgmod
+    hostPath:
+      path: /tmp/gopkgmod
+      type: DirectoryOrCreate
+  - name: bindownloaded
+    hostPath:
+      path: /tmp/bindownloaded
+      type: DirectoryOrCreate
+
 # This preset should be added to all e2e tests to ensure Docker (used to spin up
 # Kind clusters) can be set up.
 - labels:

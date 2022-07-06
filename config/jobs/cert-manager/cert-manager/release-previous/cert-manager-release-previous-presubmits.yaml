@@ -142,7 +142,7 @@ presubmits:
     - release-1.8
     labels:
       preset-service-account: "true"
-      preset-make-volumes: "true"
+      preset-make-volumes-oldbindir: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
@@ -424,7 +424,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-make-volumes-oldbindir: "true"
       preset-default-e2e-volumes: "true"
     spec:
       containers:
@@ -548,7 +548,7 @@ presubmits:
       preset-retry-flakey-tests: "true"
       preset-ginkgo-skip-default: "true"
       preset-default-e2e-volumes: "true"
-      preset-make-volumes: "true"
+      preset-make-volumes-oldbindir: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
