@@ -1,0 +1,1844 @@
+# THIS FILE HAS BEEN AUTOMATICALLY GENERATED
+# Don't manually edit it; instead edit the "cmrel" tool which generated it
+# Generated with: cmrel generate-prow --mode=previous
+
+presubmits:
+  cert-manager/cert-manager:
+  - name: pull-cert-manager-make-test
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs unit and integration tests and verification scripts
+    labels:
+      preset-make-volumes: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j2
+        - vendor-go
+        - ci-presubmit
+        - test-ci
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 4Gi
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-chart
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Verifies the Helm chart passes linting checks
+    labels:
+      preset-dind-enabled: "true"
+      preset-make-volumes: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - vendor-go
+        - verify-chart
+        resources:
+          requests:
+            cpu: "1"
+            memory: 1Gi
+        securityContext:
+          privileged: true
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-e2e-v1-19
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.19
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-20
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.20
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-21
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates-disable-ssa: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.21
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-22
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.22
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-23
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.23
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-24
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-e2e-v1-24-upgrade
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs cert-manager upgrade from latest published release
+    labels:
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-make-volumes: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - K8S_VERSION=1.24
+        - vendor-go
+        - test-upgrade
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-e2e-v1-24-issuers-venafi-tpp
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with 'Venafi TPP' in name
+    labels:
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-ginkgo-focus-venafi-tpp: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-24-issuers-venafi-cloud
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with 'Venafi Cloud' in name
+    labels:
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-ginkgo-focus-venafi-cloud: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+      preset-venafi-cloud-credentials: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-e2e-v1-24-feature-gates-disabled
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
+    - release-1.9
+    always_run: false
+    optional: true
+periodics:
+- name: ci-cert-manager-previous-make-test-1.8
+  max_concurrency: 8
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs unit and integration tests and verification scripts
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-make-volumes: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j2
+      - vendor-go
+      - ci-presubmit
+      - test-ci
+      resources:
+        requests:
+          cpu: 2000m
+          memory: 4Gi
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-make-test-1.9
+  max_concurrency: 8
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs unit and integration tests and verification scripts
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-make-volumes: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j2
+      - vendor-go
+      - ci-presubmit
+      - test-ci
+      resources:
+        requests:
+          cpu: 2000m
+          memory: 4Gi
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-19-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.19
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-19-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.19
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-20-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.20
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-20-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.20
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-21-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.21
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-21-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates-disable-ssa: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.21
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-22-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.22
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-22-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.22
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-23-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.23
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-23-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.23
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-24-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-24-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 2h
+- name: ci-cert-manager-previous-e2e-v1-24-issuers-venafi-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs Venafi (VaaS and TPP) e2e tests
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-ginkgo-focus-venafi: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 12h
+- name: ci-cert-manager-previous-e2e-v1-24-issuers-venafi-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs Venafi (VaaS and TPP) e2e tests
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-ginkgo-focus-venafi: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 12h
+- name: ci-cert-manager-previous-e2e-v1-24-upgrade-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs cert-manager upgrade from latest published release
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-make-volumes: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - K8S_VERSION=1.24
+      - vendor-go
+      - test-upgrade
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 8h
+- name: ci-cert-manager-previous-e2e-v1-24-upgrade-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs cert-manager upgrade from latest published release
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-make-volumes: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - K8S_VERSION=1.24
+      - vendor-go
+      - test-upgrade
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 8h
+- name: ci-cert-manager-previous-e2e-v1-19-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.19
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-19-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.19
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-20-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.20
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-20-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.20
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-21-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.21
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-21-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.21
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-22-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.22
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-22-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.22
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-23-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.23
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-23-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.23
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-24-feature-gates-disabled-1.8
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-previous-e2e-v1-24-feature-gates-disabled-1.9
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: jetstack-cert-manager-previous
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.9
+  interval: 24h
+

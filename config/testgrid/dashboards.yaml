@@ -3,7 +3,6 @@ dashboard_groups:
 - name: jetstack
   dashboard_names:
   - jetstack-cert-manager-master
-  - jetstack-cert-manager-next
   - jetstack-cert-manager-previous
   - jetstack-cert-manager-presubmits-blocking
   - jetstack-testing-janitors
@@ -11,7 +10,6 @@ dashboard_groups:
 # Dashboards
 dashboards:
 - name: jetstack-cert-manager-master
-- name: jetstack-cert-manager-next
 - name: jetstack-cert-manager-previous
 - name: jetstack-cert-manager-presubmits-blocking
 - name: jetstack-testing-janitors
