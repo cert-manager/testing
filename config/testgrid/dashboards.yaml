@@ -1,15 +1,17 @@
 # Dashboard Group
 dashboard_groups:
-- name: jetstack
+- name: cert-manager
   dashboard_names:
-  - jetstack-cert-manager-master
-  - jetstack-cert-manager-previous
-  - jetstack-cert-manager-presubmits-blocking
+  - cert-manager-periodics-master
+  - cert-manager-periodics-release-1.8
+  - cert-manager-periodics-release-1.9
+  - cert-manager-presubmits-master
   - jetstack-testing-janitors
 
 # Dashboards
 dashboards:
-- name: jetstack-cert-manager-master
-- name: jetstack-cert-manager-previous
-- name: jetstack-cert-manager-presubmits-blocking
+- name: cert-manager-periodics-master
+- name: cert-manager-periodics-release-1.8
+- name: cert-manager-periodics-release-1.9
+- name: cert-manager-presubmits-master
 - name: jetstack-testing-janitors

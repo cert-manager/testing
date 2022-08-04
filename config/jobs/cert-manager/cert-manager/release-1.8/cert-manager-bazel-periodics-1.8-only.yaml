@@ -17,7 +17,7 @@ periodics:
     preset-bazel-scratch-dir: "true"
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs 'bazel test --jobs=1 //...'
   spec:
@@ -48,7 +48,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster
   labels:
@@ -106,7 +106,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster
   labels:
@@ -164,7 +164,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
   labels:
@@ -222,7 +222,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
   labels:
@@ -280,7 +280,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
   labels:
@@ -338,7 +338,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs Venafi (VaaS and TPP) e2e tests against Kubernetes v1.22 cluster
   labels:
@@ -398,7 +398,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs cert-manager upgrade test every 8 hours
   labels:
@@ -455,7 +455,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.19 cluster with all feature gates disabled
   labels:
@@ -513,7 +513,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.20 cluster with all feature gates disabled
   labels:
@@ -571,7 +571,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster with all feature gates disabled
   labels:
@@ -629,7 +629,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster with all feature gates disabled
   labels:
@@ -687,7 +687,7 @@ periodics:
     base_ref: release-1.8
   annotations:
     testgrid-create-test-group: 'true'
-    testgrid-dashboards: jetstack-cert-manager-previous
+    testgrid-dashboards: cert-manager-periodics-release-1.8
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster with all feature gates disabled
   labels:
