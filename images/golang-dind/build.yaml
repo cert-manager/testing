@@ -3,19 +3,19 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.19":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:43d8197b42bab75a7a6455a2fad7608a628a7becff451f953975ed6836ac07f9"
       GO_VERSION: "1.19.0"
   "1.18":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:43d8197b42bab75a7a6455a2fad7608a628a7becff451f953975ed6836ac07f9"
       GO_VERSION: "1.18.3"
   "1.17":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:43d8197b42bab75a7a6455a2fad7608a628a7becff451f953975ed6836ac07f9"
       GO_VERSION: "1.17.11"
   "1.16":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:43d8197b42bab75a7a6455a2fad7608a628a7becff451f953975ed6836ac07f9"
       GO_VERSION: "1.16.15"
 
 # Image names to be tagged and pushed
