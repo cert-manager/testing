@@ -36,9 +36,10 @@ branch-protection:
         cert-manager:
           required_status_checks:
             contexts:
-            - pull-cert-manager-chart
-            - pull-cert-manager-e2e-v1-24
-            - pull-cert-manager-make-test
+            - pull-cert-manager-master-chart
+            - pull-cert-manager-master-make-test
+            - pull-cert-manager-master-e2e-v1-24
+            - pull-cert-manager-master-e2e-v1-24-upgrade
         website:
           required_status_checks:
             contexts:
