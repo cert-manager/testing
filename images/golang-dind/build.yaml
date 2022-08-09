@@ -4,7 +4,7 @@ variants:
   "1.19":
     arguments:
       BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
-      GO_VERSION: "1.19.0"
+      GO_VERSION: "1.19"
   "1.18":
     arguments:
       BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
