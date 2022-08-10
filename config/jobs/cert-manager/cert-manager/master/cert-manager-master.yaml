@@ -1064,6 +1064,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
+    preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
   spec:
@@ -1098,6 +1099,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
+    preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
   spec:
@@ -1132,6 +1134,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
+    preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
   spec:
@@ -1166,6 +1169,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
+    preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
   spec:
@@ -1200,6 +1204,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
+    preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
   spec:
