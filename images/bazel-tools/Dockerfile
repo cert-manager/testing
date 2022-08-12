@@ -25,6 +25,7 @@ ARG NODE_VERSION
 # install goversion, gcrane, gh cli, jq and node
 RUN go install github.com/cert-manager/goversion@v1.3.0 && \
     go install github.com/google/go-containerregistry/cmd/gcrane@v0.9.0 && \
+    go install github.com/sigstore/cosign/cmd/cosign@v1.10.1 \
     apt-get update && \
     apt-get install -y \
     nodejs=${NODE_VERSION} && \
