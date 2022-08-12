@@ -53,8 +53,8 @@ RUN apt-get update && \
     && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 
-# Move Docker's storage location & enable experimental features
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental"' | \
+# Move Docker's storage location & enable experimental features & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 # NOTE this should be mounted and persisted as a volume ideally (!)
 # We will make a fallback one now just in case
