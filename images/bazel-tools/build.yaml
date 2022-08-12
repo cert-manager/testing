@@ -3,11 +3,11 @@ name: bazel-tools # Name of the image to be built
 variants:
   "10.24":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:5f966580a1f9700b03fa2072f65c91ee0711d314163bef13f06f75fd196e92cb"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:9259980d824f75fd3274ad68115b6b06d64f2db441ae52b58c31542f6e75c616"
       # Version of Bazel that is bundled in the BASE_IMAGE
       BAZEL_VERSION: "4.2.1"
       # Version of Go that is bundled in the BASE_IMAGE
-      GO_VERSION: "1.18"
+      GO_VERSION: "1.19"
       NODE_VERSION: "12.22.12~dfsg-1~deb11u1"
       # This NODE_DOCKER_TAG is the Docker tag that corresponds to the Node version
       # we use. We don't use the Node version directly because it is not a valid
