@@ -11,7 +11,7 @@ presubmits:
       testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: golang:1.18
+      - image: golang:1.19
         args:
         - make
         - verify
@@ -31,7 +31,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.18
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.19
         args:
         - runner
         - make
