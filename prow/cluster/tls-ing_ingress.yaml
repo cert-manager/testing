@@ -12,27 +12,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: prow-ing
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: prod-nginx
     kubernetes.io/tls-acme: "true"
-    kubernetes.io/ingress.class: "nginx"
+  name: prow-ing
+  namespace: default
 spec:
-  tls:
-  - secretName: prow-tls
-    hosts:
-    - prow.build-infra.jetstack.net
   rules:
   - host: prow.build-infra.jetstack.net
     http:
       paths:
-      - path: /
-        backend:
-          serviceName: deck
-          servicePort: 80
-      - path: /hook
-        backend:
-          serviceName: hook
-          servicePort: 8888
+      - backend:
+          service:
+            name: deck
+            port:
+              number: 80
+        path: /
+        pathType: ImplementationSpecific
+      - backend:
+          service:
+            name: hook
+            port:
+              number: 8888
+        path: /hook
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - prow.build-infra.jetstack.net
+    secretName: prow-tls
