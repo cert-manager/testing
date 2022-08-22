@@ -34,12 +34,32 @@ branch-protection:
         - dco
       repos:
         cert-manager:
-          required_status_checks:
-            contexts:
-            - pull-cert-manager-master-chart
-            - pull-cert-manager-master-make-test
-            - pull-cert-manager-master-e2e-v1-24
-            - pull-cert-manager-master-e2e-v1-24-upgrade
+          branches:
+            # cert-manager/cert-manager defines required_status_checks on a per
+            # branch basis, since context names differ. Post release, the
+            # release branches can be updated to allow for cherry picks to the
+            # latest release.
+            release-1.8:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.8-chart
+                - pull-cert-manager-release-1.8-make-test
+                - pull-cert-manager-release-1.8-e2e-v1-24
+                - pull-cert-manager-release-1.8-e2e-v1-24-upgrade
+            release-1.9:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.9-chart
+                - pull-cert-manager-release-1.9-make-test
+                - pull-cert-manager-release-1.9-e2e-v1-24
+                - pull-cert-manager-release-1.9-e2e-v1-24-upgrade
+            master:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-master-chart
+                - pull-cert-manager-master-make-test
+                - pull-cert-manager-master-e2e-v1-24
+                - pull-cert-manager-master-e2e-v1-24-upgrade
         website:
           required_status_checks:
             contexts:
