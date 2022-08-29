@@ -94,8 +94,19 @@ fi
 
 # disable error exit so we can run post-command cleanup
 set +o errexit
-# actually start bootstrap and the job
-"$@"
+
+# Run the actual job.
+"$@" &
+
+# Bash does not "trikle down" signals. If the Bash script receives SIGINT
+# and that the above command "$@" is running, then SIGINT won't be passed
+# down to the "$@" command. To work around that, we trap SIGINT and pass it
+# down explicitely.
+#
+# shellcheck disable=SC2064
+trap "kill INT $!" INT
+wait $!
+
 EXIT_VALUE=$?
 
 coalesce.py || true
