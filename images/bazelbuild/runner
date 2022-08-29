@@ -87,8 +87,32 @@ fi
 
 # Disable error exit so we can run post-command cleanup.
 set +o errexit
-# actually start bootstrap and the job
-"$@"
+
+# Run the actual job.
+"$@" &
+
+# Bash does not "trikle down" UNIX signals. If the Bash script receives SIGINT
+# coming from Prow due to the 2 hours timeout being hit, and that the above
+# command "$@" is running, then SIGINT won't be passed down to the "$@" command.
+# To work around that, we trap SIGINT and SIGTERM and pass then down
+# explicitely. The reasons for handling both SIGTERM and SIGINT is detailed in
+# the following table:
+#
+#  |                          Reason                          |   Signal    |
+#  |----------------------------------------------------------|-------------|
+#  | The 2 hours Prow timeout has been reached                | SIGINT [1]  |
+#  | Google Cloud VM preempted using ACPI shutdown            | SIGTERM [2] |
+#  | GKE worker removed due to scale down using ACPI shutdown | SIGTERM [2] |
+#
+#  [1]: https://github.com/kubernetes/test-infra/blob/ee1e7c8/prow/entrypoint/run.go#L242
+#  [2]: https://unix.stackexchange.com/questions/499761/what-signal-is-sent-to-running-programs-scripts-on-shutdown
+#
+# shellcheck disable=SC2064
+trap "kill -s INT $!" INT
+# shellcheck disable=SC2064
+trap "kill -s TERM $!" TERM
+wait $!
+
 EXIT_VALUE=$?
 
 coalesce.py || true
