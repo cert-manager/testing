@@ -18,7 +18,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -30,6 +30,13 @@ presubmits:
           requests:
             cpu: 2000m
             memory: 4Gi
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - make kind-logs
       dnsConfig:
         options:
         - name: ndots
@@ -53,7 +60,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -93,7 +100,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -138,7 +145,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -183,7 +190,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -228,7 +235,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -273,7 +280,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -314,7 +321,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -357,7 +364,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -401,7 +408,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -446,7 +453,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
         args:
         - runner
         - make
@@ -486,7 +493,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -498,6 +505,13 @@ periodics:
         requests:
           cpu: 2000m
           memory: 4Gi
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - make kind-logs
     dnsConfig:
       options:
       - name: ndots
@@ -527,7 +541,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -573,7 +587,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -619,7 +633,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -665,7 +679,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -711,7 +725,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -757,7 +771,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -799,7 +813,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -844,7 +858,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -890,7 +904,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -936,7 +950,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -982,7 +996,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1028,7 +1042,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1069,7 +1083,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1104,7 +1118,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1139,7 +1153,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1174,7 +1188,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1209,7 +1223,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220812-2f64076-4.2.1
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
       args:
       - runner
       - make
@@ -1229,4 +1243,3 @@ periodics:
     repo: cert-manager
     base_ref: master
   interval: 24h
-
