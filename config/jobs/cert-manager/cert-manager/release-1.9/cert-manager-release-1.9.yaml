@@ -1,6 +1,6 @@
 # THIS FILE HAS BEEN AUTOMATICALLY GENERATED
 # Don't manually edit it; instead edit the "cmrel" tool which generated it
-# Generated with: cmrel generate-prow --branch=release-1.9
+# Generated with: cmrel generate-prow --branch * -o file
 
 presubmits:
   cert-manager/cert-manager:
@@ -1021,4 +1021,3 @@ periodics:
     repo: cert-manager
     base_ref: release-1.9
   interval: 24h
-
