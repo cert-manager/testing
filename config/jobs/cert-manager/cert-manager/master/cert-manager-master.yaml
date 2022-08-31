@@ -30,6 +30,13 @@ presubmits:
           requests:
             cpu: 2000m
             memory: 4Gi
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - make kind-logs
       dnsConfig:
         options:
         - name: ndots
@@ -498,6 +505,13 @@ periodics:
         requests:
           cpu: 2000m
           memory: 4Gi
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - make kind-logs
     dnsConfig:
       options:
       - name: ndots
