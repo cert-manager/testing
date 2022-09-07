@@ -1,0 +1,12 @@
+name: nix-dind # Name of the image to be built
+
+variants:
+  "2.11.0":
+    arguments:
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/bazelbuild@sha256:4757d0b78814ccc138561b9e2b57c3b84d2b339d2d3c5c796e5520f3cd298aa4"
+      NIX_VERSION: "2.11.0"
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${NIX_VERSION}
+- ${_REGISTRY}/${_NAME}:latest-${NIX_VERSION}
