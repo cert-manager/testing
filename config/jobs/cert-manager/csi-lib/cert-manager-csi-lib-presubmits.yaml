@@ -26,7 +26,7 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-csi-lib-e2e
-    context: pull-cert-manager-approver-policy-smoke
+    context: pull-cert-manager-csi-lib-e2e
     agent: kubernetes
     decorate: true
     # TODO: Keep optional to not block other PRs. Change once e2e test
