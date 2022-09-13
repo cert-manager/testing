@@ -24,3 +24,49 @@ presubmits:
         options:
           - name: ndots
             value: "1"
+
+  - name: pull-cert-manager-csi-lib-e2e
+    context: pull-cert-manager-csi-lib-e2e
+    agent: kubernetes
+    decorate: true
+    # TODO: Keep optional to not block other PRs. Change once e2e test
+    # boilerplate code has been merged to main.
+    always_run: false
+    optional: true
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/nix-dind:20220913-fe79bd8-2.11.0
+        args:
+        - ./hack/run-e2e.sh
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 4Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+

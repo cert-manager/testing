@@ -73,6 +73,10 @@ branch-protection:
             contexts:
             - pull-cert-manager-trust-verify
             - pull-cert-manager-trust-smoke
+        csi-lib:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-csi-lib-verify
         aws-privateca-issuer:
           protect: false
 sinker:
