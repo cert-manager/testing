@@ -24,7 +24,7 @@ RUN apt-get install -y xz-utils
 ARG NIX_VERSION
 RUN mkdir -m 0755 /nix && groupadd -r nixbld && chown root /nix
 RUN for n in $(seq 1 10); do useradd -c "Nix build user $n" -d /var/empty -g nixbld -G nixbld -M -N -r -s "$(command -v nologin)" "nixbld$n"; done
-RUN mkdir -p /etc/nix && echo "experimental-features = nix-command flakes\nsandbox = false" > /etc/nix/nix.conf
+RUN mkdir -p /etc/nix && echo "experimental-features = nix-command flakes\nsandbox = false\nsystem-features = nixos-test kvm big-parallel" > /etc/nix/nix.conf
 RUN bash -c "$(curl -L https://releases.nixos.org/nix/nix-${NIX_VERSION}/install) --no-daemon"
 
 # add nix store to path.
