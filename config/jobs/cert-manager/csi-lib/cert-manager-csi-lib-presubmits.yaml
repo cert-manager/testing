@@ -42,7 +42,9 @@ presubmits:
       - image: eu.gcr.io/jetstack-build-infra-images/nix-dind:20220913-fe79bd8-2.11.0
         args:
         - runner
-        - ./hack/run-e2e.sh
+        - flake
+        - check
+        - -L
         resources:
           requests:
             cpu: 3500m
