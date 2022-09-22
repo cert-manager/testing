@@ -312,55 +312,6 @@ presubmits:
     - release-1.8
     always_run: false
     optional: true
-  - name: pull-cert-manager-release-1.8-e2e-v1-24
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    annotations:
-      description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
-    labels:
-      preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
-      preset-dind-enabled: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
-      preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-        args:
-        - runner
-        - make
-        - -j3
-        - vendor-go
-        - e2e-ci
-        - K8S_VERSION=1.24
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add:
-            - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
-      dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
-    branches:
-    - release-1.8
-    always_run: false
-    optional: true
   - name: pull-cert-manager-release-1.8-e2e-v1-25
     max_concurrency: 4
     agent: kubernetes
@@ -408,9 +359,58 @@ presubmits:
           value: "1"
     branches:
     - release-1.8
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.8-e2e-v1-24
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.24
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - make kind-logs
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.8
     always_run: true
     optional: false
-  - name: pull-cert-manager-release-1.8-e2e-v1-25-issuers-venafi-tpp
+  - name: pull-cert-manager-release-1.8-e2e-v1-24-issuers-venafi-tpp
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -433,7 +433,7 @@ presubmits:
         - -j3
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.25
+        - K8S_VERSION=1.24
         resources:
           requests:
             cpu: 3500m
@@ -458,7 +458,7 @@ presubmits:
     - release-1.8
     always_run: false
     optional: true
-  - name: pull-cert-manager-release-1.8-e2e-v1-25-issuers-venafi-cloud
+  - name: pull-cert-manager-release-1.8-e2e-v1-24-issuers-venafi-cloud
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -481,7 +481,7 @@ presubmits:
         - -j3
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.25
+        - K8S_VERSION=1.24
         resources:
           requests:
             cpu: 3500m
@@ -506,7 +506,7 @@ presubmits:
     - release-1.8
     always_run: false
     optional: true
-  - name: pull-cert-manager-release-1.8-e2e-v1-25-feature-gates-disabled
+  - name: pull-cert-manager-release-1.8-e2e-v1-24-feature-gates-disabled
     max_concurrency: 4
     agent: kubernetes
     decorate: true
@@ -530,7 +530,7 @@ presubmits:
         - -j3
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.25
+        - K8S_VERSION=1.24
         resources:
           requests:
             cpu: 3500m
@@ -856,59 +856,6 @@ periodics:
     repo: cert-manager
     base_ref: release-1.8
   interval: 2h
-- name: ci-cert-manager-release-1.8-e2e-v1-24
-  max_concurrency: 4
-  agent: kubernetes
-  decorate: true
-  annotations:
-    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-release-1.8
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
-    preset-dind-enabled: "true"
-    preset-enable-all-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
-    preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-      args:
-      - runner
-      - make
-      - -j3
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.24
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: release-1.8
-  interval: 2h
 - name: ci-cert-manager-release-1.8-e2e-v1-25
   max_concurrency: 4
   agent: kubernetes
@@ -962,7 +909,60 @@ periodics:
     repo: cert-manager
     base_ref: release-1.8
   interval: 2h
-- name: ci-cert-manager-release-1.8-e2e-v1-25-issuers-venafi
+- name: ci-cert-manager-release-1.8-e2e-v1-24
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.8
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - make kind-logs
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 2h
+- name: ci-cert-manager-release-1.8-e2e-v1-24-issuers-venafi
   max_concurrency: 4
   agent: kubernetes
   decorate: true
@@ -989,7 +989,7 @@ periodics:
       - -j3
       - vendor-go
       - e2e-ci
-      - K8S_VERSION=1.25
+      - K8S_VERSION=1.24
       resources:
         requests:
           cpu: 3500m
@@ -1280,59 +1280,6 @@ periodics:
     repo: cert-manager
     base_ref: release-1.8
   interval: 24h
-- name: ci-cert-manager-release-1.8-e2e-v1-24-feature-gates-disabled
-  max_concurrency: 4
-  agent: kubernetes
-  decorate: true
-  annotations:
-    description: Runs the E2E tests with all feature gates disabled
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-release-1.8
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
-    preset-dind-enabled: "true"
-    preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
-    preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
-  spec:
-    containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
-      args:
-      - runner
-      - make
-      - -j3
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.24
-      resources:
-        requests:
-          cpu: 3500m
-          memory: 12Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
-    dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: release-1.8
-  interval: 24h
 - name: ci-cert-manager-release-1.8-e2e-v1-25-feature-gates-disabled
   max_concurrency: 4
   agent: kubernetes
@@ -1361,6 +1308,59 @@ periodics:
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.25
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - make kind-logs
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.8
+  interval: 24h
+- name: ci-cert-manager-release-1.8-e2e-v1-24-feature-gates-disabled
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.8
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.24
       resources:
         requests:
           cpu: 3500m
