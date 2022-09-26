@@ -1,6 +1,6 @@
 # THIS FILE HAS BEEN AUTOMATICALLY GENERATED
 # Don't manually edit it; instead edit the "cmrel" tool which generated it
-# Generated with: cmrel generate-prow --branch * -o file
+# Generated with: cmrel generate-prow -o file --branch=*
 
 presubmits:
   cert-manager/cert-manager:
