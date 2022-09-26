@@ -45,7 +45,6 @@ branch-protection:
                 - pull-cert-manager-release-1.8-chart
                 - pull-cert-manager-release-1.8-make-test
                 - pull-cert-manager-release-1.8-e2e-v1-24
-                - pull-cert-manager-release-1.8-e2e-v1-24-upgrade
             release-1.9:
               required_status_checks:
                 contexts:
