@@ -22,7 +22,7 @@ LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 COPY semversort.sh /usr/local/bin/semversort
 
 ARG NODE_VERSION
-# install goversion, gcrane, cosign, gh cli, jq and node
+# install goversion, gcrane, cosign, gh cli, jq, yq, helm and node
 RUN go install github.com/cert-manager/goversion@v1.3.0 && \
     go install github.com/sigstore/cosign/cmd/cosign@v1.10.1 && \
     go install github.com/google/go-containerregistry/cmd/gcrane@v0.11.0 && \
@@ -30,9 +30,15 @@ RUN go install github.com/cert-manager/goversion@v1.3.0 && \
     apt-get install -y \
     nodejs=${NODE_VERSION} && \
     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
-    apt update && \
-    apt install gh=2.14.4
+    curl -O -L https://get.helm.sh/helm-v3.10.0-linux-amd64.tar.gz && \
+    tar -xvzf helm-v3.10.0-linux-amd64.tar.gz && \
+    mv linux-amd64/helm /usr/local/bin/ && \
+    curl -O https://github.com/mikefarah/yq/releases/download/v4.27.3/yq_linux_amd64 && \
+    chmod +x yq_linux_amd64 && \
+    mv yq_linux_amd64 /usr/local/bin/yq && \
+    curl -O -L https://github.com/cli/cli/releases/download/v2.17.0/gh_2.17.0_linux_amd64.tar.gz && \
+    tar -xvzf gh_2.17.0_linux_amd64.tar.gz && \
+    mv gh_2.17.0_linux_amd64/bin/gh /usr/local/bin/
 
 # Add GOPATH/bin to PATH
 ENV PATH=/root/go/bin:$PATH
