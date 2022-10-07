@@ -57,8 +57,8 @@ branch-protection:
                 contexts:
                 - pull-cert-manager-master-chart
                 - pull-cert-manager-master-make-test
-                - pull-cert-manager-master-e2e-v1-24
-                - pull-cert-manager-master-e2e-v1-24-upgrade
+                - pull-cert-manager-master-e2e-v1-25
+                - pull-cert-manager-master-e2e-v1-25-upgrade
         website:
           required_status_checks:
             contexts:
