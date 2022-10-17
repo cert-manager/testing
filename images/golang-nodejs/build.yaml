@@ -1,6 +1,10 @@
 name: golang-nodejs # Name of the image to be built
 
 variants:
+  "1.19":
+    arguments:
+      BASE_IMAGE: "node:16.3.0"
+      GO_VERSION: "1.19.2"
   "1.17":
     arguments:
       BASE_IMAGE: "node:16.3.0"
