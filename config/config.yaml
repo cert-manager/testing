@@ -39,12 +39,6 @@ branch-protection:
             # branch basis, since context names differ. Post release, the
             # release branches can be updated to allow for cherry picks to the
             # latest release.
-            release-1.8:
-              required_status_checks:
-                contexts:
-                - pull-cert-manager-release-1.8-chart
-                - pull-cert-manager-release-1.8-make-test
-                - pull-cert-manager-release-1.8-e2e-v1-24
             release-1.9:
               required_status_checks:
                 contexts:
@@ -52,6 +46,13 @@ branch-protection:
                 - pull-cert-manager-release-1.9-make-test
                 - pull-cert-manager-release-1.9-e2e-v1-24
                 - pull-cert-manager-release-1.9-e2e-v1-24-upgrade
+            release-1.10:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.10-chart
+                - pull-cert-manager-release-1.10-make-test
+                - pull-cert-manager-release-1.10-e2e-v1-25
+                - pull-cert-manager-release-1.10-e2e-v1-25-upgrade
             master:
               required_status_checks:
                 contexts:
