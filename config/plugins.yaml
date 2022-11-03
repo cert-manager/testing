@@ -24,7 +24,7 @@ triggers:
 - repos:
   - cert-manager/cert-manager
   - cert-manager/website
-  - cert-manager/trust
+  - cert-manager/trust-manager
   only_org_members: true
 
 blunderbuss:
@@ -61,7 +61,7 @@ repo_milestone:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
-  cert-manager/trust:
+  cert-manager/trust-manager:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
     maintainers_id: 2805308
     maintainers_team: milestone-maintainers
@@ -92,7 +92,7 @@ milestone_applier:
     master: v0.2
     release-0.1: v0.1
     release-0.2: v0.2
-  cert-manager/trust:
+  cert-manager/trust-manager:
     master: v0.1
 
 config_updater:
