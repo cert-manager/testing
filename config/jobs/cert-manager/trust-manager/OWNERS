@@ -3,4 +3,4 @@ approvers:
 reviewers:
 - joshvanl
 labels:
-- area/cert-manager-trust
+- area/trust-manager

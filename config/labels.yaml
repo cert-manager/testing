@@ -83,7 +83,7 @@ repos:
       target: both
       addedBy: prow
 
-  cert-manager/trust:
+  cert-manager/trust-manager:
     labels:
     - color: 0052cc
       description: Indicates a PR modifies deployment configuration

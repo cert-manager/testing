@@ -1,7 +1,7 @@
 presubmits:
-  cert-manager/trust:
+  cert-manager/trust-manager:
 
-  - name: pull-cert-manager-trust-verify
+  - name: pull-trust-manager-verify
     agent: kubernetes
     decorate: true
     always_run: true
@@ -19,9 +19,9 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
-  # kind based cert-manager-trust smoke job
-  - name: pull-cert-manager-trust-smoke
-    context: pull-cert-manager-trust-smoke
+  # kind based trust-manager smoke job
+  - name: pull-trust-manager-smoke
+    context: pull-trust-manager-smoke
     # Match everything except PRs that only touch docs/
     always_run: true
     optional: false

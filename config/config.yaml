@@ -68,11 +68,11 @@ branch-protection:
           required_status_checks:
             contexts:
             - pull-cert-manager-webhook-example-verify
-        trust:
+        trust-manager:
           required_status_checks:
             contexts:
-            - pull-cert-manager-trust-verify
-            - pull-cert-manager-trust-smoke
+            - pull-trust-manager-verify
+            - pull-trust-manager-smoke
         csi-lib:
           required_status_checks:
             contexts:
