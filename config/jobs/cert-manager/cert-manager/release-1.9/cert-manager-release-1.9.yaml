@@ -349,6 +349,37 @@ presubmits:
     - release-1.9
     always_run: true
     optional: false
+  - name: pull-cert-manager-release-1.9-license
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Verifies LICENSES are up to date; only needs to be run if go.mod
+        has changed
+    labels:
+      preset-make-volumes: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220512-b6ea825-4.2.1
+        args:
+        - runner
+        - make
+        - vendor-go
+        - verify-licenses
+        resources:
+          requests:
+            cpu: "1"
+            memory: 1Gi
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - release-1.9
+    always_run: false
+    optional: true
+    run_if_changed: go.mod
   - name: pull-cert-manager-release-1.9-e2e-v1-24-issuers-venafi-tpp
     max_concurrency: 4
     agent: kubernetes
