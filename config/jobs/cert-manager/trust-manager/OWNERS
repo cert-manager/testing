@@ -1,6 +1,18 @@
 approvers:
+- munnerz
 - joshvanl
+- wallrj
+- maelvls
+- irbekrm
+- sgtcodfish
+- inteon
 reviewers:
+- munnerz
 - joshvanl
+- wallrj
+- maelvls
+- irbekrm
+- sgtcodfish
+- inteon
 labels:
 - area/trust-manager
