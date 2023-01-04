@@ -15,6 +15,7 @@ presubmits:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.19
         args:
+        - runner
         - make
         - provision-buildx
         - verify
