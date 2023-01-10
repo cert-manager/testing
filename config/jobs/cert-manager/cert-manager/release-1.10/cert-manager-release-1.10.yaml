@@ -1502,8 +1502,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the controller container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.10
+    testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
@@ -1539,8 +1541,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the acmesolver container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.10
+    testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
@@ -1576,8 +1580,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the ctl container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.10
+    testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
@@ -1613,8 +1619,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the cainjector container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.10
+    testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
@@ -1650,8 +1658,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the webhook container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.10
+    testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
