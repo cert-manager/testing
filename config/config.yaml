@@ -34,6 +34,9 @@ branch-protection:
       required_status_checks:
         contexts:
         - dco
+      exclude:
+      # don't apply branch protection rules on dependabot branches
+      - "dependabot/.*"
       repos:
         cert-manager:
           branches:
