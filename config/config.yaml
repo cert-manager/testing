@@ -24,6 +24,8 @@ plank:
         default_repo: "kubernetes"
       gcs_credentials_secret: "service-account"
 
+# branch-protection is well documented in the source code for prow:
+# https://github.com/kubernetes/test-infra/blob/bc7ab92094413c3ba659851b5ec19f4308cb3a70/prow/config/branch_protection.go
 branch-protection:
   allow_disabled_policies: true
   orgs:
@@ -53,6 +55,13 @@ branch-protection:
                 - pull-cert-manager-release-1.10-make-test
                 - pull-cert-manager-release-1.10-e2e-v1-25
                 - pull-cert-manager-release-1.10-e2e-v1-25-upgrade
+            release-1.11:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.11-chart
+                - pull-cert-manager-release-1.11-make-test
+                - pull-cert-manager-release-1.11-e2e-v1-26
+                - pull-cert-manager-release-1.11-e2e-v1-26-upgrade
             master:
               required_status_checks:
                 contexts:
