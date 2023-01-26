@@ -31,6 +31,10 @@ branch-protection:
   orgs:
     cert-manager:
       protect: true
+      # Prevent administrators from accidentally pushing directly to protected branches.
+      # Causes the "Include Administrators" checkbox to be ticked in the GitHub branch protection UI.
+      # See https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#do-not-allow-bypassing-the-above-settings
+      enforce_admins: true
       required_status_checks:
         contexts:
         - dco
