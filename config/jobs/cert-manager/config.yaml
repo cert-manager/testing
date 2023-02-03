@@ -196,3 +196,13 @@ presets:
       readOnly: true
     - mountPath: /sys/fs/cgroup
       name: cgroup
+
+# A preset which causes make e2e-setup to install cert-manager in accordance
+# with https://cert-manager.io/docs/installation/best-practice/.
+#
+# See https://github.com/cert-manager/cert-manager/blob/7ab1461674149dc172b5fa9c3884064329c60af7/make/e2e-setup.mk#L163-L172
+- labels:
+    preset-bestpractice-install: "true"
+  env:
+  - name: E2E_SETUP_OPTION_BESTPRACTICE
+    value: 'true'
