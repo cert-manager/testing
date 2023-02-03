@@ -613,6 +613,60 @@ presubmits:
     - master
     always_run: false
     optional: true
+  - name: pull-cert-manager-master-e2e-v1-26-bestpractice-install
+    max_concurrency: 4
+    agent: kubernetes
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with cert-manager installed in accordance with
+        https://cert-manager.io/docs/installation/best-practice/
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      testgrid-create-job-group: "true"
+      testgrid-dashboards: cert-manager-presubmits-master
+    labels:
+      preset-bestpractice-install: "true"
+      preset-cloudflare-credentials: "true"
+      preset-default-e2e-volumes: "true"
+      preset-dind-enabled: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-make-volumes: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-service-account: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
+        args:
+        - runner
+        - make
+        - -j3
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.26
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - make kind-logs
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+    branches:
+    - master
+    always_run: false
+    optional: true
 periodics:
 - name: ci-cert-manager-master-make-test
   max_concurrency: 8
@@ -1061,6 +1115,61 @@ periodics:
     repo: cert-manager
     base_ref: master
   interval: 8h
+- name: ci-cert-manager-master-e2e-v1-26-bestpractice-install
+  max_concurrency: 4
+  agent: kubernetes
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with cert-manager installed in accordance with
+      https://cert-manager.io/docs/installation/best-practice/
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-master
+  labels:
+    preset-bestpractice-install: "true"
+    preset-cloudflare-credentials: "true"
+    preset-default-e2e-volumes: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-make-volumes: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-service-account: "true"
+  spec:
+    containers:
+    - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20220830-c65cd19-4.2.1
+      args:
+      - runner
+      - make
+      - -j3
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.26
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 12Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+      lifecycle:
+        preStop:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - make kind-logs
+    dnsConfig:
+      options:
+      - name: ndots
+        value: "1"
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
+  interval: 24h
 - name: ci-cert-manager-master-e2e-v1-21-feature-gates-disabled
   max_concurrency: 4
   agent: kubernetes
