@@ -26,6 +26,11 @@ data:
         - https://github.com/cert-manager/cert-manager
         - https://github.com/cert-manager/website
         - https://github.com/cert-manager/release
+        - https://github.com/cert-manager/istio-csr
+        - https://github.com/cert-manager/approver-policy
+        - https://github.com/cert-manager/trust-manager
+        - https://github.com/cert-manager/csi-driver
+        - https://github.com/cert-manager/csi-driver-spiffe
 
     collections:
       - id: daily
