@@ -20,6 +20,25 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
+  - name: pull-cert-manager-approver-policy-test
+    context: pull-cert-manager-approver-policy-test
+    agent: kubernetes
+    decorate: true
+    always_run: true
+    max_concurrency: 8
+    annotations:
+      testgrid-create-test-group: 'false'
+    spec:
+      containers:
+      - image: golang:1.19
+        args:
+        - make
+        - test
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+
   - name: pull-cert-manager-approver-policy-smoke
     context: pull-cert-manager-approver-policy-smoke
     agent: kubernetes
