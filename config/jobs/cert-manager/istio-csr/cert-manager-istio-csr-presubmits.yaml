@@ -67,6 +67,59 @@ presubmits:
         - name: ndots
           value: "1"
 
+  # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.14
+  - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
+    context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    agent: kubernetes
+    decorate: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.19
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 12Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.26.1"
+        - name: ISTIO_VERSION
+          value: "1.14.6"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+        volumeMounts:
+        - mountPath: /lib/modules
+          name: modules
+          readOnly: true
+        - mountPath: /sys/fs/cgroup
+          name: cgroup
+      volumes:
+      - name: modules
+        hostPath:
+          path: /lib/modules
+          type: Directory
+      - name: cgroup
+        hostPath:
+          path: /sys/fs/cgroup
+          type: Directory
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.15
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-15
     context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-15
@@ -149,59 +202,6 @@ presubmits:
           value: "1.26.1"
         - name: ISTIO_VERSION
           value: "1.16.2"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
-      dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
-
-  # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.17
-  - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-17
-    context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-17
-    always_run: true
-    optional: false
-    max_concurrency: 8
-    agent: kubernetes
-    decorate: true
-    branches:
-    - ^main$
-    labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.19
-        args:
-        - runner
-        - make
-        - e2e
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 12Gi
-        env:
-        - name: K8S_VERSION
-          value: "1.26.1"
-        - name: ISTIO_VERSION
-          value: "1.17.0"
         securityContext:
           privileged: true
           capabilities:
