@@ -143,7 +143,6 @@ plugins:
     plugins:
     - approve
     - assign
-    - blockade
     - dco
     - golint
     - heart
