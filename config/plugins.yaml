@@ -203,7 +203,3 @@ plugins:
     - dco
     - owners-label
     - verify-owners
-
-  munnerz/venafi-cm-demo:
-    plugins:
-    - trigger
