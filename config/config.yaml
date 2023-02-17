@@ -79,7 +79,6 @@ branch-protection:
         website:
           required_status_checks:
             contexts:
-            - pull-cert-manager-website-verify
             - netlify/cert-manager-website/deploy-preview # See https://github.com/cert-manager/infrastructure#netlify
         webhook-example:
           required_status_checks:
