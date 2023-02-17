@@ -144,7 +144,6 @@ plugins:
     - approve
     - assign
     - blockade
-    - cherry-pick-unapproved
     - dco
     - golint
     - heart
