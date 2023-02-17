@@ -130,9 +130,6 @@ deck:
     '*':
       github_team_ids:
       - 2805308 # cert-manager milestone-maintainers
-      github_users:
-      - munnerz
-      - JoshVanL
 
 prowjob_namespace: default
 pod_namespace: test-pods
