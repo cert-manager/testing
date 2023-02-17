@@ -145,7 +145,6 @@ plugins:
     - assign
     - dco
     - golint
-    - heart
     - help
     - hold
     - label
@@ -157,13 +156,11 @@ plugins:
     - override
     - owners-label
     - require-matching-label
-    - shrug
     - size
     - skip
     - trigger
     - verify-owners
     - wip
-    - yuks
 
   cert-manager/cert-manager:
     plugins:
