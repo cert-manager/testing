@@ -280,7 +280,6 @@ tide:
     - "dco-signoff: yes"
     missingLabels:
     - do-not-merge
-    - do-not-merge/blocked-paths
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
@@ -299,7 +298,6 @@ tide:
     - "dco-signoff: yes"
     missingLabels:
     - do-not-merge
-    - do-not-merge/blocked-paths
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
