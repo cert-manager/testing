@@ -79,7 +79,6 @@ branch-protection:
         website:
           required_status_checks:
             contexts:
-            - pull-cert-manager-website-verify
             - netlify/cert-manager-website/deploy-preview # See https://github.com/cert-manager/infrastructure#netlify
         webhook-example:
           required_status_checks:
@@ -131,9 +130,6 @@ deck:
     '*':
       github_team_ids:
       - 2805308 # cert-manager milestone-maintainers
-      github_users:
-      - munnerz
-      - JoshVanL
 
 prowjob_namespace: default
 pod_namespace: test-pods
@@ -284,8 +280,6 @@ tide:
     - "dco-signoff: yes"
     missingLabels:
     - do-not-merge
-    - do-not-merge/blocked-paths
-    - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
@@ -304,8 +298,6 @@ tide:
     - "dco-signoff: yes"
     missingLabels:
     - do-not-merge
-    - do-not-merge/blocked-paths
-    - do-not-merge/cherry-pick-not-approved
     - do-not-merge/hold
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress

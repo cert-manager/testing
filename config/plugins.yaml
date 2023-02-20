@@ -94,8 +94,6 @@ milestone_applier:
     master: v0.2
     release-0.1: v0.1
     release-0.2: v0.2
-  cert-manager/trust-manager:
-    master: v0.1
 
 config_updater:
   maps:
@@ -145,11 +143,8 @@ plugins:
     plugins:
     - approve
     - assign
-    - blockade
-    - cherry-pick-unapproved
     - dco
     - golint
-    - heart
     - help
     - hold
     - label
@@ -161,13 +156,11 @@ plugins:
     - override
     - owners-label
     - require-matching-label
-    - shrug
     - size
     - skip
     - trigger
     - verify-owners
     - wip
-    - yuks
 
   cert-manager/cert-manager:
     plugins:
@@ -210,7 +203,3 @@ plugins:
     - dco
     - owners-label
     - verify-owners
-
-  munnerz/venafi-cm-demo:
-    plugins:
-    - trigger
