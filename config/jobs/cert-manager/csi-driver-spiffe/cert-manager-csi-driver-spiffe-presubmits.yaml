@@ -36,7 +36,7 @@ presubmits:
     - ^main$
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20220809-0643a25-1.18
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20230323-f4c9aec-1.18
         args:
         - runner
         - make
