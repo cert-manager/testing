@@ -7,9 +7,14 @@ FROM debian
 
 RUN apt update \
     && apt install curl bash make curl python3 perl jq git tar grep iptables -y \
-    && curl -sSL https://github.com/containerd/nerdctl/releases/download/v0.17.1/nerdctl-full-0.17.1-linux-amd64.tar.gz | tar zx -C / \
+    && rm -rf /var/lib/apt/lists/* \
+    && curl -sSL https://github.com/containerd/nerdctl/releases/download/v1.2.1/nerdctl-full-1.2.1-linux-amd64.tar.gz | tar zx -C / \
+    && ln -s /bin/nerdctl /bin/docker \
     && mkdir -p /opt/cni/bin \
-    && curl -sSL https://github.com/containernetworking/plugins/releases/download/v1.1.1/cni-plugins-linux-amd64-v1.1.1.tgz | tar xz -C /opt/cni/bin
+    && curl -sSL https://github.com/containernetworking/plugins/releases/download/v1.2.0/cni-plugins-linux-amd64-v1.2.0.tgz | tar xz -C /opt/cni/bin
+
 COPY docker-entrypoint.sh /
+COPY containerd-cni.conflist.json /etc/cni/net.d/containerd-cni.conflist
+COPY containerd.toml /etc/containerd/config.toml
 VOLUME /var/lib/containerd
 ENTRYPOINT ["/docker-entrypoint.sh"]
