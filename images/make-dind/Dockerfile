@@ -72,8 +72,6 @@ RUN mkdir -p /etc/apt/keyrings \
     && echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt "cloud-sdk-$(. /etc/os-release && echo "$VERSION_CODENAME")" main" \
     | tee /etc/apt/sources.list.d/google-cloud-sdk.list > /dev/null
 
-# make is installed simply because a lot of things use it - it is not required
-# by Bazel
 # moreutils is used to get timestamping on stdout
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
