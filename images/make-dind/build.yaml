@@ -1,0 +1,14 @@
+name: make-dind # Name of the image to be built
+
+# Variants allow multiple images to be built in a single build step, with
+# different build arguments for each build.
+variants:
+  bullseye:
+    arguments:
+      DEBIAN_VERSION: bullseye-slim
+      DOCKER_VERSION: 5:23.0.1-1~debian.11~bullseye
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${_VARIANT}
+- ${_REGISTRY}/${_NAME}:latest-${_VARIANT}

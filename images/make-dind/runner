@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+# Copyright 2023 The Kubernetes Authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# generic runner script, handles DIND, etc.
+
+export DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-false}
+
+if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
+    if [[ "${DOCKER_IN_DOCKER_ENABLED}" != "true" ]]; then
+        echo >&2 "DOCKER_CONFIG was requested but DOCKER_IN_DOCKER_ENABLED is not true."
+        exit 1
+    fi
+
+    echo "A writable DOCKER_CONFIG was requested."
+    tmpdir="$(mktemp -d)"
+    ln -s "${DOCKER_CONFIG}/config.json" "${tmpdir}/config.json"
+    export DOCKER_CONFIG="${tmpdir}"
+fi
+
+if [[ "${EXTRA_DOCKER_OPTS:-}" != "" ]]; then
+    if [[ "${DOCKER_IN_DOCKER_ENABLED}" != "true" ]]; then
+        echo >&2 "EXTRA_DOCKER_OPTS was requested but DOCKER_IN_DOCKER_ENABLED is not true."
+        exit 1
+    fi
+
+    echo "DOCKER_OPTS=\"\${DOCKER_OPTS} ${EXTRA_DOCKER_OPTS}\"" >>/etc/default/docker
+fi
+
+if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
+    echo >&2 "Initializing Docker in Docker."
+
+    service docker start
+    # The service may be marked as ready but the Docker socket may not be
+    # ready yet.
+    WAIT_N=0
+    MAX_WAIT=5
+    while true; do
+        # docker ps -q should only work if the daemon is ready
+        docker ps -q >/dev/null 2>&1 && break
+        if [[ ${WAIT_N} -lt ${MAX_WAIT} ]]; then
+            WAIT_N=$((WAIT_N + 1))
+            echo >&2 "Waiting for docker to be ready, sleeping for ${WAIT_N} seconds."
+            sleep ${WAIT_N}
+        else
+            echo >&2 "Reached maximum attempts, not waiting any longer..."
+            break
+        fi
+    done
+fi
+
+# Disable error exit so we can run post-command cleanup.
+set +o errexit
+
+# Run the actual job.
+"$@" &
+
+# Bash does not "trikle down" UNIX signals. If the Bash script receives SIGINT
+# coming from Prow due to the 2 hours timeout being hit, and that the above
+# command "$@" is running, then SIGINT won't be passed down to the "$@" command.
+# To work around that, we trap SIGINT and SIGTERM and pass then down
+# explicitely. The reasons for handling both SIGTERM and SIGINT is detailed in
+# the following table:
+#
+#  |                          Reason                          |   Signal    |
+#  |----------------------------------------------------------|-------------|
+#  | The 2 hours Prow timeout has been reached                | SIGINT [1]  |
+#  | Google Cloud VM preempted using ACPI shutdown            | SIGTERM [2] |
+#  | GKE worker removed due to scale down using ACPI shutdown | SIGTERM [2] |
+#
+#  [1]: https://github.com/kubernetes/test-infra/blob/ee1e7c8/prow/entrypoint/run.go#L242
+#  [2]: https://unix.stackexchange.com/questions/499761/what-signal-is-sent-to-running-programs-scripts-on-shutdown
+#
+# shellcheck disable=SC2064
+trap "kill -s INT $!" INT
+# shellcheck disable=SC2064
+trap "kill -s TERM $!" TERM
+wait $!
+
+EXIT_VALUE=$?
+
+# cleanup after job
+if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
+    echo "Stopping docker ..."
+    service docker stop || true
+fi
+
+# preserve exit value from job / bootstrap
+exit ${EXIT_VALUE}
