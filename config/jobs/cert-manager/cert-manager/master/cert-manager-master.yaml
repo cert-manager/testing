@@ -81,7 +81,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -132,7 +131,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -183,7 +181,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -234,7 +231,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -285,7 +281,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -335,7 +330,6 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-make-volumes: "true"
       preset-service-account: "true"
@@ -407,7 +401,6 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
       preset-make-volumes: "true"
@@ -457,7 +450,6 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
       preset-make-volumes: "true"
@@ -508,7 +500,6 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -561,7 +552,6 @@ presubmits:
     labels:
       preset-bestpractice-install: "true"
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -647,7 +637,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -699,7 +688,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -751,7 +739,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -803,7 +790,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -855,7 +841,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -906,7 +891,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
     preset-make-volumes: "true"
@@ -958,7 +942,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
@@ -1001,7 +984,6 @@ periodics:
   labels:
     preset-bestpractice-install: "true"
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1053,7 +1035,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1105,7 +1086,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1157,7 +1137,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1209,7 +1188,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1261,7 +1239,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"

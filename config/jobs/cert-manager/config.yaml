@@ -177,26 +177,6 @@ presets:
 #      path: /tmp/bindownloaded
 #      type: DirectoryOrCreate
 
-# This preset should be added to all e2e tests to ensure Docker (used to spin up
-# Kind clusters) can be set up.
-- labels:
-    preset-default-e2e-volumes: "true"
-  volumes:
-    - name: modules
-      hostPath:
-        path: /lib/modules
-        type: Directory
-    - name: cgroup
-      hostPath:
-        path: /sys/fs/cgroup
-        type: Directory
-  volumeMounts:
-    - mountPath: /lib/modules
-      name: modules
-      readOnly: true
-    - mountPath: /sys/fs/cgroup
-      name: cgroup
-
 # A preset which causes make e2e-setup to install cert-manager in accordance
 # with https://cert-manager.io/docs/installation/best-practice/.
 #
