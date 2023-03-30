@@ -183,40 +183,6 @@ presets:
   - name: var-run-libvirt-libvirt-sock
     mountPath: /var/run/libvirt/libvirt-sock
 
-- labels:
-    minikube-support: "true"
-  volumeMounts:
-  - name: var-lib-libvirt
-    mountPath: /var/lib/libvirt
-  - name: minikube-certs
-    mountPath: /var/lib/libvirt/caches/minikube/.minikube/certs
-  volumes:
-  - name: var-lib-libvirt
-    hostPath:
-      path: /var/lib/libvirt
-      type: Directory
-  - name: minikube-certs
-    emptyDir: {}
-  env:
-  - name: MINIKUBE_HOME
-    value: /var/lib/libvirt/caches/minikube
-
-- labels:
-    minikube-medium: "true"
-  env:
-  - name: MINIKUBE_CPUS
-    value: "4"
-  - name: MINIKUBE_MEMORY
-    value: "12288"
-
-- labels:
-    minikube-small: "true"
-  env:
-  - name: MINIKUBE_CPUS
-    value: "3"
-  - name: MINIKUBE_MEMORY
-    value: "8192"
-
 # storage / caching presets
 - labels:
     preset-bazel-scratch-dir: "true"
