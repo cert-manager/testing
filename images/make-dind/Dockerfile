@@ -12,19 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Includes make, docker-in-docker and gcloud
+# Includes make and docker-in-docker
+
 ARG DEBIAN_VERSION
 FROM debian:"${DEBIAN_VERSION}"
 
 LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
-#
-# BEGIN: DOCKER IN DOCKER SETUP
-#
-
-# Install Docker deps, some of these are already installed in the image but
-# that's fine since they won't re-install and we can reuse the code below
-# for another image someday.
+# Some of these deps might already be installed in the base image but we
+# ensure they're installed here to ensure consistency
+# TODO(SgtCoDFish): The python dependency can be removed once we remove the use of Python
+# for scanning boilerplate. That saves about 50MB from the final image size.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -33,7 +31,21 @@ RUN apt-get update \
         gnupg2 \
         software-properties-common \
         lsb-release \
-    && apt-get clean
+        zip \
+        unzip \
+        python \
+        python3-pip \
+        wget \
+        git \
+        make \
+        rsync \
+        patch \
+    && apt-get clean \
+    && python3 -m pip install --upgrade pip setuptools wheel
+
+#
+# BEGIN: DOCKER IN DOCKER SETUP
+#
 
 # Add the Docker apt-repository
 RUN mkdir -p /etc/apt/keyrings \
@@ -42,6 +54,7 @@ RUN mkdir -p /etc/apt/keyrings \
     | tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker
+
 # TODO(bentheelder): the `sed` is a bit of a hack, look into alternatives.
 # Why this exists: `docker service start` on debian runs a `cgroupfs_mount` method,
 # We're already inside docker though so we can be sure these are already mounted.
@@ -65,29 +78,6 @@ VOLUME /docker-graph
 #
 # END: DOCKER IN DOCKER SETUP
 #
-
-# Add the google-cloud-sdk apt-repository
-RUN mkdir -p /etc/apt/keyrings \
-    && curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /etc/apt/keyrings/cloud.google.gpg \
-    && echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt "cloud-sdk-$(. /etc/os-release && echo "$VERSION_CODENAME")" main" \
-    | tee /etc/apt/sources.list.d/google-cloud-sdk.list > /dev/null
-
-# moreutils is used to get timestamping on stdout
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        google-cloud-sdk \
-        zip \
-        unzip \
-        python \
-        python3-pip \
-        wget \
-        ca-certificates \
-        git \
-        make \
-        rsync \
-        patch \
-    && apt-get clean \
-    && python3 -m pip install --upgrade pip setuptools wheel
 
 WORKDIR /workspace
 
