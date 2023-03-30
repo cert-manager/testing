@@ -20,6 +20,8 @@ LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
 # install golang
 ARG GO_VERSION
-RUN wget -O go${GO_VERSION}.amd64.tar.gz https://dl.google.com/go/go${GO_VERSION}.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go${GO_VERSION}.amd64.tar.gz
+RUN wget -O go${GO_VERSION}.amd64.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+    tar -C /usr/local -xzf go${GO_VERSION}.amd64.tar.gz && \
+    rm go${GO_VERSION}.amd64.tar.gz
+
 ENV PATH "/usr/local/go/bin:${PATH}"
