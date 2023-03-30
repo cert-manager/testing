@@ -62,7 +62,9 @@ RUN mkdir -p /etc/apt/keyrings \
 # the pod logs, so we just comment out the call to it... :shrug:
 ARG DOCKER_VERSION
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends docker-ce="${DOCKER_VERSION}" \
+    && apt-get install -y --no-install-recommends \
+        docker-ce="${DOCKER_VERSION}" \
+        docker-buildx-plugin \
     && apt-get clean \
     && sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
     && update-alternatives --set iptables /usr/sbin/iptables-legacy \
