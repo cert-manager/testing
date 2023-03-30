@@ -2,7 +2,6 @@ presubmits:
   cert-manager/istio-csr:
 
   - name: pull-cert-manager-istio-csr-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -23,7 +22,6 @@ presubmits:
 
   - name: pull-cert-manager-istio-csr-ca-rotation
     context: pull-cert-manager-istio-csr-ca-rotation
-    agent: kubernetes
     decorate: true
     always_run: true
     branches:
@@ -73,7 +71,6 @@ presubmits:
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -126,7 +123,6 @@ presubmits:
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -179,7 +175,6 @@ presubmits:
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$

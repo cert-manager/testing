@@ -4,7 +4,6 @@ presubmits:
     always_run: true
     context: pull-cert-manager-release-verify
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     annotations:
       testgrid-create-test-group: 'false'

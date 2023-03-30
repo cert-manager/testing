@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-csi-driver-spiffe-verify
     context: pull-cert-manager-csi-driver-spiffe-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -27,7 +26,6 @@ presubmits:
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     labels:
       preset-service-account: "true"

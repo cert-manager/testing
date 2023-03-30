@@ -5,7 +5,6 @@ presubmits:
     always_run: true
     context: pull-cert-manager-webhook-example-verify
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - master

@@ -5,7 +5,6 @@ presubmits:
     always_run: true
     context: pull-cert-manager-csi-lib-verify
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - main
@@ -27,7 +26,6 @@ presubmits:
 
   - name: pull-cert-manager-csi-lib-e2e
     context: pull-cert-manager-csi-lib-e2e
-    agent: kubernetes
     decorate: true
     # TODO: Keep optional to not block other PRs. Change once e2e test
     # boilerplate code has been merged to main.

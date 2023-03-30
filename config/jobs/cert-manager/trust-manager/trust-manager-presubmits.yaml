@@ -1,7 +1,6 @@
 presubmits:
   cert-manager/trust-manager:
   - name: pull-trust-manager-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     optional: false
@@ -53,7 +52,6 @@ presubmits:
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$

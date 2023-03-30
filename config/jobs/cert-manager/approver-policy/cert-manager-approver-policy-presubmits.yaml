@@ -3,7 +3,6 @@ presubmits:
 
   - name: pull-cert-manager-approver-policy-verify
     context: pull-cert-manager-approver-policy-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -22,7 +21,6 @@ presubmits:
 
   - name: pull-cert-manager-approver-policy-test
     context: pull-cert-manager-approver-policy-test
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -41,7 +39,6 @@ presubmits:
 
   - name: pull-cert-manager-approver-policy-smoke
     context: pull-cert-manager-approver-policy-smoke
-    agent: kubernetes
     decorate: true
     always_run: true
     labels:
