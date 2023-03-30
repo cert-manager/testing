@@ -2,7 +2,6 @@ presubmits:
   cert-manager/csi-driver:
 
   - name: pull-cert-manager-csi-driver-verify
-    context: pull-cert-manager-csi-driver-verify
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -20,7 +19,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-csi-driver-e2e
-    context: pull-cert-manager-csi-driver-e2e
     always_run: true
     optional: false
     max_concurrency: 8

@@ -2,7 +2,6 @@ presubmits:
   cert-manager/csi-driver-spiffe:
 
   - name: pull-cert-manager-csi-driver-spiffe-verify
-    context: pull-cert-manager-csi-driver-spiffe-verify
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -22,7 +21,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-csi-driver-spiffe-e2e
-    context: pull-cert-manager-csi-driver-spiffe-e2e
     always_run: true
     optional: false
     max_concurrency: 8

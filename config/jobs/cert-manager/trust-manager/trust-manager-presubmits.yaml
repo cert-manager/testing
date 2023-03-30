@@ -48,7 +48,6 @@ presubmits:
 
   # kind based trust-manager smoke job
   - name: pull-trust-manager-smoke
-    context: pull-trust-manager-smoke
     always_run: true
     optional: false
     max_concurrency: 8

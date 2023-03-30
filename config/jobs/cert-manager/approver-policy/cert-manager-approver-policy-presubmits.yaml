@@ -2,7 +2,6 @@ presubmits:
   cert-manager/approver-policy:
 
   - name: pull-cert-manager-approver-policy-verify
-    context: pull-cert-manager-approver-policy-verify
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -20,7 +19,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-approver-policy-test
-    context: pull-cert-manager-approver-policy-test
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -38,7 +36,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-approver-policy-smoke
-    context: pull-cert-manager-approver-policy-smoke
     decorate: true
     always_run: true
     labels:

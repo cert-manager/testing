@@ -2,7 +2,6 @@ presubmits:
   cert-manager/release:
   - name: pull-cert-manager-release-verify
     always_run: true
-    context: pull-cert-manager-release-verify
     max_concurrency: 8
     decorate: true
     annotations:

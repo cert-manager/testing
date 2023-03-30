@@ -4,7 +4,6 @@ presubmits:
 
   - name: pull-testing-config
     always_run: true
-    context: pull-testing-config
     max_concurrency: 4
     decorate: true
     spec:
