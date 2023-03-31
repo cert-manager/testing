@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cherrypick
+  name: cherrypicker
 spec:
   selector:
     app: prow
-    component: cherrypick
+    component: cherrypicker
   ports:
   - port: 80
     targetPort: 8888

@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cherrypick
+  name: cherrypicker
   labels:
     app: prow
-    component: cherrypick
+    component: cherrypicker
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
       app: prow
-      component: cherrypick
+      component: cherrypicker
   template:
     metadata:
       labels:
         app: prow
-        component: cherrypick
+        component: cherrypicker
     spec:
       containers:
-      - name: cherrypick
+      - name: cherrypicker
         image: gcr.io/k8s-prow/cherrypicker:v20220301-2a7bee07aa
         args:
         - --dry-run=false
