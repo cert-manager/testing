@@ -68,7 +68,16 @@ This should have updated image tags in the static manifest files in [./prow/clus
 bazel run //prow/cluster:production.apply
 ```
 
-9. Verify the upgrade:
+9. Apply the update CRD manifest to the `build-infra` cluster.
+
+> TODO: make this part of step 8 once the CRD is not too long to fit in a
+> the last-applied-configuration annotation.
+
+```sh
+kubectl apply --server-side -f ./prow/cluster/prowjob-crd/prowjob_customresourcedefinition.yaml
+```
+
+10. Verify the upgrade:
 
 - Check that all `Deployment`s and `Daemonset`s are up and running and up to date
 
@@ -78,7 +87,7 @@ bazel run //prow/cluster:production.apply
 
 - Ensure you can access `https://prow.build-infra.jetstack.net/` (and see logs for the tests there) and `https://triage.build-infra.jetstack.net/s/daily`
 
-10. Commit and PR in your change
+11. Commit and PR in your change
 
 
 * TODO: check if that is the case and why
