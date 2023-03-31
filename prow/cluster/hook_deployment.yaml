@@ -34,22 +34,28 @@ spec:
       labels:
         app: hook
     spec:
-      serviceAccountName: "hook" # Uncomment for use with RBAC
+      serviceAccountName: hook
       terminationGracePeriodSeconds: 180
       containers:
       - name: hook
-        image: gcr.io/k8s-prow/hook:v20220301-2a7bee07aa
+        image: gcr.io/k8s-prow/hook:v20230329-c93d79fb7d
         imagePullPolicy: Always
         args:
         - --dry-run=false
         - --github-endpoint=http://ghproxy
         - --github-endpoint=https://api.github.com
+        - --github-token-path=/etc/github/oauth
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
-        - --github-token-path=/etc/github/oauth
+        env:
+        # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
+        - name: KUBECONFIG
+          value: "/etc/kubeconfig/config"
         ports:
-          - name: http
-            containerPort: 8888
+        - name: http
+          containerPort: 8888
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - name: hmac
           mountPath: /etc/webhook
@@ -65,6 +71,9 @@ spec:
           readOnly: true
         - name: plugins
           mountPath: /etc/plugins
+          readOnly: true
+        - name: kubeconfig
+          mountPath: /etc/kubeconfig
           readOnly: true
         livenessProbe:
           httpGet:
@@ -95,3 +104,7 @@ spec:
       - name: plugins
         configMap:
           name: plugins
+      - name: kubeconfig
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig

@@ -31,10 +31,10 @@ spec:
       labels:
         app: tide
     spec:
-      serviceAccountName: "tide" # Uncomment for use with RBAC
+      serviceAccountName: tide
       containers:
       - name: tide
-        image: gcr.io/k8s-prow/tide:v20220301-2a7bee07aa
+        image: gcr.io/k8s-prow/tide:v20230329-c93d79fb7d
         args:
         - --dry-run=false
         - --github-endpoint=http://ghproxy
@@ -43,8 +43,10 @@ spec:
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
         ports:
-          - name: http
-            containerPort: 8888
+        - name: http
+          containerPort: 8888
+        - name: metrics
+          containerPort: 9090
         volumeMounts:
         - name: oauth
           mountPath: /etc/github
