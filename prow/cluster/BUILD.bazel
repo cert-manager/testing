@@ -25,7 +25,7 @@ release(
     component("prow_controller_manager", "deployment", "service"),
     component("prow_controller_manager_rbac", MULTI_KIND),
     component("prowjob", "customresourcedefinition"),
-    component("pushgateway", MULTI_KIND),
+    component("pushgateway", "deployment"),
     component("sinker", "deployment", "service"),
     component("sinker_rbac", MULTI_KIND),
     component("statusreconciler", "deployment"),
