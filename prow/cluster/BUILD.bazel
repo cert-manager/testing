@@ -24,7 +24,6 @@ release(
     component("pipeline_rbac", MULTI_KIND),
     component("prow_controller_manager", "deployment", "service"),
     component("prow_controller_manager_rbac", MULTI_KIND),
-    component("prowjob", "customresourcedefinition"),
     component("pushgateway", "deployment"),
     component("sinker", "deployment", "service"),
     component("sinker_rbac", MULTI_KIND),
