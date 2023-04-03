@@ -1,6 +1,0 @@
-approvers:
-- simonswine
-reviewers:
-- simonswine
-labels:
-- area/okta-kubectl-auth

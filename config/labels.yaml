@@ -96,53 +96,6 @@ repos:
       target: both
       addedBy: prow
 
-
-  jetstack/kube-oidc-proxy:
-    labels:
-    - color: FF123A
-      description: Indicates a PR directly modifies the proxy code
-      name: area/proxy
-      target: both
-      addedBy: human
-    - color: DF62D7
-      description: Indicates a PR directly modifies end to end tests
-      name: area/e2e
-      target: both
-      addedBy: human
-    - color: 05CB68
-      description: Indicates a PR directly modifies the demos
-      name: area/demo
-      target: both
-      addedBy: human
-
-  jetstack/tarmak:
-    labels:
-    - name: area/wing
-      target: both
-      color: 0052cc
-      description: Indicates a PR is affecting Wing
-      addedBy: human
-    - name: area/puppet
-      target: both
-      color: 0052cc
-      description: Indicates a PR is affecting Puppet manifests
-      addedBy: human
-    - name: area/cli
-      target: both
-      color: 0052cc
-      description: Indicates a PR is affecting CLI interface
-      addedBy: human
-    - name: area/terraform
-      target: both
-      color: 0052cc
-      description: Indicates a PR is affecting Terraform configuration
-      addedBy: human
-    - name: area/provider-aws
-      target: both
-      color: 0052cc
-      description: Indicates a PR is affecting Cloud Provider AWS
-      addedBy: human
-
   jetstack/testing:
     labels:
     - color: 0052cc
