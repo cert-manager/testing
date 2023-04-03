@@ -4,22 +4,7 @@
 ---
 triggers:
 - repos:
-  - jetstack/kube-lego
-  - jetstack/test-infra
-  - jetstack/navigator
-  - jetstack/tarmak
-  - jetstack/okta-kubectl-auth
-  - jetstack/puppet-module-aws_ebs
-  - jetstack/puppet-module-calico
-  - jetstack/puppet-module-etcd
-  - jetstack/puppet-module-kubernetes
-  - jetstack/puppet-module-kubernetes_addons
-  - jetstack/puppet-module-prometheus
-  - jetstack/puppet-module-vault_client
-  - jetstack/puppet-module-tarmak
-  - jetstack/vault-helper
-  - jetstack/vault-unsealer
-  - jetstack/vault-plugin-auth-templated-aws
+  - jetstack/testing
   only_org_members: true
 - repos:
   - cert-manager/cert-manager
@@ -90,10 +75,6 @@ milestone_applier:
     release-0.10: v0.10
     release-0.9: v0.9
     release-0.8: v0.8
-  jetstack/kube-oidc-proxy:
-    master: v0.2
-    release-0.1: v0.1
-    release-0.2: v0.2
 
 config_updater:
   maps:
@@ -165,36 +146,6 @@ plugins:
   cert-manager/cert-manager:
     plugins:
     - release-note
-
-  jetstack/tarmak:
-    plugins:
-    - approve
-    - dco
-    - owners-label
-    - release-note
-    - verify-owners
-
-  jetstack/kube-oidc-proxy:
-    plugins:
-    - approve
-    - dco
-    - owners-label
-    - release-note
-    - verify-owners
-
-  jetstack/preflight:
-    plugins:
-    - approve
-    - dco
-    - verify-owners
-
-  jetstack/version-checker:
-    plugins:
-    - approve
-    - dco
-    - owners-label
-    - release-note
-    - verify-owners
 
   jetstack/testing:
     plugins:
