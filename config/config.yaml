@@ -172,17 +172,6 @@ presets:
   - name: docker-graph
     mountPath: /docker-graph
 
-- labels:
-    libvirt-socket: "true"
-  volumes:
-  - name: var-run-libvirt-libvirt-sock
-    hostPath:
-      path: /var/run/libvirt/libvirt-sock
-      type: Socket
-  volumeMounts:
-  - name: var-run-libvirt-libvirt-sock
-    mountPath: /var/run/libvirt/libvirt-sock
-
 # storage / caching presets
 - labels:
     preset-bazel-scratch-dir: "true"
