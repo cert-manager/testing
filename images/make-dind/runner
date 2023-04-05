@@ -64,10 +64,6 @@ fi
 # Disable error exit so we can run post-command cleanup.
 set +o errexit
 
-# Populate the PWD env var, since it is not set by default and used in some of our Makefiles.
-export PWD
-PWD=$(pwd)
-
 # Run the actual job.
 "$@" &
 

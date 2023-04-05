@@ -31,6 +31,7 @@ RUN apt-get update \
         gnupg2 \
         software-properties-common \
         lsb-release \
+        g++ \
         zip \
         unzip \
         python \
