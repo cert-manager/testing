@@ -40,6 +40,7 @@ RUN apt-get update \
         make \
         rsync \
         patch \
+        jq \
     && apt-get clean \
     && python3 -m pip install --upgrade pip setuptools wheel
 
