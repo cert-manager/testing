@@ -18,7 +18,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230330-83ce2fd-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230405-13a0496-bullseye
         args:
         - make
         - -j2
