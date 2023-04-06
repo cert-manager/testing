@@ -182,13 +182,21 @@ presets:
   env:
   - name: GOCACHE
     value: /root/.prow_go_cache/
+  - name: GOMODCACHE
+    value: /root/.prow_go_mod_cache/
   volumeMounts:
     - mountPath: /root/.prow_go_cache/
       name: go-cache
+    - mountPath: /root/.prow_go_mod_cache/
+      name: go-mod-cache
   volumes:
     - name: go-cache
       hostPath:
         path: /tmp/go_cache
+        type: DirectoryOrCreate
+    - name: go-mod-cache
+      hostPath:
+        path: /tmp/go_mod_cache
         type: DirectoryOrCreate
 
 # A preset which causes make e2e-setup to install cert-manager in accordance
