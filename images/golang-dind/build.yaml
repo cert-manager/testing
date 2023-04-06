@@ -3,7 +3,7 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.20":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20230405-38c1b22-bullseye@sha256:65b90b2c9ca1439a9e2b3b40d1876fe9dfc060e77fa0a84e9996f64009fdf6ae"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye@sha256:65b90b2c9ca1439a9e2b3b40d1876fe9dfc060e77fa0a84e9996f64009fdf6ae"
       GO_VERSION: "1.20.2"
   "1.19":
     arguments:
