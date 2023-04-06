@@ -99,11 +99,11 @@ postsubmits:
       description: Build and push the 'bazelbuild' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/bazelbuild
         - --confirm=true
         resources:
@@ -135,11 +135,11 @@ postsubmits:
       description: Build and push the 'make-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/make-dind
         - --confirm=true
         resources:
@@ -171,11 +171,11 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/golang-dind
         - --confirm=true
         resources:
@@ -207,11 +207,11 @@ postsubmits:
       description: Build and push the 'golang-nodejs' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/golang-nodejs
         - --confirm=true
         resources:
@@ -242,11 +242,11 @@ postsubmits:
       description: Build and push the 'bazel-tools' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/bazel-tools
         - --confirm=true
         resources:
@@ -312,11 +312,11 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/golang-aws
         - --confirm=true
         resources:
@@ -348,11 +348,11 @@ postsubmits:
       description: Build and push the 'nix-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:latest-1.20.2
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/builder/ci-runner.sh
+        - images/make-builder/ci-runner.sh
         - images/nix-dind
         - --confirm=true
         resources:
