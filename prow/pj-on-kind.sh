@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-# Copyright 2021 The Jetstack contributors.
+# +skip_license_check
+
+# Copyright 2019 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +15,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# */
 
 # This script is copied from k/test-infra
-# https://github.com/kubernetes/test-infra/blob/488e767e326f6c7189cbf0682e7f926040ae959c/prow/pj-on-kind.sh
+# https://github.com/kubernetes/test-infra/blob/e4d1738d6eb8c2c00f9d90ed9e694e48f14156c5/prow/pj-on-kind.sh
 # Runs prow/pj-on-kind.sh with config arguments specific to Jetstack Prow config.
 # Requries go, docker, and kubectl.
 
@@ -27,11 +28,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SCRIPT_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" > /dev/null && pwd )"
-export REPO_ROOT="${SCRIPT_ROOT}/.."
-
-export CONFIG_PATH="${REPO_ROOT}/config/config.yaml"
-export JOB_CONFIG_PATH="${REPO_ROOT}/config/jobs"
+root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+export CONFIG_PATH="${root}/config/config.yaml"
+export JOB_CONFIG_PATH="${root}/config/jobs"
 
 function main() {
   # Point kubectl at the mkpod cluster.
@@ -41,9 +40,9 @@ function main() {
 
   # Generate PJ and Pod.
   docker pull gcr.io/k8s-prow/mkpj:latest
-  docker run -i --rm -v "${PWD}:${PWD}" -v "${config}:${config}" ${job_config_mnt} -w "${PWD}" gcr.io/k8s-prow/mkpj:latest "--config-path=${config}" "--job=${job}" ${job_config_flag} > "${PWD}/pj.yaml"
+  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -v "${config}:${config}" ${job_config_mnt} -w "${PWD}" gcr.io/k8s-prow/mkpj:latest "--config-path=${config}" "--job=${job}" ${job_config_flag} > "${PWD}/pj.yaml"
   docker pull gcr.io/k8s-prow/mkpod:latest
-  docker run -i --rm -v "${PWD}:${PWD}" -w "${PWD}" gcr.io/k8s-prow/mkpod:latest --build-id=snowflake "--prow-job=${PWD}/pj.yaml" --local "--out-dir=${out_dir}/${job}" > "${PWD}/pod.yaml"
+  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -w "${PWD}" gcr.io/k8s-prow/mkpod:latest --build-id=snowflake "--prow-job=${PWD}/pj.yaml" --local "--out-dir=${out_dir}/${job}" > "${PWD}/pod.yaml"
 
   # Add any k8s resources that the pod depends on to the kind cluster here. (secrets, configmaps, etc.)
 
@@ -92,8 +91,16 @@ function parseArgs() {
 function ensureInstall() {
   # Install kind and set up cluster if not already done.
   if ! command -v kind >/dev/null 2>&1; then
+    # Extract the minor version from xx.{minor_version}.xx version format
+    go_minor_version=$(go version | { read _ _ v _; TMP=${v#*.}; echo ${TMP%.*}; }; )
+    echo "Current Go minor version: $go_minor_version"
     echo "Installing kind..."
-    GO111MODULE="on" go get sigs.k8s.io/kind@v0.7.0
+    if [[ $go_minor_version -ge 18 ]]; then
+      # `go get` is fully deprecated in Go 1.18, so use `go install` for version >= 18.
+      GO111MODULE="on" go install sigs.k8s.io/kind@v0.17.0
+    else
+      GO111MODULE="on" go get sigs.k8s.io/kind@v0.17.0
+    fi
   fi
   local found="false"
   for clust in $(kind get clusters); do

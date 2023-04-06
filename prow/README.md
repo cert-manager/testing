@@ -62,19 +62,18 @@ go run prow/bump/main.go
 
 This should have updated image tags in the static manifest files in [./prow/cluster](./cluster).
 
-8. Apply the updated manifests to `build-infra` cluster.
+8. Review the difference between the local manifests and the live resources in the `build-infra` cluster.
 
 ```sh
-bazel run //prow/cluster:production.apply
+cd prow
+make diff-prow
 ```
 
-9. Apply the update CRD manifest to the `build-infra` cluster.
-
-> TODO: make this part of step 8 once the CRD is not too long to fit in a
-> the last-applied-configuration annotation.
+9. Apply the updated manifests to `build-infra` cluster.
 
 ```sh
-kubectl apply --server-side -f ./prow/cluster/prowjob-crd/prowjob_customresourcedefinition.yaml
+cd prow
+make deploy-prow
 ```
 
 10. Verify the upgrade:
@@ -88,6 +87,3 @@ kubectl apply --server-side -f ./prow/cluster/prowjob-crd/prowjob_customresource
 - Ensure you can access `https://prow.build-infra.jetstack.net/` (and see logs for the tests there) and `https://triage.build-infra.jetstack.net/s/daily`
 
 11. Commit and PR in your change
-
-
-* TODO: check if that is the case and why
