@@ -11,6 +11,7 @@ presubmits:
       description: Runs unit and integration tests and verification scripts
     labels:
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -42,6 +43,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -76,6 +78,7 @@ presubmits:
       preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -123,6 +126,7 @@ presubmits:
       preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -170,6 +174,7 @@ presubmits:
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -217,6 +222,7 @@ presubmits:
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -264,6 +270,7 @@ presubmits:
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -311,6 +318,7 @@ presubmits:
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -358,6 +366,7 @@ presubmits:
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -402,6 +411,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -437,6 +447,7 @@ presubmits:
         has changed
     labels:
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -468,6 +479,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-tpp-credentials: "true"
@@ -514,6 +526,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-cloud-credentials: "true"
@@ -562,6 +575,7 @@ presubmits:
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -611,6 +625,7 @@ presubmits:
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
       preset-make-volumes: "true"
+      preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -658,6 +673,7 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.10
   labels:
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -696,6 +712,7 @@ periodics:
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -747,6 +764,7 @@ periodics:
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -798,6 +816,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -849,6 +868,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -900,6 +920,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -951,6 +972,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1002,6 +1024,7 @@ periodics:
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1051,6 +1074,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
     preset-venafi-cloud-credentials: "true"
@@ -1101,6 +1125,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1145,6 +1170,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1196,6 +1222,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1247,6 +1274,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1298,6 +1326,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1349,6 +1378,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1400,6 +1430,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1451,6 +1482,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1502,6 +1534,7 @@ periodics:
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1552,6 +1585,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1590,6 +1624,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1628,6 +1663,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1666,6 +1702,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1704,6 +1741,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
+    preset-go-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
