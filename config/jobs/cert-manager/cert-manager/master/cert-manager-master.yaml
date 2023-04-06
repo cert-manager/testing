@@ -13,7 +13,7 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-service-account: "true"
     spec:
@@ -48,7 +48,7 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-dind-enabled: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-service-account: "true"
     spec:
@@ -86,7 +86,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -137,7 +137,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -188,7 +188,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -239,7 +239,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -290,7 +290,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -338,7 +338,7 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-dind-enabled: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-service-account: "true"
     spec:
@@ -377,7 +377,7 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-service-account: "true"
     spec:
@@ -412,7 +412,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -462,7 +462,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -514,7 +514,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -567,7 +567,7 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-make-volumes: "true"
+      preset-local-cache: "true"
       preset-go-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
@@ -615,7 +615,7 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -654,7 +654,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -706,7 +706,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -758,7 +758,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -810,7 +810,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -862,7 +862,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -912,7 +912,7 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -963,7 +963,7 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -1008,7 +1008,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1060,7 +1060,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1112,7 +1112,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1164,7 +1164,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1216,7 +1216,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1268,7 +1268,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
@@ -1319,7 +1319,7 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -1358,7 +1358,7 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -1397,7 +1397,7 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -1436,7 +1436,7 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
@@ -1475,7 +1475,7 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-make-volumes: "true"
+    preset-local-cache: "true"
     preset-go-cache: "true"
     preset-service-account: "true"
   spec:
