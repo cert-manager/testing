@@ -158,7 +158,7 @@ presets:
   env:
   - name: LOCAL_CACHE_ENABLED
     value: true
-  - nmae: LOCAL_CACHE_DIR
+  - name: LOCAL_CACHE_DIR
     value: /home/prow/go/src/github.com/cert-manager/cert-manager/_bin/downloaded/
   - name: SHARED_CACHE_DIR
     value: /root/.prow_shared_cache/
