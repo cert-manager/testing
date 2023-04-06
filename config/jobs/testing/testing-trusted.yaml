@@ -187,6 +187,42 @@ postsubmits:
           capabilities:
             add: ["SYS_ADMIN"]
 
+  - name: post-testing-push-image-builder
+    cluster: trusted
+    run_if_changed: '^images/image-builder/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-bazel-scratch-dir: "true"
+      preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      testgrid-disable-prowjob-analysis: "true"
+      description: Build and push the 'image-builder' image
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/image-builder-script/ci-runner.sh
+        - images/image-builder
+        - --confirm=true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+
   - name: post-testing-push-golang-nodejs
     cluster: trusted
     run_if_changed: '^images/golang-nodejs/'
