@@ -16,6 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# based on: https://github.com/kubernetes/test-infra/blob/e4d1738d6eb8c2c00f9d90ed9e694e48f14156c5/config/mkpj.sh
+
 # Usage: mkpj.sh --job=foo ...
 #
 # Arguments to this script will be passed to a dockerized mkpj
