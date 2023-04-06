@@ -177,6 +177,20 @@ presets:
 #      path: /tmp/bindownloaded
 #      type: DirectoryOrCreate
 
+- labels:
+    preset-go-cache: "true"
+  env:
+  - name: GOCACHE
+    value: /root/.prow_go_cache/
+  volumeMounts:
+    - mountPath: /root/.prow_go_cache/
+      name: go_cache
+  volumes:
+    - name: go_cache
+      hostPath:
+        path: /tmp/go_cache
+        type: DirectoryOrCreate
+
 # A preset which causes make e2e-setup to install cert-manager in accordance
 # with https://cert-manager.io/docs/installation/best-practice/.
 #
