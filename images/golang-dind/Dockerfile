@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Includes golang, docker-in-docker and gcloud
+# Includes golang, docker-in-docker
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 LABEL maintainer="cert-manager-maintainers@googlegroups.com"
