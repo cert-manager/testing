@@ -44,7 +44,7 @@ presubmits:
       preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230405-38c1b22-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20230323-f4c9aec-1.19.7
         args:
         - runner
         - make
