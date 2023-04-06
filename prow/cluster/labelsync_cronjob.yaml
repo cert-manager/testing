@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: label-sync
@@ -28,7 +28,7 @@ spec:
         spec:
           containers:
             - name: label-sync
-              image: eu.gcr.io/jetstack-build-infra/prow-labelsync:latest
+              image: gcr.io/k8s-prow/label_sync:v20230405-89944e7c3e
               args:
               - --config=/etc/config/labels.yaml
               - --confirm=true
