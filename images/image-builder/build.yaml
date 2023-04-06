@@ -1,0 +1,12 @@
+name: image-builder # Name of the image to be built
+
+variants:
+  gcloud-425:
+    arguments:
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/golang-dind:20230406-a2c17f5-1.20.2"
+      CLOUD_SDK_VERSION: "425.0.0"
+
+# Image names to be tagged and pushed
+images:
+- ${_REGISTRY}/${_NAME}:${_DATE_STAMP}-${_GIT_REF}-${CLOUD_SDK_VERSION}
+- ${_REGISTRY}/${_NAME}:latest-${CLOUD_SDK_VERSION}
