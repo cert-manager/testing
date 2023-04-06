@@ -1,4 +1,4 @@
-# Copyright 2018 The Jetstack contributors.
+# Copyright 2023 The Jetstack contributors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Includes golang, docker-in-docker
+# Includes golang, docker-in-docker and gcloud
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
+ARG CLOUD_SDK_VERSION=425.0.0
+ENV CLOUD_SDK_VERSION=$CLOUD_SDK_VERSION
+ENV PATH "$PATH:/opt/google-cloud-sdk/bin/"
 
-# install golang
-ARG GO_VERSION
-RUN wget -O go${GO_VERSION}.amd64.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
-    tar -C /usr/local -xzf go${GO_VERSION}.amd64.tar.gz && \
-    rm go${GO_VERSION}.amd64.tar.gz
+# Install google-cloud-cli
+RUN echo "deb http://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -c -s) main" > /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends \
+        google-cloud-cli=${CLOUD_SDK_VERSION}-0 && \
+    apt-get clean
 
-ENV PATH "/usr/local/go/bin:${PATH}"
+WORKDIR /workspace
