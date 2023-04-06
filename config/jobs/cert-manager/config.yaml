@@ -159,11 +159,11 @@ presets:
   - name: LOCAL_CACHE_ENABLED
     value: true
   - name: LOCAL_CACHE_DIR
-    value: /home/prow/go/src/github.com/cert-manager/cert-manager/_bin/downloaded/
+    value: /home/prow/go/src/github.com/cert-manager/cert-manager/_bin/downloaded
   - name: SHARED_CACHE_DIR
-    value: /root/.prow_shared_cache/
+    value: /root/.prow_shared_cache
   volumeMounts:
-    - mountPath: /root/.prow_shared_cache/
+    - mountPath: /root/.prow_shared_cache
       name: shared-cache
   volumes:
     - name: shared-cache

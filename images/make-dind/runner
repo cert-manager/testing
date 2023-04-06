@@ -33,17 +33,21 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         exit 1
     fi
 
-    echo "Local cache is enabled, checking for cache ..."
+    if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
+        echo "Local cache: found latest cache directory."
 
-    # Obtain the name of the latest cache directory.
-    LATEST_CACHE_DIR=$(cat "${SHARED_CACHE_DIR}/latest")
+        # Obtain the name of the latest cache directory.
+        LATEST_CACHE_DIR=$(cat "${SHARED_CACHE_DIR}/latest")
 
-    mkdir -p "${LOCAL_CACHE_DIR}"
+        mkdir -p "${LOCAL_CACHE_DIR}"
 
-    # Copying the latest cache to our local cache ...
-    cp -rp "${LATEST_CACHE_DIR}" "${LOCAL_CACHE_DIR}"
+        # Copying the latest cache to our local cache ...
+        cp -rp "${LATEST_CACHE_DIR}" "${LOCAL_CACHE_DIR}"
 
-    echo "Local cache is enabled, provisioned ${LOCAL_CACHE_DIR}"
+        echo "Local cache: provisioned ${LOCAL_CACHE_DIR}"
+    else
+        echo "Local cache: no latest cache directory found."
+    fi
 fi
 
 # Check if the job has opted-in to docker in docker and if so start the docker daemon
@@ -133,23 +137,23 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         cache_unique_id="cache_$(date +"%F_H%H-M%M-S%S")_$(head -c 8 /proc/sys/kernel/random/uuid)"
 
         # Move the local cache directory to the shared cache directory.
-        echo "Moving local cache to shared cache ..."
+        echo "Local cache: Moving local cache to shared cache ..."
         mv "${LOCAL_CACHE_DIR}" "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
         # Update the latest cache directory to the local cache directory.
-        echo "Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
+        echo "Local cache: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
         echo "${SHARED_CACHE_DIR}/${cache_unique_id}" > "${SHARED_CACHE_DIR}/latest"
 
         # Remove the old cache directories to save disk space. Keep the
         # last 4 cache directories because they may be used by other
         # jobs that are still copying from these directories.
-        echo "Removing old caches ..."
+        echo "Local cache: Removing old caches ..."
         find "${SHARED_CACHE_DIR}" -maxdepth 1 -type d -name 'cache_*' -printf '%f\n' | \
             sort -r | \
             tail -n +4 | \
             xargs -I{} rm -rf "${SHARED_CACHE_DIR}/{}"
     else
-        echo "Job failed, not updating cache."
+        echo "Local cache: Job failed, not updating cache."
     fi
 fi
 
