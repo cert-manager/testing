@@ -18,7 +18,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -53,7 +53,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -92,7 +92,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -143,7 +143,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -194,7 +194,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -245,7 +245,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -296,7 +296,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -343,7 +343,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -382,7 +382,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -419,7 +419,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -469,7 +469,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -520,7 +520,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -573,7 +573,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
         args:
         - runner
         - make
@@ -620,7 +620,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -660,7 +660,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -712,7 +712,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -764,7 +764,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -816,7 +816,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -868,7 +868,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -920,7 +920,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -968,7 +968,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1014,7 +1014,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1066,7 +1066,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1118,7 +1118,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1170,7 +1170,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1222,7 +1222,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1274,7 +1274,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1324,7 +1324,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1363,7 +1363,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1402,7 +1402,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1441,7 +1441,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
@@ -1480,7 +1480,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-b45d92a-bullseye
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-2ee6abc-bullseye
       args:
       - runner
       - make
