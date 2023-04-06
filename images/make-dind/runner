@@ -16,6 +16,37 @@
 
 # generic runner script, handles DIND, etc.
 
+
+# Check if the job has opted-in to local caching and if so check for a cache and
+# copy the cache to prepopulate the local cache. After the job is done, change the
+# latest cache directory to the local cache directory.
+export LOCAL_CACHE_ENABLED=${LOCAL_CACHE_ENABLED:-false}
+
+if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
+    if [[ "${SHARED_CACHE_DIR}" == "" ]]; then
+        echo >&2 "LOCAL_CACHE_ENABLED was enabled but SHARED_CACHE_DIR is empty."
+        exit 1
+    fi
+    
+    if [[ "${LOCAL_CACHE_DIR}" == "" ]]; then
+        echo >&2 "LOCAL_CACHE_ENABLED was enabled but LOCAL_CACHE_DIR is empty."
+        exit 1
+    fi
+
+    echo "Local cache is enabled, checking for cache ..."
+
+    # Obtain the name of the latest cache directory.
+    LATEST_CACHE_DIR=$(cat "${SHARED_CACHE_DIR}/latest")
+
+    mkdir -p "${LOCAL_CACHE_DIR}"
+
+    # Copying the latest cache to our local cache ...
+    cp -rp "${LATEST_CACHE_DIR}" "${LOCAL_CACHE_DIR}"
+
+    echo "Local cache is enabled, provisioned ${LOCAL_CACHE_DIR}"
+fi
+
+# Check if the job has opted-in to docker in docker and if so start the docker daemon
 export DOCKER_IN_DOCKER_ENABLED=${DOCKER_IN_DOCKER_ENABLED:-false}
 
 if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
@@ -95,6 +126,31 @@ EXIT_VALUE=$?
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo "Stopping docker ..."
     service docker stop || true
+fi
+
+if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
+    if [[ $EXIT_VALUE == 0 ]]; then
+        cache_unique_id="cache_$(date +"%F_H%H-M%M-S%S")_$(head -c 8 /proc/sys/kernel/random/uuid)"
+
+        # Move the local cache directory to the shared cache directory.
+        echo "Moving local cache to shared cache ..."
+        mv "${LOCAL_CACHE_DIR}" "${SHARED_CACHE_DIR}/${cache_unique_id}"
+
+        # Update the latest cache directory to the local cache directory.
+        echo "Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
+        echo "${SHARED_CACHE_DIR}/${cache_unique_id}" > "${SHARED_CACHE_DIR}/latest"
+
+        # Remove the old cache directories to save disk space. Keep the
+        # last 4 cache directories because they may be used by other
+        # jobs that are still copying from these directories.
+        echo "Removing old caches ..."
+        find "${SHARED_CACHE_DIR}" -maxdepth 1 -type d -name 'cache_*' -printf '%f\n' | \
+            sort -r | \
+            tail -n +4 | \
+            xargs -I{} rm -rf "${SHARED_CACHE_DIR}/{}"
+    else
+        echo "Job failed, not updating cache."
+    fi
 fi
 
 # preserve exit value from job / bootstrap
