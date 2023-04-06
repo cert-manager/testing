@@ -19,7 +19,7 @@ set -o nounset
 set -o pipefail
 
 PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )/../.." && pwd )"
-SCRIPT_DIR="${PROJECT_DIR}/images/make-builder"
+SCRIPT_DIR="${PROJECT_DIR}/images/image-builder-script"
 
 BUILD_DIR="${1:-}"
 if [ -z "${BUILD_DIR}" ]; then
