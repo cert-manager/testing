@@ -42,7 +42,7 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         mkdir -p "${LOCAL_CACHE_DIR}"
 
         # Copying the latest cache to our local cache ...
-        cp -rp "${LATEST_CACHE_DIR}" "${LOCAL_CACHE_DIR}"
+        cp -a "${LATEST_CACHE_DIR}/." "${LOCAL_CACHE_DIR}"
 
         echo "Local cache: provisioned ${LOCAL_CACHE_DIR}"
     else
