@@ -184,9 +184,9 @@ presets:
     value: /root/.prow_go_cache/
   volumeMounts:
     - mountPath: /root/.prow_go_cache/
-      name: go_cache
+      name: go-cache
   volumes:
-    - name: go_cache
+    - name: go-cache
       hostPath:
         path: /tmp/go_cache
         type: DirectoryOrCreate
