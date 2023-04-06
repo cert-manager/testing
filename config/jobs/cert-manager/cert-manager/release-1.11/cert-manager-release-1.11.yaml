@@ -6,7 +6,6 @@ presubmits:
   cert-manager/cert-manager:
   - name: pull-cert-manager-release-1.11-make-test
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs unit and integration tests and verification scripts
@@ -37,7 +36,6 @@ presubmits:
     optional: false
   - name: pull-cert-manager-release-1.11-chart
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     annotations:
       description: Verifies the Helm chart passes linting checks
@@ -69,13 +67,11 @@ presubmits:
     optional: false
   - name: pull-cert-manager-release-1.11-e2e-v1-21
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
@@ -118,13 +114,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-22
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -167,13 +161,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-23
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -216,13 +208,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-24
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -265,13 +255,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-25
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.25 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -314,13 +302,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-26
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.26 cluster
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -363,12 +349,10 @@ presubmits:
     optional: false
   - name: pull-cert-manager-release-1.11-e2e-v1-26-upgrade
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs cert-manager upgrade from latest published release
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-make-volumes: "true"
       preset-service-account: "true"
@@ -400,7 +384,6 @@ presubmits:
     optional: false
   - name: pull-cert-manager-release-1.11-license
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     annotations:
       description: Verifies LICENSES are up to date; only needs to be run if go.mod
@@ -431,12 +414,10 @@ presubmits:
     run_if_changed: go.mod
   - name: pull-cert-manager-release-1.11-e2e-v1-26-issuers-venafi-tpp
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the E2E tests with 'Venafi TPP' in name
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
       preset-make-volumes: "true"
@@ -479,12 +460,10 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-26-issuers-venafi-cloud
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the E2E tests with 'Venafi Cloud' in name
     labels:
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
       preset-make-volumes: "true"
@@ -527,13 +506,11 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-26-feature-gates-disabled
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the E2E tests with all feature gates disabled
     labels:
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -576,7 +553,6 @@ presubmits:
     optional: true
   - name: pull-cert-manager-release-1.11-e2e-v1-26-bestpractice-install
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
     annotations:
       description: Runs the E2E tests with cert-manager installed in accordance with
@@ -584,7 +560,6 @@ presubmits:
     labels:
       preset-bestpractice-install: "true"
       preset-cloudflare-credentials: "true"
-      preset-default-e2e-volumes: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -628,7 +603,6 @@ presubmits:
 periodics:
 - name: ci-cert-manager-release-1.11-make-test
   max_concurrency: 8
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs unit and integration tests and verification scripts
@@ -663,7 +637,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-21
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.21 cluster
@@ -672,7 +645,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
@@ -716,7 +688,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-22
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.22 cluster
@@ -725,7 +696,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -769,7 +739,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-23
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.23 cluster
@@ -778,7 +747,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -822,7 +790,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-24
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.24 cluster
@@ -831,7 +798,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -875,7 +841,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-25
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.25 cluster
@@ -884,7 +849,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -928,7 +892,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-26
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the end-to-end test suite against a Kubernetes v1.26 cluster
@@ -937,7 +900,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -981,7 +943,6 @@ periodics:
   interval: 2h
 - name: ci-cert-manager-release-1.11-e2e-v1-26-issuers-venafi
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs Venafi (VaaS and TPP) e2e tests
@@ -989,7 +950,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
     preset-make-volumes: "true"
@@ -1034,7 +994,6 @@ periodics:
   interval: 12h
 - name: ci-cert-manager-release-1.11-e2e-v1-26-upgrade
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs cert-manager upgrade from latest published release
@@ -1042,7 +1001,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-make-volumes: "true"
     preset-service-account: "true"
@@ -1075,7 +1033,6 @@ periodics:
   interval: 8h
 - name: ci-cert-manager-release-1.11-e2e-v1-26-bestpractice-install
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with cert-manager installed in accordance with
@@ -1086,7 +1043,6 @@ periodics:
   labels:
     preset-bestpractice-install: "true"
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1130,7 +1086,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-21-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1139,7 +1094,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1183,7 +1137,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-22-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1192,7 +1145,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1236,7 +1188,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-23-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1245,7 +1196,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1289,7 +1239,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-24-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1298,7 +1247,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1342,7 +1290,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-25-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1351,7 +1298,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1395,7 +1341,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-e2e-v1-26-feature-gates-disabled
   max_concurrency: 4
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs the E2E tests with all feature gates disabled
@@ -1404,7 +1349,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-cloudflare-credentials: "true"
-    preset-default-e2e-volumes: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -1448,7 +1392,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-trivy-test-controller
   max_concurrency: 2
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs a Trivy scan against the controller container
@@ -1487,7 +1430,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-trivy-test-acmesolver
   max_concurrency: 2
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs a Trivy scan against the acmesolver container
@@ -1526,7 +1468,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-trivy-test-ctl
   max_concurrency: 2
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs a Trivy scan against the ctl container
@@ -1565,7 +1506,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-trivy-test-cainjector
   max_concurrency: 2
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs a Trivy scan against the cainjector container
@@ -1604,7 +1544,6 @@ periodics:
   interval: 24h
 - name: ci-cert-manager-release-1.11-trivy-test-webhook
   max_concurrency: 2
-  agent: kubernetes
   decorate: true
   annotations:
     description: Runs a Trivy scan against the webhook container

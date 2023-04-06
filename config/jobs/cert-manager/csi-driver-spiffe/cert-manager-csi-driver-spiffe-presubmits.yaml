@@ -2,8 +2,6 @@ presubmits:
   cert-manager/csi-driver-spiffe:
 
   - name: pull-cert-manager-csi-driver-spiffe-verify
-    context: pull-cert-manager-csi-driver-spiffe-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -23,11 +21,9 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-csi-driver-spiffe-e2e
-    context: pull-cert-manager-csi-driver-spiffe-e2e
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     labels:
       preset-service-account: "true"
@@ -49,21 +45,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots

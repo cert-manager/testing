@@ -2,7 +2,6 @@ periodics:
 
 - name: periodic-testing-close
   interval: 1h
-  agent: kubernetes
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
@@ -38,7 +37,6 @@ periodics:
 
 - name: periodic-testing-rotten
   interval: 1h
-  agent: kubernetes
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
@@ -77,7 +75,6 @@ periodics:
 
 - name: periodic-testing-stale
   interval: 1h
-  agent: kubernetes
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors

@@ -39,24 +39,6 @@ presets:
     secret:
       secretName: deployer-service-account
 
-- labels:
-    preset-image-deploy: "true"
-  volumeMounts:
-  - mountPath: /lib/modules
-    name: modules
-    readOnly: true
-  - mountPath: /sys/fs/cgroup
-    name: cgroup
-  volumes:
-  - name: modules
-    hostPath:
-      path: /lib/modules
-      type: Directory
-  - name: cgroup
-    hostPath:
-      path: /sys/fs/cgroup
-      type: Directory
-
 postsubmits:
   jetstack/testing:
 
@@ -106,7 +88,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -143,7 +124,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -180,7 +160,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -217,7 +196,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -254,7 +232,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -291,7 +268,6 @@ postsubmits:
       preset-dind-enabled: "true"
       # Mount Bazel scratch dir.
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       # Mount GCP SA creds and export GOOGLE_APPLICATION_CREDENTIALS env var
       # pointing to the creds file.
       preset-deployer-service-account: "true"
@@ -326,7 +302,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -362,7 +337,6 @@ postsubmits:
     labels:
       preset-dind-enabled: "true"
       preset-bazel-scratch-dir: "true"
-      preset-image-deploy: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"

@@ -3,9 +3,7 @@ presubmits:
 
   - name: pull-cert-manager-csi-lib-verify
     always_run: true
-    context: pull-cert-manager-csi-lib-verify
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - main
@@ -26,8 +24,6 @@ presubmits:
             value: "1"
 
   - name: pull-cert-manager-csi-lib-e2e
-    context: pull-cert-manager-csi-lib-e2e
-    agent: kubernetes
     decorate: true
     # TODO: Keep optional to not block other PRs. Change once e2e test
     # boilerplate code has been merged to main.
@@ -54,21 +50,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots

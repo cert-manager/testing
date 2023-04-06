@@ -2,8 +2,6 @@ presubmits:
   cert-manager/approver-policy:
 
   - name: pull-cert-manager-approver-policy-verify
-    context: pull-cert-manager-approver-policy-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -21,8 +19,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-approver-policy-test
-    context: pull-cert-manager-approver-policy-test
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -40,8 +36,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-approver-policy-smoke
-    context: pull-cert-manager-approver-policy-smoke
-    agent: kubernetes
     decorate: true
     always_run: true
     labels:
@@ -63,21 +57,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots

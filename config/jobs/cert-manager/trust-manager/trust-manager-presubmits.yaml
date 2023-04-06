@@ -1,7 +1,6 @@
 presubmits:
   cert-manager/trust-manager:
   - name: pull-trust-manager-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     optional: false
@@ -27,21 +26,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots
@@ -49,11 +33,9 @@ presubmits:
 
   # kind based trust-manager smoke job
   - name: pull-trust-manager-smoke
-    context: pull-trust-manager-smoke
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -76,21 +58,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots

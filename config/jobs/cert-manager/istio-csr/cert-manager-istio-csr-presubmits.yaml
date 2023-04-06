@@ -2,7 +2,6 @@ presubmits:
   cert-manager/istio-csr:
 
   - name: pull-cert-manager-istio-csr-verify
-    agent: kubernetes
     decorate: true
     always_run: true
     max_concurrency: 8
@@ -22,8 +21,6 @@ presubmits:
             memory: 1Gi
 
   - name: pull-cert-manager-istio-csr-ca-rotation
-    context: pull-cert-manager-istio-csr-ca-rotation
-    agent: kubernetes
     decorate: true
     always_run: true
     branches:
@@ -47,21 +44,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
         - name: ndots
@@ -69,11 +51,9 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.14
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
-    context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -100,21 +80,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots
@@ -122,11 +87,9 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.15
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-15
-    context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-15
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -153,21 +116,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots
@@ -175,11 +123,9 @@ presubmits:
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.16
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-16
-    context: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-16
     always_run: true
     optional: false
     max_concurrency: 8
-    agent: kubernetes
     decorate: true
     branches:
     - ^main$
@@ -206,21 +152,6 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
-        volumeMounts:
-        - mountPath: /lib/modules
-          name: modules
-          readOnly: true
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-      volumes:
-      - name: modules
-        hostPath:
-          path: /lib/modules
-          type: Directory
-      - name: cgroup
-        hostPath:
-          path: /sys/fs/cgroup
-          type: Directory
       dnsConfig:
         options:
           - name: ndots
