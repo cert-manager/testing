@@ -70,7 +70,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         env:
         - name: K8S_VERSION
           value: "1.26.1"
@@ -106,7 +106,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         env:
         - name: K8S_VERSION
           value: "1.26.1"
@@ -142,7 +142,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         env:
         - name: K8S_VERSION
           value: "1.26.1"

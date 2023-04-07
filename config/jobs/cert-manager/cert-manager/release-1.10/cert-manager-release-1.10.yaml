@@ -94,7 +94,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -142,7 +142,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -190,7 +190,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -238,7 +238,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -286,7 +286,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -334,7 +334,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -382,7 +382,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -425,7 +425,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -496,7 +496,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -543,7 +543,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -591,7 +591,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -641,7 +641,7 @@ presubmits:
         resources:
           requests:
             cpu: 3500m
-            memory: 12Gi
+            memory: 6Gi
         securityContext:
           privileged: true
           capabilities:
@@ -728,7 +728,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -780,7 +780,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -832,7 +832,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -884,7 +884,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -936,7 +936,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -988,7 +988,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1040,7 +1040,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1092,7 +1092,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1139,7 +1139,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1186,7 +1186,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1238,7 +1238,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1290,7 +1290,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1342,7 +1342,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1394,7 +1394,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1446,7 +1446,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1498,7 +1498,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
@@ -1550,7 +1550,7 @@ periodics:
       resources:
         requests:
           cpu: 3500m
-          memory: 12Gi
+          memory: 6Gi
       securityContext:
         privileged: true
         capabilities:
