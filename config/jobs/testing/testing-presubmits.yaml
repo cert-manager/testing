@@ -22,33 +22,6 @@ presubmits:
     trigger: "(?m)^/test config,?(\\s+|$)"
     rerun_command: "/test config"
 
-  - name: pull-testing-build
-    always_run: true
-    context: pull-testing-build
-    max_concurrency: 4
-    agent: kubernetes
-    decorate: true
-    labels:
-      preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
-    spec:
-      containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
-        args:
-        - runner
-        - bazel
-        - build
-        - //...
-        resources:
-          requests:
-            cpu: 1
-            memory: 2Gi
-        securityContext:
-          privileged: true
-    trigger: "(?m)^/test build,?(\\s+|$)"
-    rerun_command: "/test build"
-
   - name: pull-testing-verify
     always_run: true
     context: pull-testing-verify
@@ -57,22 +30,17 @@ presubmits:
     decorate: true
     labels:
       preset-service-account: "true"
-      preset-bazel-remote-cache-enabled: "true"
-      preset-bazel-scratch-dir: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/bazelbuild:20210831-4cf7b0b-4.2.1
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-0ef4440-bullseye
         args:
         - runner
-        - bazel
-        - test
-        - //...
+        - make
+        - verify
         resources:
           requests:
             cpu: 1
             memory: 2Gi
-        securityContext:
-          privileged: true
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
 

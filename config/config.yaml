@@ -172,56 +172,6 @@ presets:
   - name: docker-graph
     mountPath: /docker-graph
 
-# storage / caching presets
-- labels:
-    preset-bazel-scratch-dir: "true"
-  env:
-  - name: TEST_TMPDIR
-    value: /bazel-scratch/.cache/bazel
-  volumes:
-  - name: bazel-scratch
-    emptyDir: {}
-  volumeMounts:
-  - name: bazel-scratch
-    mountPath: /bazel-scratch/.cache
-
-# Use this preset to cache Go modules and build artifacts on the prow cluster
-# nodes nodes.
-# This idea is stolen from the Istio Prow configuration.
-# You can see how they implemented it in the following PRs:
-#  https://github.com/istio/test-infra/pulls?q=is%3Apr+cache
-# Additionally configure bazel-gazelle to get Go modules from this cache. See:
-#  https://github.com/bazelbuild/bazel-gazelle/blob/136915ee0ab40b6cf6461670bf2a1a04b0929d66/repository.rst#go_repository
-- labels:
-    preset-bazel-go-cache: "true"
-  env:
-  - name: GO_REPOSITORY_USE_HOST_CACHE
-    value: "1"
-  volumes:
-  - name: go-cache
-    hostPath:
-      path: /var/tmp/prow/cache/go/pkg
-      type: DirectoryOrCreate
-  volumeMounts:
-  - name: go-cache
-    mountPath: /home/prow/go/pkg
-
-- labels:
-    preset-bazel-remote-cache-enabled: "true"
-  volumes:
-  - name: bazel-cache-credentials
-    secret:
-      secretName: bazel-cache-credentials
-  volumeMounts:
-  - name: bazel-cache-credentials
-    mountPath: /etc/bazel-cache-credentials
-    readOnly: true
-  env:
-  - name: BAZEL_REMOTE_CACHE_ENABLED
-    value: "true"
-  - name: BAZEL_CACHE_CREDENTIALS
-    value: /etc/bazel-cache-credentials/credentials.json
-
 tide:
   pr_status_base_urls:
     '*': https://prow.build-infra.jetstack.net/pr
