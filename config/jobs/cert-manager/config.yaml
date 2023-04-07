@@ -168,7 +168,7 @@ presets:
   volumes:
     - name: shared-cache
       hostPath:
-        path: /tmp/shared_cache
+        path: /mnt/stateful_partition/cache/shared_cache
         type: DirectoryOrCreate
 
 - labels:
@@ -186,11 +186,11 @@ presets:
   volumes:
     - name: go-cache
       hostPath:
-        path: /tmp/go_cache
+        path: /mnt/stateful_partition/cache/go_cache
         type: DirectoryOrCreate
     - name: go-mod-cache
       hostPath:
-        path: /tmp/go_mod_cache
+        path: /mnt/stateful_partition/cache/go_mod_cache
         type: DirectoryOrCreate
 
 # A preset which causes make e2e-setup to install cert-manager in accordance
