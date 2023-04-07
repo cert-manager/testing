@@ -1,0 +1,29 @@
+---
+gitHubLogin: "jetstack-bot"
+gitHubToken: "/etc/github/token"
+gitName: "jetstack-bot"
+gitEmail: "jetstack-bot@users.noreply.github.com"
+skipPullRequest: false
+gitHubOrg: "jetstack"
+gitHubRepo: "testing"
+remoteName: "testing"
+headBranchName: "autobump"
+upstreamURLBase: "https://raw.githubusercontent.com/jetstack/testing/master"
+includedConfigPaths:
+  - "config/jobs"
+  - "images"
+  - "prow/cluster"
+extraFiles:
+  - "config/config.yaml"
+targetVersion: "latest"
+prefixes:
+  - name: "k8s-prow images"
+    prefix: "gcr.io/k8s-prow/"
+    repo: "https://github.com/kubernetes/test-infra"
+    summarise: false
+    consistentImages: false
+  - name: "jetstack-build-infra images"
+    prefix: "eu.gcr.io/jetstack-build-infra-images/"
+    repo: "https://github.com/jetstack/testing"
+    summarise: false
+    consistentImages: false
