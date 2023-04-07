@@ -42,7 +42,7 @@ fi
 
 echo "Executing builder..."
 PUSHED_IMAGE=$(cd "$SCRIPT_DIR" && \
-    go run . --build-dir "${PROJECT_DIR}"/"${BUILD_DIR}" "$@")
+    go run . --build-dir "${PROJECT_DIR}"/"${BUILD_DIR}" $@)
 
 echo "Build complete!"
 

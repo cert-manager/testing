@@ -15,34 +15,10 @@ We have certain requirements on files in these repository:
 copyright notice at the top of the file. Examples of copyright notices for
 different filetypes can be seen in [hack/boilerplate](hack/boilerplate).
 
-* bazel file check - we 'lint' our Bazel files, as well as auto-generate the
-`package-srcs` and `all-srcs` targets in each.
-
 You can run the lint checks with:
 
 ```bash
-bazel test //hack/...
-```
-
-Alternatively, to test a single aspect, you can:
-
-```bash
-# Run Bazel lint checks
-bazel test //hack:verify-kazel
-
-# Run boilerplate checker
-bazel test //hack:verify-boilerplate
-```
-
-### Running the Bazel linter
-
-As noted above, we lint our Bazel files and auto-generate targets for certain
-common tasks.
-
-You can auto-lint and auto-generate these targets like so:
-
-```bash
-bazel run //hack:update-kazel
+make verify
 ```
 
 ### Validating Prow configuration
@@ -50,7 +26,7 @@ bazel run //hack:update-kazel
 In order to test the configuration is valid, you can run:
 
 ```
-bazel test //config/...
+make local-checkconfig
 ```
 
 This will use the test-infra 'checkconfig' tool to verify the configuration
@@ -58,62 +34,47 @@ files.
 
 ### Deploying a new version of Prow
 
-Prow's deployment on our build-infra cluster is done manually using Bazel
-scripts in ./prow/cluster.
+Prow's deployment on our build-infra cluster is done manually using a Makefile in ./prow/cluster.
 
 See more detailed information about upgrading Prow in [./prow/cluster/README.md](./prow/cluster/README.md)
 
 ### Building an image and exporting to your local Docker daemon
 
-Each directory under `images/` and `legacy/images` contains a Bazel build file
-defining how each image should be built.
+Each directory under `images/` contains a configuration file that
+define how each image should be built.
 
 You can build these images and store them within your local docker daemon by
 running:
 
 ```bash
-$ bazel run //images/bazelbuild
-INFO: Analysed target //images/bazelbuild:bazelbuild (1 packages loaded).
-INFO: Found 1 target...
-Target //images/bazelbuild:bazelbuild up-to-date (nothing to build)
-INFO: Elapsed time: 0.783s, Critical Path: 0.08s
-INFO: 0 processes.
-INFO: Build completed successfully, 1 total action
-INFO: Build completed successfully, 1 total action
-Loaded image ID: sha256:3c6a6d4f8f7c760670825a52475029dbc0da333eebed5472ece60fdd6ed51949
-Tagging 3c6a6d4f8f7c760670825a52475029dbc0da333eebed5472ece60fdd6ed51949 as eu.gcr.io/jetstack-build-infra-images/bazelbuild:v20180907-8793fc5-0.16.1
+$ ./images/image-builder-script/builder.sh images/golang-dind
+./images/image-builder-script/builder.sh images/golang-aws
+WARNING: GOOGLE_APPLICATION_CREDENTIALS not set
+Executing builder...
+2023/04/07 16:31:51 --confirm is set to false, not pushing images
+...
 ```
 
-This may take a few minutes depending on the state of your Bazel & Docker cache.
+This may take a few minutes depending on the state of your Docker cache.
 
 ### Pushing a docker image to the image repository
 
-Bazel is used to *push* built docker images to the remote registry.
-
-Each images directory exposes a `push` rule in its BUILD.bazel file that can be
-used to push images automatically.
+builder.sh can also be used to *push* built docker images to the remote registry.
 
 This push target **will not** handle authentication with the remote registry for
 you. You should ensure your Docker client is already authenticated using gcloud.
 
-For example, to build and push the `images/bazelbuild` image:
+For example, to build and push the `images/golang-aws` image:
 
 ```bash
 # Obtain credentials for the docker registry
 $ gcloud docker -a
 # Build (if required) and push the docker image
-$ bazel run //images/bazelbuild:push
+$ ./images/image-builder-script/builder.sh images/golang-aws --confirm=true
 ...
 ```
 
-Again, this may take a few minutes depending on the state of your Bazel and
-Docker cache.
-
-The docker repository that will be pushed to is defined in `hack/print-workspace-status.sh`.
-If you want to push to a custom repository, you will need to edit this file
-manually.
-In future, we may allow this to be overridden using environment variables or
-build arguments passed to `bazel run`.
+If you want to push to a custom repository, you can use the `--registry` flag.
 
 ---
 
@@ -125,8 +86,7 @@ build arguments passed to `bazel run`.
 
 ### hack/
 
-This contains a bazel build file and support scripts used to verify aspects
-of the repository.
+This contains support scripts used to verify aspects of the repository.
 
 ### config/
 
@@ -147,22 +107,6 @@ This directory contains image defintions for images used as part of Prow jobs.
 New images will be built and pushed on changes to the relevant files (i.e
 Dockerfile for the image).
 
-
-### legacy/
-
-Prow supports two modes for configuring jobs - 'decorated' and 'bootstrap'.
-
-The decorated mode uses init containers and a sidecar to perform job 'utility'
-functions, such as uploading logs to GCS and cloning the repo you are testing
-at the correct revision. This is a newer approach, with a few limitations in
-the amount of build metadata can be displayed. It is recommended to be used
-going forward.
-
-The bootstrap approach relies on a Python script in this repository, under [legacy/bootstrap](legacy/bootstrap).
-
-A number of our jobs still rely on this 'bootstrap' approach, and as such we
-maintain a copy of all required files within this configuration repository.
-
 ### Debugging e2e tests run with Prow
 
 -  For each e2e test run, Prow will create a new `ProwJob` custom resource in
@@ -176,7 +120,6 @@ maintain a copy of all required files within this configuration repository.
 - The image used for the test container has bash, so a running test can be
   easily debugged by execing the container `kubectl exec -it  <pod-name> -ctest
   -ntest-pods -- bash`
-
 
 - When execed to test container, you can find tools such as `kubectl`, `kind`, `helm`,
   `jq` in `~/bazel-out/k8-fastbuild/bin/hack/bin/`. The current kube context will
@@ -195,10 +138,9 @@ See [documentation in k/test-infra](https://github.com/kubernetes/test-infra/blo
 
 An example of running `pull-cert-manager-upgrade-v1-21` job locally:
 
-1. Remove Bazel presets from job config, so it doesn't look for Bazel cache creds
-2. Run `./prow/pj-on-kind.sh pull-cert-manager-upgrade-v1-21`
-3. Pass some cert-manager PR number when requested. This will be checked out.
-4. Pass 'empty' for any storage volumes when requested.
-5. Retrieve kubeconfig for the kind cluster `kind get kubeconfig --name mkpod` and set KUBECONFIG
-6. `kubectl get pods` - to get the name of the pod that is running the test
-7. `kubectl logs <pod-name> -c test -f` stream the logs
+1. Run `./prow/pj-on-kind.sh pull-cert-manager-upgrade-v1-21`
+2. Pass some cert-manager PR number when requested. This will be checked out.
+3. Pass 'empty' for any storage volumes when requested.
+4. Retrieve kubeconfig for the kind cluster `kind get kubeconfig --name mkpod` and set KUBECONFIG
+5. `kubectl get pods` - to get the name of the pod that is running the test
+6. `kubectl logs <pod-name> -c test -f` stream the logs

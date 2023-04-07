@@ -27,7 +27,7 @@ images:
 To build an image locally, from the root of this repository run:
 
 ```bash
-$ ./images/builder/ci-runner.sh images/bazelbuild
+$ ./images/image-builder-script/builder.sh images/bazelbuild
 ```
 
 ### Additional options
