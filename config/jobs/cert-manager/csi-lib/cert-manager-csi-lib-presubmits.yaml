@@ -32,7 +32,6 @@ presubmits:
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/nix-dind:20220921-789387a-2.11.0

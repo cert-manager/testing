@@ -87,7 +87,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -123,7 +122,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -159,7 +157,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -195,7 +192,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -231,7 +227,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -267,8 +262,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      # Mount Bazel scratch dir.
-      preset-bazel-scratch-dir: "true"
       # Mount GCP SA creds and export GOOGLE_APPLICATION_CREDENTIALS env var
       # pointing to the creds file.
       preset-deployer-service-account: "true"
@@ -302,7 +295,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
@@ -337,7 +329,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      preset-bazel-scratch-dir: "true"
       preset-deployer-service-account: "true"
       preset-deployer-github-token: "true"
       preset-deployer-ssh-key: "true"
