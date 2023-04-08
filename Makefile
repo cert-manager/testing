@@ -25,8 +25,20 @@ verify: verify-boilerplate
 local-checkconfig:
 	docker run --rm \
 		-v $(CURDIR)/config:/config \
-		gcr.io/k8s-prow/checkconfig:v20210409-985ef5e721 \
+		gcr.io/k8s-prow/checkconfig:v20230407-e8b3bf711e \
 		--strict=true \
         --config-path=/config/config.yaml \
         --job-config-path=/config/jobs \
         --plugin-config=/config/plugins.yaml
+
+	docker run --rm \
+		-v $(CURDIR)/config:/config \
+		gcr.io/k8s-prow/configurator:v20230407-e8b3bf711e \
+        --yaml=/config/testgrid/dashboards.yaml \
+        --default=config/testgrid/default.yaml \
+        --prow-config=/config/config.yaml \
+        --prow-job-config=/config/jobs \
+        --prowjob-url-prefix=https://github.com/jetstack/testing/tree/master/config/jobs \
+        --update-description \
+        --validate-config-file \
+        --oneshot
