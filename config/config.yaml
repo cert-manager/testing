@@ -1,7 +1,7 @@
 plank:
   job_url_template: 'https://prow.build-infra.jetstack.net/view/jetstack-logs/{{if eq .Spec.Type "presubmit"}}pr-logs/pull{{else if eq .Spec.Type "batch"}}pr-logs/pull{{else}}logs{{end}}{{if .Spec.Refs}}{{if ne .Spec.Refs.Org ""}}/{{.Spec.Refs.Org}}_{{.Spec.Refs.Repo}}{{end}}{{end}}{{if eq .Spec.Type "presubmit"}}/{{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}{{else if eq .Spec.Type "batch"}}/batch{{end}}/{{.Spec.Job}}/{{.Status.BuildID}}/'
-  report_templates:
-    '*': '[Full PR test history](https://prow.build-infra.jetstack.net/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://jetstack-build-infra.appspot.com/pr/{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#github-issues-for-known-flakes) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
+  report_templates: # These templates are used when creating a GH report comment for test failures.
+    '*': '[Full PR test history](https://prow.build-infra.jetstack.net/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://prow.build-infra.jetstack.net/pr?query=is%3Apr%20state%3Aopen%20author%3A{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#github-issues-for-known-flakes) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
   job_url_prefix_config:
     '*': https://prow.build-infra.jetstack.net/view/
   pod_pending_timeout: 120m
@@ -17,12 +17,25 @@ plank:
         entrypoint: "gcr.io/k8s-prow/entrypoint:v20230329-c93d79fb7d"
         sidecar: "gcr.io/k8s-prow/sidecar:v20230329-c93d79fb7d"
       gcs_configuration:
-        bucket: "jetstack-logs"
+        bucket: gs://jetstack-logs
         path_strategy: "legacy"
         # Leave this as k/k so that all logs use org_repo in the path
         default_org: "kubernetes"
         default_repo: "kubernetes"
       gcs_credentials_secret: "service-account"
+      resources:
+        clonerefs:
+          requests:
+            cpu: 100m
+        initupload:
+          requests:
+            cpu: 100m
+        place_entrypoint:
+          requests:
+            cpu: 100m
+        sidecar:
+          requests:
+            cpu: 100m
 
 # branch-protection is well documented in the source code for prow:
 # https://github.com/kubernetes/test-infra/blob/bc7ab92094413c3ba659851b5ec19f4308cb3a70/prow/config/branch_protection.go
@@ -103,29 +116,39 @@ sinker:
 
 deck:
   spyglass:
-    size_limit: 500000000 # 500MB
+    size_limit: 100000000 # 100MB
     gcs_browser_prefix: https://console.cloud.google.com/storage/browser/
-    testgrid_config: gs://k8s-testgrid/config
+    testgrid_config: gs://jetstack-testgrid/config
     testgrid_root: https://testgrid.k8s.io/
     lenses:
     - lens:
         name: metadata
       required_files:
-      - started.json|finished.json
+      - ^(?:started|finished)\.json$
+      optional_files:
+      - ^(?:podinfo|prowjob)\.json$
     - lens:
         name: buildlog
       required_files:
-        - build-log.txt
+        - ^.*build-log\.txt$
     - lens:
         name: junit
       required_files:
-        - artifacts/junit.*\.xml
+        - ^artifacts(/.*/|/)junit.*\.xml$ # https://regex101.com/r/vCSegS/1
     - lens:
         name: coverage
       required_files:
-        - artifacts/filtered.cov
+        - ^artifacts/filtered\.cov$
       optional_files:
-        - artifacts/filtered.html
+        - ^artifacts/filtered\.html$
+    - lens:
+        name: podinfo
+      required_files:
+        - ^podinfo\.json$
+    - lens:
+        name: links
+      required_files:
+        - artifacts/.*\.link\.txt
   tide_update_period: 1s
   rerun_auth_configs:
     '*':
