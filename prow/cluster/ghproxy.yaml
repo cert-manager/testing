@@ -59,6 +59,7 @@ spec:
         - --cache-sizeGB=99
         - --push-gateway=pushgateway
         - --serve-metrics=true
+        - --legacy-disable-disk-cache-partitions-by-auth-header=false
         ports:
         - name: main
           containerPort: 8888
