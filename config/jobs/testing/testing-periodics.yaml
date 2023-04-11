@@ -109,3 +109,26 @@ periodics:
     - name: token
       secret:
         secretName: retest-bot-token
+
+- cron: "30 18-23/5 * * 1-5"  # Run at 10:30 and 15:30 PST (18:05 UTC, fall) Mon-Fri
+  name: periodic-testing-autobump
+  cluster: trusted
+  decorate: true
+  annotations:
+    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Creates autobump PRs for the jetstack/testing repo.
+  extra_refs:
+  - org: jetstack
+    repo: testing
+    base_ref: master
+  labels:
+    preset-deployer-github-token: "true"
+    preset-deployer-ssh-key: "true"
+  spec:
+    containers:
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230406-d42c989ab5
+      command:
+      - generic-autobumper
+      args:
+      - --config=config/prow/autobump-config/testing-autobump-config.yaml
