@@ -14,7 +14,7 @@
 
 .PHONY: verify-boilerplate
 verify-boilerplate:
-	@./hack/verify-boilerplate.py --rootdir=$(CURDIR) --boilerplate-dir=hack/boilerplate
+	@./hack/verify-boilerplate.py --rootdir=$(CURDIR) --boilerplate-dir=hack/boilerplate && echo "Boilerplate verification passed."
 
 .PHONY: verify
 verify: verify-boilerplate
