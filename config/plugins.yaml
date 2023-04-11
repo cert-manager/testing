@@ -40,15 +40,12 @@ repo_milestone:
   # curl -H "Authorization: token <token>" https://api.github.com/orgs/<org-name>/teams
   cert-manager/cert-manager:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
-    maintainers_id: 2805308
     maintainers_team: milestone-maintainers
   cert-manager/website:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
-    maintainers_id: 2805308
     maintainers_team: milestone-maintainers
   cert-manager/trust-manager:
     # https://github.com/orgs/cert-manager/teams/milestone-maintainers
-    maintainers_id: 2805308
     maintainers_team: milestone-maintainers
 
 milestone_applier:
