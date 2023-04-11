@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/checkconfig:v20210409-985ef5e721
+      - image: gcr.io/k8s-prow/checkconfig:v20230407-e8b3bf711e
         args:
         - /app/prow/cmd/checkconfig/app.binary
         - -strict=true
@@ -57,7 +57,7 @@ presubmits:
       testgrid-create-test-group: "false"
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20220501-de638098ae
+      - image: gcr.io/k8s-prow/configurator:v20230407-e8b3bf711e
         command:
         - configurator
         args:

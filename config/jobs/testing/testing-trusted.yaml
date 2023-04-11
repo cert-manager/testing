@@ -102,7 +102,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/bazelbuild
         - --confirm=true
         resources:
@@ -137,7 +137,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/make-dind
         - --confirm=true
         resources:
@@ -172,7 +172,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/golang-dind
         - --confirm=true
         resources:
@@ -207,7 +207,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/image-builder
         - --confirm=true
         resources:
@@ -242,7 +242,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/golang-nodejs
         - --confirm=true
         resources:
@@ -309,7 +309,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/golang-aws
         - --confirm=true
         resources:
@@ -344,7 +344,7 @@ postsubmits:
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
-        - images/image-builder-script/ci-runner.sh
+        - images/image-builder-script/builder.sh
         - images/nix-dind
         - --confirm=true
         resources:
