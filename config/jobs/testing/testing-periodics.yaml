@@ -127,7 +127,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20230406-d42c989ab5
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230410-e1db1a99f8
       command:
       - generic-autobumper
       args:
