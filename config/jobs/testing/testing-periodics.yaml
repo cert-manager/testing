@@ -19,7 +19,6 @@ periodics:
         label:lifecycle/rotten
       - --updated=720h
       - --token=/etc/token/bot-github-token
-      - --endpoint=http://ghproxy.default.svc.cluster.local
       - |-
         --comment=Rotten issues close after 30d of inactivity.
         Reopen the issue with `/reopen`.
@@ -56,7 +55,6 @@ periodics:
         -label:lifecycle/rotten
       - --updated=720h
       - --token=/etc/token/bot-github-token
-      - --endpoint=http://ghproxy.default.svc.cluster.local
       - |-
         --comment=Stale issues rot after 30d of inactivity.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
@@ -95,7 +93,6 @@ periodics:
         -label:lifecycle/rotten
       - --updated=2160h
       - --token=/etc/token/bot-github-token
-      - --endpoint=http://ghproxy.default.svc.cluster.local
       - |-
         --comment=Issues go stale after 90d of inactivity.
         Mark the issue as fresh with `/remove-lifecycle stale`.
