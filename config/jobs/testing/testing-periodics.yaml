@@ -131,4 +131,4 @@ periodics:
       command:
       - generic-autobumper
       args:
-      - --config=config/prow/autobump-config/testing-autobump-config.yaml
+      - --config=config/autobump-config/testing-autobump-config.yaml
