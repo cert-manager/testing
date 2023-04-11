@@ -9,7 +9,7 @@ periodics:
     description: Closes PRs and issues that are marked 'rotten' and have been inactive for 30d
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230410-e1db1a99f8
+    - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
       command:
       - commenter
       args:
@@ -44,7 +44,7 @@ periodics:
     description: Marks PRs and issues that are marked 'stale' and have been inactive for 30d as 'rotten'
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230410-e1db1a99f8
+    - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
       command:
       - commenter
       args:
@@ -82,7 +82,7 @@ periodics:
     description: Marks PRs and issues that have been inactive for 30d as 'stale'
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230410-e1db1a99f8
+    - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
       command:
       - commenter
       args:
@@ -127,7 +127,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20230410-e1db1a99f8
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230411-7b4f9b177a
       command:
       - generic-autobumper
       args:
