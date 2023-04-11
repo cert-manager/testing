@@ -25,12 +25,8 @@ presubmits:
 
   - name: pull-testing-verify
     always_run: true
-    context: pull-testing-verify
     max_concurrency: 4
-    agent: kubernetes
     decorate: true
-    labels:
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-0ef4440-bullseye
@@ -40,22 +36,15 @@ presubmits:
         - verify
         resources:
           requests:
-            cpu: 1
-            memory: 2Gi
+            cpu: 100m
+            memory: 100Mi
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
 
   - name: pull-testing-check-testgrid-config
-    # TODO: Temporarily optional and disabled by default so that we can iterate
-    # on getting this test working before making it mandatory again.
-    always_run: false
-    optional: true
-    run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
+    always_run: true
+    max_concurrency: 4
     decorate: true
-    branches:
-    - master
-    annotations:
-      testgrid-create-test-group: "false"
     spec:
       containers:
       - image: gcr.io/k8s-prow/configurator:v20230407-e8b3bf711e
@@ -72,4 +61,7 @@ presubmits:
         - --oneshot
         resources:
           requests:
-            memory: "1Gi"
+            cpu: 100m
+            memory: 100Mi
+    trigger: "(?m)^/test testgrid-config,?(\\s+|$)"
+    rerun_command: "/test testgrid-config"
