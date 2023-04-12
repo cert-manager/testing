@@ -102,7 +102,7 @@ presubmits:
         - K8S_VERSION=1.22
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -153,7 +153,7 @@ presubmits:
         - K8S_VERSION=1.23
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -204,7 +204,7 @@ presubmits:
         - K8S_VERSION=1.24
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -255,7 +255,7 @@ presubmits:
         - K8S_VERSION=1.25
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -306,7 +306,7 @@ presubmits:
         - K8S_VERSION=1.26
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -352,7 +352,7 @@ presubmits:
         - test-upgrade
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -429,7 +429,7 @@ presubmits:
         - K8S_VERSION=1.26
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -479,7 +479,7 @@ presubmits:
         - K8S_VERSION=1.26
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -530,7 +530,7 @@ presubmits:
         - K8S_VERSION=1.26
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -583,7 +583,7 @@ presubmits:
         - K8S_VERSION=1.26
         resources:
           requests:
-            cpu: 3500m
+            cpu: 7000m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -670,7 +670,7 @@ periodics:
       - K8S_VERSION=1.22
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -722,7 +722,7 @@ periodics:
       - K8S_VERSION=1.23
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -774,7 +774,7 @@ periodics:
       - K8S_VERSION=1.24
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -826,7 +826,7 @@ periodics:
       - K8S_VERSION=1.25
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -878,7 +878,7 @@ periodics:
       - K8S_VERSION=1.26
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -930,7 +930,7 @@ periodics:
       - K8S_VERSION=1.26
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -977,7 +977,7 @@ periodics:
       - test-upgrade
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1024,7 +1024,7 @@ periodics:
       - K8S_VERSION=1.26
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1076,7 +1076,7 @@ periodics:
       - K8S_VERSION=1.22
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1128,7 +1128,7 @@ periodics:
       - K8S_VERSION=1.23
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1180,7 +1180,7 @@ periodics:
       - K8S_VERSION=1.24
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1232,7 +1232,7 @@ periodics:
       - K8S_VERSION=1.25
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1284,7 +1284,7 @@ periodics:
       - K8S_VERSION=1.26
       resources:
         requests:
-          cpu: 3500m
+          cpu: 7000m
           memory: 6Gi
       securityContext:
         privileged: true
