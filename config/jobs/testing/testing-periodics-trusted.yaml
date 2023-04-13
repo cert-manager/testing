@@ -120,3 +120,61 @@ periodics:
       - generic-autobumper
       args:
       - --config=config/autobump-config/testing-autobump-config.yaml
+
+- name: periodic-testing-label-sync
+  cron: "17 * * * *"  # Every hour at 17 minutes past the hour
+  cluster: trusted
+  decorate: true
+  annotations:
+    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs label_sync to synchronize GitHub repo labels with the label config defined in label_sync/labels.yaml.
+  extra_refs:
+  - org: jetstack
+    repo: testing
+    base_ref: master
+  labels:
+    preset-deployer-github-token: "true"
+  spec:
+    containers:
+    - name: label-sync
+      image: gcr.io/k8s-prow/label_sync:v20230412-a86d65c3c2
+      command:
+      - label_sync
+      args:
+      - --config=config/labels.yaml
+      - --confirm=true
+      # TODO: enable label_sync across the whole org
+      - --only=cert-manager/cert-manager,jetstack/testing,cert-manager/release,cert-manager/webhook-example,cert-manager/website,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr,cert-manager/csi-driver-spiffe,cert-manager/infrastructure
+      - --token=/etc/github/token
+      - --endpoint=https://api.github.com
+      - --debug
+
+- name: periodic-testing-branchprotector
+  cron: "54 * * * *"  # Every hour at 54 minutes past the hour
+  cluster: trusted
+  decorate: true
+  decoration_config:
+    timeout: 5h
+  annotations:
+    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs Prow's branchprotector to apply configured GitHub status context requirements and merge policies.
+  extra_refs:
+  - org: jetstack
+    repo: testing
+    base_ref: master
+  labels:
+    preset-deployer-github-token: "true"
+  spec:
+    containers:
+    - name: branchprotector
+      image: gcr.io/k8s-prow/branchprotector:v20230412-a86d65c3c2
+      command:
+      - branchprotector
+      args:
+      - --config-path=config/config.yaml
+      - --job-config-path=config/jobs
+      - --github-token-path=/etc/github/token
+      - --confirm
+      - --github-endpoint=https://api.github.com
