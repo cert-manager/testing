@@ -2,11 +2,14 @@ periodics:
 
 - name: periodic-testing-close
   interval: 1h
+  cluster: trusted
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Closes PRs and issues that are marked 'rotten' and have been inactive for 30d
+  labels:
+    preset-deployer-github-token: "true"
   spec:
     containers:
     - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
@@ -18,7 +21,7 @@ periodics:
         -label:lifecycle/frozen
         label:lifecycle/rotten
       - --updated=720h
-      - --token=/etc/token/bot-github-token
+      - --token=/etc/github/token
       - |-
         --comment=Rotten issues close after 30d of inactivity.
         Reopen the issue with `/reopen`.
@@ -27,21 +30,17 @@ periodics:
         /close
       - --ceiling=10
       - --confirm
-      volumeMounts:
-      - name: token
-        mountPath: /etc/token
-    volumes:
-    - name: token
-      secret:
-        secretName: retest-bot-token
 
 - name: periodic-testing-rotten
   interval: 1h
+  cluster: trusted
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Marks PRs and issues that are marked 'stale' and have been inactive for 30d as 'rotten'
+  labels:
+    preset-deployer-github-token: "true"
   spec:
     containers:
     - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
@@ -54,7 +53,7 @@ periodics:
         label:lifecycle/stale
         -label:lifecycle/rotten
       - --updated=720h
-      - --token=/etc/token/bot-github-token
+      - --token=/etc/github/token
       - |-
         --comment=Stale issues rot after 30d of inactivity.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
@@ -65,21 +64,17 @@ periodics:
         /remove-lifecycle stale
       - --ceiling=10
       - --confirm
-      volumeMounts:
-      - name: token
-        mountPath: /etc/token
-    volumes:
-    - name: token
-      secret:
-        secretName: retest-bot-token
 
 - name: periodic-testing-stale
   interval: 1h
+  cluster: trusted
   decorate: true
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Marks PRs and issues that have been inactive for 30d as 'stale'
+  labels:
+    preset-deployer-github-token: "true"
   spec:
     containers:
     - image: gcr.io/k8s-prow/commenter:v20230411-7b4f9b177a
@@ -92,7 +87,7 @@ periodics:
         -label:lifecycle/stale
         -label:lifecycle/rotten
       - --updated=2160h
-      - --token=/etc/token/bot-github-token
+      - --token=/etc/github/token
       - |-
         --comment=Issues go stale after 90d of inactivity.
         Mark the issue as fresh with `/remove-lifecycle stale`.
@@ -102,16 +97,9 @@ periodics:
         /lifecycle stale
       - --ceiling=10
       - --confirm
-      volumeMounts:
-      - name: token
-        mountPath: /etc/token
-    volumes:
-    - name: token
-      secret:
-        secretName: retest-bot-token
 
-- cron: "30 18-23/5 * * 1-5"  # Run at 10:30 and 15:30 PST (18:05 UTC, fall) Mon-Fri
-  name: periodic-testing-autobump
+- name: periodic-testing-autobump
+  cron: "30 18-23/5 * * 1-5"  # Run at 10:30 and 15:30 PST (18:05 UTC, fall) Mon-Fri
   cluster: trusted
   decorate: true
   annotations:
