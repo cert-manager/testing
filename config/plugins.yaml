@@ -91,6 +91,10 @@ require_matching_label:
   prs: true
   regexp: ^kind/
 
+dco:
+  jetstack:
+    trusted_apps: [ "jetstack-bot" ]
+
 plugins:
 
   jetstack:
