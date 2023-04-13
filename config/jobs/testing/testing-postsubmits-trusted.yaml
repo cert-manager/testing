@@ -38,6 +38,43 @@ postsubmits:
           requests:
             memory: "1Gi"
 
+  - name: post-testing-reconcile-hmacs
+    cluster: trusted
+    run_if_changed: 'config/config.yaml'
+    decorate: true
+    branches:
+    - master
+    annotations:
+      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    labels:
+      preset-deployer-github-token: "true"
+    max_concurrency: 1
+    spec:
+      containers:
+      - image: gcr.io/k8s-prow/hmac:v20200622-168a90f1b0
+        command:
+        - /hmac
+        args:
+        - --config-path=config/config.yaml
+        - --hook-url=https://prow.build-infra.jetstack.net/hook
+        - --hmac-token-secret-name=hmac-token-new
+        - --hmac-token-key=hmac
+        - --kubeconfig=/etc/kubeconfig/config
+        - --kubeconfig-context=prow-services
+        - --github-token-path=/etc/github/token
+        - --github-endpoint=https://api.github.com
+        - --dry-run=true # set this to false once configured correctly
+        volumeMounts:
+        - name: kubeconfig
+          mountPath: /etc/kubeconfig
+          readOnly: true
+      volumes:
+      - name: kubeconfig
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-prow-services
+
   - name: post-testing-push-bazelbuild
     cluster: trusted
     run_if_changed: '^images/bazelbuild/'
