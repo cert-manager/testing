@@ -22,7 +22,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j2
+        - -j
         - vendor-go
         - ci-presubmit
         - test-ci
@@ -96,7 +96,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.22
@@ -147,7 +147,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.23
@@ -198,7 +198,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.24
@@ -249,7 +249,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.25
@@ -300,7 +300,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -423,7 +423,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -473,7 +473,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -524,7 +524,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -577,7 +577,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j3
+        - -j
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -624,7 +624,7 @@ periodics:
       args:
       - runner
       - make
-      - -j2
+      - -j
       - vendor-go
       - ci-presubmit
       - test-ci
@@ -664,7 +664,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.22
@@ -716,7 +716,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.23
@@ -768,7 +768,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.24
@@ -820,7 +820,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.25
@@ -872,7 +872,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -924,7 +924,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -1018,7 +1018,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -1070,7 +1070,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.22
@@ -1122,7 +1122,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.23
@@ -1174,7 +1174,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.24
@@ -1226,7 +1226,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.25
@@ -1278,7 +1278,7 @@ periodics:
       args:
       - runner
       - make
-      - -j3
+      - -j
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -1328,7 +1328,7 @@ periodics:
       args:
       - runner
       - make
-      - -j1
+      - -j
       - vendor-go
       - trivy-scan-controller
       resources:
@@ -1367,7 +1367,7 @@ periodics:
       args:
       - runner
       - make
-      - -j1
+      - -j
       - vendor-go
       - trivy-scan-acmesolver
       resources:
@@ -1406,7 +1406,7 @@ periodics:
       args:
       - runner
       - make
-      - -j1
+      - -j
       - vendor-go
       - trivy-scan-ctl
       resources:
@@ -1445,7 +1445,7 @@ periodics:
       args:
       - runner
       - make
-      - -j1
+      - -j
       - vendor-go
       - trivy-scan-cainjector
       resources:
@@ -1484,7 +1484,7 @@ periodics:
       args:
       - runner
       - make
-      - -j1
+      - -j
       - vendor-go
       - trivy-scan-webhook
       resources:
