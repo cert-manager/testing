@@ -133,7 +133,7 @@ func LicenseTest(ctx *ProwContext) *Job {
 
 // E2ETest generates a test which runs end-to-end tests with feature gates enabled. This
 // is run inside a container and requires additional permissions.
-func E2ETest(ctx *ProwContext, k8sVersion string) *Job {
+func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
 	// we don't want to use dots in names, so replace with dashes
 	nameVersion := strings.ReplaceAll(k8sVersion, ".", "-")
 
@@ -152,7 +152,7 @@ func E2ETest(ctx *ProwContext, k8sVersion string) *Job {
 		addMaxConcurrency(4),
 	)
 
-	makeJobs, cpuRequest := calculateMakeConcurrency("7000m")
+	makeJobs, cpuRequest := calculateMakeConcurrency(cpuRequest)
 
 	k8sVersionArg := fmt.Sprintf("K8S_VERSION=%s", k8sVersion)
 
@@ -170,7 +170,7 @@ func E2ETest(ctx *ProwContext, k8sVersion string) *Job {
 			Resources: ContainerResources{
 				Requests: ContainerResourceRequest{
 					CPU:    cpuRequest,
-					Memory: "6Gi",
+					Memory: memoryRequest,
 				},
 			},
 			SecurityContext: &SecurityContext{
@@ -198,8 +198,8 @@ func E2ETest(ctx *ProwContext, k8sVersion string) *Job {
 
 // E2ETestVenafiTPP generates a test which runs end-to-end tests only focusing on Venafi TPP.
 // This runs inside a container and so requires additional permissions.
-func E2ETestVenafiTPP(ctx *ProwContext, k8sVersion string) *Job {
-	job := E2ETest(ctx, k8sVersion)
+func E2ETestVenafiTPP(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
+	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-issuers-venafi-tpp"
 	job.Annotations["description"] = "Runs the E2E tests with 'Venafi TPP' in name"
@@ -218,8 +218,8 @@ func E2ETestVenafiTPP(ctx *ProwContext, k8sVersion string) *Job {
 
 // E2ETestVenafiCloud generates a test which runs end-to-end tests only focusing on Venafi Cloud.
 // This runs inside a container and so requires additional permissions.
-func E2ETestVenafiCloud(ctx *ProwContext, k8sVersion string) *Job {
-	job := E2ETest(ctx, k8sVersion)
+func E2ETestVenafiCloud(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
+	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-issuers-venafi-cloud"
 	job.Annotations["description"] = "Runs the E2E tests with 'Venafi Cloud' in name"
@@ -239,8 +239,8 @@ func E2ETestVenafiCloud(ctx *ProwContext, k8sVersion string) *Job {
 // E2ETestVenafiBoth generates a test which runs end-to-end tests focusing on
 // both Venafi TPP and Venafi Cloud.
 // This runs inside a container and so requires additional permissions.
-func E2ETestVenafiBoth(ctx *ProwContext, k8sVersion string) *Job {
-	job := E2ETest(ctx, k8sVersion)
+func E2ETestVenafiBoth(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
+	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-issuers-venafi"
 	job.Annotations["description"] = "Runs Venafi (VaaS and TPP) e2e tests"
@@ -258,8 +258,8 @@ func E2ETestVenafiBoth(ctx *ProwContext, k8sVersion string) *Job {
 }
 
 // E2ETestFeatureGatesDisabled generates a test which runs e2e tests with feature gates disabled
-func E2ETestFeatureGatesDisabled(ctx *ProwContext, k8sVersion string) *Job {
-	job := E2ETest(ctx, k8sVersion)
+func E2ETestFeatureGatesDisabled(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
+	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-feature-gates-disabled"
 	job.Annotations["description"] = "Runs the E2E tests with all feature gates disabled"
@@ -281,8 +281,8 @@ func E2ETestFeatureGatesDisabled(ctx *ProwContext, k8sVersion string) *Job {
 // E2ETestWithBestPracticeInstall generates a test which runs e2e tests
 // with cert-manager installed in accordance with
 // https://cert-manager.io/docs/installation/best-practice/
-func E2ETestWithBestPracticeInstall(ctx *ProwContext, k8sVersion string) *Job {
-	job := E2ETest(ctx, k8sVersion)
+func E2ETestWithBestPracticeInstall(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
+	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-bestpractice-install"
 	job.Annotations["description"] = "Runs the E2E tests with cert-manager installed in accordance with https://cert-manager.io/docs/installation/best-practice/"

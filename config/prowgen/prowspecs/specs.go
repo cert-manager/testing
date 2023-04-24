@@ -49,6 +49,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		primaryKubernetesVersion: "1.26",
 		otherKubernetesVersions:  []string{"1.21", "1.22", "1.23", "1.24", "1.25", "1.27"},
+
+		e2eCPURequest:    "3500m",
+		e2eMemoryRequest: "6Gi",
 	},
 	"release-1.12": {
 		prowContext: &pkg.ProwContext{
@@ -67,6 +70,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		primaryKubernetesVersion: "1.27",
 		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25", "1.26"},
+
+		e2eCPURequest:    "7000m",
+		e2eMemoryRequest: "6Gi",
 	},
 	"master": {
 		prowContext: &pkg.ProwContext{
@@ -84,6 +90,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		primaryKubernetesVersion: "1.27",
 		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25", "1.26"},
+
+		e2eCPURequest:    "7000m",
+		e2eMemoryRequest: "6Gi",
 	},
 }
 
@@ -97,6 +106,9 @@ type BranchSpec struct {
 
 	primaryKubernetesVersion string
 	otherKubernetesVersions  []string
+
+	e2eCPURequest    string
+	e2eMemoryRequest string
 }
 
 // GenerateJobFile will create a complete test file based on the BranchSpec. This
@@ -106,19 +118,19 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 	m.prowContext.RequiredPresubmit(pkg.ChartTest(m.prowContext))
 
 	for _, secondaryVersion := range m.otherKubernetesVersions {
-		m.prowContext.OptionalPresubmit(pkg.E2ETest(m.prowContext, secondaryVersion))
+		m.prowContext.OptionalPresubmit(pkg.E2ETest(m.prowContext, secondaryVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 	}
 
-	m.prowContext.RequiredPresubmit(pkg.E2ETest(m.prowContext, m.primaryKubernetesVersion))
+	m.prowContext.RequiredPresubmit(pkg.E2ETest(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 
 	m.prowContext.RequiredPresubmit(pkg.UpgradeTest(m.prowContext, m.primaryKubernetesVersion))
 
 	m.prowContext.OptionalPresubmitIfChanged(pkg.LicenseTest(m.prowContext), `go.mod`)
 
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiTPP(m.prowContext, m.primaryKubernetesVersion))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiCloud(m.prowContext, m.primaryKubernetesVersion))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestFeatureGatesDisabled(m.prowContext, m.primaryKubernetesVersion))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion))
+	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiTPP(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
+	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiCloud(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
+	m.prowContext.OptionalPresubmit(pkg.E2ETestFeatureGatesDisabled(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
+	m.prowContext.OptionalPresubmit(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 
 	allKubernetesVersions := append(m.otherKubernetesVersions, m.primaryKubernetesVersion)
 
@@ -127,21 +139,21 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 	// TODO: add chart periodic test?
 
 	for _, kubernetesVersion := range allKubernetesVersions {
-		m.prowContext.Periodics(pkg.E2ETest(m.prowContext, kubernetesVersion), 2)
+		m.prowContext.Periodics(pkg.E2ETest(m.prowContext, kubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 2)
 
 	}
 
-	m.prowContext.Periodics(pkg.E2ETestVenafiBoth(m.prowContext, m.primaryKubernetesVersion), 12)
+	m.prowContext.Periodics(pkg.E2ETestVenafiBoth(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 12)
 
 	m.prowContext.Periodics(pkg.UpgradeTest(m.prowContext, m.primaryKubernetesVersion), 8)
 
-	m.prowContext.Periodics(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion), 24)
+	m.prowContext.Periodics(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 24)
 
 	for _, kubernetesVersion := range allKubernetesVersions {
 		// TODO: roll this into above for loop; we have two for loops here to preserve the
 		// ordering of the tests in the output file, making it easier to review the
 		// differences between generated tests and existing handwritten tests
-		m.prowContext.Periodics(pkg.E2ETestFeatureGatesDisabled(m.prowContext, kubernetesVersion), 24)
+		m.prowContext.Periodics(pkg.E2ETestFeatureGatesDisabled(m.prowContext, kubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 24)
 	}
 
 	for _, container := range []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"} {
@@ -155,7 +167,7 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 func KnownBranches() []string {
 	var availableBranches []string
 
-	for branch, _ := range knownBranches {
+	for branch := range knownBranches {
 		availableBranches = append(availableBranches, branch)
 	}
 
