@@ -13,8 +13,8 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -22,7 +22,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j2
         - vendor-go
         - ci-presubmit
         - test-ci
@@ -48,8 +48,8 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-dind-enabled: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -86,8 +86,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -96,7 +96,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.22
@@ -137,8 +137,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -147,7 +147,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.23
@@ -188,8 +188,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -198,7 +198,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.24
@@ -239,8 +239,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -249,7 +249,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.25
@@ -290,8 +290,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -300,7 +300,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -338,8 +338,8 @@ presubmits:
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
       preset-dind-enabled: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -352,7 +352,7 @@ presubmits:
         - test-upgrade
         resources:
           requests:
-            cpu: 7000m
+            cpu: 3500m
             memory: 6Gi
         securityContext:
           privileged: true
@@ -377,8 +377,8 @@ presubmits:
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -412,8 +412,8 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-tpp-credentials: "true"
@@ -423,7 +423,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -462,8 +462,8 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-cloud-credentials: "true"
@@ -473,7 +473,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -514,8 +514,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -524,7 +524,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -567,8 +567,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -577,7 +577,7 @@ presubmits:
         args:
         - runner
         - make
-        - -j
+        - -j7
         - vendor-go
         - e2e-ci
         - K8S_VERSION=1.26
@@ -615,8 +615,8 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
   labels:
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -624,7 +624,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j2
       - vendor-go
       - ci-presubmit
       - test-ci
@@ -654,8 +654,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -664,7 +664,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.22
@@ -706,8 +706,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -716,7 +716,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.23
@@ -758,8 +758,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -768,7 +768,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.24
@@ -810,8 +810,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -820,7 +820,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.25
@@ -862,8 +862,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -872,7 +872,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -912,8 +912,8 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
     preset-venafi-cloud-credentials: "true"
@@ -924,7 +924,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -963,8 +963,8 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-master
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -977,7 +977,7 @@ periodics:
       - test-upgrade
       resources:
         requests:
-          cpu: 7000m
+          cpu: 3500m
           memory: 6Gi
       securityContext:
         privileged: true
@@ -1008,8 +1008,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1018,7 +1018,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -1060,8 +1060,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1070,7 +1070,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.22
@@ -1112,8 +1112,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1122,7 +1122,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.23
@@ -1164,8 +1164,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1174,7 +1174,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.24
@@ -1216,8 +1216,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1226,7 +1226,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.25
@@ -1268,8 +1268,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1278,7 +1278,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j7
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.26
@@ -1319,8 +1319,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1328,7 +1328,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j1
       - vendor-go
       - trivy-scan-controller
       resources:
@@ -1358,8 +1358,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1367,7 +1367,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j1
       - vendor-go
       - trivy-scan-acmesolver
       resources:
@@ -1397,8 +1397,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1406,7 +1406,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j1
       - vendor-go
       - trivy-scan-ctl
       resources:
@@ -1436,8 +1436,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1445,7 +1445,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j1
       - vendor-go
       - trivy-scan-cainjector
       resources:
@@ -1475,8 +1475,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1484,7 +1484,7 @@ periodics:
       args:
       - runner
       - make
-      - -j
+      - -j1
       - vendor-go
       - trivy-scan-webhook
       resources:

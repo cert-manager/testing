@@ -10,8 +10,8 @@ presubmits:
     annotations:
       description: Runs unit and integration tests and verification scripts
     labels:
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -42,8 +42,8 @@ presubmits:
       description: Verifies the Helm chart passes linting checks
     labels:
       preset-dind-enabled: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -77,8 +77,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates-disable-ssa: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -125,8 +125,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -173,8 +173,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -221,8 +221,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -269,8 +269,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -317,8 +317,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -362,8 +362,8 @@ presubmits:
       description: Runs cert-manager upgrade from latest published release
     labels:
       preset-dind-enabled: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -398,8 +398,8 @@ presubmits:
       description: Verifies LICENSES are up to date; only needs to be run if go.mod
         has changed
     labels:
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-service-account: "true"
     spec:
       containers:
@@ -430,8 +430,8 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-tpp: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-tpp-credentials: "true"
@@ -477,8 +477,8 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
       preset-ginkgo-focus-venafi-cloud: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
       preset-venafi-cloud-credentials: "true"
@@ -526,8 +526,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -576,8 +576,8 @@ presubmits:
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
-      preset-local-cache: "true"
       preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
       preset-service-account: "true"
     spec:
@@ -624,8 +624,8 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -663,8 +663,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates-disable-ssa: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -715,8 +715,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -767,8 +767,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -819,8 +819,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -871,8 +871,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -923,8 +923,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -973,8 +973,8 @@ periodics:
   labels:
     preset-dind-enabled: "true"
     preset-ginkgo-focus-venafi: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
     preset-venafi-cloud-credentials: "true"
@@ -1024,8 +1024,8 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.11
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1069,8 +1069,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1121,8 +1121,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1173,8 +1173,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1225,8 +1225,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1277,8 +1277,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1329,8 +1329,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1381,8 +1381,8 @@ periodics:
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-service-account: "true"
   spec:
@@ -1432,8 +1432,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1471,8 +1471,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1510,8 +1510,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1549,8 +1549,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
@@ -1588,8 +1588,8 @@ periodics:
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
-    preset-local-cache: "true"
     preset-go-cache: "true"
+    preset-local-cache: "true"
     preset-service-account: "true"
   spec:
     containers:
