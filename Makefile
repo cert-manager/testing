@@ -19,6 +19,10 @@ verify-boilerplate:
 .PHONY: verify
 verify: verify-boilerplate
 
+.PHONY: test
+test:
+	cd ./config/prowgen/ && go test ./...
+
 # Run checkconfig locally to verify the Prow configuration, CI runs this
 # directly in the Prow cluster.
 local-checkconfig:
