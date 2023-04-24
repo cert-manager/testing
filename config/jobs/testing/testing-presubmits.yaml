@@ -29,7 +29,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20230406-0ef4440-bullseye
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20230407-da759c2-1.20.2
         args:
         - runner
         - make
@@ -40,6 +40,24 @@ presubmits:
             memory: 100Mi
     trigger: "(?m)^/test verify,?(\\s+|$)"
     rerun_command: "/test verify"
+
+  - name: pull-testing-test
+    always_run: true
+    max_concurrency: 4
+    decorate: true
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20230407-da759c2-1.20.2
+        args:
+        - runner
+        - make
+        - test
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+    trigger: "(?m)^/test test,?(\\s+|$)"
+    rerun_command: "/test test"
 
   - name: pull-testing-check-testgrid-config
     always_run: true
