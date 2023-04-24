@@ -66,7 +66,25 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		},
 
 		primaryKubernetesVersion: "1.26",
-		otherKubernetesVersions:  []string{"1.21", "1.22", "1.23", "1.24", "1.25"},
+		otherKubernetesVersions:  []string{"1.21", "1.22", "1.23", "1.24", "1.25", "1.27"},
+	},
+	"release-1.12": {
+		prowContext: &pkg.ProwContext{
+			Branch: "release-1.12",
+
+			// Use latest image.
+			Image: pkg.CommonTestImage,
+
+			// NB: we don't use a presubmit dashboard outside of "master", currently
+			PresubmitDashboard: false,
+			PeriodicDashboard:  true,
+
+			Org:  "cert-manager",
+			Repo: "cert-manager",
+		},
+
+		primaryKubernetesVersion: "1.27",
+		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25", "1.26"},
 	},
 	"master": {
 		prowContext: &pkg.ProwContext{
@@ -82,8 +100,8 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 			Repo: "cert-manager",
 		},
 
-		primaryKubernetesVersion: "1.26",
-		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25"},
+		primaryKubernetesVersion: "1.27",
+		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25", "1.26"},
 	},
 }
 
