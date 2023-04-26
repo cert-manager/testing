@@ -14,6 +14,14 @@
 
 # based on: https://github.com/kubernetes/test-infra/blob/e4d1738d6eb8c2c00f9d90ed9e694e48f14156c5/config/prow/Makefile
 
+.PHONY: help
+help:
+	@echo "Available targets:"
+	@echo "  update-config: update the configmap for the prow config"
+	@echo "  update-plugins: update the configmap for the prow plugins"
+	@echo "  diff-prow: diff the current prow deployment against the desired state"
+	@echo "  deploy-prow: deploy the prow deployment"
+
 # This target allows you to manually update the configmap for the prow config,
 # normally this is done through GitOps.
 .PHONY: update-config
