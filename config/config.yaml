@@ -109,6 +109,10 @@ branch-protection:
             - pull-cert-manager-csi-lib-verify
         aws-privateca-issuer:
           protect: false
+        boilersuite:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-boilersuite-verify
 sinker:
   resync_period: 1h
   max_prowjob_age: 48h
