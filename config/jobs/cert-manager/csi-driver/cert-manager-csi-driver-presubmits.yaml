@@ -9,7 +9,7 @@ presubmits:
       testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: golang:1.18
+      - image: golang:1.20
         args:
         - make
         - verify
