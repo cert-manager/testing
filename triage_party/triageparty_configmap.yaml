@@ -29,6 +29,7 @@ data:
         - https://github.com/cert-manager/istio-csr
         - https://github.com/cert-manager/approver-policy
         - https://github.com/cert-manager/trust-manager
+        - https://github.com/cert-manager/issuer-lib
         - https://github.com/cert-manager/csi-driver
         - https://github.com/cert-manager/csi-driver-spiffe
         - https://github.com/cert-manager/openshift-routes
