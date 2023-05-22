@@ -155,3 +155,39 @@ presubmits:
         options:
           - name: ndots
             value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.17
+  - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-17
+    always_run: true
+    optional: false
+    max_concurrency: 8
+    decorate: true
+    branches:
+    - ^main$
+    labels:
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20230407-da759c2-1.20.2
+        args:
+        - runner
+        - make
+        - e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.26.1"
+        - name: ISTIO_VERSION
+          value: "1.17.2"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
