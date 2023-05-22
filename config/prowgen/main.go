@@ -25,6 +25,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 	"path/filepath"
 	"strings"
 
@@ -47,9 +48,9 @@ tests (tests which are run on a schedule, independently of PRs).
 By generating this config we avoid the need for humans to edit YAML manually
 which is error-prone.
 
-If --output-format is set to "file", the generated YAML will be written to the
-file with the correct directory format which prow expects. Otherwise, generated
-output will be written to stdout.
+If --output-dir is set, the generated YAML will be written to the specified
+directory with the correct directory format which prow expects. Otherwise,
+generated output will be written to stdout.
 `
 )
 
@@ -65,14 +66,14 @@ type generateProwOptions struct {
 	// Branch specifies the name of the branch whose tests should be generated
 	Branch string
 
-	// OutputFormat specifies the format of the output. Either one of 'stdout' or
-	// 'file'.
-	OutputFormat string
+	// OutputDir specifies the dir to output the yaml files to. If empty, output
+	// will be written to stdout.
+	OutputDir string
 }
 
 func (o *generateProwOptions) AddFlags(fs *flag.FlagSet, markRequired func(string)) {
 	fs.StringVar(&o.Branch, "branch", "", fmt.Sprintf("Type of tests to generate; one of ('*' generates all branches) %v", append(prowspecs.KnownBranches(), "*")))
-	fs.StringVarP(&o.OutputFormat, "output-format", "o", "stdout", "Output format; one of 'stdout' or 'file'. Any other option prints to stdout.")
+	fs.StringVarP(&o.OutputDir, "output-dir", "o", "", "OutputDir specifies the dir to output the yaml files to. If empty, output will be written to stdout.")
 
 	markRequired("branch")
 }
@@ -113,7 +114,14 @@ func generateProwCmd() *cobra.Command {
 // so we don't include things like "/home/workspace/release/bin/prowgen"
 func sanitizedArgs() []string {
 	args := os.Args[:]
-	args[0] = filepath.Base(args[0])
+
+	for i := range args {
+		if !strings.Contains(args[i], "/") {
+			continue
+		}
+
+		args[i] = filepath.Base(args[i])
+	}
 
 	return args
 }
@@ -142,24 +150,25 @@ func (o *generateProwOptions) runGenerateProw(branch string) error {
 
 	data := prelude + string(out)
 
-	switch strings.ToLower(o.OutputFormat) {
-	case "file":
-		if err := os.MkdirAll(branch, 0755); err != nil {
-			return err
-		}
-
-		path := filepath.Join(branch, fmt.Sprintf("cert-manager-%s.yaml", branch))
-		f, err := os.Create(path)
-		if err != nil {
-			return err
-		}
-
-		if _, err := io.Copy(f, strings.NewReader(data)); err != nil {
-			return err
-		}
-
-	default:
+	if o.OutputDir == "" {
 		fmt.Println(data)
+		return nil
+	}
+
+	branchPath := path.Join(o.OutputDir, branch)
+
+	if err := os.MkdirAll(branchPath, 0755); err != nil {
+		return err
+	}
+
+	path := filepath.Join(branchPath, fmt.Sprintf("cert-manager-%s.yaml", branch))
+	f, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+
+	if _, err := io.Copy(f, strings.NewReader(data)); err != nil {
+		return err
 	}
 
 	return nil

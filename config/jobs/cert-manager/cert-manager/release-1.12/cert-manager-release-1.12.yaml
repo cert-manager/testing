@@ -1,6 +1,6 @@
 # THIS FILE HAS BEEN AUTOMATICALLY GENERATED
 # Don't manually edit it; instead edit the "prowgen" tool which generated it
-# Generated with: main prowgen --branch=release-1.12
+# Generated with: prowgen --branch=* -o cert-manager
 
 presubmits:
   cert-manager/cert-manager:
@@ -1615,4 +1615,3 @@ periodics:
     repo: cert-manager
     base_ref: release-1.12
   interval: 24h
-

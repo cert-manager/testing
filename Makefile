@@ -16,8 +16,18 @@
 verify-boilerplate:
 	@./hack/verify-boilerplate.py --rootdir=$(CURDIR) --boilerplate-dir=hack/boilerplate && echo "Boilerplate verification passed."
 
+.PHONY: prowgen
+prowgen:
+	cd ./config/prowgen/ && go run . --branch=* -o $(CURDIR)/config/jobs/cert-manager/cert-manager/
+
+.PHONY: verify-prowgen
+verify-prowgen:
+	mkdir -p _temp
+	cd ./config/prowgen/ && go run . --branch=* -o $(CURDIR)/_temp/cert-manager/
+	diff -q -r $(CURDIR)/config/jobs/cert-manager/cert-manager/ $(CURDIR)/_temp/cert-manager/
+
 .PHONY: verify
-verify: verify-boilerplate
+verify: verify-boilerplate verify-prowgen
 
 .PHONY: test
 test:
