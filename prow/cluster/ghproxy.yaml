@@ -46,6 +46,12 @@ spec:
     matchLabels:
       app: ghproxy
   replicas: 1  # TODO(fejta): this should be HA
+
+  # @inteon: we set the strategy to Recreate, so the volume is
+  # unmounted before the new pod is created
+  strategy:
+    type: Recreate
+
   template:
     metadata:
       labels:
