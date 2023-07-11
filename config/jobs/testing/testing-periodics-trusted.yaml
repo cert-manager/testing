@@ -120,3 +120,4 @@ periodics:
       - generic-autobumper
       args:
       - --config=config/autobump-config/testing-autobump-config.yaml
+      - --signoff
