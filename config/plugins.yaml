@@ -97,6 +97,9 @@ approve:
 - repos: ["cert-manager"] # repos can be specified as either org/repo or just org. So "cert-manager/cert-manager" is just the cert-manager repo, and "cert-manager" is "everything under the cert-manager org"
   require_self_approval: true
 
+owners:
+  skip_collaborators: ["cert-manager"] # all repos in the cert-manager org
+
 plugins:
 
   jetstack:
