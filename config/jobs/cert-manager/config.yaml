@@ -134,19 +134,19 @@ presets:
     preset-ginkgo-focus-venafi: "true"
   env:
   - name: GINKGO_FOCUS
-    value: 'Venafi'
+    value: "Venafi"
 
 - labels:
     preset-ginkgo-focus-venafi-tpp: "true"
   env:
   - name: GINKGO_FOCUS
-    value: 'Venafi TPP'
+    value: "Venafi TPP"
 
 - labels:
     preset-ginkgo-focus-venafi-cloud: "true"
   env:
   - name: GINKGO_FOCUS
-    value: 'Venafi Cloud'
+    value: "Venafi Cloud"
 
 # This preset is used to enable the logic in the make-dind runner that manages
 # a local cache and shares that cache with other jobs after successful completion.

@@ -216,6 +216,7 @@ tide:
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
+
   # cert-manager/cert-manager is the only repo in the cert-manager org which
   # currently uses the release-note plugin so we duplicate the organization
   # query parameters here and add the do-not-merge/release-note-label-needed to
@@ -236,21 +237,3 @@ tide:
     - needs-rebase
     - needs-kind
     - do-not-merge/release-note-label-needed
-  # Maintain separate testing configuration as PRs in this repo don't need release note
-  - repos:
-    - cert-manager/testing
-    labels:
-    - lgtm
-    - approved
-    - "dco-signoff: yes"
-    missingLabels:
-    - do-not-merge
-    - do-not-merge/blocked-paths
-    - do-not-merge/cherry-pick-not-approved
-    - do-not-merge/hold
-    - do-not-merge/invalid-owners-file
-    - do-not-merge/work-in-progress
-    - needs-rebase
-
-# push_gateway:
-#   endpoint: pushgateway
