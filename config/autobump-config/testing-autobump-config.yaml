@@ -8,7 +8,7 @@ gitHubOrg: "jetstack"
 gitHubRepo: "testing"
 remoteName: "testing"
 headBranchName: "autobump"
-upstreamURLBase: "https://raw.githubusercontent.com/jetstack/testing/master"
+upstreamURLBase: "https://raw.githubusercontent.com/cert-manager/testing/master"
 includedConfigPaths:
   - "config/jobs"
   - "images"
@@ -24,6 +24,6 @@ prefixes:
     consistentImages: false
   - name: "jetstack-build-infra images"
     prefix: "eu.gcr.io/jetstack-build-infra-images/"
-    repo: "https://github.com/jetstack/testing"
+    repo: "https://github.com/cert-manager/testing"
     summarise: false
     consistentImages: false

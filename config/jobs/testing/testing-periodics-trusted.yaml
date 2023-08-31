@@ -105,7 +105,7 @@ periodics:
   annotations:
     testgrid-dashboards: jetstack-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Creates autobump PRs for the jetstack/testing repo.
+    description: Creates autobump PRs for the cert-manager/testing repo.
   extra_refs:
   - org: jetstack
     repo: testing

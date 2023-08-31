@@ -19,7 +19,7 @@ presubmits:
           requests:
             # 3500m was chosen because that allows us to fit two jobs onto one
             # n1-standard-8 node, taking into account the amount of CPU allocated
-            # to the kubelet. https://github.com/jetstack/testing/pull/510
+            # to the kubelet. https://github.com/cert-manager/testing/pull/510
             cpu: 3500m
             memory: 4Gi
       dnsConfig:

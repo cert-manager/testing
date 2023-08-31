@@ -33,7 +33,7 @@ spec:
               - --config=/etc/config/labels.yaml
               - --confirm=true
               # TODO: enable label_sync across the whole org
-              - --only=cert-manager/cert-manager,jetstack/testing,cert-manager/trust-manager,cert-manager/release,cert-manager/webhook-example,cert-manager/website,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr,cert-manager/csi-driver-spiffe,cert-manager/infrastructure,cert-manager/boilersuite
+              - --only=cert-manager/cert-manager,cert-manager/testing,cert-manager/trust-manager,cert-manager/release,cert-manager/webhook-example,cert-manager/website,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr,cert-manager/csi-driver-spiffe,cert-manager/infrastructure,cert-manager/boilersuite
               - --token=/etc/github/oauth
               volumeMounts:
               - name: oauth
