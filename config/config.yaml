@@ -238,7 +238,7 @@ tide:
     - do-not-merge/release-note-label-needed
   # Maintain separate testing configuration as PRs in this repo don't need release note
   - repos:
-    - jetstack/testing
+    - cert-manager/testing
     labels:
     - lgtm
     - approved

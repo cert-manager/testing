@@ -1,5 +1,5 @@
 postsubmits:
-  jetstack/testing:
+  cert-manager/testing:
 
   # TestGrid (https://github.com/GoogleCloudPlatform/testgrid) is a UI
   # for Prow. We and some other kubernetes-related projects use a hosted TestGrid
@@ -30,7 +30,7 @@ postsubmits:
         - --default=config/testgrid/default.yaml
         - --prow-config=config/config.yaml
         - --prow-job-config=config/jobs
-        - --prowjob-url-prefix=https://github.com/jetstack/testing/tree/master/config/jobs
+        - --prowjob-url-prefix=https://github.com/cert-manager/testing/tree/master/config/jobs
         - --update-description
         - --output=gs://jetstack-testgrid/config
         - --oneshot

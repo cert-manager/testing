@@ -9,10 +9,10 @@ Most images are built using the scripts in [images/builder](./builder).
 ## When does a new image get built/will my change trigger a new build?
 
 There is a Prow post-submit job that builds the image for each of the images in ./config/jobs/testing/testing-trusted.yaml.
-Each of these jobs will get triggered after a change to a subdirectory in ./images, for example the job that builds new 'golang-nodejs' image will get triggered after a change to ./images/golang-nodejs, see [its '.run_if_changed' field](https://github.com/jetstack/testing/blob/2b87fe6e34ff150042a9a776a85b3e62a20d98dc/config/jobs/testing/testing-trusted.yaml#L176).
+Each of these jobs will get triggered after a change to a subdirectory in ./images, for example the job that builds new 'golang-nodejs' image will get triggered after a change to ./images/golang-nodejs, see [its '.run_if_changed' field](https://github.com/cert-manager/testing/blob/2b87fe6e34ff150042a9a776a85b3e62a20d98dc/config/jobs/testing/testing-trusted.yaml#L176).
 
 After a PR to ./images subdirectory gets merged, you should see the Prow job that builds the new image version in https://prow.build-infra.jetstack.net/.
-(There is a known bug where sometimes these jobs appear as failed despite having succesfully built the image https://github.com/jetstack/testing/issues/602)
+(There is a known bug where sometimes these jobs appear as failed despite having succesfully built the image https://github.com/cert-manager/testing/issues/602)
 
 ## How do I add a new image?
 

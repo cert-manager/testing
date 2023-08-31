@@ -4,9 +4,7 @@
 ---
 triggers:
 - repos:
-  - jetstack/testing
-  only_org_members: true
-- repos:
+  - cert-manager/testing
   - cert-manager/cert-manager
   - cert-manager/website
   - cert-manager/trust-manager
@@ -18,14 +16,6 @@ blunderbuss:
   request_count: 1
 
 external_plugins:
-  jetstack:
-  - name: needs-rebase
-    events:
-    - pull_request
-  - name: cherrypicker
-    events:
-    - issue_comment
-    - pull_request
   cert-manager:
   - name: needs-rebase
     events:
@@ -102,30 +92,6 @@ owners:
 
 plugins:
 
-  jetstack:
-    plugins:
-    - assign
-    - blockade
-    - cherry-pick-unapproved
-    - golint
-    - heart
-    - help
-    - hold
-    - label
-    - lgtm
-    - lifecycle
-    - milestone
-    - milestonestatus
-    - milestoneapplier
-    - override
-    - require-matching-label
-    - shrug
-    - size
-    - skip
-    - trigger
-    - wip
-    - yuks
-
   cert-manager:
     plugins:
     - approve
@@ -153,10 +119,6 @@ plugins:
     plugins:
     - release-note
 
-  jetstack/testing:
+  cert-manager/testing:
     plugins:
-    - approve
     - config-updater
-    - dco
-    - owners-label
-    - verify-owners

@@ -51,7 +51,7 @@ local-checkconfig:
         --default=config/testgrid/default.yaml \
         --prow-config=/config/config.yaml \
         --prow-job-config=/config/jobs \
-        --prowjob-url-prefix=https://github.com/jetstack/testing/tree/master/config/jobs \
+        --prowjob-url-prefix=https://github.com/cert-manager/testing/tree/master/config/jobs \
         --update-description \
         --validate-config-file \
         --oneshot

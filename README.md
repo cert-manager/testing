@@ -1,4 +1,4 @@
-# jetstack/testing
+# cert-manager/testing
 
 This repository contains the configuration used for testing all jetstck projects.
 

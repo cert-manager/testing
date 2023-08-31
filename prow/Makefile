@@ -17,21 +17,35 @@
 .PHONY: help
 help:
 	@echo "Available targets:"
+	@echo "  diff-config: diff the configmap and the prow config"
 	@echo "  update-config: update the configmap for the prow config"
+	@echo "  diff-plugins: diff the configmap and the prow plugins"
 	@echo "  update-plugins: update the configmap for the prow plugins"
 	@echo "  diff-prow: diff the current prow deployment against the desired state"
 	@echo "  deploy-prow: deploy the prow deployment"
+
+.PHONY: diff-config
+diff-config:
+	cd ../config/ && \
+	kubectl create configmap config --from-file=config.yaml=config.yaml --dry-run=client -o yaml | kubectl diff -f -
 
 # This target allows you to manually update the configmap for the prow config,
 # normally this is done through GitOps.
 .PHONY: update-config
 update-config:
+	cd ../config/ && \
 	kubectl create configmap config --from-file=config.yaml=config.yaml --dry-run=client -o yaml | kubectl replace configmap config -f -
+
+.PHONY: diff-plugins
+diff-plugins:
+	cd ../config/ && \
+	kubectl create configmap plugins --from-file=plugins.yaml=plugins.yaml --dry-run=client -o yaml | kubectl diff -f -
 
 # This target allows you to manually update the configmap for the prow plugins,
 # normally this is done through GitOps.
 .PHONY: update-plugins
 update-plugins:
+	cd ../config/ && \
 	kubectl create configmap plugins --from-file=plugins.yaml=plugins.yaml --dry-run=client -o yaml | kubectl replace configmap plugins -f -
 
 .PHONY: diff-prow
