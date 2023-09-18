@@ -22,7 +22,7 @@ postsubmits:
     spec:
       serviceAccountName: testgrid-updater
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20230710-68864df057
+      - image: gcr.io/k8s-prow/configurator:v20230917-1c005674cf
         command:
         - configurator
         args:

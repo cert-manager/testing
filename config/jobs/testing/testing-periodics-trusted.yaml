@@ -12,7 +12,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230710-68864df057
+    - image: gcr.io/k8s-prow/commenter:v20230917-1c005674cf
       command:
       - commenter
       args:
@@ -43,7 +43,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230710-68864df057
+    - image: gcr.io/k8s-prow/commenter:v20230917-1c005674cf
       command:
       - commenter
       args:
@@ -77,7 +77,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/commenter:v20230710-68864df057
+    - image: gcr.io/k8s-prow/commenter:v20230917-1c005674cf
       command:
       - commenter
       args:
@@ -115,7 +115,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20230710-68864df057
+    - image: gcr.io/k8s-prow/generic-autobumper:v20230917-1c005674cf
       command:
       - generic-autobumper
       args:
