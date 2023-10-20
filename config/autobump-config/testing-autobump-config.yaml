@@ -4,7 +4,7 @@ gitHubToken: "/etc/github/token"
 gitName: "jetstack-bot"
 gitEmail: "jetstack-bot@users.noreply.github.com"
 skipPullRequest: false
-gitHubOrg: "jetstack"
+gitHubOrg: "cert-manager"
 gitHubRepo: "testing"
 remoteName: "testing"
 headBranchName: "autobump"
