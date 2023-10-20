@@ -36,7 +36,6 @@ spec:
   - name: pushgateway
     port: 80
     targetPort: http
-  type: NodePort
   selector:
     app: pushgateway
 ---
@@ -110,6 +109,5 @@ spec:
   - name: pushgateway-external
     port: 80
     targetPort: http
-  type: NodePort
   selector:
     app: pushgateway-proxy
