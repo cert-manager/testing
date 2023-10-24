@@ -39,6 +39,7 @@ presubmits:
     decorate: true
     branches:
     - ^main$
+    - ^release-.*$
     labels:
       preset-service-account: "true"
       preset-dind-enabled: "true"
