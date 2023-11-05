@@ -9,7 +9,7 @@ presubmits:
       testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: golang:1.20
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20231020-a4e175b-1.21.3
         args:
         - make
         - verify
@@ -26,7 +26,7 @@ presubmits:
       testgrid-create-test-group: 'false'
     spec:
       containers:
-      - image: golang:1.20
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20231020-a4e175b-1.21.3
         args:
         - make
         - test
