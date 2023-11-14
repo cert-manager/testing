@@ -73,7 +73,9 @@ RUN apt-get update \
     && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 # Move Docker's storage location & enable experimental features & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
+# @inteon: added --mtu 1460 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
+#          at the time of writing, the parent mtu is 1460 (see https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1460 --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 
 # NOTE this should be mounted and persisted as a volume ideally (!)
