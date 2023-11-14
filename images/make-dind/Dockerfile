@@ -75,7 +75,8 @@ RUN apt-get update \
 # Move Docker's storage location & enable experimental features & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
 # @inteon: added --mtu 1460 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
 #          at the time of writing, the parent mtu is 1460 (see https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1460 --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
+# @inteon: added --bip 192.168.0.1/16 to fix network issues due to ip conflicts with the cloud provider (based on https://github.com/cert-manager/cert-manager/blob/d2f6bbe579fd9d5f88b82f9a4bfe9241709e9eb8/make/cluster.sh#L128-L140)
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --bip 192.168.0.1/16 --mtu=1460 --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 
 # NOTE this should be mounted and persisted as a volume ideally (!)
