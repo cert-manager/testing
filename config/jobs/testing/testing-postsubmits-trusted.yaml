@@ -22,7 +22,7 @@ postsubmits:
     spec:
       serviceAccountName: testgrid-updater
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20231114-9e6076d23d
+      - image: gcr.io/k8s-prow/configurator:v20231114-3897be59f6
         command:
         - configurator
         args:
@@ -57,7 +57,7 @@ postsubmits:
       description: Build and push the 'bazelbuild' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -92,7 +92,7 @@ postsubmits:
       description: Build and push the 'make-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -127,7 +127,7 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -162,7 +162,7 @@ postsubmits:
       description: Build and push the 'image-builder' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -197,7 +197,7 @@ postsubmits:
       description: Build and push the 'golang-nodejs' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -264,7 +264,7 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -299,7 +299,7 @@ postsubmits:
       description: Build and push the 'nix-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231020-b5df896-gcloud-425
+      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20231114-fd504db-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
