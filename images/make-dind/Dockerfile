@@ -34,16 +34,17 @@ RUN apt-get update \
         g++ \
         zip \
         unzip \
-        python \
+        python3 \
         python3-pip \
+        python3-setuptools \
+        python3-wheel \
         wget \
         git \
         make \
         rsync \
         patch \
         jq \
-    && apt-get clean \
-    && python3 -m pip install --upgrade pip setuptools wheel
+    && apt-get clean
 
 #
 # BEGIN: DOCKER IN DOCKER SETUP
@@ -66,16 +67,13 @@ ARG DOCKER_VERSION
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         docker-ce="${DOCKER_VERSION}" \
-        docker-buildx-plugin \
     && apt-get clean \
-    && sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
-    && update-alternatives --set iptables /usr/sbin/iptables-legacy \
-    && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+    && sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker
 
-# Move Docker's storage location & enable experimental features & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
+# Move Docker's storage location & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
 # @inteon: added --mtu 1460 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
 #          at the time of writing, the parent mtu is 1460 (see https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1460 --data-root=/docker-graph --experimental --registry-mirror=https://mirror.gcr.io"' | \
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1460 --data-root=/docker-graph --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 
 # NOTE this should be mounted and persisted as a volume ideally (!)
