@@ -19,7 +19,7 @@ package pkg
 
 const (
 	// CommonTestImage defines the common base image used across many prow jobs
-	CommonTestImage = "eu.gcr.io/jetstack-build-infra-images/make-dind:20231114-2f36f6c-bullseye"
+	CommonTestImage = "eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm"
 
 	// AlertEmailAddress is the address to which testgrid alerts should be sent
 	AlertEmailAddress = "cert-manager-dev-alerts@googlegroups.com"
