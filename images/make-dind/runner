@@ -33,6 +33,10 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         exit 1
     fi
 
+    # Convert local cache directory to absolute path and re-export it.
+    LOCAL_CACHE_DIR="$(PWD)/${LOCAL_CACHE_DIR}"
+    export LOCAL_CACHE_DIR
+
     if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
         echo "Local cache: found latest cache directory."
 
