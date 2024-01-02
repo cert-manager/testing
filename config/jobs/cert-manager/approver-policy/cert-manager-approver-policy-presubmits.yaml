@@ -5,7 +5,7 @@ presubmits:
     decorate: true
     always_run: true
     max_concurrency: 8
-    annotations:
+    labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
     spec:
@@ -25,7 +25,7 @@ presubmits:
     decorate: true
     always_run: true
     max_concurrency: 8
-    annotations:
+    labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
     spec:
