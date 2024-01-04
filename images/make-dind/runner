@@ -27,7 +27,7 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         echo >&2 "LOCAL_CACHE_ENABLED was enabled but SHARED_CACHE_DIR is empty."
         exit 1
     fi
-    
+
     if [[ "${LOCAL_CACHE_DIR}" == "" ]]; then
         echo >&2 "LOCAL_CACHE_ENABLED was enabled but LOCAL_CACHE_DIR is empty."
         exit 1
@@ -38,19 +38,19 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
     export LOCAL_CACHE_DIR
 
     if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
-        echo "Local cache: found latest cache directory."
+        echo "Local cache [restore]: found latest cache directory."
 
         # Obtain the name of the latest cache directory.
-        LATEST_CACHE_DIR=$(cat "${SHARED_CACHE_DIR}/latest")
+        latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
 
         mkdir -p "${LOCAL_CACHE_DIR}"
 
         # Copying the latest cache to our local cache ...
-        cp -a "${LATEST_CACHE_DIR}/." "${LOCAL_CACHE_DIR}"
+        rsync -avvz --delete "${latest_cache_dir}/." "${LOCAL_CACHE_DIR}"
 
-        echo "Local cache: provisioned ${LOCAL_CACHE_DIR}"
+        echo "Local cache [restore]: provisioned ${LOCAL_CACHE_DIR}"
     else
-        echo "Local cache: no latest cache directory found."
+        echo "Local cache [restore]: no latest cache directory found."
     fi
 fi
 
@@ -140,24 +140,40 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
     if [[ $EXIT_VALUE == 0 ]]; then
         cache_unique_id="cache_$(date +"%F_H%H-M%M-S%S")_$(head -c 8 /proc/sys/kernel/random/uuid)"
 
-        # Move the local cache directory to the shared cache directory.
-        echo "Local cache: Moving local cache to shared cache ..."
-        mv "${LOCAL_CACHE_DIR}" "${SHARED_CACHE_DIR}/${cache_unique_id}"
+        # 0. Make sure the local cache dir and the unique shared dir exist.
+        mkdir -p "${LOCAL_CACHE_DIR}"
+        mkdir -p "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
-        # Update the latest cache directory to the local cache directory.
-        echo "Local cache: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
+        # 1. Copy the latest shared cache directory to the new shared directory that we are creating.
+        #    This should be a same-disk rsync and should be fast.
+        #    @inteon: I'm trying this out to see if it's faster than directly copying from the
+        #    local cache directory to the new shared directory. The idea is that the local cache
+        #    directory may be on a different disk than the shared cache directory.
+        if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
+            latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
+
+            echo "Local cache [update]: Copying latest cache to new cache directory ..."
+            rsync -avv --delete "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+        fi
+
+        # 2. Copy the local cache directory to the new shared directory that we are creating.
+        echo "Local cache [update]: Copying local cache to shared cache ..."
+        rsync -avvz --delete "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+
+        # 3. Update the latest cache directory to the local cache directory.
+        echo "Local cache [update]: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
         echo "${SHARED_CACHE_DIR}/${cache_unique_id}" > "${SHARED_CACHE_DIR}/latest"
 
-        # Remove the old cache directories to save disk space. Keep the
-        # last 4 cache directories because they may be used by other
-        # jobs that are still copying from these directories.
-        echo "Local cache: Removing old caches ..."
+        # 4. Remove the old cache directories to save disk space. Keep the
+        #    last 4 cache directories because they may be used by other
+        #    jobs that are still copying from these directories.
+        echo "Local cache [update]: Removing old caches ..."
         find "${SHARED_CACHE_DIR}" -maxdepth 1 -type d -name 'cache_*' -printf '%f\n' | \
             sort -r | \
             tail -n +4 | \
             xargs -I{} rm -rf "${SHARED_CACHE_DIR}/{}"
     else
-        echo "Local cache: Job failed, not updating cache."
+        echo "Local cache [update]: Job failed, not updating cache."
     fi
 fi
 
