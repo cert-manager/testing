@@ -44,6 +44,7 @@ RUN apt-get update \
         rsync \
         patch \
         jq \
+        rsync \
     && apt-get clean
 
 #
