@@ -3,11 +3,11 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.21":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20231218-dab7a99-bookworm"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20240104-602a628-bookworm"
       GO_VERSION: "1.21.3"
   "1.20":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20231218-dab7a99-bookworm"
+      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20240104-602a628-bookworm"
       GO_VERSION: "1.20.10"
   "1.19":
     arguments:
