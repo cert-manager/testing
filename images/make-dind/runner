@@ -34,7 +34,7 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
     fi
 
     # Convert local cache directory to absolute path and re-export it.
-    LOCAL_CACHE_DIR="$(PWD)/${LOCAL_CACHE_DIR}"
+    LOCAL_CACHE_DIR="$(pwd)/${LOCAL_CACHE_DIR}"
     export LOCAL_CACHE_DIR
 
     if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
