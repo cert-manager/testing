@@ -46,7 +46,7 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         mkdir -p "${LOCAL_CACHE_DIR}"
 
         # Copying the latest cache to our local cache ...
-        rsync -avvz --delete "${latest_cache_dir}/." "${LOCAL_CACHE_DIR}"
+        rsync -avv --inplace --delete "${latest_cache_dir}/." "${LOCAL_CACHE_DIR}"
 
         echo "Local cache [restore]: provisioned ${LOCAL_CACHE_DIR}"
     else
@@ -150,14 +150,14 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
             latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
 
             echo "Local cache [update]: Copying latest cache to new cache directory ..."
-            rsync -avvz "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+            rsync -avv --inplace "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
         fi
 
         # 2. Copy the local cache directory to the new shared directory that we are creating. rsync
         #    will only copy the files that are not already present in the shared directory. The new
         #    shared directory now contains the latest cache + what was downloaded in the current job.
         echo "Local cache [update]: Copying local cache to shared cache ..."
-        rsync -avvz "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+        rsync -avv --inplace "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
         # 3. Update the latest cache directory to the local cache directory.
         echo "Local cache [update]: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
