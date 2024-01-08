@@ -29,7 +29,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-c133671-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-a2a42cb-1.21.3
         args:
         - runner
         - make
@@ -47,7 +47,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-c133671-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-a2a42cb-1.21.3
         args:
         - runner
         - make
