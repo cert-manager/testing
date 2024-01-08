@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/checkconfig:v20240103-fc5e4f9694
+      - image: gcr.io/k8s-prow/checkconfig:v20240108-49228c2a7e
         command:
         - checkconfig
         args:
@@ -29,7 +29,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20231115-6d9432b-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240104-ac2de90-1.21.3
         args:
         - runner
         - make
@@ -47,7 +47,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20231115-6d9432b-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240104-ac2de90-1.21.3
         args:
         - runner
         - make
@@ -65,7 +65,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20240102-43c89140b5
+      - image: gcr.io/k8s-prow/configurator:v20240108-49228c2a7e
         command:
         - configurator
         args:

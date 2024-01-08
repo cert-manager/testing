@@ -9,7 +9,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -28,7 +28,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -49,7 +49,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -79,7 +79,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -114,7 +114,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -149,7 +149,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
@@ -184,7 +184,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20231115-8c0910c-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-30ad0a8-bookworm
         args:
         - runner
         - make
