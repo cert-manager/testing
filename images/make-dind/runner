@@ -145,20 +145,19 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         mkdir -p "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
         # 1. Copy the latest shared cache directory to the new shared directory that we are creating.
-        #    This should be a same-disk rsync and should be fast.
-        #    @inteon: I'm trying this out to see if it's faster than directly copying from the
-        #    local cache directory to the new shared directory. The idea is that the local cache
-        #    directory may be on a different disk than the shared cache directory.
+        #    This should be a same-disk rsync and should be fast. This forms the basis of the new cache.
         if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
             latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
 
             echo "Local cache [update]: Copying latest cache to new cache directory ..."
-            rsync -avv --delete "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+            rsync -avvz "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
         fi
 
-        # 2. Copy the local cache directory to the new shared directory that we are creating.
+        # 2. Copy the local cache directory to the new shared directory that we are creating. rsync
+        #    will only copy the files that are not already present in the shared directory. The new
+        #    shared directory now contains the latest cache + what was downloaded in the current job.
         echo "Local cache [update]: Copying local cache to shared cache ..."
-        rsync -avvz --delete "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
+        rsync -avvz "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
         # 3. Update the latest cache directory to the local cache directory.
         echo "Local cache [update]: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
