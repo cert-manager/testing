@@ -4,7 +4,6 @@ presubmits:
   - name: pull-cert-manager-approver-policy-verify
     decorate: true
     always_run: true
-    max_concurrency: 8
     labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
@@ -24,7 +23,6 @@ presubmits:
   - name: pull-cert-manager-approver-policy-test
     decorate: true
     always_run: true
-    max_concurrency: 8
     labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
@@ -45,10 +43,10 @@ presubmits:
     decorate: true
     always_run: true
     labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
       preset-go-cache: "true"
       preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240104-683c03b-bookworm
