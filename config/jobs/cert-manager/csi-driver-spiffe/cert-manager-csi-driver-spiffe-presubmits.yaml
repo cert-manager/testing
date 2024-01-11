@@ -4,39 +4,57 @@ presubmits:
   - name: pull-cert-manager-csi-driver-spiffe-verify
     decorate: true
     always_run: true
-    max_concurrency: 8
-    annotations:
-      testgrid-create-test-group: 'false'
-    branches:
-    - ^main$
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-a2a42cb-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
         args:
+        - runner
         - make
+        - vendor-go
         - verify
         resources:
           requests:
             cpu: 1
             memory: 1Gi
 
-  - name: pull-cert-manager-csi-driver-spiffe-e2e
-    always_run: true
-    optional: false
-    max_concurrency: 8
+  - name: pull-cert-manager-csi-driver-spiffe-test
     decorate: true
+    always_run: true
     labels:
-      preset-service-account: "true"
-      preset-dind-enabled: "true"
-    branches:
-    - ^main$
+      preset-go-cache: "true"
+      preset-local-cache: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-a2a42cb-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
         args:
         - runner
         - make
-        - e2e
+        - vendor-go
+        - test-unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+
+  - name: pull-cert-manager-csi-driver-spiffe-e2e
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
         resources:
           requests:
             cpu: 3500m
@@ -47,5 +65,5 @@ presubmits:
             add: ["SYS_ADMIN"]
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: "1"
