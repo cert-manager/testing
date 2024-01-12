@@ -9,6 +9,7 @@ triggers:
   - cert-manager/website
   - cert-manager/trust-manager
   - cert-manager/issuer-lib
+  - cert-manager/helm-tool
   only_org_members: true
 
 blunderbuss:

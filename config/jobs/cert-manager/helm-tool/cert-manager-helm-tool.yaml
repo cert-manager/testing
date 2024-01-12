@@ -1,0 +1,40 @@
+presubmits:
+  cert-manager/helm-tool:
+
+  - name: pull-cert-manager-helm-tool-verify
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - verify
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+
+  - name: pull-cert-manager-helm-tool-test
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
