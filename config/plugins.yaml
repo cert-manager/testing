@@ -10,6 +10,7 @@ triggers:
   - cert-manager/trust-manager
   - cert-manager/issuer-lib
   - cert-manager/helm-tool
+  - cert-manager/cmctl
   only_org_members: true
 
 blunderbuss:
