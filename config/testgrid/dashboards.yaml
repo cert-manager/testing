@@ -5,6 +5,7 @@ dashboard_groups:
   - cert-manager-periodics-master
   - cert-manager-periodics-release-1.12
   - cert-manager-periodics-release-1.13
+  - cert-manager-periodics-release-1.14
   - cert-manager-presubmits-master
   - jetstack-testing-janitors
 
@@ -13,5 +14,6 @@ dashboards:
 - name: cert-manager-periodics-master
 - name: cert-manager-periodics-release-1.12
 - name: cert-manager-periodics-release-1.13
+- name: cert-manager-periodics-release-1.14
 - name: cert-manager-presubmits-master
 - name: jetstack-testing-janitors
