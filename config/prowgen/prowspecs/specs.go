@@ -52,6 +52,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
+
+		// This older cert-manager release uses the ctl image to run the statupapicheck test
+		containerNames: []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"},
 	},
 	"release-1.13": {
 		prowContext: &pkg.ProwContext{
@@ -73,6 +76,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
+
+		// This older cert-manager release uses the ctl image to run the statupapicheck test
+		containerNames: []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"},
 	},
 	"release-1.14": {
 		prowContext: &pkg.ProwContext{
@@ -94,6 +100,10 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
+
+		// This older cert-manager release uses the NEW startupapicheck image to run the statupapicheck test
+		// The release however still includes a ctl image (which is not used in the Helm chart)
+		containerNames: []string{"controller", "acmesolver", "ctl", "startupapicheck", "cainjector", "webhook"},
 	},
 	"master": {
 		prowContext: &pkg.ProwContext{
@@ -130,6 +140,9 @@ type BranchSpec struct {
 
 	e2eCPURequest    string
 	e2eMemoryRequest string
+
+	// TODO: remove this field once we've migrated to the new set of container names
+	containerNames []string
 }
 
 // GenerateJobFile will create a complete test file based on the BranchSpec. This
@@ -177,7 +190,13 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 		m.prowContext.Periodics(pkg.E2ETestFeatureGatesDisabled(m.prowContext, kubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 24)
 	}
 
-	for _, container := range []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"} {
+	// Apply the default set of container names if none have been specified
+	// TODO: this is the set that we want to migrate to in the future
+	if m.containerNames == nil {
+		m.containerNames = []string{"controller", "acmesolver", "startupapicheck", "cainjector", "webhook"}
+	}
+
+	for _, container := range m.containerNames {
 		m.prowContext.Periodics(pkg.TrivyTest(m.prowContext, container), 24)
 	}
 

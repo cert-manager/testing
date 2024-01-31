@@ -1695,11 +1695,11 @@ periodics:
     repo: cert-manager
     base_ref: master
   interval: 24h
-- name: ci-cert-manager-master-trivy-test-ctl
+- name: ci-cert-manager-master-trivy-test-startupapicheck
   max_concurrency: 2
   decorate: true
   annotations:
-    description: Runs a Trivy scan against the ctl container
+    description: Runs a Trivy scan against the startupapicheck container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     testgrid-alert-stale-results-hours: "36"
     testgrid-create-job-group: "true"
@@ -1718,7 +1718,7 @@ periodics:
       - make
       - -j1
       - vendor-go
-      - trivy-scan-ctl
+      - trivy-scan-startupapicheck
       resources:
         requests:
           cpu: 1000m
