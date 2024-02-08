@@ -1,0 +1,69 @@
+presubmits:
+  cert-manager/issuer-lib:
+
+  - name: pull-cert-manager-issuer-lib-verify
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - verify
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+
+  - name: pull-cert-manager-issuer-lib-test
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+
+  - name: pull-cert-manager-issuer-lib-e2e
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 4Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"

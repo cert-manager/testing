@@ -104,12 +104,6 @@ branch-protection:
             contexts:
             - pull-trust-manager-verify
             - pull-trust-manager-smoke
-        issuer-lib:
-          required_status_checks:
-            contexts:
-            - lint
-            - test-e2e
-            - test-unit
         csi-lib:
           required_status_checks:
             contexts:
