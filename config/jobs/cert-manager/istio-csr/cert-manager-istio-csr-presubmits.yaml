@@ -163,7 +163,7 @@ presubmits:
         - name: K8S_VERSION
           value: "1.26.1"
         - name: ISTIO_VERSION
-          value: "1.16.2"
+          value: "1.16.7"
         securityContext:
           privileged: true
           capabilities:
@@ -198,7 +198,112 @@ presubmits:
         - name: K8S_VERSION
           value: "1.26.1"
         - name: ISTIO_VERSION
-          value: "1.17.2"
+          value: "1.17.8"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.18
+  - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-18
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.26.1"
+        - name: ISTIO_VERSION
+          value: "1.18.7"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.17
+  - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-19
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.26.1"
+        - name: ISTIO_VERSION
+          value: "1.19.6"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+
+  # kind based istio-csr e2e job for Kubernetes v1.29, istio v1.20
+  - name: pull-cert-manager-istio-csr-k8s-v1-29-istio-v1-20
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: K8S_VERSION
+          value: "1.29.1"
+        - name: ISTIO_VERSION
+          value: "1.20.2"
         securityContext:
           privileged: true
           capabilities:
