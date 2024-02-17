@@ -48,6 +48,11 @@ branch-protection:
       # Causes the "Include Administrators" checkbox to be ticked in the GitHub branch protection UI.
       # See https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#do-not-allow-bypassing-the-above-settings
       enforce_admins: true
+      # Disallow force pushes to the protected branch. 
+      allow_force_pushes: false
+      # Disallow deletion of the protected branch.
+      allow_deletions: false
+
       required_status_checks:
         contexts:
         - dco
