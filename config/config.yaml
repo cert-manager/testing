@@ -61,6 +61,8 @@ branch-protection:
         - master
         - release-.*
       repos:
+        api:
+          protect: false
         cert-manager:
           branches:
             # cert-manager/cert-manager defines required_status_checks on a per
