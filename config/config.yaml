@@ -52,6 +52,9 @@ branch-protection:
       allow_force_pushes: false
       # Disallow deletion of the protected branch.
       allow_deletions: false
+      
+      required_pull_request_reviews:
+        required_approving_review_count: 0
 
       required_status_checks:
         contexts:
