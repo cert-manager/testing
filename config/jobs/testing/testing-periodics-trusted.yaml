@@ -5,7 +5,7 @@ periodics:
   cluster: trusted
   decorate: true
   annotations:
-    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Closes PRs and issues that are marked 'rotten' and have been inactive for 30d
   labels:
@@ -26,7 +26,6 @@ periodics:
         --comment=Rotten issues close after 30d of inactivity.
         Reopen the issue with `/reopen`.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
-        Send feedback to [jetstack](https://github.com/jetstack).
         /close
       - --ceiling=10
       - --confirm
@@ -36,7 +35,7 @@ periodics:
   cluster: trusted
   decorate: true
   annotations:
-    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Marks PRs and issues that are marked 'stale' and have been inactive for 30d as 'rotten'
   labels:
@@ -59,7 +58,6 @@ periodics:
         Mark the issue as fresh with `/remove-lifecycle rotten`.
         Rotten issues close after an additional 30d of inactivity.
         If this issue is safe to close now please do so with `/close`.
-        Send feedback to [jetstack](https://github.com/jetstack).
         /lifecycle rotten
         /remove-lifecycle stale
       - --ceiling=10
@@ -70,7 +68,7 @@ periodics:
   cluster: trusted
   decorate: true
   annotations:
-    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Marks PRs and issues that have been inactive for 30d as 'stale'
   labels:
@@ -93,7 +91,6 @@ periodics:
         Mark the issue as fresh with `/remove-lifecycle stale`.
         Stale issues rot after an additional 30d of inactivity and eventually close.
         If this issue is safe to close now please do so with `/close`.
-        Send feedback to [jetstack](https://github.com/jetstack).
         /lifecycle stale
       - --ceiling=10
       - --confirm
@@ -103,11 +100,11 @@ periodics:
   cluster: trusted
   decorate: true
   annotations:
-    testgrid-dashboards: jetstack-testing-janitors
+    testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     description: Creates autobump PRs for the cert-manager/testing repo.
   extra_refs:
-  - org: jetstack
+  - org: cert-manager
     repo: testing
     base_ref: master
   labels:

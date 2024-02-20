@@ -16,7 +16,7 @@ postsubmits:
     branches:
     - master
     annotations:
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     max_concurrency: 1
     spec:
@@ -51,7 +51,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'bazelbuild' image
@@ -86,7 +86,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'make-dind' image
@@ -121,7 +121,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'golang-dind' image
@@ -156,7 +156,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'image-builder' image
@@ -191,7 +191,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'golang-nodejs' image
@@ -226,7 +226,7 @@ postsubmits:
       preset-deployer-service-account: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'kind' image
@@ -259,7 +259,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'golang-aws' image
     spec:
@@ -293,7 +293,7 @@ postsubmits:
       preset-deployer-ssh-key: "true"
     annotations:
       testgrid-create-test-group: 'true'
-      testgrid-dashboards: jetstack-testing-janitors
+      testgrid-dashboards: cert-manager-testing-janitors
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'nix-dind' image
