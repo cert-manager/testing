@@ -53,6 +53,15 @@ branch-protection:
       # Disallow deletion of the protected branch.
       allow_deletions: false
       
+      # In the GH UI, the following 'required_pull_request_reviews' configuration
+      # results in checking the 'Require a pull request before merging' checkbox,
+      # without checking any of it's child checkboxes. We must set the
+      # 'required_approving_review_count' value to 0 to make this work (this
+      # is 100% based on the GH REST API, see
+      # https://docs.github.com/en/rest/branches/branch-protection?apiVersion=2022-11-28#update-branch-protection)
+      # Note that the 'required_approving_review_count=0' option is not
+      # selectable in the UI but just corresponds with unchecking the
+      # 'Require approvals' checkbox.
       required_pull_request_reviews:
         required_approving_review_count: 0
 
