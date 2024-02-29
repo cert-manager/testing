@@ -39,6 +39,35 @@ presubmits:
             cpu: 1
             memory: 1Gi
 
+  - name: pull-cert-manager-istio-csr-test-ecc
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-service-account: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-ecc
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 4Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsConfig:
+        options:
+        - name: ndots
+          value: "1"
+
   - name: pull-cert-manager-istio-csr-ca-rotation
     decorate: true
     always_run: true
@@ -67,7 +96,6 @@ presubmits:
         options:
         - name: ndots
           value: "1"
-
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.14
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
     decorate: true
