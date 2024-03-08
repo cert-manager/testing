@@ -10,7 +10,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240108-a2a42cb-1.21.3
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240308-20aab84-1.22.1
         args:
         - runner
         - make

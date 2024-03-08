@@ -232,7 +232,9 @@ postsubmits:
       description: Build and push the 'kind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:ac1c44a3bb2781258e570a9e2ec25b3a8464a8112f46703b1769510940612344
+      # TODO: why is this a digest in contrast to everything else?
+      # eu.gcr.io/jetstack-build-infra-images/golang-dind:20240308-20aab84-1.21.8
+      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:cda16346a368732a7a95c54750e01f8df6af6230e35d7c95e982ee9c53c26f5a
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
