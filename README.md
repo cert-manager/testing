@@ -59,6 +59,10 @@ This may take a few minutes depending on the state of your Docker cache.
 
 ### Pushing a docker image to the image repository
 
+⚠️ WARNING: You're unlikely to have permissions to be able to push images to GCR locally. If you're simply
+looking to update an image, a [workload](https://github.com/cert-manager/testing/blob/365d570125e751a7d9aac4148d8c0ef23e42168c/config/jobs/testing/testing-postsubmits-trusted.yaml#L76)
+in prow will build and push the image for you when your PR with the changes is merged.
+
 builder.sh can also be used to *push* built docker images to the remote registry.
 
 This push target **will not** handle authentication with the remote registry for

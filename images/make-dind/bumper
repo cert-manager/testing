@@ -1,0 +1,6 @@
+# The postsubmit which actually builds an image only triggers on changes to this directory `run_if_changed: '^images/make-dind/'`
+# But it makes sense to rebuild the image without changing any of the logic or anything else
+# (e.g. so that we `apt-get install` the latest and greatest versions)
+
+# This file exists to hold an integer below which exists only to be changed in order to build a new image
+1
