@@ -18,7 +18,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -53,7 +53,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -92,7 +92,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -143,7 +143,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -194,7 +194,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -245,7 +245,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -296,7 +296,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -347,7 +347,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -398,7 +398,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -445,7 +445,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -484,7 +484,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -521,7 +521,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -571,7 +571,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -622,7 +622,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -675,7 +675,7 @@ presubmits:
       preset-service-account: "true"
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+      - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
         args:
         - runner
         - make
@@ -722,7 +722,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -762,7 +762,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -814,7 +814,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -866,7 +866,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -918,7 +918,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -970,7 +970,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1022,7 +1022,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1074,7 +1074,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1126,7 +1126,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1174,7 +1174,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1220,7 +1220,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1272,7 +1272,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1324,7 +1324,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1376,7 +1376,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1428,7 +1428,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1480,7 +1480,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1532,7 +1532,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1584,7 +1584,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1634,7 +1634,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1673,7 +1673,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1712,7 +1712,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1751,7 +1751,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
@@ -1790,7 +1790,7 @@ periodics:
     preset-service-account: "true"
   spec:
     containers:
-    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240108-f7d6331-bookworm
+    - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
       args:
       - runner
       - make
