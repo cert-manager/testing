@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/checkconfig:v20240311-b09cdeb92c
+      - image: gcr.io/k8s-prow/checkconfig:v20240415-7013691e3
         command:
         - checkconfig
         args:
@@ -65,7 +65,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20240311-b09cdeb92c
+      - image: gcr.io/k8s-prow/configurator:v20240409-13cd3acf7e
         command:
         - configurator
         args:
