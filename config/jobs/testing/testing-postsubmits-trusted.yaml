@@ -22,7 +22,7 @@ postsubmits:
     spec:
       serviceAccountName: testgrid-updater
       containers:
-      - image: gcr.io/k8s-prow/configurator:v20240311-b09cdeb92c
+      - image: gcr.io/k8s-prow/configurator:v20240409-13cd3acf7e
         command:
         - configurator
         args:
@@ -57,7 +57,7 @@ postsubmits:
       description: Build and push the 'make-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-63d3df9-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -92,7 +92,7 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-63d3df9-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -127,7 +127,7 @@ postsubmits:
       description: Build and push the 'image-builder' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-63d3df9-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -194,7 +194,7 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-63d3df9-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -229,7 +229,7 @@ postsubmits:
       description: Build and push the 'nix-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-63d3df9-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
