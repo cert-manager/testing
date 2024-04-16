@@ -9,7 +9,7 @@ presubmits:
     labels:
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind:20240308-20aab84-1.22.1
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240416-5ccb4a8-1.22.1
         args:
         - runner
         - make

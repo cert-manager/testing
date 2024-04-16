@@ -22,8 +22,8 @@ prefixes:
     repo: "https://github.com/kubernetes/test-infra"
     summarise: false
     consistentImages: false
-  - name: "jetstack-build-infra images"
-    prefix: "eu.gcr.io/jetstack-build-infra-images/"
+  - name: "cert-manager-infra-images images"
+    prefix: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/"
     repo: "https://github.com/cert-manager/testing"
     summarise: false
     consistentImages: false

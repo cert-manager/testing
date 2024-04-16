@@ -3,15 +3,15 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.22":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240416-5ccb4a8-bookworm"
       GO_VERSION: "1.22.1"
   "1.21":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240416-5ccb4a8-bookworm"
       GO_VERSION: "1.21.8"
   "1.20":
     arguments:
-      BASE_IMAGE: "eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240416-5ccb4a8-bookworm"
       GO_VERSION: "1.20.14"
   "1.19":
     arguments:

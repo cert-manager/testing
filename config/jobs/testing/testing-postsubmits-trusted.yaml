@@ -57,7 +57,7 @@ postsubmits:
       description: Build and push the 'bazelbuild' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -92,7 +92,7 @@ postsubmits:
       description: Build and push the 'make-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -127,7 +127,7 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -162,7 +162,7 @@ postsubmits:
       description: Build and push the 'image-builder' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -197,7 +197,7 @@ postsubmits:
       description: Build and push the 'golang-nodejs' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -232,9 +232,7 @@ postsubmits:
       description: Build and push the 'kind' image
     spec:
       containers:
-      # TODO: why is this a digest in contrast to everything else?
-      # eu.gcr.io/jetstack-build-infra-images/golang-dind:20240308-20aab84-1.21.8
-      - image: eu.gcr.io/jetstack-build-infra-images/golang-dind@sha256:cda16346a368732a7a95c54750e01f8df6af6230e35d7c95e982ee9c53c26f5a
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240416-5ccb4a8-1.22.1
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -266,7 +264,7 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -301,7 +299,7 @@ postsubmits:
       description: Build and push the 'nix-dind' image
     spec:
       containers:
-      - image: eu.gcr.io/jetstack-build-infra-images/image-builder:20240109-984fa99-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-5ccb4a8-gcloud-425
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
