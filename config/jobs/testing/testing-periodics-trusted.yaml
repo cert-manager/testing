@@ -118,3 +118,89 @@ periodics:
       args:
       - --config=config/autobump-config/testing-autobump-config.yaml
       - --signoff
+
+- name: periodic-testing-label-sync
+  cron: "17 * * * *"  # Every hour at 17 minutes past the hour
+  cluster: prow-trusted
+  decorate: true
+  annotations:
+    testgrid-dashboards: cert-manager-testing-janitors
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs label_sync to synchronize GitHub repo labels with the label config defined in label_sync/labels.yaml.
+  extra_refs:
+  - org: cert-manager
+    repo: testing
+    base_ref: master
+  spec:
+    containers:
+    - name: label-sync
+      image: gcr.io/k8s-prow/label_sync:v20230412-a86d65c3c2
+      command:
+      - label_sync
+      args:
+      - --config=config/labels.yaml
+      # TODO: enable label_sync across the whole org
+      - --only=cert-manager/cert-manager,cert-manager/testing,cert-manager/trust-manager,cert-manager/release,cert-manager/webhook-example,cert-manager/website,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr,cert-manager/csi-driver-spiffe,cert-manager/infrastructure,cert-manager/boilersuite
+      - --debug
+      - --confirm
+      - --github-app-id=$(GITHUB_APP_ID)
+      - --github-app-private-key-path=/etc/github/cert
+      - --github-endpoint=http://ghproxy.default
+      - --github-endpoint=https://api.github.com
+      env:
+      - name: GITHUB_APP_ID
+        valueFrom:
+          secretKeyRef:
+            name: github-app-token
+            key: appid
+      volumeMounts:
+      - name: github-app-token
+        mountPath: /etc/github
+        readOnly: true
+    volumes:
+    - name: github-app-token
+      secret:
+        secretName: github-app-token
+
+- name: periodic-testing-branchprotector
+  cron: "54 * * * *"  # Every hour at 54 minutes past the hour
+  cluster: prow-trusted
+  decorate: true
+  decoration_config:
+    timeout: 5h
+  annotations:
+    testgrid-dashboards: cert-manager-testing-janitors
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    description: Runs Prow's branchprotector to apply configured GitHub status context requirements and merge policies.
+  extra_refs:
+  - org: cert-manager
+    repo: testing
+    base_ref: master
+  spec:
+    containers:
+    - name: branchprotector
+      image: gcr.io/k8s-prow/branchprotector:v20230412-a86d65c3c2
+      command:
+      - branchprotector
+      args:
+      - --config-path=config/config.yaml
+      - --job-config-path=config/jobs
+      - --confirm
+      - --github-app-id=$(GITHUB_APP_ID)
+      - --github-app-private-key-path=/etc/github/cert
+      - --github-endpoint=http://ghproxy.default
+      - --github-endpoint=https://api.github.com
+      env:
+      - name: GITHUB_APP_ID
+        valueFrom:
+          secretKeyRef:
+            name: github-app-token
+            key: appid
+      volumeMounts:
+      - name: github-app-token
+        mountPath: /etc/github
+        readOnly: true
+    volumes:
+    - name: github-app-token
+      secret:
+        secretName: github-app-token
