@@ -39,15 +39,15 @@ $ ./images/image-builder-script/builder.sh images/bazelbuild
 The builder automatically injects build variables into image builds, and makes
 them available for templating in the `images` section of the `build.yaml` file.
 
-+-------------+------------------------------------------------------+---------------------------------------+
-| Name        | Description                                          | Example                               |
-+-------------+------------------------------------------------------+---------------------------------------+
-| _NAME       | The name of the image as specified in build.yaml     | bazelbuild                            |
-| _REGISTRY   | The image registry (specified as --registry)         | eu.gcr.io/jetstack-build-infra-images |
-| _DATE_STAMP | The current date stamp, useful for use in image tags | 20190407                              |
-| _GIT_REF    | The current git reference of the repository          | 2ba5d19                               |
-| _VARIANT    | The name of the variant being built, if any          | experimental                          |
-+-------------+------------------------------------------------------+---------------------------------------+
++-------------+------------------------------------------------------+-------------------------------------+
+| Name        | Description                                          | Example                             |
++-------------+------------------------------------------------------+-------------------------------------+
+| _NAME       | The name of the image as specified in build.yaml     | bazelbuild                          |
+| _REGISTRY   | The image registry (specified as --registry)         | eu.gcr.io/cert-manager-infra-images |
+| _DATE_STAMP | The current date stamp, useful for use in image tags | 20190407                            |
+| _GIT_REF    | The current git reference of the repository          | 2ba5d19                             |
+| _VARIANT    | The name of the variant being built, if any          | experimental                        |
++-------------+------------------------------------------------------+-------------------------------------+
 
 Additionally, all global and variant-specific options will be provided to the
 Docker build, and made available for templating as part of the `images` section.

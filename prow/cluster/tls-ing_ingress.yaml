@@ -17,13 +17,14 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
-    kubernetes.io/ingress.class: prod-nginx
     kubernetes.io/tls-acme: "true"
+    acme.cert-manager.io/http01-edit-in-place: "true"
   name: prow-ing
   namespace: default
 spec:
+  ingressClassName: prod-nginx
   rules:
-  - host: prow.build-infra.jetstack.net
+  - host: prow.infra.cert-manager.io
     http:
       paths:
       - backend:
@@ -42,5 +43,5 @@ spec:
         pathType: ImplementationSpecific
   tls:
   - hosts:
-    - prow.build-infra.jetstack.net
+    - prow.infra.cert-manager.io
     secretName: prow-tls

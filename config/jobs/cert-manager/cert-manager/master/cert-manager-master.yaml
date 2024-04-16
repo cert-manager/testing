@@ -15,7 +15,6 @@ presubmits:
     labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -50,7 +49,6 @@ presubmits:
       preset-dind-enabled: "true"
       preset-go-cache: "true"
       preset-local-cache: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -89,7 +87,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -140,7 +137,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -191,7 +187,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -242,7 +237,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -293,7 +287,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -344,7 +337,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -395,7 +387,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -442,7 +433,6 @@ presubmits:
       preset-dind-enabled: "true"
       preset-go-cache: "true"
       preset-local-cache: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -481,7 +471,6 @@ presubmits:
     labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -517,7 +506,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
@@ -567,7 +555,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
@@ -619,7 +606,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -672,7 +658,6 @@ presubmits:
       preset-go-cache: "true"
       preset-local-cache: "true"
       preset-retry-flakey-jobs: "true"
-      preset-service-account: "true"
     spec:
       containers:
       - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -719,7 +704,6 @@ periodics:
   labels:
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -759,7 +743,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -811,7 +794,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -863,7 +845,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -915,7 +896,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -967,7 +947,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1019,7 +998,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1071,7 +1049,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1121,7 +1098,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
     preset-venafi-cloud-credentials: "true"
     preset-venafi-tpp-credentials: "true"
   spec:
@@ -1171,7 +1147,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1217,7 +1192,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1269,7 +1243,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1321,7 +1294,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1373,7 +1345,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1425,7 +1396,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1477,7 +1447,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1529,7 +1498,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1581,7 +1549,6 @@ periodics:
     preset-go-cache: "true"
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1631,7 +1598,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1670,7 +1636,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1709,7 +1674,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1748,7 +1712,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm
@@ -1787,7 +1750,6 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
-    preset-service-account: "true"
   spec:
     containers:
     - image: eu.gcr.io/jetstack-build-infra-images/make-dind:20240308-a6a8aa9-bookworm

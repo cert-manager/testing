@@ -1,5 +1,5 @@
 /*
-Copyright 2019 The Jetstack contributors.
+Copyright 2019 The cert-manager Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -48,7 +48,7 @@ var (
 
 func init() {
 	flag.BoolVar(&confirm, "confirm", false, "set to true to confirm pushing images")
-	flag.StringVar(&registry, "registry", "eu.gcr.io/jetstack-build-infra-images", "docker image registry to push images to")
+	flag.StringVar(&registry, "registry", "eu.gcr.io/cert-manager-infra-images", "docker image registry to push images to")
 	flag.StringVar(&buildDir, "build-dir", "", "path to a directory containing a build.yaml file")
 	flag.StringVar(&variantName, "variant", "", "if specified, only the given variant will be built")
 }

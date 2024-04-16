@@ -1,10 +1,15 @@
 presets:
 
+# The "deployer" github account is https://github.com/cert-manager-bot.
+# The credentials for this account can be found in the 1Password vault.
+# Long-term, we probably want to use a GitHub App here too instea of this
+# bot account.
+
 - labels:
     preset-deployer-github-token: "true"
   env:
   - name: GITHUB_USER
-    value: jetstack-bot
+    value: cert-manager-bot
   - name: GITHUB_TOKEN_FILE
     value: /etc/github/token
   volumeMounts:
@@ -13,7 +18,7 @@ presets:
   volumes:
   - name: github-token
     secret:
-      secretName: bot-github-token
+      secretName: cert-manager-bot-github-token
 
 - labels:
     preset-deployer-ssh-key: "true"
@@ -23,7 +28,7 @@ presets:
   volumes:
   - name: ssh
     secret:
-      secretName: jetstack-bot-ssh-keys
+      secretName: cert-manager-bot-ssh-keys
       defaultMode: 0400
 
 - labels:
@@ -37,4 +42,4 @@ presets:
   volumes:
   - name: creds
     secret:
-      secretName: deployer-service-account
+      secretName: cert-manager-bot-gcp-service-account

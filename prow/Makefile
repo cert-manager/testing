@@ -1,4 +1,4 @@
-# Copyright 2021 The Jetstack contributors.
+# Copyright 2021 The cert-manager Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -36,6 +36,18 @@ update-config:
 	cd ../config/ && \
 	kubectl create configmap config --from-file=config.yaml=config.yaml --dry-run=client -o yaml | kubectl replace configmap config -f -
 
+# This target allows you to manually update the configmap for the prow config,
+# normally this is done through GitOps.
+.PHONY: bootstrap-job-config
+bootstrap-job-config:
+	cd ../ && \
+	go run sigs.k8s.io/prow/prow/cmd/config-bootstrapper@v0.0.0-20240415223539-7013691e3f35 \
+		--dry-run=false \
+		--source-path=. \
+		--config-path=config/config.yaml \
+		--plugin-config=config/plugins.yaml \
+		--job-config-path=config/jobs
+
 .PHONY: diff-plugins
 diff-plugins:
 	cd ../config/ && \
@@ -56,3 +68,12 @@ diff-prow:
 deploy-prow:
 	kubectl apply --server-side -f ./cluster/prowjob-crd/prowjob_customresourcedefinition.yaml
 	kubectl apply --server-side -f ./cluster/
+
+.PHONY: diff-worker
+diff-worker:
+	kubectl diff -f ./worker_cluster/
+
+.PHONY: deploy-worker
+deploy-worker:
+	kubectl create ns test-pods --dry-run=client -o yaml | kubectl apply --server-side -f -
+	kubectl apply --server-side -f ./worker_cluster/

@@ -84,6 +84,6 @@ make deploy-prow
 
 - Trigger an e2e test and see it succeed
 
-- Ensure you can access `https://prow.build-infra.jetstack.net/` (and see logs for the tests there) and `https://triage.build-infra.jetstack.net/s/daily`
+- Ensure you can access `https://prow.infra.cert-manager.io/` (and see logs for the tests there) and `https://triage.build-infra.jetstack.net/s/daily`
 
 11. Commit and PR in your change

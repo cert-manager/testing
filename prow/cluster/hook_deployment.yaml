@@ -44,13 +44,19 @@ spec:
         - --dry-run=false
         - --github-endpoint=http://ghproxy
         - --github-endpoint=https://api.github.com
-        - --github-token-path=/etc/github/oauth
+        - --github-app-id=$(GITHUB_APP_ID)
+        - --github-app-private-key-path=/etc/github/cert
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
           value: "/etc/kubeconfig/config"
+        - name: GITHUB_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: github-app-token
+              key: appid
         ports:
         - name: http
           containerPort: 8888
@@ -60,7 +66,7 @@ spec:
         - name: hmac
           mountPath: /etc/webhook
           readOnly: true
-        - name: oauth
+        - name: github-app-token
           mountPath: /etc/github
           readOnly: true
         - name: config
@@ -92,9 +98,9 @@ spec:
       - name: hmac
         secret:
           secretName: hmac-token
-      - name: oauth
+      - name: github-app-token
         secret:
-          secretName: oauth-token
+          secretName: github-app-token
       - name: config
         configMap:
           name: config

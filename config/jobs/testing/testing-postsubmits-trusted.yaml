@@ -10,7 +10,7 @@ postsubmits:
   #
   # See https://github.com/kubernetes/test-infra/blob/master/testgrid/merging.md
   - name: post-testing-upload-testgrid-config
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^(config/jobs/.*\.yaml)|(config/testgrid/dashboards\.yaml)$'
     decorate: true
     branches:
@@ -32,14 +32,14 @@ postsubmits:
         - --prow-job-config=config/jobs
         - --prowjob-url-prefix=https://github.com/cert-manager/testing/tree/master/config/jobs
         - --update-description
-        - --output=gs://jetstack-testgrid/config
+        - --output=gs://cert-manager-prow-testgrid/config
         - --oneshot
         resources:
           requests:
             memory: "1Gi"
 
   - name: post-testing-push-bazelbuild
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/bazelbuild/'
     branches:
     - master
@@ -74,7 +74,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-make-dind
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/make-dind/'
     branches:
     - master
@@ -109,7 +109,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-golang-dind
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/golang-dind/'
     branches:
     - master
@@ -144,7 +144,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-image-builder
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/image-builder/'
     branches:
     - master
@@ -179,7 +179,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-golang-nodejs
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/golang-nodejs/'
     branches:
     - master
@@ -214,7 +214,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-kind
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/kind/'
     branches:
     - master
@@ -249,7 +249,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: aws-testing
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/golang-aws/'
     branches:
     - master
@@ -283,7 +283,7 @@ postsubmits:
             add: ["SYS_ADMIN"]
 
   - name: post-testing-push-nix-dind
-    cluster: trusted
+    cluster: prow-trusted
     run_if_changed: '^images/nix-dind/'
     branches:
     - master

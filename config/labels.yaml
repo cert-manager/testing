@@ -239,7 +239,7 @@ default:
     name: lifecycle/rotten
     target: both
     prowPlugin: lifecycle
-    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-rotten prowjob](https://prow.build-infra.jetstack.net/?job=periodic-testing-rotten)
+    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-rotten prowjob](https://prow.infra.cert-manager.io/?job=periodic-testing-rotten)
   - color: "795548"
     description: Denotes an issue or PR has remained open with no activity and has become stale.
     name: lifecycle/stale
@@ -247,7 +247,7 @@ default:
       - name: stale
     target: both
     prowPlugin: lifecycle
-    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-stale prowjob](https://prow.build-infra.jetstack.net/?job=periodic-testing-stale)
+    addedBy: anyone or [@retest-bot](https://github.com/retest-bot) via [periodic-testing-stale prowjob](https://prow.infra.cert-manager.io/?job=periodic-testing-stale)
   - color: b60205
     description: Indicates a PR that requires an org member to verify it is safe to test. # This is to prevent spam/abuse of our CI system, and can be circumvented by becoming an org member. Org members can remove this label with the `/ok-to-test` command.
     name: needs-ok-to-test
