@@ -1,0 +1,10 @@
+clusters:
+- gke: projects/cert-manager-tests-trusted/locations/europe-west1-b/clusters/prow-trusted
+  name: prow-trusted
+  duration: 48h
+  output: kubeconfig.yaml
+
+- gke: projects/cert-manager-tests-untrusted/locations/europe-west1-b/clusters/prow-untrusted
+  name: default
+  duration: 48h
+  output: kubeconfig.yaml

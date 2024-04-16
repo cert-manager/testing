@@ -1,9 +1,9 @@
 plank:
-  job_url_template: 'https://prow.build-infra.jetstack.net/view/jetstack-logs/{{if eq .Spec.Type "presubmit"}}pr-logs/pull{{else if eq .Spec.Type "batch"}}pr-logs/pull{{else}}logs{{end}}{{if .Spec.Refs}}{{if ne .Spec.Refs.Org ""}}/{{.Spec.Refs.Org}}_{{.Spec.Refs.Repo}}{{end}}{{end}}{{if eq .Spec.Type "presubmit"}}/{{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}{{else if eq .Spec.Type "batch"}}/batch{{end}}/{{.Spec.Job}}/{{.Status.BuildID}}/'
+  job_url_template: 'https://prow.infra.cert-manager.io/view/cert-manager-prow-artifacts/{{if eq .Spec.Type "presubmit"}}pr-logs/pull{{else if eq .Spec.Type "batch"}}pr-logs/pull{{else}}logs{{end}}{{if .Spec.Refs}}{{if ne .Spec.Refs.Org ""}}/{{.Spec.Refs.Org}}_{{.Spec.Refs.Repo}}{{end}}{{end}}{{if eq .Spec.Type "presubmit"}}/{{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}{{else if eq .Spec.Type "batch"}}/batch{{end}}/{{.Spec.Job}}/{{.Status.BuildID}}/'
   report_templates: # These templates are used when creating a GH report comment for test failures.
-    '*': '[Full PR test history](https://prow.build-infra.jetstack.net/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://prow.build-infra.jetstack.net/pr?query=is%3Apr%20state%3Aopen%20author%3A{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#github-issues-for-known-flakes) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
+    '*': '[Full PR test history](https://prow.infra.cert-manager.io/pr-history?org={{.Spec.Refs.Org}}&repo={{.Spec.Refs.Repo}}&pr={{with index .Spec.Refs.Pulls 0}}{{.Number}}{{end}}). [Your PR dashboard](https://prow.infra.cert-manager.io/pr?query=is%3Apr%20state%3Aopen%20author%3A{{with index .Spec.Refs.Pulls 0}}{{.Author}}{{end}}). Please help us cut down on flakes by [linking to](https://git.k8s.io/community/contributors/devel/sig-testing/flaky-tests.md#github-issues-for-known-flakes) an [open issue](https://github.com/{{.Spec.Refs.Org}}/{{.Spec.Refs.Repo}}/issues?q=is:issue+is:open) when you hit one in your PR.'
   job_url_prefix_config:
-    '*': https://prow.build-infra.jetstack.net/view/
+    '*': https://prow.infra.cert-manager.io/view/
   pod_pending_timeout: 120m
   pod_unscheduled_timeout: 60m
   pod_running_timeout: 48h0m0s
@@ -17,12 +17,9 @@ plank:
         entrypoint: "gcr.io/k8s-prow/entrypoint:v20240311-b09cdeb92c"
         sidecar: "gcr.io/k8s-prow/sidecar:v20240311-b09cdeb92c"
       gcs_configuration:
-        bucket: jetstack-logs
-        path_strategy: "legacy"
-        # Leave this as k/k so that all logs use org_repo in the path
-        default_org: "kubernetes"
-        default_repo: "kubernetes"
-      gcs_credentials_secret: "service-account"
+        bucket: cert-manager-prow-artifacts
+        path_strategy: explicit
+      gcs_credentials_secret: gcs-credentials
       resources:
         clonerefs:
           requests:
@@ -142,7 +139,7 @@ deck:
   spyglass:
     size_limit: 100000000 # 100MB
     gcs_browser_prefix: https://console.cloud.google.com/storage/browser/
-    testgrid_config: gs://jetstack-testgrid/config
+    testgrid_config: gs://cert-manager-prow-testgrid/config
     testgrid_root: https://testgrid.k8s.io/
     lenses:
     - lens:
@@ -184,20 +181,6 @@ pod_namespace: test-pods
 log_level: info
 
 presets:
-- labels:
-    preset-service-account: "true"
-  env:
-  - name: GOOGLE_APPLICATION_CREDENTIALS
-    value: /etc/service-account/service-account.json
-  volumes:
-  - name: service
-    secret:
-      secretName: service-account
-  volumeMounts:
-  - name: service
-    mountPath: /etc/service-account
-    readOnly: true
-
 # docker-in-docker (with images/bootstrap) preset
 # NOTE: using this also requires using that image,
 # ensuring you run your test under either the ENTRYPOINT or:
@@ -221,7 +204,7 @@ presets:
 
 tide:
   pr_status_base_urls:
-    '*': https://prow.build-infra.jetstack.net/pr
+    '*': https://prow.infra.cert-manager.io/pr
   squash_label: tide/squash
   queries:
   # Default tide config for all repos in the cert-manager org

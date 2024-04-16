@@ -53,10 +53,6 @@ func addGoCacheLabel(job *Job) {
 	job.Labels["preset-go-cache"] = "true"
 }
 
-func addServiceAccountLabel(job *Job) {
-	job.Labels["preset-service-account"] = "true"
-}
-
 func addDindLabel(job *Job) {
 	job.Labels["preset-dind-enabled"] = "true"
 }

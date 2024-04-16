@@ -8,7 +8,6 @@ presubmits:
     annotations:
       testgrid-create-test-group: 'false'
     labels:
-      preset-service-account: "true"
       preset-dind-enabled: "true"
     spec:
       containers:
@@ -41,7 +40,6 @@ presubmits:
     - ^main$
     - ^release-.*$
     labels:
-      preset-service-account: "true"
       preset-dind-enabled: "true"
     spec:
       containers:

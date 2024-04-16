@@ -45,7 +45,6 @@ presubmits:
     labels:
       preset-go-cache: "true"
       preset-local-cache: "true"
-      preset-service-account: "true"
       preset-dind-enabled: "true"
     spec:
       containers:

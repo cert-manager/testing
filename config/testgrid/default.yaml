@@ -18,7 +18,7 @@ default_test_group:
 
 default_dashboard_tab:
   open_test_template: # The URL template to visit after clicking on a cell
-    url: https://prow.build-infra.jetstack.net/view/gs/<gcs_prefix>/<changelist>
+    url: https://prow.infra.cert-manager.io/view/gs/<gcs_prefix>/<changelist>
   file_bug_template: # The URL template to visit when filing a bug
     url: https://github.com/cert-manager/cert-manager/issues/new
     options:
@@ -33,7 +33,7 @@ default_dashboard_tab:
     url: https://github.com/cert-manager/cert-manager/issues/
   results_text: See these results on Prow # Text to show in the about menu as a link to another view of the results
   results_url_template: # The URL template to visit after clicking
-    url: https://prow.build-infra.jetstack.net/job-history/<gcs_prefix>
+    url: https://prow.infra.cert-manager.io/job-history/<gcs_prefix>
   code_search_path: github.com/cert-manager/cert-manager/search # URL for regression search links.
   num_columns_recent: 10
   code_search_url_template: # The URL template to visit when searching for changelists

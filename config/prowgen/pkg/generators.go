@@ -28,7 +28,6 @@ func MakeTest(ctx *ProwContext) *Job {
 	job := jobTemplate(
 		"make-test",
 		"Runs unit and integration tests and verification scripts",
-		addServiceAccountLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
 		addMaxConcurrency(8),
@@ -65,7 +64,6 @@ func ChartTest(ctx *ProwContext) *Job {
 	job := jobTemplate(
 		"chart",
 		"Verifies the Helm chart passes linting checks",
-		addServiceAccountLabel,
 		addDindLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
@@ -104,7 +102,6 @@ func LicenseTest(ctx *ProwContext) *Job {
 	job := jobTemplate(
 		"license",
 		"Verifies LICENSES are up to date; only needs to be run if go.mod has changed",
-		addServiceAccountLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
 		addMaxConcurrency(8),
@@ -142,7 +139,6 @@ func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest stri
 	job := jobTemplate(
 		"e2e-v"+nameVersion,
 		desc,
-		addServiceAccountLabel,
 		addDindLabel,
 		addCloudflareCredentialsLabel,
 		addLocalCacheLabel,
@@ -210,7 +206,6 @@ func E2ETestVenafiTPP(ctx *ProwContext, k8sVersion string, cpuRequest, memoryReq
 	addLocalCacheLabel(job)
 	addGoCacheLabel(job)
 	addRetryFlakesLabel(job)
-	addServiceAccountLabel(job)
 	addVenafiTPPLabels(job)
 
 	return job
@@ -230,7 +225,6 @@ func E2ETestVenafiCloud(ctx *ProwContext, k8sVersion string, cpuRequest, memoryR
 	addLocalCacheLabel(job)
 	addGoCacheLabel(job)
 	addRetryFlakesLabel(job)
-	addServiceAccountLabel(job)
 	addVenafiCloudLabels(job)
 
 	return job
@@ -251,7 +245,6 @@ func E2ETestVenafiBoth(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRe
 	addLocalCacheLabel(job)
 	addGoCacheLabel(job)
 	addRetryFlakesLabel(job)
-	addServiceAccountLabel(job)
 	addVenafiBothLabels(job)
 
 	return job
@@ -273,7 +266,6 @@ func E2ETestFeatureGatesDisabled(ctx *ProwContext, k8sVersion string, cpuRequest
 	addLocalCacheLabel(job)
 	addGoCacheLabel(job)
 	addRetryFlakesLabel(job)
-	addServiceAccountLabel(job)
 
 	return job
 }
@@ -296,7 +288,6 @@ func E2ETestWithBestPracticeInstall(ctx *ProwContext, k8sVersion string, cpuRequ
 	addLocalCacheLabel(job)
 	addGoCacheLabel(job)
 	addRetryFlakesLabel(job)
-	addServiceAccountLabel(job)
 	addBestPracticeInstallLabel(job)
 
 	return job
@@ -311,7 +302,6 @@ func UpgradeTest(ctx *ProwContext, k8sVersion string) *Job {
 	job := jobTemplate(
 		"e2e-v"+nameVersion+"-upgrade",
 		"Runs cert-manager upgrade from latest published release",
-		addServiceAccountLabel,
 		addDindLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
@@ -359,7 +349,6 @@ func TrivyTest(ctx *ProwContext, containerName string) *Job {
 	job := jobTemplate(
 		fmt.Sprintf("trivy-test-%s", containerName),
 		fmt.Sprintf("Runs a Trivy scan against the %s container", containerName),
-		addServiceAccountLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
 		addDindLabel,

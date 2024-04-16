@@ -36,7 +36,7 @@ spec:
               - --only=cert-manager/cert-manager,cert-manager/testing,cert-manager/trust-manager,cert-manager/release,cert-manager/webhook-example,cert-manager/website,cert-manager/csi-lib,cert-manager/approver-policy,cert-manager/csi-driver,cert-manager/istio-csr,cert-manager/csi-driver-spiffe,cert-manager/infrastructure,cert-manager/boilersuite
               - --token=/etc/github/oauth
               volumeMounts:
-              - name: oauth
+              - name: github-app-token
                 mountPath: /etc/github
                 readOnly: true
               - name: config
@@ -44,9 +44,9 @@ spec:
                 readOnly: true
           restartPolicy: Never
           volumes:
-          - name: oauth
+          - name: github-app-token
             secret:
-              secretName: oauth-token
+              secretName: github-app-token
           - name: config
             configMap:
               name: label-config

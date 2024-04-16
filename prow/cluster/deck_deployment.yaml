@@ -54,7 +54,8 @@ spec:
         - --job-config-path=/etc/job-config
         - --spyglass=true
         - --rerun-creates-job
-        - --github-token-path=/etc/github/oauth
+        - --github-app-id=$(GITHUB_APP_ID)
+        - --github-app-private-key-path=/etc/github/cert
         - --github-endpoint=http://ghproxy
         - --github-endpoint=https://api.github.com
         - --github-oauth-config-file=/etc/githuboauth/secret
@@ -64,6 +65,11 @@ spec:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
           value: "/etc/kubeconfig/config"
+        - name: GITHUB_APP_ID
+          valueFrom:
+            secretKeyRef:
+              name: github-app-token
+              key: appid
         volumeMounts:
         - name: oauth-config
           mountPath: /etc/githuboauth
@@ -105,7 +111,7 @@ spec:
           secretName: github-oauth-config
       - name: oauth-token
         secret:
-          secretName: oauth-token
+          secretName: github-app-token
       - name: cookie-secret
         secret:
           secretName: cookie

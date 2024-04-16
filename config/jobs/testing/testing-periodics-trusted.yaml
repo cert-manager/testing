@@ -2,7 +2,7 @@ periodics:
 
 - name: periodic-testing-close
   interval: 1h
-  cluster: trusted
+  cluster: prow-trusted
   decorate: true
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
@@ -32,7 +32,7 @@ periodics:
 
 - name: periodic-testing-rotten
   interval: 1h
-  cluster: trusted
+  cluster: prow-trusted
   decorate: true
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
@@ -65,7 +65,7 @@ periodics:
 
 - name: periodic-testing-stale
   interval: 1h
-  cluster: trusted
+  cluster: prow-trusted
   decorate: true
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
@@ -97,7 +97,7 @@ periodics:
 
 - name: periodic-testing-autobump
   cron: "30 18-23/5 * * 1-5"  # Run at 10:30 and 15:30 PST (18:05 UTC, fall) Mon-Fri
-  cluster: trusted
+  cluster: prow-trusted
   decorate: true
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors

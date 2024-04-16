@@ -19,12 +19,19 @@ spec:
             args:
             - --config-path=/etc/config/config.yaml
             - --job-config-path=/etc/job-config
-            - --github-token-path=/etc/github/oauth
+            - --github-app-id=$(GITHUB_APP_ID)
+            - --github-app-private-key-path=/etc/github/cert
             - --confirm
             - --github-endpoint=http://ghproxy
             - --github-endpoint=https://api.github.com
+            env:
+            - name: GITHUB_APP_ID
+              valueFrom:
+                secretKeyRef:
+                  name: github-app-token
+                  key: appid
             volumeMounts:
-            - name: oauth
+            - name: github-app-token
               mountPath: /etc/github
               readOnly: true
             - name: config
@@ -35,9 +42,9 @@ spec:
               readOnly: true
           restartPolicy: Never
           volumes:
-          - name: oauth
+          - name: github-app-token
             secret:
-              secretName: oauth-token
+              secretName: github-app-token
           - name: config
             configMap:
               name: config
