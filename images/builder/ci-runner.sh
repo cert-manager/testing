@@ -61,8 +61,8 @@ find "${WORKSPACE}/config/jobs" -type f -name '*.yaml' | \
     --image-regex "${PUSHED_IMAGE}"
 
 ensure-config() {
-  local username="jetstack-bot"
-  local email="jetstack-bot@users.noreply.github.com"
+  local username="cert-manager-bot"
+  local email="cert-manager-bot@users.noreply.github.com"
   echo "git config user.name=$username user.email=$email..." >&2
   git config user.name "$username"
   git config user.email "$email"
