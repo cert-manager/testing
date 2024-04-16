@@ -9,7 +9,7 @@ presubmits:
     labels:
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240416-5ccb4a8-1.22.1
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240416-5ccb4a8-1.22
         args:
         - runner
         - make
