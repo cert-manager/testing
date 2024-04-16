@@ -1,7 +1,7 @@
 # testing/images
 
 Images used for various CI jobs for cert-manager and related projects.
-These images are all pushed to eu.gcr.io/jetstack-build-infra-images/
+These images are all pushed to europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/
 
 All images are built in Prow. There is a Prow job per image in [config/jobs/testing/test-trusted.yaml](../config/jobs/testing/testing-trusted.yaml).
 Most images are built using the scripts in [images/builder](./builder).
