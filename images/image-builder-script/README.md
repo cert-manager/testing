@@ -43,7 +43,7 @@ them available for templating in the `images` section of the `build.yaml` file.
 | Name        | Description                                          | Example                             |
 +-------------+------------------------------------------------------+-------------------------------------+
 | _NAME       | The name of the image as specified in build.yaml     | bazelbuild                          |
-| _REGISTRY   | The image registry (specified as --registry)         | eu.gcr.io/cert-manager-infra-images |
+| _REGISTRY   | The image registry (specified as --registry)         | europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images |
 | _DATE_STAMP | The current date stamp, useful for use in image tags | 20190407                            |
 | _GIT_REF    | The current git reference of the repository          | 2ba5d19                             |
 | _VARIANT    | The name of the variant being built, if any          | experimental                        |

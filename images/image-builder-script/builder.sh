@@ -35,7 +35,7 @@ if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
     gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
 
     echo "Generating docker credentials..."
-    gcloud auth configure-docker --quiet
+    gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 else
     echo "WARNING: GOOGLE_APPLICATION_CREDENTIALS not set"
 fi
