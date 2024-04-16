@@ -31,7 +31,7 @@ echo "Activating service account..."
 gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
 
 echo "Generating docker credentials..."
-gcloud auth configure-docker --quiet
+gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 
 echo "Executing builder..."
 PUSHED_IMAGE=$(bazel run \
