@@ -1,8 +1,8 @@
 ---
-gitHubLogin: "jetstack-bot"
+gitHubLogin: "cert-manager-bot"
 gitHubToken: "/etc/github/token"
-gitName: "jetstack-bot"
-gitEmail: "jetstack-bot@users.noreply.github.com"
+gitName: "cert-manager-bot"
+gitEmail: "cert-manager-bot@users.noreply.github.com"
 skipPullRequest: false
 gitHubOrg: "cert-manager"
 gitHubRepo: "testing"
