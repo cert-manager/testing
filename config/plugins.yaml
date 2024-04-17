@@ -79,6 +79,8 @@ config_updater:
       name: plugins
     config/jobs/**/*.yaml:
       name: job-config
+    config/gencred-config/gencred-config.yaml:
+      name: gencred-config
 
 require_matching_label:
 - missing_label: needs-kind

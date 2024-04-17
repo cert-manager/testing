@@ -1,0 +1,55 @@
+# Copyright 2019 The Kubernetes Authors All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This deployment is a customization on top of the "default" prow setup
+# to avoid the use of long-lived manually-managed kubeconfig secrets,
+# we instead use the gencred tool to authenticate to GCP and retrieve
+# the kubeconfigs that we need to run the prowjobs in other clusters.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: gencred
+  labels:
+    app: gencred
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gencred
+  template:
+    metadata:
+      labels:
+        app: gencred
+    spec:
+      serviceAccountName: gencred
+      terminationGracePeriodSeconds: 30
+      containers:
+      - name: gencred
+        image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/gencred:20240417-d0e6803
+        args:
+        - --config=/etc/config/gencred-config.yaml
+        - --refresh-interval=2h
+        ports:
+        - name: metrics
+          containerPort: 9090
+        volumeMounts:
+        - name: config
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: gencred-config

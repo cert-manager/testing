@@ -24,22 +24,10 @@ help:
 	@echo "  diff-prow: diff the current prow deployment against the desired state"
 	@echo "  deploy-prow: deploy the prow deployment"
 
-.PHONY: diff-config
-diff-config:
-	cd ../config/ && \
-	kubectl create configmap config --from-file=config.yaml=config.yaml --dry-run=client -o yaml | kubectl diff -f -
-
 # This target allows you to manually update the configmap for the prow config,
 # normally this is done through GitOps.
-.PHONY: update-config
-update-config:
-	cd ../config/ && \
-	kubectl create configmap config --from-file=config.yaml=config.yaml --dry-run=client -o yaml | kubectl replace configmap config -f -
-
-# This target allows you to manually update the configmap for the prow config,
-# normally this is done through GitOps.
-.PHONY: bootstrap-job-config
-bootstrap-job-config:
+.PHONY: bootstrap-config
+bootstrap-config:
 	cd ../ && \
 	go run sigs.k8s.io/prow/prow/cmd/config-bootstrapper@v0.0.0-20240415223539-7013691e3f35 \
 		--dry-run=false \
@@ -47,18 +35,6 @@ bootstrap-job-config:
 		--config-path=config/config.yaml \
 		--plugin-config=config/plugins.yaml \
 		--job-config-path=config/jobs
-
-.PHONY: diff-plugins
-diff-plugins:
-	cd ../config/ && \
-	kubectl create configmap plugins --from-file=plugins.yaml=plugins.yaml --dry-run=client -o yaml | kubectl diff -f -
-
-# This target allows you to manually update the configmap for the prow plugins,
-# normally this is done through GitOps.
-.PHONY: update-plugins
-update-plugins:
-	cd ../config/ && \
-	kubectl create configmap plugins --from-file=plugins.yaml=plugins.yaml --dry-run=client -o yaml | kubectl replace configmap plugins -f -
 
 .PHONY: diff-prow
 diff-prow:
@@ -68,12 +44,3 @@ diff-prow:
 deploy-prow:
 	kubectl apply --server-side -f ./cluster/prowjob-crd/prowjob_customresourcedefinition.yaml
 	kubectl apply --server-side -f ./cluster/
-
-.PHONY: diff-worker
-diff-worker:
-	kubectl diff -f ./worker_cluster/
-
-.PHONY: deploy-worker
-deploy-worker:
-	kubectl create ns test-pods --dry-run=client -o yaml | kubectl apply --server-side -f -
-	kubectl apply --server-side -f ./worker_cluster/
