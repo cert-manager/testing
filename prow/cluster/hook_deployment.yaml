@@ -48,6 +48,7 @@ spec:
         - --github-app-private-key-path=/etc/github/cert
         - --config-path=/etc/config/config.yaml
         - --job-config-path=/etc/job-config
+        - --hmac-secret-file=/etc/webhook/hmac
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG

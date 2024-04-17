@@ -41,6 +41,7 @@ spec:
         - --github-app-id=$(GITHUB_APP_ID)
         - --github-app-private-key-path=/etc/github/cert
         - --update-period=6h
+        - --hmac-secret-file=/etc/webhook/hmac
         env:
         - name: GITHUB_APP_ID
           valueFrom:
