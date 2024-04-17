@@ -27,3 +27,8 @@ prefixes:
     repo: "https://github.com/cert-manager/testing"
     summarise: false
     consistentImages: false
+  - name: "quay.io/jetstack/base-static image"
+    prefix: "quay.io/jetstack/base-static"
+    repo: "https://github.com/cert-manager/testing"
+    summarise: false
+    consistentImages: false
