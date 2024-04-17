@@ -15,6 +15,7 @@ presets:
   volumeMounts:
   - name: github-token
     mountPath: /etc/github
+    readOnly: true
   volumes:
   - name: github-token
     secret:
@@ -25,6 +26,7 @@ presets:
   volumeMounts:
   - name: ssh
     mountPath: /root/.ssh
+    readOnly: true
   volumes:
   - name: ssh
     secret:
@@ -37,8 +39,9 @@ presets:
   - name: GOOGLE_APPLICATION_CREDENTIALS
     value: /creds/service-account.json
   volumeMounts:
-    - name: creds
-      mountPath: /creds
+  - name: creds
+    mountPath: /creds
+    readOnly: true
   volumes:
   - name: creds
     secret:
