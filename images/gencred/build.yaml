@@ -1,4 +1,4 @@
-name: golang-dind # Name of the image to be built
+name: gencred # Name of the image to be built
 
 variants:
   latest:
