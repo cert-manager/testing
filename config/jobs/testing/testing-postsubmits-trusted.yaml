@@ -38,6 +38,41 @@ postsubmits:
           requests:
             memory: "1Gi"
 
+  - name: post-testing-push-gencred
+    cluster: prow-trusted
+    run_if_changed: '^images/gencred/'
+    branches:
+    - master
+    decorate: true
+    labels:
+      preset-dind-enabled: "true"
+      preset-deployer-service-account: "true"
+      preset-deployer-github-token: "true"
+      preset-deployer-ssh-key: "true"
+    annotations:
+      testgrid-create-test-group: 'true'
+      testgrid-dashboards: cert-manager-testing-janitors
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      testgrid-disable-prowjob-analysis: "true"
+      description: Build and push the 'gencred' image
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240416-b8d773e-gcloud-425
+        args:
+        # Wrap the release script with the runner so we can use docker-in-docker
+        - runner
+        - images/image-builder-script/builder.sh
+        - images/gencred
+        - --confirm=true
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+
   - name: post-testing-push-make-dind
     cluster: prow-trusted
     run_if_changed: '^images/make-dind/'
