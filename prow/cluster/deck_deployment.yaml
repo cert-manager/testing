@@ -64,7 +64,7 @@ spec:
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
-          value: "/etc/kubeconfig/config"
+          value: "/etc/kubeconfig-default/config:/etc/kubeconfig-prow-trusted/config"
         - name: GITHUB_APP_ID
           valueFrom:
             secretKeyRef:
@@ -77,8 +77,11 @@ spec:
         - name: cookie-secret
           mountPath: /etc/cookie
           readOnly: true
-        - mountPath: /etc/kubeconfig
-          name: kubeconfig
+        - mountPath: /etc/kubeconfig-prow-trusted
+          name: kubeconfig-prow-trusted
+          readOnly: true
+        - mountPath: /etc/kubeconfig-default
+          name: kubeconfig-prow-untrusted
           readOnly: true
         - name: config
           mountPath: /etc/config
@@ -115,10 +118,14 @@ spec:
       - name: cookie-secret
         secret:
           secretName: cookie
-      - name: kubeconfig
+      - name: kubeconfig-prow-trusted
         secret:
           defaultMode: 420
-          secretName: kubeconfig
+          secretName: kubeconfig-prow-trusted
+      - name: kubeconfig-prow-untrusted
+        secret:
+          defaultMode: 420
+          secretName: kubeconfig-prow-untrusted
       - name: config
         configMap:
           name: config
