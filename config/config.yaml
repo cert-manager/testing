@@ -10,7 +10,7 @@ plank:
   default_decoration_configs:
     '*':
       timeout: 7200000000000 # 2h
-      grace_period: 15000000000 # 15s
+      grace_period: 60000000000 # 60s = 30s for kind containers to stop + 25s for docker to stop + 5s extra
       utility_images:
         clonerefs: "gcr.io/k8s-prow/clonerefs:v20240417-db89760fe"
         initupload: "gcr.io/k8s-prow/initupload:v20240417-db89760fe"

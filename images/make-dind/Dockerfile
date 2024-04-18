@@ -21,8 +21,6 @@ LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
 # Some of these deps might already be installed in the base image but we
 # ensure they're installed here to ensure consistency
-# TODO(SgtCoDFish): The python dependency can be removed once we remove the use of Python
-# for scanning boilerplate. That saves about 50MB from the final image size.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         apt-transport-https \
@@ -34,10 +32,6 @@ RUN apt-get update \
         g++ \
         zip \
         unzip \
-        python3 \
-        python3-pip \
-        python3-setuptools \
-        python3-wheel \
         wget \
         git \
         make \
@@ -75,9 +69,9 @@ RUN apt-get update \
     && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
 # Move Docker's storage location & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
-# @inteon: added --mtu 1460 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
-#          at the time of writing, the parent mtu is 1460 (see https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1460 --data-root=/docker-graph --registry-mirror=https://mirror.gcr.io"' | \
+# @inteon: added --mtu 1500 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
+#          at the time of writing, the parent mtu is 1500 (see "GKE Dataplane V2" on https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1500 --data-root=/docker-graph --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 
 # NOTE this should be mounted and persisted as a volume ideally (!)

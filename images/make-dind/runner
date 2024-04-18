@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# TIP: use https://github.com/kubernetes/test-infra/blob/29db47ec636660a9d547e29e55d16efb27ce57b4/images/bootstrap/runner.sh#L28 as
+# inspiration for some of the hacks and tricks that we use in this file.
+
 # generic runner script, handles DIND, etc.
 
 
@@ -81,6 +84,7 @@ fi
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo >&2 "Initializing Docker in Docker."
 
+    printf '=%.0s' {1..80}; echo >&2
     service docker start
     # The service may be marked as ready but the Docker socket may not be
     # ready yet.
@@ -98,6 +102,9 @@ if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
             break
         fi
     done
+    printf '=%.0s' {1..80}; echo >&2
+
+    echo >&2 "Done setting up docker in docker."
 fi
 
 # Disable error exit so we can run post-command cleanup.
@@ -105,6 +112,7 @@ set +o errexit
 
 # Run the actual job.
 "$@" &
+WRAPPED_COMMAND_PID=$!
 
 # Bash does not "trikle down" UNIX signals. If the Bash script receives SIGINT
 # coming from Prow due to the 2 hours timeout being hit, and that the above
@@ -122,18 +130,23 @@ set +o errexit
 #  [1]: https://github.com/kubernetes/test-infra/blob/ee1e7c8/prow/entrypoint/run.go#L242
 #  [2]: https://unix.stackexchange.com/questions/499761/what-signal-is-sent-to-running-programs-scripts-on-shutdown
 #
-# shellcheck disable=SC2064
-trap "kill -s INT $!" INT
-# shellcheck disable=SC2064
-trap "kill -s TERM $!" TERM
-wait $!
+trap 'kill -s INT "$WRAPPED_COMMAND_PID" || true' INT
+trap 'kill -s TERM "$WRAPPED_COMMAND_PID" || true' TERM
 
+wait $WRAPPED_COMMAND_PID
 EXIT_VALUE=$?
 
 # cleanup after job
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
-    echo "Stopping docker ..."
-    service docker stop || true
+    echo "Waiting 30 seconds for pods stopped with terminationGracePeriod:30"
+    sleep 30
+    echo "Cleaning up after docker"
+    docker ps -aq | xargs -r docker rm -f || true
+    echo "Waiting for docker to stop for 25 seconds"
+    timeout 25 service docker stop || true
+
+    # In total, we wait for 55s, add 5s for safety and we get to 60s. This
+    # 60s value is what we set as the grace period on our prowjobs (see config.yaml).
 fi
 
 if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
