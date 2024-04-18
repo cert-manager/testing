@@ -14,7 +14,7 @@
 
 .PHONY: verify-boilerplate
 verify-boilerplate:
-	@./hack/verify-boilerplate.py --rootdir=$(CURDIR) --boilerplate-dir=hack/boilerplate && echo "Boilerplate verification passed."
+	go run github.com/cert-manager/boilersuite@v0.1.0 .
 
 .PHONY: prowgen
 prowgen:
