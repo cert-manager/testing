@@ -3,11 +3,11 @@ name: golang-dind # Name of the image to be built
 variants:
   "1.22":
     arguments:
-      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240416-5ccb4a8-bookworm"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240418-15f03a5-bookworm"
       GO_VERSION: "1.22.2"
   "1.21":
     arguments:
-      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240416-5ccb4a8-bookworm"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240418-15f03a5-bookworm"
       GO_VERSION: "1.21.9"
 
 # Image names to be tagged and pushed
