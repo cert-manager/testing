@@ -12,10 +12,10 @@ plank:
       timeout: 7200000000000 # 2h
       grace_period: 60000000000 # 60s = 30s for kind containers to stop + 25s for docker to stop + 5s extra
       utility_images:
-        clonerefs: "gcr.io/k8s-prow/clonerefs:v20240417-db89760fe"
-        initupload: "gcr.io/k8s-prow/initupload:v20240417-db89760fe"
-        entrypoint: "gcr.io/k8s-prow/entrypoint:v20240417-db89760fe"
-        sidecar: "gcr.io/k8s-prow/sidecar:v20240417-db89760fe"
+        clonerefs: "gcr.io/k8s-prow/clonerefs:v20240418-0a3518154"
+        initupload: "gcr.io/k8s-prow/initupload:v20240418-0a3518154"
+        entrypoint: "gcr.io/k8s-prow/entrypoint:v20240418-0a3518154"
+        sidecar: "gcr.io/k8s-prow/sidecar:v20240418-0a3518154"
       gcs_configuration:
         bucket: cert-manager-prow-artifacts
         path_strategy: explicit
