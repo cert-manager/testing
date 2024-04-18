@@ -111,7 +111,7 @@ fi
 # Disable error exit so we can run post-command cleanup.
 set +o errexit
 
-printf '\n%.0s' {1..3}; echo
+echo ""
 echo "###########################################"
 echo "############### Start test ################"
 echo "###########################################"
@@ -121,13 +121,14 @@ echo "### PROW_JOB_ID: ${PROW_JOB_ID}"
 echo "### REPO_OWNER: ${REPO_OWNER}"
 echo "### REPO_NAME: ${REPO_NAME}"
 echo "### PULL_REFS: ${PULL_REFS}"
+echo "### Command: $@"
 echo "###########################################"
 echo "### LOCAL_CACHE_ENABLED: ${LOCAL_CACHE_ENABLED}"
 echo "### DOCKER_IN_DOCKER_ENABLED: ${DOCKER_IN_DOCKER_ENABLED}"
 echo "###########################################"
 echo ""
 
-start=$(date +%s.%N)
+start=$(date +%s)
 
 # Run the actual job.
 "$@" &
@@ -155,7 +156,7 @@ trap 'kill -s TERM "$WRAPPED_COMMAND_PID" || true' TERM
 wait $WRAPPED_COMMAND_PID
 EXIT_VALUE=$?
 
-end=$(date +%s.%N)
+end=$(date +%s)
 
 echo ""
 echo "###########################################"
@@ -164,7 +165,7 @@ echo "###########################################"
 echo "## EXIT_VALUE: ${EXIT_VALUE}"
 echo "## Elapsed Time: $((end-start)) seconds"
 echo "###########################################"
-printf '\n%.0s' {1..3}; echo
+echo ""
 
 # cleanup after job
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
