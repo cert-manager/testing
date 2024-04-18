@@ -15,6 +15,7 @@ includedConfigPaths:
   - "prow/cluster"
 extraFiles:
   - "config/config.yaml"
+  - "config/prowgen/pkg/globals.go"
 targetVersion: "latest"
 prefixes:
   - name: "k8s-prow images"
