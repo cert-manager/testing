@@ -84,6 +84,9 @@ fi
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
     echo "## Docker [start]: Initializing Docker in Docker."
 
+    # Fix ulimit issue
+    sed -i 's|ulimit -Hn|ulimit -n|' /etc/init.d/docker || true
+
     service docker start
     # The service may be marked as ready but the Docker socket may not be
     # ready yet.
