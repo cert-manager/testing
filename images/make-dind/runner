@@ -127,7 +127,7 @@ echo "### DOCKER_IN_DOCKER_ENABLED: ${DOCKER_IN_DOCKER_ENABLED}"
 echo "###########################################"
 echo ""
 
-start=$(date +%s.%N)
+start=$(date +%s)
 
 # Run the actual job.
 "$@" &
@@ -155,7 +155,7 @@ trap 'kill -s TERM "$WRAPPED_COMMAND_PID" || true' TERM
 wait $WRAPPED_COMMAND_PID
 EXIT_VALUE=$?
 
-end=$(date +%s.%N)
+end=$(date +%s)
 
 echo ""
 echo "###########################################"
