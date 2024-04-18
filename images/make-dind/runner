@@ -19,7 +19,6 @@
 
 # generic runner script, handles DIND, etc.
 
-
 # Check if the job has opted-in to local caching and if so check for a cache and
 # copy the cache to prepopulate the local cache. After the job is done, change the
 # latest cache directory to the local cache directory.
@@ -41,7 +40,7 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
     export LOCAL_CACHE_DIR
 
     if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
-        echo "Local cache [restore]: found latest cache directory."
+        echo "## Local cache [restore]: found latest cache directory."
 
         # Obtain the name of the latest cache directory.
         latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
@@ -51,9 +50,9 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         # Copying the latest cache to our local cache ...
         rsync -avv --inplace --delete "${latest_cache_dir}/." "${LOCAL_CACHE_DIR}"
 
-        echo "Local cache [restore]: provisioned ${LOCAL_CACHE_DIR}"
+        echo "## Local cache [restore]: provisioned ${LOCAL_CACHE_DIR}"
     else
-        echo "Local cache [restore]: no latest cache directory found."
+        echo "## Local cache [restore]: no latest cache directory found."
     fi
 fi
 
@@ -66,7 +65,7 @@ if [[ "${DOCKER_CONFIG:-}" != "" ]]; then
         exit 1
     fi
 
-    echo "A writable DOCKER_CONFIG was requested."
+    echo "## Docker [start]: A writable DOCKER_CONFIG was requested."
     tmpdir="$(mktemp -d)"
     ln -s "${DOCKER_CONFIG}/config.json" "${tmpdir}/config.json"
     export DOCKER_CONFIG="${tmpdir}"
@@ -78,13 +77,16 @@ if [[ "${EXTRA_DOCKER_OPTS:-}" != "" ]]; then
         exit 1
     fi
 
+    echo "## Docker [start]: Extra docker opts were requested."
     echo "DOCKER_OPTS=\"\${DOCKER_OPTS} ${EXTRA_DOCKER_OPTS}\"" >>/etc/default/docker
 fi
 
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
-    echo >&2 "Initializing Docker in Docker."
+    echo "## Docker [start]: Initializing Docker in Docker."
 
-    printf '=%.0s' {1..80}; echo >&2
+    # Fix ulimit issue
+    sed -i 's|ulimit -Hn|ulimit -n|' /etc/init.d/docker || true
+
     service docker start
     # The service may be marked as ready but the Docker socket may not be
     # ready yet.
@@ -95,20 +97,37 @@ if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
         docker ps -q >/dev/null 2>&1 && break
         if [[ ${WAIT_N} -lt ${MAX_WAIT} ]]; then
             WAIT_N=$((WAIT_N + 1))
-            echo >&2 "Waiting for docker to be ready, sleeping for ${WAIT_N} seconds."
+            echo "## Docker [start]: Waiting for docker to be ready, sleeping for ${WAIT_N} seconds."
             sleep ${WAIT_N}
         else
-            echo >&2 "Reached maximum attempts, not waiting any longer..."
+            echo "## Docker [start]: Reached maximum attempts, not waiting any longer..."
             break
         fi
     done
-    printf '=%.0s' {1..80}; echo >&2
 
-    echo >&2 "Done setting up docker in docker."
+    echo "## Docker [start]: Done setting up docker in docker."
 fi
 
 # Disable error exit so we can run post-command cleanup.
 set +o errexit
+
+printf '\n%.0s' {1..3}; echo
+echo "###########################################"
+echo "############### Start test ################"
+echo "###########################################"
+echo "### JOB_NAME: ${JOB_NAME}"
+echo "### JOB_TYPE: ${JOB_TYPE}"
+echo "### PROW_JOB_ID: ${PROW_JOB_ID}"
+echo "### REPO_OWNER: ${REPO_OWNER}"
+echo "### REPO_NAME: ${REPO_NAME}"
+echo "### PULL_REFS: ${PULL_REFS}"
+echo "###########################################"
+echo "### LOCAL_CACHE_ENABLED: ${LOCAL_CACHE_ENABLED}"
+echo "### DOCKER_IN_DOCKER_ENABLED: ${DOCKER_IN_DOCKER_ENABLED}"
+echo "###########################################"
+echo ""
+
+start=$(date +%s.%N)
 
 # Run the actual job.
 "$@" &
@@ -136,13 +155,24 @@ trap 'kill -s TERM "$WRAPPED_COMMAND_PID" || true' TERM
 wait $WRAPPED_COMMAND_PID
 EXIT_VALUE=$?
 
+end=$(date +%s.%N)
+
+echo ""
+echo "###########################################"
+echo "################ End test #################"
+echo "###########################################"
+echo "## EXIT_VALUE: ${EXIT_VALUE}"
+echo "## Elapsed Time: $((end-start)) seconds"
+echo "###########################################"
+printf '\n%.0s' {1..3}; echo
+
 # cleanup after job
 if [[ "${DOCKER_IN_DOCKER_ENABLED}" == "true" ]]; then
-    echo "Waiting 30 seconds for pods stopped with terminationGracePeriod:30"
+    echo "## Docker [stop]: Waiting 30 seconds for pods stopped with terminationGracePeriod:30"
     sleep 30
-    echo "Cleaning up after docker"
+    echo "## Docker [stop]: Cleaning up after docker"
     docker ps -aq | xargs -r docker rm -f || true
-    echo "Waiting for docker to stop for 25 seconds"
+    echo "## Docker [stop]: Waiting for docker to stop for 25 seconds"
     timeout 25 service docker stop || true
 
     # In total, we wait for 55s, add 5s for safety and we get to 60s. This
@@ -162,30 +192,30 @@ if [[ "${LOCAL_CACHE_ENABLED}" == "true" ]]; then
         if [[ -f "${SHARED_CACHE_DIR}/latest" ]]; then
             latest_cache_dir=$(cat "${SHARED_CACHE_DIR}/latest")
 
-            echo "Local cache [update]: Copying latest cache to new cache directory ..."
+            echo "## Local cache [update]: Copying latest cache to new cache directory ..."
             rsync -avv --inplace "${latest_cache_dir}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
         fi
 
         # 2. Copy the local cache directory to the new shared directory that we are creating. rsync
         #    will only copy the files that are not already present in the shared directory. The new
         #    shared directory now contains the latest cache + what was downloaded in the current job.
-        echo "Local cache [update]: Copying local cache to shared cache ..."
+        echo "## Local cache [update]: Copying local cache to shared cache ..."
         rsync -avv --inplace "${LOCAL_CACHE_DIR}/." "${SHARED_CACHE_DIR}/${cache_unique_id}"
 
         # 3. Update the latest cache directory to the local cache directory.
-        echo "Local cache [update]: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
+        echo "## Local cache [update]: Updating latest cache directory to ${SHARED_CACHE_DIR}/${cache_unique_id}"
         echo "${SHARED_CACHE_DIR}/${cache_unique_id}" > "${SHARED_CACHE_DIR}/latest"
 
         # 4. Remove the old cache directories to save disk space. Keep the
         #    last 4 cache directories because they may be used by other
         #    jobs that are still copying from these directories.
-        echo "Local cache [update]: Removing old caches ..."
+        echo "## Local cache [update]: Removing old caches ..."
         find "${SHARED_CACHE_DIR}" -maxdepth 1 -type d -name 'cache_*' -printf '%f\n' | \
             sort -r | \
             tail -n +4 | \
             xargs -I{} rm -rf "${SHARED_CACHE_DIR}/{}"
     else
-        echo "Local cache [update]: Job failed, not updating cache."
+        echo "## Local cache [update]: Job failed, not updating cache."
     fi
 fi
 
