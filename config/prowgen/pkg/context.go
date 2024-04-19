@@ -20,6 +20,15 @@ package pkg
 import (
 	"fmt"
 	"math"
+	"sync/atomic"
+)
+
+// jobFileInvocationCounter is used to track how many calls have been made to JobFile on
+// any ProwContext struct.
+// This is used to slightly offset tests for different branches so we don't e.g.
+// start tests for release-1.1x at the same time as tests for the default branch.
+var (
+	jobFileInvocationCounter atomic.Int32
 )
 
 // ProwContext holds jobs and information required to configure jobs for a given release channel.
@@ -121,6 +130,8 @@ func (pc *ProwContext) Periodics(job *Job, periodicityHours int) {
 }
 
 func (pc *ProwContext) JobFile() *JobFile {
+	defer jobFileInvocationCounter.Add(1)
+
 	presubmitKey := fmt.Sprintf("%s/%s", pc.Org, pc.Repo)
 
 	// By dividing 60 by the number of periodics we get the maximum number of minutes
@@ -131,6 +142,8 @@ func (pc *ProwContext) JobFile() *JobFile {
 	// often when most jobs need a lot of CPU (e.g. to set up tests / clusters)
 	// We use ceil because more spreading isn't a bad thing
 	minuteSpread := int(math.Ceil(60.0 / float64(len(pc.periodics))))
+
+	minuteOffset := int(jobFileInvocationCounter.Load()) % minuteSpread
 
 	// Count the number of jobs with each periodicity to make it easier to spread them later
 	periodicityCounts := map[int]int{}
@@ -144,7 +157,7 @@ func (pc *ProwContext) JobFile() *JobFile {
 	periodicitySeen := map[int]int{}
 
 	for i, p := range pc.periodics {
-		minute := (i * minuteSpread) % 60
+		minute := (minuteOffset + (i * minuteSpread)) % 60
 
 		// hourCounter is how many jobs with the same periodicity we've already seen
 		hourCounter := periodicitySeen[p.PeriodicityHours]
@@ -176,7 +189,9 @@ func (pc *ProwContext) JobFile() *JobFile {
 			hourSpread = 7
 		}
 
-		startHour := (hourSpread * hourCounter) % p.PeriodicityHours
+		hourOffset := int(jobFileInvocationCounter.Load()) % p.PeriodicityHours
+
+		startHour := (hourOffset + (hourSpread * hourCounter)) % p.PeriodicityHours
 
 		p.Cron = cronSchedule(minute, startHour, p.PeriodicityHours)
 	}
