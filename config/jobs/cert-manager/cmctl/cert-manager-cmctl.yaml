@@ -9,7 +9,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240418-85b8687-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240419-d5dce7d-bookworm
         args:
         - runner
         - make
@@ -28,7 +28,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240418-85b8687-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240419-d5dce7d-bookworm
         args:
         - runner
         - make
@@ -47,7 +47,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240418-85b8687-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240419-d5dce7d-bookworm
         args:
         - runner
         - make
