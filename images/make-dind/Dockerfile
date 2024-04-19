@@ -65,6 +65,7 @@ RUN apt-get update \
         docker-buildx-plugin \
     && apt-get clean \
     && sed -i 's/cgroupfs_mount$/#cgroupfs_mount\n/' /etc/init.d/docker \
+    && sed -i 's/ulimit -Hn/ulimit -n/' /etc/init.d/docker \
     && update-alternatives --set iptables /usr/sbin/iptables-legacy \
     && update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
