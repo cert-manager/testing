@@ -3,7 +3,7 @@ name: gencred # Name of the image to be built
 variants:
   latest:
     arguments:
-      BUILDER_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240418-2218845-1.22"
+      BUILDER_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240419-532d563-1.22"
       BASE_IMAGE: "quay.io/jetstack/base-static@sha256:ba3cff0a4cacc5ae564e04c1f645000e8c9234c0f4b09534be1dee7874a42141"
 
 # Image names to be tagged and pushed
