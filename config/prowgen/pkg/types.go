@@ -126,8 +126,12 @@ type PeriodicJob struct {
 
 	ExtraRefs []ExtraRef `yaml:"extra_refs"`
 
-	Cron     string `yaml:"cron,omitempty"`
-	Interval string `yaml:"interval,omitempty"`
+	// PeriodicityHours isn't present in upstream structs; we use it to track when
+	// a job should recur. Keeping track of this allows us to spread jobs across
+	// time after we know how many jobs we have to avoid several being scheduled at once.
+	PeriodicityHours int `yaml:"-"`
+
+	Cron string `yaml:"cron,omitempty"`
 }
 
 type ExtraRef struct {

@@ -634,7 +634,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 01 01-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-22
   max_concurrency: 4
   decorate: true
@@ -685,7 +685,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 04 00-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-23
   max_concurrency: 4
   decorate: true
@@ -736,7 +736,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 07 01-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-24
   max_concurrency: 4
   decorate: true
@@ -787,7 +787,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 10 00-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-25
   max_concurrency: 4
   decorate: true
@@ -838,7 +838,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 13 01-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-26
   max_concurrency: 4
   decorate: true
@@ -889,7 +889,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 16 00-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-27
   max_concurrency: 4
   decorate: true
@@ -940,7 +940,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 2h
+  cron: 19 01-23/02 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-27-issuers-venafi
   max_concurrency: 4
   decorate: true
@@ -991,7 +991,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 12h
+  cron: 22 01-23/12 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-27-upgrade
   max_concurrency: 4
   decorate: true
@@ -1030,7 +1030,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 8h
+  cron: 25 01-23/08 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-27-bestpractice-install
   max_concurrency: 4
   decorate: true
@@ -1083,7 +1083,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 28 01-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-22-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1134,7 +1134,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 31 08-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-23-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1185,7 +1185,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 34 15-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-24-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1236,7 +1236,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 37 22-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-25-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1287,7 +1287,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 40 05-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-26-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1338,7 +1338,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 43 12-23/24 * * *
 - name: ci-cert-manager-release-1.12-e2e-v1-27-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1389,7 +1389,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 46 19-23/24 * * *
 - name: ci-cert-manager-release-1.12-trivy-test-controller
   max_concurrency: 2
   decorate: true
@@ -1427,7 +1427,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 49 02-23/24 * * *
 - name: ci-cert-manager-release-1.12-trivy-test-acmesolver
   max_concurrency: 2
   decorate: true
@@ -1465,7 +1465,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 52 09-23/24 * * *
 - name: ci-cert-manager-release-1.12-trivy-test-ctl
   max_concurrency: 2
   decorate: true
@@ -1503,7 +1503,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 55 16-23/24 * * *
 - name: ci-cert-manager-release-1.12-trivy-test-cainjector
   max_concurrency: 2
   decorate: true
@@ -1541,7 +1541,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 58 23-23/24 * * *
 - name: ci-cert-manager-release-1.12-trivy-test-webhook
   max_concurrency: 2
   decorate: true
@@ -1579,4 +1579,4 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.12
-  interval: 24h
+  cron: 01 06-23/24 * * *
