@@ -114,10 +114,9 @@ func (pc *ProwContext) Periodics(job *Job, periodicityHours int) {
 			},
 		},
 		PeriodicityHours: periodicityHours,
-		// Use a minute and startHour of 0 when adding the period here, but in JobFile
-		// when we actually generate the JobFile struct we'll recalculate values
-		// to spread the periodics evenly across every hour / day
-		Cron: cronSchedule(0, 0, periodicityHours),
+		// Cron is filled later after all periodics are known, to maximise our ability
+		// to spread jobs over the time available
+		Cron: "FILLED LATER",
 	})
 }
 
