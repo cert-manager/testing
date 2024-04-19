@@ -19,6 +19,7 @@ package prowspecs
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"prowgen/pkg"
@@ -211,6 +212,7 @@ func KnownBranches() []string {
 		availableBranches = append(availableBranches, branch)
 	}
 
+	slices.Sort(availableBranches)
 	return availableBranches
 }
 
