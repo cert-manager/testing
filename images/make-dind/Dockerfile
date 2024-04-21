@@ -72,7 +72,14 @@ RUN apt-get update \
 # Move Docker's storage location & add Container Registry cache (see: https://cloud.google.com/container-registry/docs/pulling-cached-images)
 # @inteon: added --mtu 1500 to fix network issues due to parent mtu < child mtu (see https://blog.zespre.com/dind-mtu-size-matters.html)
 #          at the time of writing, the parent mtu is 1500 (see "GKE Dataplane V2" on https://cloud.google.com/kubernetes-engine/docs/concepts/network-overview)
-RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1500 --data-root=/docker-graph --registry-mirror=https://mirror.gcr.io"' | \
+# @inteon: change docker bridge ip range, to make sure there are no conflicting ip ranges:
+#          - prow cluster: {nodes: 172.16.0.0/24, pods: 10.8.0.0/17, services: 10.8.240.0/20}
+#            -> https://github.com/cert-manager/infrastructure/blob/769c684d6aff9230e933cf531ce4fa291f4534da/gcp/modules/gcp-cluster/main.tf#L28-L38
+#          - dind: {containers: 192.168.0.0/16}
+#            -> this file
+#          - test kind cluster: {pods: 10.244.0.0/16, services: 10.96.0.0/16 or 10.0.0.0/16}
+#            -> https://kind.sigs.k8s.io/docs/user/configuration#pod-subnet
+RUN echo 'DOCKER_OPTS="${DOCKER_OPTS} --mtu=1500 --bip=192.168.0.1/16 --data-root=/docker-graph --registry-mirror=https://mirror.gcr.io"' | \
     tee --append /etc/default/docker
 
 # NOTE this should be mounted and persisted as a volume ideally (!)
