@@ -19,6 +19,11 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   - name: pull-cert-manager-istio-csr-unit
     decorate: true
@@ -38,6 +43,11 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   - name: pull-cert-manager-istio-csr-test-ecc
     decorate: true
@@ -62,10 +72,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   - name: pull-cert-manager-istio-csr-ca-rotation
     decorate: true
@@ -90,10 +101,12 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.14
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-14
     decorate: true
@@ -123,10 +136,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.15
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-15
@@ -157,10 +171,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.16
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-16
@@ -191,10 +206,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.17
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-17
@@ -225,10 +241,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.18
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-18
@@ -259,10 +276,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.26, istio v1.17
   - name: pull-cert-manager-istio-csr-k8s-v1-26-istio-v1-19
@@ -293,10 +311,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based istio-csr e2e job for Kubernetes v1.29, istio v1.20
   - name: pull-cert-manager-istio-csr-k8s-v1-29-istio-v1-20
@@ -327,7 +346,8 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4

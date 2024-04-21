@@ -26,10 +26,11 @@ presubmits:
           requests:
             cpu: 2000m
             memory: 4Gi
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: true
@@ -57,10 +58,11 @@ presubmits:
             memory: 1Gi
         securityContext:
           privileged: true
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: true
@@ -104,10 +106,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -151,10 +154,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -198,10 +202,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -245,10 +250,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -292,10 +298,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -339,10 +346,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: true
@@ -374,10 +382,11 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: true
@@ -403,10 +412,11 @@ presubmits:
           requests:
             cpu: "1"
             memory: 1Gi
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -450,10 +460,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -496,10 +507,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -543,10 +555,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -592,10 +605,11 @@ presubmits:
               - /bin/sh
               - -c
               - make kind-logs
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
     branches:
     - release-1.13
     always_run: false
@@ -626,10 +640,11 @@ periodics:
         requests:
           cpu: 2000m
           memory: 4Gi
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -677,10 +692,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -728,10 +744,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -779,10 +796,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -830,10 +848,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -881,10 +900,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -932,10 +952,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -983,10 +1004,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1022,10 +1044,11 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1075,10 +1098,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1126,10 +1150,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1177,10 +1202,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1228,10 +1254,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1279,10 +1306,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1330,10 +1358,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1381,10 +1410,11 @@ periodics:
             - /bin/sh
             - -c
             - make kind-logs
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1419,10 +1449,11 @@ periodics:
           memory: 2Gi
       securityContext:
         privileged: true
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1457,10 +1488,11 @@ periodics:
           memory: 2Gi
       securityContext:
         privileged: true
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1495,10 +1527,11 @@ periodics:
           memory: 2Gi
       securityContext:
         privileged: true
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1533,10 +1566,11 @@ periodics:
           memory: 2Gi
       securityContext:
         privileged: true
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager
@@ -1571,10 +1605,11 @@ periodics:
           memory: 2Gi
       securityContext:
         privileged: true
+    dnsPolicy: None
     dnsConfig:
-      options:
-      - name: ndots
-        value: "1"
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
   extra_refs:
   - org: cert-manager
     repo: cert-manager

@@ -34,7 +34,14 @@ func jobTemplate(name string, description string, configurers ...JobConfigurer) 
 		},
 		Labels: make(map[string]string),
 		Spec: JobSpec{
-			DNSConfig: DefaultDNSConfig(),
+			// Fully omit the kube-dns DNS server, and directly talk to
+			// Google's public DNS server. Generally, the tests don't need
+			// to access any in-cluster services, so not being able to resolve
+			// xxxxx.cluster.local queries is ok.
+			DNSPolicy: "None",
+			DNSConfig: DNSConfig{
+				Nameservers: []string{"8.8.8.8", "8.8.4.4"},
+			},
 		},
 	}
 
