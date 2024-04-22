@@ -41,7 +41,7 @@ spec:
         image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/gencred:20240419-900b623
         args:
         - --config=/etc/config/gencred-config.yaml
-        - --refresh-interval=2h
+        - --refresh-interval=46h
         ports:
         - name: metrics
           containerPort: 9090
