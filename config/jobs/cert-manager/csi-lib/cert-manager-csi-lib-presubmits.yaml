@@ -33,7 +33,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/nix-dind:20240419-532d563-2.11.0
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/nix-dind:20240422-729441b-2.11.0
         args:
         - runner
         - nix
