@@ -25,10 +25,11 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   # kind based trust-manager smoke job
   - name: pull-trust-manager-smoke
@@ -57,7 +58,8 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-          - name: ndots
-            value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4

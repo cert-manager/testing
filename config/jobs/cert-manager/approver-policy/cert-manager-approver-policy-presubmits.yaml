@@ -19,6 +19,11 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   - name: pull-cert-manager-approver-policy-test
     decorate: true
@@ -38,6 +43,11 @@ presubmits:
           requests:
             cpu: 1
             memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
 
   - name: pull-cert-manager-approver-policy-smoke
     decorate: true
@@ -62,7 +72,8 @@ presubmits:
           privileged: true
           capabilities:
             add: ["SYS_ADMIN"]
+      dnsPolicy: None
       dnsConfig:
-        options:
-        - name: ndots
-          value: "1"
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4

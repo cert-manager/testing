@@ -44,6 +44,7 @@ type Job struct {
 
 type JobSpec struct {
 	Containers []Container `yaml:"containers"`
+	DNSPolicy  string      `yaml:"dnsPolicy"`
 	DNSConfig  DNSConfig   `yaml:"dnsConfig"`
 }
 
@@ -69,23 +70,12 @@ type ContainerResourceRequest struct {
 }
 
 type DNSConfig struct {
-	Options []DNSConfigOption `yaml:"options"`
+	Nameservers []string `yaml:"nameservers"`
 }
 
 type DNSConfigOption struct {
 	Name  string `yaml:"name"`
 	Value string `yaml:"value"`
-}
-
-func DefaultDNSConfig() DNSConfig {
-	return DNSConfig{
-		Options: []DNSConfigOption{
-			{
-				Name:  "ndots",
-				Value: "1",
-			},
-		},
-	}
 }
 
 type SecurityContext struct {
