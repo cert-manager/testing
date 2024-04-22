@@ -66,9 +66,9 @@ branch-protection:
         contexts:
         - dco
       include:
-        - main
-        - master
-        - release-.*
+        - ^main$
+        - ^master$
+        - ^release-.*$
       repos:
         api:
           protect: false
