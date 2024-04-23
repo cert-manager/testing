@@ -4,11 +4,11 @@
 
 presubmits:
   cert-manager/cert-manager:
-  - name: pull-cert-manager-master-make-test
+  - name: pull-cert-manager-master-make-verify
     max_concurrency: 8
     decorate: true
     annotations:
-      description: Runs unit and integration tests and verification scripts
+      description: Runs linting and verification targets
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
@@ -23,8 +23,7 @@ presubmits:
         - make
         - -j2
         - vendor-go
-        - ci-presubmit
-        - test-ci
+        - verify
         resources:
           requests:
             cpu: 2000m
@@ -38,16 +37,15 @@ presubmits:
     - master
     always_run: true
     optional: false
-  - name: pull-cert-manager-master-chart
+  - name: pull-cert-manager-master-make-test
     max_concurrency: 8
     decorate: true
     annotations:
-      description: Verifies the Helm chart passes linting checks
+      description: Runs unit and integration tests
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       testgrid-create-job-group: "true"
       testgrid-dashboards: cert-manager-presubmits-master
     labels:
-      preset-dind-enabled: "true"
       preset-go-cache: "true"
       preset-local-cache: "true"
     spec:
@@ -56,14 +54,13 @@ presubmits:
         args:
         - runner
         - make
+        - -j2
         - vendor-go
-        - verify-chart
+        - test-ci
         resources:
           requests:
-            cpu: "1"
-            memory: 1Gi
-        securityContext:
-          privileged: true
+            cpu: 2000m
+            memory: 4Gi
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -712,7 +709,7 @@ periodics:
   max_concurrency: 8
   decorate: true
   annotations:
-    description: Runs unit and integration tests and verification scripts
+    description: Runs unit and integration tests
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-master
@@ -727,7 +724,6 @@ periodics:
       - make
       - -j2
       - vendor-go
-      - ci-presubmit
       - test-ci
       resources:
         requests:
