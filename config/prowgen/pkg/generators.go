@@ -22,9 +22,78 @@ import (
 	"strings"
 )
 
-// MakeTest generates a test which runs linting and verification targets as well as
-// unit and integration tests
+// MakeTest generates a test which runs unit and integration tests
 func MakeTest(ctx *ProwContext) *Job {
+	job := jobTemplate(
+		"make-test",
+		"Runs unit and integration tests",
+		addLocalCacheLabel,
+		addGoCacheLabel,
+		addMaxConcurrency(8),
+	)
+
+	makeJobs, cpuRequest := calculateMakeConcurrency("2000m")
+
+	job.Spec.Containers = []Container{
+		{
+			Image: ctx.Image,
+			Args: []string{
+				"runner",
+				"make",
+				makeJobs,
+				"vendor-go",
+				"test-ci",
+			},
+			Resources: ContainerResources{
+				Requests: ContainerResourceRequest{
+					CPU:    cpuRequest,
+					Memory: "4Gi",
+				},
+			},
+		},
+	}
+
+	return job
+}
+
+// MakeVerify generates a test which runs linting and verification targets
+func MakeVerify(ctx *ProwContext) *Job {
+	job := jobTemplate(
+		"make-verify",
+		"Runs linting and verification targets",
+		addLocalCacheLabel,
+		addGoCacheLabel,
+		addMaxConcurrency(8),
+	)
+
+	makeJobs, cpuRequest := calculateMakeConcurrency("2000m")
+
+	job.Spec.Containers = []Container{
+		{
+			Image: ctx.Image,
+			Args: []string{
+				"runner",
+				"make",
+				makeJobs,
+				"vendor-go",
+				"verify",
+			},
+			Resources: ContainerResources{
+				Requests: ContainerResourceRequest{
+					CPU:    cpuRequest,
+					Memory: "4Gi",
+				},
+			},
+		},
+	}
+
+	return job
+}
+
+// MakeTestOld generates a test which runs linting and verification targets as well as
+// unit and integration tests
+// Deprecated: replaced with MakeVerify and MakeTest
+func MakeTestOld(ctx *ProwContext) *Job {
 	job := jobTemplate(
 		"make-test",
 		"Runs unit and integration tests and verification scripts",
@@ -58,9 +127,10 @@ func MakeTest(ctx *ProwContext) *Job {
 	return job
 }
 
-// ChartTest generates a test which lints helm charts. This is run inside a container
+// ChartTestOld generates a test which lints helm charts. This is run inside a container
 // and so requires additional permissions.
-func ChartTest(ctx *ProwContext) *Job {
+// Deprecated: replaced with MakeVerify and MakeTest
+func ChartTestOld(ctx *ProwContext) *Job {
 	job := jobTemplate(
 		"chart",
 		"Verifies the Helm chart passes linting checks",

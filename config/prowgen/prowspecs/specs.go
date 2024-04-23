@@ -56,6 +56,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		// This older cert-manager release uses the ctl image to run the statupapicheck test
 		containerNames: []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"},
+
+		// Keep using the old tests (for backwards compatibility)
+		isPreMakefileModules: true,
 	},
 	"release-1.13": {
 		prowContext: &pkg.ProwContext{
@@ -80,6 +83,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		// This older cert-manager release uses the ctl image to run the statupapicheck test
 		containerNames: []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"},
+
+		// Keep using the old tests (for backwards compatibility)
+		isPreMakefileModules: true,
 	},
 	"release-1.14": {
 		prowContext: &pkg.ProwContext{
@@ -105,6 +111,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		// This older cert-manager release uses the NEW startupapicheck image to run the statupapicheck test
 		// The release however still includes a ctl image (which is not used in the Helm chart)
 		containerNames: []string{"controller", "acmesolver", "ctl", "startupapicheck", "cainjector", "webhook"},
+
+		// Keep using the old tests (for backwards compatibility)
+		isPreMakefileModules: true,
 	},
 	"master": {
 		prowContext: &pkg.ProwContext{
@@ -144,13 +153,21 @@ type BranchSpec struct {
 
 	// TODO: remove this field once we've migrated to the new set of container names
 	containerNames []string
+
+	// TODO: remove this field once all versions use Makefile modules
+	isPreMakefileModules bool
 }
 
 // GenerateJobFile will create a complete test file based on the BranchSpec. This
 // assumes that all tests for all branches should be the same.
 func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
-	m.prowContext.RequiredPresubmit(pkg.MakeTest(m.prowContext))
-	m.prowContext.RequiredPresubmit(pkg.ChartTest(m.prowContext))
+	if !m.isPreMakefileModules {
+		m.prowContext.RequiredPresubmit(pkg.MakeVerify(m.prowContext))
+		m.prowContext.RequiredPresubmit(pkg.MakeTest(m.prowContext))
+	} else {
+		m.prowContext.RequiredPresubmit(pkg.MakeTestOld(m.prowContext))
+		m.prowContext.RequiredPresubmit(pkg.ChartTestOld(m.prowContext))
+	}
 
 	for _, secondaryVersion := range m.otherKubernetesVersions {
 		m.prowContext.OptionalPresubmit(pkg.E2ETest(m.prowContext, secondaryVersion, m.e2eCPURequest, m.e2eMemoryRequest))
@@ -169,7 +186,11 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 
 	allKubernetesVersions := append(m.otherKubernetesVersions, m.primaryKubernetesVersion)
 
-	m.prowContext.Periodics(pkg.MakeTest(m.prowContext), 2)
+	if !m.isPreMakefileModules {
+		m.prowContext.Periodics(pkg.MakeTest(m.prowContext), 2)
+	} else {
+		m.prowContext.Periodics(pkg.MakeTestOld(m.prowContext), 2)
+	}
 
 	// TODO: add chart periodic test?
 
