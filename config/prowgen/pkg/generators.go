@@ -76,7 +76,7 @@ func MakeVerify(ctx *ProwContext) *Job {
 				"make",
 				makeJobs,
 				"vendor-go",
-				"verify",
+				"ci-presubmit",
 			},
 			Resources: ContainerResources{
 				Requests: ContainerResourceRequest{
