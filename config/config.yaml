@@ -102,7 +102,7 @@ branch-protection:
             master:
               required_status_checks:
                 contexts:
-                - pull-cert-manager-master-chart
+                - pull-cert-manager-master-make-verify
                 - pull-cert-manager-master-make-test
                 - pull-cert-manager-master-e2e-v1-28
                 - pull-cert-manager-master-e2e-v1-28-upgrade

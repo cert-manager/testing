@@ -23,7 +23,7 @@ presubmits:
         - make
         - -j2
         - vendor-go
-        - verify
+        - ci-presubmit
         resources:
           requests:
             cpu: 2000m
