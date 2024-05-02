@@ -112,7 +112,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-prow/generic-autobumper:v20240424-0a3188200
+    - image: gcr.io/k8s-prow/generic-autobumper:v20240430-4359601d0
       command:
       - generic-autobumper
       args:
@@ -179,7 +179,7 @@ periodics:
   spec:
     containers:
     - name: branchprotector
-      image: gcr.io/k8s-prow/branchprotector:v20240424-0a3188200
+      image: gcr.io/k8s-prow/branchprotector:v20240430-4359601d0
       command:
       - branchprotector
       args:
