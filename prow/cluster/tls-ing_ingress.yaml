@@ -15,14 +15,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  name: prow-ing
+  namespace: default
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/tls-acme: "true"
     acme.cert-manager.io/http01-edit-in-place: "true"
-  name: prow-ing
-  namespace: default
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/ingress.global-static-ip-name: prow-infra-cert-manager-io
 spec:
-  ingressClassName: prod-nginx
   rules:
   - host: prow.infra.cert-manager.io
     http:
@@ -33,14 +34,14 @@ spec:
             port:
               number: 80
         path: /
-        pathType: ImplementationSpecific
+        pathType: Prefix
       - backend:
           service:
             name: hook
             port:
               number: 8888
         path: /hook
-        pathType: ImplementationSpecific
+        pathType: Prefix
   tls:
   - hosts:
     - prow.infra.cert-manager.io

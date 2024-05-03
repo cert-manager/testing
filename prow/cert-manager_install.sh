@@ -14,15 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-helm upgrade \
-    ingress-nginx oci://ghcr.io/nginxinc/charts/nginx-ingress \
-    --install \
-    --reset-values \
-    --namespace ingress-nginx \
-    --create-namespace \
-    --version "1.2.0" \
-    --set controller.ingressClass.name=prod-nginx
-
 helm repo add jetstack https://charts.jetstack.io --force-update
 helm upgrade \
     cert-manager jetstack/cert-manager \
