@@ -21,6 +21,7 @@ metadata:
   name: hook
   annotations:
     prometheus.io/scrape: "true"
+    cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
     app: hook
