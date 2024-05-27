@@ -1,0 +1,19 @@
+presubmits:
+
+  cert-manager/org:
+
+  - name: pull-org-verify
+    always_run: true
+    max_concurrency: 4
+    decorate: true
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240422-729441b-1.22
+        args:
+        - runner
+        - make
+        - verify
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
