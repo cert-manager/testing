@@ -85,13 +85,6 @@ branch-protection:
                 - pull-cert-manager-release-1.12-make-test
                 - pull-cert-manager-release-1.12-e2e-v1-27
                 - pull-cert-manager-release-1.12-e2e-v1-27-upgrade
-            release-1.13:
-              required_status_checks:
-                contexts:
-                - pull-cert-manager-release-1.13-chart
-                - pull-cert-manager-release-1.13-make-test
-                - pull-cert-manager-release-1.13-e2e-v1-28
-                - pull-cert-manager-release-1.13-e2e-v1-28-upgrade
             release-1.14:
               required_status_checks:
                 contexts:
