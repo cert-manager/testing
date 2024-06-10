@@ -3,57 +3,94 @@ presubmits:
   - name: pull-trust-manager-verify
     decorate: true
     always_run: true
-    optional: false
-    max_concurrency: 8
-    annotations:
-      testgrid-create-test-group: 'false'
     labels:
-      preset-dind-enabled: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240422-729441b-1.22
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
         args:
         - runner
         - make
-        - provision-buildx
+        - vendor-go
         - verify
         resources:
           requests:
-            cpu: 2000m
+            cpu: 1
             memory: 1Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
       dnsPolicy: None
       dnsConfig:
         nameservers:
         - 8.8.8.8
         - 8.8.4.4
 
-  # kind based trust-manager smoke job
-  - name: pull-trust-manager-smoke
-    always_run: true
-    optional: false
-    max_concurrency: 8
+  - name: pull-trust-manager-test
     decorate: true
-    branches:
-    - ^main$
-    - ^release-.*$
+    always_run: true
     labels:
-      preset-dind-enabled: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240422-729441b-1.22
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
         args:
         - runner
         - make
-        - provision-buildx
-        - smoke
+        - vendor-go
+        - test-unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
+  - name: pull-trust-manager-integration
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-integration
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
+  - name: pull-trust-manager-smoke
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-smoke
         resources:
           requests:
             cpu: 3500m
-            memory: 6Gi
+            memory: 4Gi
         securityContext:
           privileged: true
           capabilities:
