@@ -1,0 +1,56 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: triage-gateway
+  namespace: triageparty
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/issue-temporary-certificate: "true"
+spec:
+  gatewayClassName: gke-l7-global-external-managed
+  addresses:
+  - type: NamedAddress
+    value: triage-infra-cert-manager-io
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+    - name: https
+      hostname: triage.infra.cert-manager.io
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: triage-infra-cert-manager-io-tls
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: triage-gateway-redirect
+  namespace: triageparty
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: triage-gateway
+    sectionName: http
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: triage-gateway-route
+  namespace: triageparty
+spec:
+  parentRefs:
+    - kind: Gateway
+      name: triage-gateway
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: triageparty
+          port: 80

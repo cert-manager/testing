@@ -19,8 +19,24 @@ spec:
         - name: GITHUB_TOKEN
           valueFrom:
             secretKeyRef:
-              name: triageparty-github-token
+              name: cert-manager-bot-triage-party-github-token
               key: token
+        ports:
+          - name: http
+            containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /s/daily
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /s/daily
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 3
+          timeoutSeconds: 600
         volumeMounts:
         - name: config
           mountPath: /app/config
