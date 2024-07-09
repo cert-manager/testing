@@ -19,8 +19,6 @@ metadata:
   name: deck
   labels:
     app: deck
-  annotations:
-    cloud.google.com/neg: '{"ingress": true}'
 spec:
   selector:
     app: deck

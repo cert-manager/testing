@@ -21,5 +21,8 @@ helm upgrade \
     --reset-values \
     --namespace cert-manager \
     --create-namespace \
-    --version v1.14.4 \
-    --set installCRDs=true
+    --version v1.15.1 \
+    --set crds.enabled=true \
+    --set config.apiVersion="controller.config.cert-manager.io/v1alpha1" \
+    --set config.kind="ControllerConfiguration" \
+    --set config.enableGatewayAPI="true"
