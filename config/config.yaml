@@ -210,6 +210,8 @@ tide:
   # Default tide config for all repos in the cert-manager org
   - orgs:
     - cert-manager
+    excludedRepos:
+    - cert-manager/cert-manager # Handled with a separate Tide query below.
     labels:
     - lgtm
     - approved
@@ -241,3 +243,16 @@ tide:
     - needs-rebase
     - needs-kind
     - do-not-merge/release-note-label-needed
+
+  - author: github-actions[bot]
+    orgs:
+    - cert-manager
+    labels:
+    - skip-review
+    - "dco-signoff: yes"
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
