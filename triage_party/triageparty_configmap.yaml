@@ -37,6 +37,17 @@ data:
         - https://github.com/cert-manager/webhook-lib
         - https://github.com/cert-manager/csi-lib
         - https://github.com/cert-manager/sample-external-issuer
+        - https://github.com/cert-manager/cmctl
+        - https://github.com/cert-manager/infrastructure
+        - https://github.com/cert-manager/testing
+        - https://github.com/cert-manager/makefile-modules
+        - https://github.com/cert-manager/helm-tool
+        - https://github.com/cert-manager/community
+        - https://github.com/cert-manager/webhook-example
+        - https://github.com/cert-manager/org
+        - https://github.com/cert-manager/base-images
+        - https://github.com/cert-manager/klone
+        - https://github.com/cert-manager/boilersuite
 
     collections:
       - id: daily

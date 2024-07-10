@@ -4,10 +4,28 @@ metadata:
   name: triageparty
   namespace: triageparty
 spec:
-  type: ClusterIP
-  ports:
-  - name: http
-    port: 80
-    targetPort: 8080
   selector:
     app: triageparty
+  ports:
+  - name: main
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+---
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: triage-health
+  namespace: triageparty
+spec:
+  default:
+    logConfig:
+      enabled: true
+    config:
+      type: HTTP
+      httpHealthCheck:
+        requestPath: /s/daily
+  targetRef:
+    group: ""
+    kind: Service
+    name: triageparty
