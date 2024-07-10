@@ -1,0 +1,67 @@
+kind: Gateway
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: prow-gateway
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/issue-temporary-certificate: "true"
+spec:
+  gatewayClassName: gke-l7-global-external-managed
+  addresses:
+  - type: NamedAddress
+    value: prow-infra-cert-manager-io
+  listeners:
+    - name: http
+      protocol: HTTP
+      port: 80
+    - name: https
+      hostname: prow.infra.cert-manager.io
+      port: 443
+      protocol: HTTPS
+      tls:
+        mode: Terminate
+        certificateRefs:
+          - name: prow-infra-cert-manager-io-tls
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: prow-gateway-redirect
+  namespace: default
+spec:
+  parentRefs:
+  - kind: Gateway
+    name: prow-gateway
+    sectionName: http
+  rules:
+  - filters:
+    - type: RequestRedirect
+      requestRedirect:
+        scheme: https
+---
+kind: HTTPRoute
+apiVersion: gateway.networking.k8s.io/v1
+metadata:
+  name: prow-gateway-route
+  namespace: default
+spec:
+  parentRefs:
+    - kind: Gateway
+      name: prow-gateway
+      sectionName: https
+  rules:
+    - matches:
+      - path:
+          type: PathPrefix
+          value: "/hook"
+      backendRefs:
+      - name: hook
+        port: 8888
+    - matches:
+      - path:
+          type: PathPrefix
+          value: "/"
+      backendRefs:
+      - name: deck
+        port: 80
