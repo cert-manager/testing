@@ -192,7 +192,7 @@ presubmits:
             memory: 6Gi
         env:
         - name: ISTIO_VERSION
-          value: "1.19.6"
+          value: "1.19.9"
         securityContext:
           privileged: true
           capabilities:
@@ -224,7 +224,71 @@ presubmits:
             memory: 6Gi
         env:
         - name: ISTIO_VERSION
-          value: "1.20.2"
+          value: "1.20.8"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
+  - name: pull-cert-manager-istio-csr-istio-v1-21
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: ISTIO_VERSION
+          value: "1.21.4"
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
+  - name: pull-cert-manager-istio-csr-istio-v1-22
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-dind-enabled: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-e2e
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        env:
+        - name: ISTIO_VERSION
+          value: "1.22.2"
         securityContext:
           privileged: true
           capabilities:
