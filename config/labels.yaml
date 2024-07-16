@@ -78,6 +78,11 @@ repos:
       target: both
       addedBy: prow
     - color: 0052cc
+      description: Indicates a PR or issue relates to the gateway-shim feature (as in Gateway API).
+      name: area/gateway-shim
+      target: both
+      addedBy: prow
+    - color: 0052cc
       description: Indicates a PR or issue relates to the cert-manager-ctl CLI component
       name: area/ctl
       target: both
