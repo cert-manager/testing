@@ -2,7 +2,7 @@
 
 This repository contains the configuration used for testing all jetstck projects.
 
-It is used by [Prow](https://github.com/kubernetes/test-infra/tree/master/prow)
+It is used by [Prow](https://github.com/kubernetes-sigs/prow)
 to provide GitHub automation to all of our repositories.
 
 ## Common tasks
@@ -12,8 +12,9 @@ to provide GitHub automation to all of our repositories.
 We have certain requirements on files in these repository:
 
 * boilerplate check - we require that all files in the repository have a valid
-copyright notice at the top of the file. Examples of copyright notices for
-different filetypes can be seen in [hack/boilerplate](hack/boilerplate).
+copyright notice at the top of the file.
+* prowgen check - we require that all cert-manager job configuration files are
+generated using `prowgen`.
 
 You can run the lint checks with:
 
@@ -25,7 +26,7 @@ make verify
 
 In order to test the configuration is valid, you can run:
 
-```
+```bash
 make local-checkconfig
 ```
 
@@ -34,7 +35,7 @@ files.
 
 ### Deploying a new version of Prow
 
-Prow's deployment on our build-infra cluster is done manually using a Makefile in ./prow/cluster.
+Prow's deployment on our prow-untrusted cluster is done manually using a Makefile in ./prow/cluster.
 
 See more detailed information about upgrading Prow in [./prow/cluster/README.md](./prow/cluster/README.md)
 
@@ -114,8 +115,8 @@ Dockerfile for the image).
 ### Debugging e2e tests run with Prow
 
 -  For each e2e test run, Prow will create a new `ProwJob` custom resource in
-   `build-infra` cluster. For the actual test, a pod will be spun up in
-   `build-infra-workers` cluster in `test-pods` namespace. You can find the pod's
+   `prow-trusted` cluster. For the actual test, a pod will be spun up in
+   `prow-untrusted` cluster in `test-pods` namespace. You can find the pod's
    name from the `ProwJob`'s yaml `kubectl get prowjob <prowjob-name> -ojsonpath='{.status.pod_name}'`
 
 - When debugging a periodic Prow test, a new test run can be triggered by
@@ -124,14 +125,6 @@ Dockerfile for the image).
 - The image used for the test container has bash, so a running test can be
   easily debugged by execing the container `kubectl exec -it  <pod-name> -ctest
   -ntest-pods -- bash`
-
-- When execed to test container, you can find tools such as `kubectl`, `kind`, `helm`,
-  `jq` in `~/bazel-out/k8-fastbuild/bin/hack/bin/`. The current kube context will
-  already be that of the kind cluster that runs the e2e tests
-
-## Creating new Prowjobs
-
-See documentation for ProwJobs in [k/test-infra](https://github.com/kubernetes/test-infra/blob/master/prow/jobs.md).
 
 ### Testing locally
 
