@@ -4,13 +4,9 @@
 ---
 triggers:
 - repos:
-  - cert-manager/testing
-  - cert-manager/cert-manager
-  - cert-manager/website
-  - cert-manager/trust-manager
-  - cert-manager/issuer-lib
-  - cert-manager/helm-tool
-  - cert-manager/cmctl
+  - cert-manager
+  trusted_apps:
+  - github-actions
   only_org_members: true
 
 blunderbuss:
