@@ -282,13 +282,14 @@ presubmits:
         - make
         - vendor-go
         - test-e2e
+        - test-e2e-ambient
         resources:
           requests:
             cpu: 3500m
             memory: 6Gi
         env:
         - name: ISTIO_VERSION
-          value: "1.22.2"
+          value: "1.22.3"
         securityContext:
           privileged: true
           capabilities:
