@@ -48,6 +48,7 @@ data:
         - https://github.com/cert-manager/base-images
         - https://github.com/cert-manager/klone
         - https://github.com/cert-manager/boilersuite
+        - https://github.com/cert-manager/google-cas-issuer
 
     collections:
       - id: daily
