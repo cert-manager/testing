@@ -10,7 +10,7 @@ presubmits:
     labels:
     spec:
       containers:
-      - image: golang:1.20
+      - image: golang:1.23
         args:
         - ./hack/verify-all.sh
         resources:
