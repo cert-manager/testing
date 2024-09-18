@@ -13,9 +13,10 @@
 # limitations under the License.
 
 apiVersion: cert-manager.io/v1
-kind: ClusterIssuer
+kind: Issuer
 metadata:
   name: letsencrypt-prod
+  namespace: default
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
@@ -23,6 +24,10 @@ spec:
       name: letsencrypt-prod-issuer-account-key
     solvers:
     - http01:
-        ingress:
-          ingressClassName: prod-nginx
+        gatewayHTTPRoute:
+          serviceType: ClusterIP
+          parentRefs:
+            - name: prow-gateway
+              namespace: default
+              kind: Gateway
     email: cert-manager-maintainers@googlegroups.com
