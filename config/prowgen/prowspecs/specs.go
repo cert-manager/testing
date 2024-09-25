@@ -49,7 +49,10 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		},
 
 		primaryKubernetesVersion: "1.27",
-		otherKubernetesVersions:  []string{"1.22", "1.23", "1.24", "1.25", "1.26", "1.28", "1.29"},
+		// NB: It would be nice to test 1.30 and 1.31 (and newer) here but newer versions of Kind don't
+		// build images to support testing older k8s versions. E.g. kind v0.24.0 doesn't have images for
+		// Kubernetes 1.24 and below
+		otherKubernetesVersions: []string{"1.22", "1.23", "1.24", "1.25", "1.26", "1.28", "1.29"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
@@ -104,7 +107,9 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		},
 
 		primaryKubernetesVersion: "1.30",
-		otherKubernetesVersions:  []string{"1.25", "1.26", "1.27", "1.28", "1.29"},
+
+		// TODO: test k8s 1.31 here when possible; requires support in the release-1.15 branch on cert-manager
+		otherKubernetesVersions: []string{"1.25", "1.26", "1.27", "1.28", "1.29"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
@@ -123,8 +128,8 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 			Repo: "cert-manager",
 		},
 
-		primaryKubernetesVersion: "1.30",
-		otherKubernetesVersions:  []string{"1.25", "1.26", "1.27", "1.28", "1.29"},
+		primaryKubernetesVersion: "1.31",
+		otherKubernetesVersions:  []string{"1.27", "1.28", "1.29", "1.30"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
