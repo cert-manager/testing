@@ -109,7 +109,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		primaryKubernetesVersion: "1.30",
 
 		// TODO: test k8s 1.31 here when possible; requires support in the release-1.15 branch on cert-manager
-		otherKubernetesVersions: []string{"1.25", "1.26", "1.27", "1.28", "1.29"},
+		otherKubernetesVersions: []string{"1.25", "1.26", "1.27", "1.28", "1.29", "1.31"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
