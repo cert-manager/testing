@@ -45,11 +45,11 @@ branch-protection:
       # Causes the "Include Administrators" checkbox to be ticked in the GitHub branch protection UI.
       # See https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/about-protected-branches#do-not-allow-bypassing-the-above-settings
       enforce_admins: true
-      # Disallow force pushes to the protected branch. 
+      # Disallow force pushes to the protected branch.
       allow_force_pushes: false
       # Disallow deletion of the protected branch.
       allow_deletions: false
-      
+
       # In the GH UI, the following 'required_pull_request_reviews' configuration
       # results in checking the 'Require a pull request before merging' checkbox,
       # without checking any of it's child checkboxes. We must set the
@@ -99,13 +99,20 @@ branch-protection:
                 - pull-cert-manager-release-1.15-make-test
                 - pull-cert-manager-release-1.15-e2e-v1-30
                 - pull-cert-manager-release-1.15-e2e-v1-30-upgrade
+            release-1.16:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.16-make-verify
+                - pull-cert-manager-release-1.16-make-test
+                - pull-cert-manager-release-1.16-e2e-v1-31
+                - pull-cert-manager-release-1.16-e2e-v1-31-upgrade
             master:
               required_status_checks:
                 contexts:
                 - pull-cert-manager-master-make-verify
                 - pull-cert-manager-master-make-test
-                - pull-cert-manager-master-e2e-v1-30
-                - pull-cert-manager-master-e2e-v1-30-upgrade
+                - pull-cert-manager-master-e2e-v1-31
+                - pull-cert-manager-master-e2e-v1-31-upgrade
         website:
           required_status_checks:
             contexts:
