@@ -111,8 +111,8 @@ branch-protection:
                 contexts:
                 - pull-cert-manager-master-make-verify
                 - pull-cert-manager-master-make-test
-                - pull-cert-manager-master-e2e-v1-30
-                - pull-cert-manager-master-e2e-v1-30-upgrade
+                - pull-cert-manager-master-e2e-v1-31
+                - pull-cert-manager-master-e2e-v1-31-upgrade
         website:
           required_status_checks:
             contexts:
