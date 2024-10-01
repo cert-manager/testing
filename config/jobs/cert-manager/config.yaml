@@ -129,6 +129,23 @@ presets:
   - name: GINKGO_FOCUS
     value: "Venafi Cloud"
 
+# This preset adds common configuration for all trivy jobs
+#
+# 1. Mitigate the impact of Trivy DB download rate limiting on GHCR. E.g.
+#    >  2024-09-30T19:10:14Z FATAL Fatal error init error: DB error: failed to
+#    >  download vulnerability DB: database download error: OCI repository error: 1
+#    >  error occurred:
+#    >  	* GET https://ghcr.io/v2/aquasecurity/trivy-db/manifests/2: TOOMANYREQUESTS: retry-after: 203.192µs, allowed: 44000/minute
+#    By using an alternative registry mirror for the database. See:
+#    - https://github.com/aquasecurity/trivy-action/issues/389
+#    - https://aquasecurity.github.io/trivy/v0.55/docs/configuration/db/#db-repository
+#    - https://aquasecurity.github.io/trivy/v0.55/docs/configuration/#environment-variables
+- labels:
+    preset-trivy: "true"
+  env:
+  - name: TRIVY_DB_REPOSITORY
+    value: "public.ecr.aws/aquasecurity/trivy-db:2"
+
 # This preset is used to enable the logic in the make-dind runner that manages
 # a local cache and shares that cache with other jobs after successful completion.
 # The runner script populates the LOCAL_CACHE_DIR location with a copy of the latest
