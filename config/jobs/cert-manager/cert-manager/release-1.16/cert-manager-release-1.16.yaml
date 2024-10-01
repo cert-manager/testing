@@ -1278,6 +1278,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
+    preset-trivy: "true"
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
@@ -1317,6 +1318,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
+    preset-trivy: "true"
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
@@ -1356,6 +1358,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
+    preset-trivy: "true"
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
@@ -1395,6 +1398,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
+    preset-trivy: "true"
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
@@ -1434,6 +1438,7 @@ periodics:
     preset-dind-enabled: "true"
     preset-go-cache: "true"
     preset-local-cache: "true"
+    preset-trivy: "true"
   spec:
     containers:
     - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
