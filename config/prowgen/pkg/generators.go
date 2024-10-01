@@ -422,6 +422,7 @@ func TrivyTest(ctx *ProwContext, containerName string) *Job {
 		addLocalCacheLabel,
 		addGoCacheLabel,
 		addDindLabel,
+		addTrivyLabel,
 		addMaxConcurrency(2),
 		// Need to ensure that trivy tests send a failure email as soon as they fail since
 		// they tend to be run relatively infrequently and a failure is important to address
