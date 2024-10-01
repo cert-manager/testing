@@ -52,6 +52,10 @@ func jobTemplate(name string, description string, configurers ...JobConfigurer) 
 	return job
 }
 
+func addTrivyLabel(job *Job) {
+	job.Labels["preset-trivy"] = "true"
+}
+
 func addLocalCacheLabel(job *Job) {
 	job.Labels["preset-local-cache"] = "true"
 }
