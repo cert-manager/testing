@@ -140,11 +140,13 @@ presets:
 #    - https://github.com/aquasecurity/trivy-action/issues/389
 #    - https://aquasecurity.github.io/trivy/v0.55/docs/configuration/db/#db-repository
 #    - https://aquasecurity.github.io/trivy/v0.55/docs/configuration/#environment-variables
+#    Omit the OCI tag (schema version), for backwards compatibility with trivy < 0.50.0:
+#    - https://github.com/aquasecurity/trivy/pull/6219
 - labels:
     preset-trivy: "true"
   env:
   - name: TRIVY_DB_REPOSITORY
-    value: "public.ecr.aws/aquasecurity/trivy-db:2"
+    value: "public.ecr.aws/aquasecurity/trivy-db"
 
 # This preset is used to enable the logic in the make-dind runner that manages
 # a local cache and shares that cache with other jobs after successful completion.
