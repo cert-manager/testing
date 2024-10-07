@@ -63,34 +63,6 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		// Keep using the old tests (for backwards compatibility)
 		isPreMakefileModules: true,
 	},
-	"release-1.14": {
-		prowContext: &pkg.ProwContext{
-			Branch: "release-1.14",
-
-			// Use latest image.
-			Image: pkg.CommonTestImage,
-
-			// NB: we don't use a presubmit dashboard outside of "master", currently
-			PresubmitDashboard: false,
-			PeriodicDashboard:  true,
-
-			Org:  "cert-manager",
-			Repo: "cert-manager",
-		},
-
-		primaryKubernetesVersion: "1.29",
-		otherKubernetesVersions:  []string{"1.24", "1.25", "1.26", "1.27", "1.28"},
-
-		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
-
-		// This older cert-manager release uses the NEW startupapicheck image to run the statupapicheck test
-		// The release however still includes a ctl image (which is not used in the Helm chart)
-		containerNames: []string{"controller", "acmesolver", "ctl", "startupapicheck", "cainjector", "webhook"},
-
-		// Keep using the old tests (for backwards compatibility)
-		isPreMakefileModules: true,
-	},
 	"release-1.15": {
 		prowContext: &pkg.ProwContext{
 			Branch: "release-1.15",
