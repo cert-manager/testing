@@ -17,3 +17,4 @@ dashboards:
 - name: cert-manager-periodics-release-1.16
 - name: cert-manager-presubmits-master
 - name: cert-manager-testing-janitors
+- name: istio-csr-periodics

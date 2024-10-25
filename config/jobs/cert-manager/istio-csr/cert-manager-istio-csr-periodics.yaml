@@ -1,0 +1,37 @@
+periodics:
+- name: istio-csr-latest-istio-periodic
+  decorate: true
+  annotations:
+    description: Runs istio-csr's e2e test on the latest version of Istio
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: istio-csr-periodics
+  labels:
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-dind-enabled: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      args:
+      - bash
+      - -c
+      - "ISTIO_VERSION=$(make -s print-latest-istio-version) runner make vendor-go test-e2e"
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: istio-csr
+    base_ref: main
+  cron: 42 */12 * * * # run at 13:42 and 01:42 every day
