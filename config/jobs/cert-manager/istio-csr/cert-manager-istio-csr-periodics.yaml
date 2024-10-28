@@ -6,6 +6,8 @@ periodics:
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     testgrid-create-job-group: "true"
     testgrid-dashboards: istio-csr-periodics
+    testgrid-num-failures-to-alert: "2"
+    testgrid-alert-stale-results-hours: "24"
   labels:
     preset-go-cache: "true"
     preset-local-cache: "true"
@@ -34,4 +36,4 @@ periodics:
   - org: cert-manager
     repo: istio-csr
     base_ref: main
-  cron: 42 */12 * * * # run at 13:42 and 01:42 every day
+  cron: 42 */12 * * * # run at 12:42 UTC and 00:42 UTC every day (42 was picked arbitrarily)
