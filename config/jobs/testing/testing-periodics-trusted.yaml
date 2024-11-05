@@ -17,7 +17,7 @@ periodics:
       - commenter
       args:
       - |-
-        --query=repo:cert-manager/cert-manager
+        --query=repo:cert-manager/cert-manager repo:cert-manager/trust-manager
         -label:lifecycle/frozen
         label:lifecycle/rotten
       - --updated=720h
@@ -47,7 +47,7 @@ periodics:
       - commenter
       args:
       - |-
-        --query=repo:cert-manager/cert-manager
+        --query=repo:cert-manager/cert-manager repo:cert-manager/trust-manager
         -label:lifecycle/frozen
         label:lifecycle/stale
         -label:lifecycle/rotten
@@ -80,7 +80,7 @@ periodics:
       - commenter
       args:
       - |-
-        --query=repo:cert-manager/cert-manager
+        --query=repo:cert-manager/cert-manager repo:cert-manager/trust-manager
         -label:lifecycle/frozen
         -label:lifecycle/stale
         -label:lifecycle/rotten
