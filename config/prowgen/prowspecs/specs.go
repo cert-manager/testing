@@ -120,8 +120,8 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 			Repo: "cert-manager",
 		},
 
-		primaryKubernetesVersion: "1.31",
-		otherKubernetesVersions:  []string{"1.28", "1.29", "1.30"},
+		primaryKubernetesVersion: "1.32",
+		otherKubernetesVersions:  []string{"1.29", "1.30", "1.31"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
