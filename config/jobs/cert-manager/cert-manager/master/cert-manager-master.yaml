@@ -70,57 +70,6 @@ presubmits:
     - master
     always_run: true
     optional: false
-  - name: pull-cert-manager-master-e2e-v1-29
-    max_concurrency: 4
-    decorate: true
-    annotations:
-      description: Runs the end-to-end test suite against a Kubernetes v1.29 cluster
-      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-      testgrid-create-job-group: "true"
-      testgrid-dashboards: cert-manager-presubmits-master
-    labels:
-      preset-cloudflare-credentials: "true"
-      preset-dind-enabled: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-go-cache: "true"
-      preset-local-cache: "true"
-      preset-retry-flakey-jobs: "true"
-    spec:
-      containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
-        args:
-        - runner
-        - make
-        - -j7
-        - vendor-go
-        - e2e-ci
-        - K8S_VERSION=1.29
-        resources:
-          requests:
-            cpu: 7000m
-            memory: 6Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add:
-            - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        - 8.8.8.8
-        - 8.8.4.4
-    branches:
-    - master
-    always_run: false
-    optional: true
   - name: pull-cert-manager-master-e2e-v1-30
     max_concurrency: 4
     decorate: true
@@ -586,58 +535,6 @@ periodics:
     repo: cert-manager
     base_ref: master
   cron: 00 00-23/02 * * *
-- name: ci-cert-manager-master-e2e-v1-29
-  max_concurrency: 4
-  decorate: true
-  annotations:
-    description: Runs the end-to-end test suite against a Kubernetes v1.29 cluster
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-master
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-dind-enabled: "true"
-    preset-enable-all-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-go-cache: "true"
-    preset-local-cache: "true"
-    preset-retry-flakey-jobs: "true"
-  spec:
-    containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
-      args:
-      - runner
-      - make
-      - -j7
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.29
-      resources:
-        requests:
-          cpu: 7000m
-          memory: 6Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
-    dnsPolicy: None
-    dnsConfig:
-      nameservers:
-      - 8.8.8.8
-      - 8.8.4.4
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: master
-  cron: 04 01-23/02 * * *
 - name: ci-cert-manager-master-e2e-v1-30
   max_concurrency: 4
   decorate: true
@@ -689,7 +586,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 08 00-23/02 * * *
+  cron: 04 01-23/02 * * *
 - name: ci-cert-manager-master-e2e-v1-31
   max_concurrency: 4
   decorate: true
@@ -741,7 +638,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 12 01-23/02 * * *
+  cron: 08 00-23/02 * * *
 - name: ci-cert-manager-master-e2e-v1-32
   max_concurrency: 4
   decorate: true
@@ -793,7 +690,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 16 00-23/02 * * *
+  cron: 12 01-23/02 * * *
 - name: ci-cert-manager-master-e2e-v1-32-issuers-venafi
   max_concurrency: 4
   decorate: true
@@ -845,7 +742,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 20 00-23/12 * * *
+  cron: 16 00-23/12 * * *
 - name: ci-cert-manager-master-e2e-v1-32-upgrade
   max_concurrency: 4
   decorate: true
@@ -885,7 +782,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 24 00-23/08 * * *
+  cron: 20 00-23/08 * * *
 - name: ci-cert-manager-master-e2e-v1-32-bestpractice-install
   max_concurrency: 4
   decorate: true
@@ -939,59 +836,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 28 00-23/24 * * *
-- name: ci-cert-manager-master-e2e-v1-29-feature-gates-disabled
-  max_concurrency: 4
-  decorate: true
-  annotations:
-    description: Runs the E2E tests with all feature gates disabled
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-master
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-dind-enabled: "true"
-    preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-go-cache: "true"
-    preset-local-cache: "true"
-    preset-retry-flakey-jobs: "true"
-  spec:
-    containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
-      args:
-      - runner
-      - make
-      - -j7
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.29
-      resources:
-        requests:
-          cpu: 7000m
-          memory: 6Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
-    dnsPolicy: None
-    dnsConfig:
-      nameservers:
-      - 8.8.8.8
-      - 8.8.4.4
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: master
-  cron: 32 07-23/24 * * *
+  cron: 24 00-23/24 * * *
 - name: ci-cert-manager-master-e2e-v1-30-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1043,7 +888,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 36 14-23/24 * * *
+  cron: 28 07-23/24 * * *
 - name: ci-cert-manager-master-e2e-v1-31-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1095,7 +940,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 40 21-23/24 * * *
+  cron: 32 14-23/24 * * *
 - name: ci-cert-manager-master-e2e-v1-32-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1147,7 +992,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 44 04-23/24 * * *
+  cron: 36 21-23/24 * * *
 - name: ci-cert-manager-master-trivy-test-controller
   max_concurrency: 2
   decorate: true
@@ -1187,7 +1032,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 48 11-23/24 * * *
+  cron: 40 04-23/24 * * *
 - name: ci-cert-manager-master-trivy-test-acmesolver
   max_concurrency: 2
   decorate: true
@@ -1227,7 +1072,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 52 18-23/24 * * *
+  cron: 44 11-23/24 * * *
 - name: ci-cert-manager-master-trivy-test-startupapicheck
   max_concurrency: 2
   decorate: true
@@ -1267,7 +1112,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 56 01-23/24 * * *
+  cron: 48 18-23/24 * * *
 - name: ci-cert-manager-master-trivy-test-cainjector
   max_concurrency: 2
   decorate: true
@@ -1307,7 +1152,7 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 00 08-23/24 * * *
+  cron: 52 01-23/24 * * *
 - name: ci-cert-manager-master-trivy-test-webhook
   max_concurrency: 2
   decorate: true
@@ -1347,4 +1192,4 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
-  cron: 04 15-23/24 * * *
+  cron: 56 08-23/24 * * *
