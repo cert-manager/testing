@@ -6,7 +6,7 @@ variants:
   bookworm:
     arguments:
       DEBIAN_VERSION: bookworm-slim
-      DOCKER_VERSION: 5:26.0.1-1~debian.12~bookworm
+      DOCKER_VERSION: 5:28.0.4-1~debian.12~bookworm
 
 # Image names to be tagged and pushed
 images:
