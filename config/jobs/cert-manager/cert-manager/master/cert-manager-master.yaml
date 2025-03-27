@@ -17,7 +17,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -50,7 +50,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -88,7 +88,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -139,7 +139,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -190,7 +190,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -237,7 +237,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -276,7 +276,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -313,7 +313,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -363,7 +363,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -414,7 +414,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -467,7 +467,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
         - make
@@ -514,7 +514,7 @@ periodics:
     preset-local-cache: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -553,7 +553,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -605,7 +605,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -657,7 +657,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -709,7 +709,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -757,7 +757,7 @@ periodics:
     preset-local-cache: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -803,7 +803,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -855,7 +855,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -907,7 +907,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -959,7 +959,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -1010,7 +1010,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -1050,7 +1050,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -1090,7 +1090,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -1130,7 +1130,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
@@ -1170,7 +1170,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
       args:
       - runner
       - make
