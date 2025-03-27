@@ -39,7 +39,7 @@ spec:
       terminationGracePeriodSeconds: 180
       containers:
       - name: cherrypicker
-        image: gcr.io/k8s-prow/cherrypicker:v20240805-37a08f946
+        image: us-docker.pkg.dev/k8s-infra-prow/images/cherrypicker:v20240805-37a08f946
         imagePullPolicy: Always
         args:
         - --github-token-path=/etc/github/token
@@ -68,9 +68,9 @@ spec:
       # We cannot use the GitHub APP here because
       # an APP does not have any repos, and can thus not
       # have/ create a fork of a repo to create a cherrypick.
-      - name: github-app-token
-        secret:
-          secretName: github-app-token
+      # - name: github-app-token
+      #   secret:
+      #     secretName: github-app-token
       - name: github-token
         secret:
           secretName: cert-manager-bot-github-token

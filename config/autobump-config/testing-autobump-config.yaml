@@ -18,8 +18,13 @@ extraFiles:
   - "config/prowgen/pkg/globals.go"
 targetVersion: "latest"
 prefixes:
-  - name: "k8s-prow images"
-    prefix: "gcr.io/k8s-prow/"
+  - name: "k8s-infra-prow images"
+    prefix: "us-docker.pkg.dev/k8s-infra-prow/images/"
+    repo: "https://github.com/kubernetes-sigs/prow"
+    summarise: false
+    consistentImages: false
+  - name: "k8s-staging-test-infra images"
+    prefix: "gcr.io/k8s-staging-test-infra/"
     repo: "https://github.com/kubernetes/test-infra"
     summarise: false
     consistentImages: false
