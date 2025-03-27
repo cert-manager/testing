@@ -19,7 +19,7 @@ package pkg
 
 const (
 	// CommonTestImage defines the common base image used across many prow jobs
-	CommonTestImage = "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20240422-6b43e85-bookworm"
+	CommonTestImage = "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm"
 
 	// AlertEmailAddress is the address to which testgrid alerts should be sent
 	AlertEmailAddress = "cert-manager-dev-alerts@googlegroups.com"
