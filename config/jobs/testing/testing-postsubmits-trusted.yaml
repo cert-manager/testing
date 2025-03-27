@@ -57,7 +57,7 @@ postsubmits:
       description: Build and push the 'gencred' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -92,7 +92,7 @@ postsubmits:
       description: Build and push the 'prow-controller-manager-spot' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -127,7 +127,7 @@ postsubmits:
       description: Build and push the 'make-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -162,7 +162,7 @@ postsubmits:
       description: Build and push the 'golang-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -197,7 +197,7 @@ postsubmits:
       description: Build and push the 'image-builder' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -232,7 +232,7 @@ postsubmits:
       description: Build and push the 'kind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20240422-729441b-1.22
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20250327-a3af8ba-1.24
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -264,7 +264,7 @@ postsubmits:
       description: Build and push the 'golang-aws' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -299,7 +299,7 @@ postsubmits:
       description: Build and push the 'nix-dind' image
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20240422-8a629d9-gcloud-425
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-af35b2b-gcloud-516
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
