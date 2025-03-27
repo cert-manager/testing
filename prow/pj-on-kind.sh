@@ -39,10 +39,10 @@ function main() {
   ensureInstall
 
   # Generate PJ and Pod.
-  docker pull gcr.io/k8s-prow/mkpj:latest
-  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -v "${config}:${config}" ${job_config_mnt} -w "${PWD}" gcr.io/k8s-prow/mkpj:latest "--config-path=${config}" "--job=${job}" ${job_config_flag} > "${PWD}/pj.yaml"
-  docker pull gcr.io/k8s-prow/mkpod:latest
-  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -w "${PWD}" gcr.io/k8s-prow/mkpod:latest --build-id=snowflake "--prow-job=${PWD}/pj.yaml" --local "--out-dir=${out_dir}/${job}" > "${PWD}/pod.yaml"
+  docker pull us-docker.pkg.dev/k8s-infra-prow/images/mkpj:latest
+  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -v "${config}:${config}" ${job_config_mnt} -w "${PWD}" us-docker.pkg.dev/k8s-infra-prow/images/mkpj:latest "--config-path=${config}" "--job=${job}" ${job_config_flag} > "${PWD}/pj.yaml"
+  docker pull us-docker.pkg.dev/k8s-infra-prow/images/mkpod:latest
+  docker run -i --rm --user "$(id -u):$(id -g)" -v "${PWD}:${PWD}" -w "${PWD}" us-docker.pkg.dev/k8s-infra-prow/images/mkpod:latest --build-id=snowflake "--prow-job=${PWD}/pj.yaml" --local "--out-dir=${out_dir}/${job}" > "${PWD}/pod.yaml"
 
   # Add any k8s resources that the pod depends on to the kind cluster here. (secrets, configmaps, etc.)
 
