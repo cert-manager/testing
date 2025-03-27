@@ -38,7 +38,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: gencred
-        image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/gencred:20240422-8a629d9
+        image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/gencred:20241213-3abe325
         args:
         - --config=/etc/config/gencred-config.yaml
         - --refresh-interval=46h
