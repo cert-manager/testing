@@ -168,7 +168,9 @@ presets:
   volumes:
     - name: shared-cache
       hostPath:
-        path: /mnt/stateful_partition/cache/shared_cache
+        # Use an on-disk folder which is mounted with executable permissions.
+        # See https://cloud.google.com/container-optimized-os/docs/concepts/disks-and-filesystem
+        path: /var/lib/toolbox/cache/shared_cache
         type: DirectoryOrCreate
 
 - labels:
@@ -186,11 +188,15 @@ presets:
   volumes:
     - name: go-cache
       hostPath:
-        path: /mnt/stateful_partition/cache/go_cache
+        # Use an on-disk folder which is mounted with executable permissions.
+        # See https://cloud.google.com/container-optimized-os/docs/concepts/disks-and-filesystem
+        path: /var/lib/toolbox/cache/go_cache
         type: DirectoryOrCreate
     - name: go-mod-cache
       hostPath:
-        path: /mnt/stateful_partition/cache/go_mod_cache
+        # Use an on-disk folder which is mounted with executable permissions.
+        # See https://cloud.google.com/container-optimized-os/docs/concepts/disks-and-filesystem
+        path: /var/lib/toolbox/cache/go_mod_cache
         type: DirectoryOrCreate
 
 # A preset which causes make e2e-setup to install cert-manager in accordance
