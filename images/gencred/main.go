@@ -85,6 +85,8 @@ type clusterConfig struct {
 	// GKEConnection is the connection string for a GKE cluster, in the format of
 	// `projects/%s/locations/%s/clusters/%s`
 	GKEConnection *string `json:"gke,omitempty"`
+	// GKEUsePublicCA means we will use the public CA certs instead of the cluster CA in the kubeconfig.
+	GKEUsePublicCA bool `json:"gke-use-public-ca,omitempty"`
 	// Context is the name of the kubeconfig context to use from local kube env.
 	Context *string `json:"context,omitempty"`
 	// Name is the alias of generated kubeconfig.
@@ -430,8 +432,12 @@ func runOnce(c config, filter filter, getKubeClient kubeClientGetter) error {
 					Insecure: false,
 					CertData: decodedClientCertificate,
 					KeyData:  decodedClientKey,
-					CAData:   decodedClusterCaCertificate,
 				},
+			}
+
+			// DNS-based kubernetes clusters use the public CA certs instead of the cluster CA.
+			if !cc.GKEUsePublicCA {
+				config.TLSClientConfig.CAData = decodedClusterCaCertificate
 			}
 
 			cred, err := google.DefaultTokenSource(context.Background(), container.CloudPlatformScope)
