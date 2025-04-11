@@ -42,6 +42,7 @@ data:
         - https://github.com/cert-manager/testing
         - https://github.com/cert-manager/makefile-modules
         - https://github.com/cert-manager/helm-tool
+        - https://github.com/cert-manager/image-tool
         - https://github.com/cert-manager/community
         - https://github.com/cert-manager/webhook-example
         - https://github.com/cert-manager/org
