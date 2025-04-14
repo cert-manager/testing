@@ -140,7 +140,7 @@ periodics:
       args:
       - --config=config/labels.yaml
       # TODO: enable label_sync across the whole org
-      - --only=cert-manager/cert-manager,cert-manager/website,cert-manager/release,cert-manager/istio-csr,cert-manager/approver-policy,cert-manager/trust-manager,cert-manager/issuer-lib,cert-manager/csi-driver,cert-manager/csi-driver-spiffe,cert-manager/openshift-routes,cert-manager/cert-manager-olm,cert-manager/webhook-lib,cert-manager/csi-lib,cert-manager/sample-external-issuer,cert-manager/cmctl,cert-manager/infrastructure,cert-manager/testing,cert-manager/makefile-modules,cert-manager/helm-tool,cert-manager/community,cert-manager/webhook-example,cert-manager/org,cert-manager/base-images,cert-manager/klone,cert-manager/boilersuite,cert-manager/google-cas-issuer
+      - --only=cert-manager/cert-manager,cert-manager/website,cert-manager/release,cert-manager/istio-csr,cert-manager/approver-policy,cert-manager/trust-manager,cert-manager/issuer-lib,cert-manager/csi-driver,cert-manager/csi-driver-spiffe,cert-manager/openshift-routes,cert-manager/cert-manager-olm,cert-manager/webhook-lib,cert-manager/csi-lib,cert-manager/sample-external-issuer,cert-manager/cmctl,cert-manager/infrastructure,cert-manager/testing,cert-manager/makefile-modules,cert-manager/helm-tool,cert-manager/image-tool,cert-manager/community,cert-manager/webhook-example,cert-manager/org,cert-manager/base-images,cert-manager/klone,cert-manager/boilersuite,cert-manager/google-cas-issuer
       - --debug
       - --confirm
       - --github-app-id=$(GITHUB_APP_ID)
