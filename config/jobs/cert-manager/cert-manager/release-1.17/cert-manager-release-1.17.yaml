@@ -96,13 +96,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -144,13 +137,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -192,13 +178,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -240,13 +219,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -354,13 +326,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -401,13 +366,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -449,13 +407,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -499,13 +450,6 @@ presubmits:
           capabilities:
             add:
             - SYS_ADMIN
-        lifecycle:
-          preStop:
-            exec:
-              command:
-              - /bin/sh
-              - -c
-              - make kind-logs
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -585,13 +529,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -637,13 +574,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -689,13 +619,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -741,13 +664,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -793,13 +709,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -887,13 +796,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -939,13 +841,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -991,13 +886,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -1043,13 +931,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
@@ -1095,13 +976,6 @@ periodics:
         capabilities:
           add:
           - SYS_ADMIN
-      lifecycle:
-        preStop:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - make kind-logs
     dnsPolicy: None
     dnsConfig:
       nameservers:
