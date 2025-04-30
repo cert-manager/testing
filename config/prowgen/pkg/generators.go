@@ -245,17 +245,6 @@ func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest stri
 					Add: []string{"SYS_ADMIN"},
 				},
 			},
-			Lifecycle: &Lifecycle{
-				PreStop: LifecycleHandler{
-					Exec: ExecAction{
-						Command: []string{
-							"/bin/sh",
-							"-c",
-							"make kind-logs",
-						},
-					},
-				},
-			},
 		},
 	}
 
