@@ -56,8 +56,6 @@ type Container struct {
 	Resources ContainerResources `yaml:"resources"`
 
 	SecurityContext *SecurityContext `yaml:"securityContext,omitempty"`
-
-	Lifecycle *Lifecycle `yaml:"lifecycle,omitempty"`
 }
 
 type ContainerResources struct {
@@ -86,18 +84,6 @@ type SecurityContext struct {
 
 type SecurityContextCapabilities struct {
 	Add []string `yaml:"add"`
-}
-
-type Lifecycle struct {
-	PreStop LifecycleHandler `yaml:"preStop"`
-}
-
-type LifecycleHandler struct {
-	Exec ExecAction `yaml:"exec"`
-}
-
-type ExecAction struct {
-	Command []string `yaml:"command"`
 }
 
 type PresubmitJob struct {
