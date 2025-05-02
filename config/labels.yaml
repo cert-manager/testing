@@ -409,3 +409,8 @@ default:
     name: skip-review
     target: prs
     addedBy: autobump bot
+  - color: 006699
+    description: Indicates that a PR should be squashed by tide
+    name: tide/squash
+    target: pts
+    addedBy: humans
