@@ -33,36 +33,6 @@ import (
 // based on the k8s version it's being run against.
 
 var knownBranches map[string]BranchSpec = map[string]BranchSpec{
-	"release-1.12": {
-		prowContext: &pkg.ProwContext{
-			Branch: "release-1.12",
-
-			// Use latest image.
-			Image: pkg.CommonTestImage,
-
-			// NB: we don't use a presubmit dashboard outside of "master", currently
-			PresubmitDashboard: false,
-			PeriodicDashboard:  true,
-
-			Org:  "cert-manager",
-			Repo: "cert-manager",
-		},
-
-		primaryKubernetesVersion: "1.27",
-		// NB: It would be nice to test 1.30 and 1.31 (and newer) here but newer versions of Kind don't
-		// build images to support testing older k8s versions. E.g. kind v0.24.0 doesn't have images for
-		// Kubernetes 1.24 and below
-		otherKubernetesVersions: []string{"1.22", "1.23", "1.24", "1.25", "1.26", "1.28", "1.29"},
-
-		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
-
-		// This older cert-manager release uses the ctl image to run the statupapicheck test
-		containerNames: []string{"controller", "acmesolver", "ctl", "cainjector", "webhook"},
-
-		// Keep using the old tests (for backwards compatibility)
-		isPreMakefileModules: true,
-	},
 	"release-1.16": {
 		prowContext: &pkg.ProwContext{
 			Branch: "release-1.16",
@@ -143,21 +113,13 @@ type BranchSpec struct {
 
 	// TODO: remove this field once we've migrated to the new set of container names
 	containerNames []string
-
-	// TODO: remove this field once all versions use Makefile modules
-	isPreMakefileModules bool
 }
 
 // GenerateJobFile will create a complete test file based on the BranchSpec. This
 // assumes that all tests for all branches should be the same.
 func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
-	if !m.isPreMakefileModules {
-		m.prowContext.RequiredPresubmit(pkg.MakeVerify(m.prowContext))
-		m.prowContext.RequiredPresubmit(pkg.MakeTest(m.prowContext))
-	} else {
-		m.prowContext.RequiredPresubmit(pkg.MakeTestOld(m.prowContext))
-		m.prowContext.RequiredPresubmit(pkg.ChartTestOld(m.prowContext))
-	}
+	m.prowContext.RequiredPresubmit(pkg.MakeVerify(m.prowContext))
+	m.prowContext.RequiredPresubmit(pkg.MakeTest(m.prowContext))
 
 	for _, secondaryVersion := range m.otherKubernetesVersions {
 		m.prowContext.OptionalPresubmit(pkg.E2ETest(m.prowContext, secondaryVersion, m.e2eCPURequest, m.e2eMemoryRequest))
@@ -176,11 +138,7 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 
 	allKubernetesVersions := append(m.otherKubernetesVersions, m.primaryKubernetesVersion)
 
-	if !m.isPreMakefileModules {
-		m.prowContext.Periodics(pkg.MakeTest(m.prowContext), 2)
-	} else {
-		m.prowContext.Periodics(pkg.MakeTestOld(m.prowContext), 2)
-	}
+	m.prowContext.Periodics(pkg.MakeTest(m.prowContext), 2)
 
 	// TODO: add chart periodic test?
 
