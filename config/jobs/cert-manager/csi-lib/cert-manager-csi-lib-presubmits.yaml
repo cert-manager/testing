@@ -2,21 +2,47 @@ presubmits:
   cert-manager/csi-lib:
 
   - name: pull-cert-manager-csi-lib-verify
-    always_run: true
-    max_concurrency: 8
     decorate: true
-    branches:
-    - main
+    always_run: true
     labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
     spec:
       containers:
-      - image: golang:1.23
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
-        - ./hack/verify-all.sh
+        - runner
+        - make
+        - vendor-go
+        - verify
         resources:
           requests:
-            cpu: 2
-            memory: 4Gi
+            cpu: 1
+            memory: 1Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+
+  - name: pull-cert-manager-csi-lib-test
+    decorate: true
+    always_run: true
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
+        args:
+        - runner
+        - make
+        - vendor-go
+        - test-unit
+        resources:
+          requests:
+            cpu: 1
+            memory: 1Gi
       dnsPolicy: None
       dnsConfig:
         nameservers:
@@ -25,21 +51,19 @@ presubmits:
 
   - name: pull-cert-manager-csi-lib-e2e
     decorate: true
-    # TODO: Keep optional to not block other PRs. Change once e2e test
-    # boilerplate code has been merged to main.
-    always_run: false
-    optional: true
+    always_run: true
     labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/nix-dind:20250327-a3af8ba-2.11.0
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
         args:
         - runner
-        - nix
-        - flake
-        - check
-        - -L
+        - make
+        - vendor-go
+        - test-e2e
         resources:
           requests:
             cpu: 3500m
