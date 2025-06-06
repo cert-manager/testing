@@ -39,7 +39,8 @@ repo_milestone:
 
 milestone_applier:
   cert-manager/cert-manager:
-    master: v1.18
+    master: v1.19
+    release-1.18: v1.18
     release-1.17: v1.17
     release-1.16: v1.16
     release-1.15: v1.15
