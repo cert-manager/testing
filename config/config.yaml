@@ -83,8 +83,8 @@ branch-protection:
                 contexts:
                 - pull-cert-manager-release-1.17-make-verify
                 - pull-cert-manager-release-1.17-make-test
-                - pull-cert-manager-release-1.17-e2e-v1-33
-                - pull-cert-manager-release-1.17-e2e-v1-33-upgrade
+                - pull-cert-manager-release-1.17-e2e-v1-32
+                - pull-cert-manager-release-1.17-e2e-v1-32-upgrade
             release-1.18:
               required_status_checks:
                 contexts:
