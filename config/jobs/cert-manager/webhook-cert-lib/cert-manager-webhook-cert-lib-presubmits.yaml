@@ -39,6 +39,7 @@ presubmits:
         - make
         - vendor-go
         - test-unit
+        - test-integration
         resources:
           requests:
             cpu: 1
