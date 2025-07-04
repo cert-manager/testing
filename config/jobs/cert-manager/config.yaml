@@ -1,4 +1,11 @@
 presets:
+
+# A preset with no labels is applied to all jobs
+- env:
+  # Set GINKGO_NO_COLOR to make ginkgo output more readable in prow.
+  - name: GINKGO_NO_COLOR
+    value: TRUE
+
 - labels:
     preset-cloudflare-credentials: "true"
   env:
