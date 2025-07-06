@@ -133,6 +133,10 @@ branch-protection:
             - pull-google-cas-issuer-verify
             - pull-google-cas-issuer-test
             - pull-google-cas-issuer-e2e
+        go-pkcs12:
+          required_status_checks:
+            contexts:
+            - pull-cert-manager-go-pkcs12-verify
 sinker:
   resync_period: 1h
   max_prowjob_age: 48h
