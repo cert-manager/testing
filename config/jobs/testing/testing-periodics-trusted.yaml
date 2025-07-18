@@ -7,7 +7,7 @@ periodics:
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Closes PRs and issues that are marked 'rotten' and have been inactive for 30d
+    description: Closes PRs and issues that are marked 'rotten' and have been inactive for 3 months
   labels:
     preset-deployer-github-token: "true"
   spec:
@@ -20,10 +20,10 @@ periodics:
         --query=repo:cert-manager/cert-manager repo:cert-manager/trust-manager
         -label:lifecycle/frozen
         label:lifecycle/rotten
-      - --updated=720h
+      - --updated=2184h # 3 months
       - --token=/etc/github/token
       - |-
-        --comment=Rotten issues close after 30d of inactivity.
+        --comment=Rotten issues close after 3 months of inactivity.
         Reopen the issue with `/reopen`.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
         /close
@@ -37,7 +37,7 @@ periodics:
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Marks PRs and issues that are marked 'stale' and have been inactive for 30d as 'rotten'
+    description: Marks PRs and issues that are marked 'stale' and have been inactive for 3 months as 'rotten'
   labels:
     preset-deployer-github-token: "true"
   spec:
@@ -51,12 +51,12 @@ periodics:
         -label:lifecycle/frozen
         label:lifecycle/stale
         -label:lifecycle/rotten
-      - --updated=720h
+      - --updated=2184h # 3 months
       - --token=/etc/github/token
       - |-
-        --comment=Stale issues rot after 30d of inactivity.
+        --comment=Stale issues rot after 3 months of inactivity.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
-        Rotten issues close after an additional 30d of inactivity.
+        Rotten issues close after an additional 3 months of inactivity.
         If this issue is safe to close now please do so with `/close`.
         /lifecycle rotten
         /remove-lifecycle stale
@@ -70,7 +70,7 @@ periodics:
   annotations:
     testgrid-dashboards: cert-manager-testing-janitors
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    description: Marks PRs and issues that have been inactive for 30d as 'stale'
+    description: Marks PRs and issues that have been inactive for 6 months as 'stale'
   labels:
     preset-deployer-github-token: "true"
   spec:
@@ -84,12 +84,12 @@ periodics:
         -label:lifecycle/frozen
         -label:lifecycle/stale
         -label:lifecycle/rotten
-      - --updated=2160h
+      - --updated=4368h # 6 months
       - --token=/etc/github/token
       - |-
-        --comment=Issues go stale after 90d of inactivity.
+        --comment=Issues go stale after 6 months of inactivity.
         Mark the issue as fresh with `/remove-lifecycle stale`.
-        Stale issues rot after an additional 30d of inactivity and eventually close.
+        Stale issues remain open for an additional 3 months of inactivity and then close.
         If this issue is safe to close now please do so with `/close`.
         /lifecycle stale
       - --ceiling=10
