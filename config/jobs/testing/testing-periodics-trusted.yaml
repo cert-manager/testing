@@ -54,7 +54,7 @@ periodics:
       - --updated=2184h # 3 months
       - --token=/etc/github/token
       - |-
-        --comment=Stale issues rot after 3m of inactivity.
+        --comment=Stale issues rot after 3 months of inactivity.
         Mark the issue as fresh with `/remove-lifecycle rotten`.
         Rotten issues close after an additional 3 months of inactivity.
         If this issue is safe to close now please do so with `/close`.
