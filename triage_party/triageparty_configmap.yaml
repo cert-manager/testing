@@ -50,7 +50,7 @@ data:
         - https://github.com/cert-manager/klone
         - https://github.com/cert-manager/boilersuite
         - https://github.com/cert-manager/google-cas-issuer
-        - https://github.com/cert-manager/testing
+        - https://github.com/cert-manager/go-pkcs12
 
     collections:
       - id: daily
