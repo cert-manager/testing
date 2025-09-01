@@ -117,6 +117,11 @@ branch-protection:
             contexts:
             - pull-trust-manager-verify
             - pull-trust-manager-smoke
+        trust-manager-csi-driver:
+          required_status_checks:
+            contexts:
+            - pull-trust-manager-csi-driver-verify
+            - pull-trust-manager-csi-driver-test
         csi-lib:
           required_status_checks:
             contexts:
