@@ -72,6 +72,8 @@ branch-protection:
       repos:
         api:
           protect: false
+        controller-framework:
+          protect: false
         cert-manager:
           branches:
             # cert-manager/cert-manager defines required_status_checks on a per
@@ -117,6 +119,11 @@ branch-protection:
             contexts:
             - pull-trust-manager-verify
             - pull-trust-manager-smoke
+        trust-manager-csi-driver:
+          required_status_checks:
+            contexts:
+            - pull-trust-manager-csi-driver-verify
+            - pull-trust-manager-csi-driver-test
         csi-lib:
           required_status_checks:
             contexts:
