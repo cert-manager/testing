@@ -72,6 +72,8 @@ branch-protection:
       repos:
         api:
           protect: false
+        controller-framework:
+          protect: false
         cert-manager:
           branches:
             # cert-manager/cert-manager defines required_status_checks on a per
