@@ -219,7 +219,9 @@ presets:
 tide:
   pr_status_base_urls:
     '*': https://prow.infra.cert-manager.io/pr
-  squash_label: tide/squash
+  squash_label: tide/merge-method-squash
+  rebase_label: tide/merge-method-rebase
+  merge_label: tide/merge-method-merge
   queries:
   # Default tide config for all repos in the cert-manager org
   - orgs:
