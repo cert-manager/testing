@@ -95,6 +95,12 @@ approve:
 owners:
   skip_collaborators: ["cert-manager"] # all repos in the cert-manager org
 
+label:
+  additional_labels:
+    - tide/merge-method-merge
+    - tide/merge-method-rebase
+    - tide/merge-method-squash
+
 plugins:
 
   cert-manager:
