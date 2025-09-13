@@ -90,7 +90,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		},
 
 		primaryKubernetesVersion: "1.33",
-		otherKubernetesVersions:  []string{"1.30", "1.31", "1.32"},
+		otherKubernetesVersions:  []string{"1.30", "1.31", "1.32", "1.34"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
