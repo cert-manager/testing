@@ -99,8 +99,8 @@ branch-protection:
                 contexts:
                 - pull-cert-manager-master-make-verify
                 - pull-cert-manager-master-make-test
-                - pull-cert-manager-master-e2e-v1-33
-                - pull-cert-manager-master-e2e-v1-33-upgrade
+                - pull-cert-manager-master-e2e-v1-34
+                - pull-cert-manager-master-e2e-v1-34-upgrade
         website:
           required_status_checks:
             contexts:
