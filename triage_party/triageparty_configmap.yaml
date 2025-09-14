@@ -35,7 +35,6 @@ data:
         - https://github.com/cert-manager/csi-driver
         - https://github.com/cert-manager/csi-driver-spiffe
         - https://github.com/cert-manager/openshift-routes
-        - https://github.com/cert-manager/webhook-lib
         - https://github.com/cert-manager/csi-lib
         - https://github.com/cert-manager/sample-external-issuer
         - https://github.com/cert-manager/cmctl
