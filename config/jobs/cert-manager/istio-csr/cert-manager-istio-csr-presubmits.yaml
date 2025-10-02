@@ -136,8 +136,7 @@ presubmits:
         - 8.8.8.8
         - 8.8.4.4
 
-
-  - name: pull-cert-manager-istio-csr-istio-v1-20
+  - name: pull-cert-manager-istio-csr-istio-v1-26
     decorate: true
     always_run: true
     labels:
@@ -157,8 +156,8 @@ presubmits:
             cpu: 3500m
             memory: 6Gi
         env:
-        - name: ISTIO_VERSION
-          value: "1.20.8"
+          - name: ISTIO_VERSION
+            value: "1.26.4"
         securityContext:
           privileged: true
           capabilities:
@@ -169,7 +168,7 @@ presubmits:
         - 8.8.8.8
         - 8.8.4.4
 
-  - name: pull-cert-manager-istio-csr-istio-v1-21
+  - name: pull-cert-manager-istio-csr-istio-v1-27
     decorate: true
     always_run: true
     labels:
@@ -189,104 +188,8 @@ presubmits:
             cpu: 3500m
             memory: 6Gi
         env:
-        - name: ISTIO_VERSION
-          value: "1.21.6"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        - 8.8.8.8
-        - 8.8.4.4
-
-  - name: pull-cert-manager-istio-csr-istio-v1-22
-    decorate: true
-    always_run: true
-    labels:
-      preset-go-cache: "true"
-      preset-local-cache: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
-        args:
-        - runner
-        - make
-        - vendor-go
-        - test-e2e
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 6Gi
-        env:
-        - name: ISTIO_VERSION
-          value: "1.22.6"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        - 8.8.8.8
-        - 8.8.4.4
-
-  - name: pull-cert-manager-istio-csr-istio-v1-23
-    decorate: true
-    always_run: true
-    labels:
-      preset-go-cache: "true"
-      preset-local-cache: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
-        args:
-        - runner
-        - make
-        - vendor-go
-        - test-e2e
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 6Gi
-        env:
-        - name: ISTIO_VERSION
-          value: "1.23.2"
-        securityContext:
-          privileged: true
-          capabilities:
-            add: ["SYS_ADMIN"]
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        - 8.8.8.8
-        - 8.8.4.4
-
-  - name: pull-cert-manager-istio-csr-istio-v1-24
-    decorate: true
-    always_run: true
-    labels:
-      preset-go-cache: "true"
-      preset-local-cache: "true"
-      preset-dind-enabled: "true"
-    spec:
-      containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20250327-af35b2b-bookworm
-        args:
-        - runner
-        - make
-        - vendor-go
-        - test-e2e
-        resources:
-          requests:
-            cpu: 3500m
-            memory: 6Gi
-        env:
-        - name: ISTIO_VERSION
-          value: "1.24.0-alpha.0"
+          - name: ISTIO_VERSION
+            value: "1.27.1"
         securityContext:
           privileged: true
           capabilities:
