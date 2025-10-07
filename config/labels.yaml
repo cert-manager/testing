@@ -414,3 +414,8 @@ default:
     name: tide/squash
     target: pts
     addedBy: humans
+  - color: "006699"
+    description: "Used by CyberArk maintainers to provide line management with visibility into upcoming potential work."
+    name: cybr
+    target: both
+    addedBy: humans
