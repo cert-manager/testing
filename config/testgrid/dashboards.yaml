@@ -3,7 +3,6 @@ dashboard_groups:
 - name: cert-manager
   dashboard_names:
   - cert-manager-periodics-master
-  - cert-manager-periodics-release-1.17
   - cert-manager-periodics-release-1.18
   - cert-manager-periodics-release-1.19
   - cert-manager-presubmits-master
@@ -15,7 +14,6 @@ dashboard_groups:
 # Dashboards
 dashboards:
 - name: cert-manager-periodics-master
-- name: cert-manager-periodics-release-1.17
 - name: cert-manager-periodics-release-1.18
 - name: cert-manager-periodics-release-1.19
 - name: cert-manager-presubmits-master
