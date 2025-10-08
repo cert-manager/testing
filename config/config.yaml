@@ -94,6 +94,13 @@ branch-protection:
                 - pull-cert-manager-release-1.18-make-test
                 - pull-cert-manager-release-1.18-e2e-v1-33
                 - pull-cert-manager-release-1.18-e2e-v1-33-upgrade
+            release-1.19:
+              required_status_checks:
+                contexts:
+                - pull-cert-manager-release-1.19-make-verify
+                - pull-cert-manager-release-1.19-make-test
+                - pull-cert-manager-release-1.19-e2e-v1-34
+                - pull-cert-manager-release-1.19-e2e-v1-34-upgrade
             master:
               required_status_checks:
                 contexts:
