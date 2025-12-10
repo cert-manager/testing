@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG BASE_IMAGE=golang:buster
+ARG BASE_IMAGE=golang:buster@sha256:eb3f9ac805435c1b2c965d63ce460988e1000058e1f67881324746362baf9572
 FROM ${BASE_IMAGE}
 
 ARG TERRAFORM_VERSION=1.0.0
