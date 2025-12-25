@@ -1123,9 +1123,10 @@ periodics:
   annotations:
     description: Runs a Trivy scan against the controller container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-alert-stale-results-hours: "36"
+    testgrid-alert-stale-results-hours: "18"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.18
+    testgrid-num-columns-recent: "1"
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
@@ -1156,16 +1157,17 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.18
-  cron: 57 19-23/24 * * *
+  cron: 57 03-23/12 * * *
 - name: ci-cert-manager-release-1.18-trivy-test-acmesolver
   max_concurrency: 2
   decorate: true
   annotations:
     description: Runs a Trivy scan against the acmesolver container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-alert-stale-results-hours: "36"
+    testgrid-alert-stale-results-hours: "18"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.18
+    testgrid-num-columns-recent: "1"
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
@@ -1196,16 +1198,17 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.18
-  cron: 01 02-23/24 * * *
+  cron: 01 05-23/12 * * *
 - name: ci-cert-manager-release-1.18-trivy-test-startupapicheck
   max_concurrency: 2
   decorate: true
   annotations:
     description: Runs a Trivy scan against the startupapicheck container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-alert-stale-results-hours: "36"
+    testgrid-alert-stale-results-hours: "18"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.18
+    testgrid-num-columns-recent: "1"
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
@@ -1236,16 +1239,17 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.18
-  cron: 05 09-23/24 * * *
+  cron: 05 07-23/12 * * *
 - name: ci-cert-manager-release-1.18-trivy-test-cainjector
   max_concurrency: 2
   decorate: true
   annotations:
     description: Runs a Trivy scan against the cainjector container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-alert-stale-results-hours: "36"
+    testgrid-alert-stale-results-hours: "18"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.18
+    testgrid-num-columns-recent: "1"
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
@@ -1276,16 +1280,17 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.18
-  cron: 09 16-23/24 * * *
+  cron: 09 09-23/12 * * *
 - name: ci-cert-manager-release-1.18-trivy-test-webhook
   max_concurrency: 2
   decorate: true
   annotations:
     description: Runs a Trivy scan against the webhook container
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-alert-stale-results-hours: "36"
+    testgrid-alert-stale-results-hours: "18"
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.18
+    testgrid-num-columns-recent: "1"
     testgrid-num-failures-to-alert: "1"
   labels:
     preset-dind-enabled: "true"
@@ -1316,4 +1321,4 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: release-1.18
-  cron: 13 23-23/24 * * *
+  cron: 13 11-23/12 * * *

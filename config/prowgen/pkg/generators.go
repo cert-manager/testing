@@ -19,6 +19,7 @@ package pkg
 
 import (
 	"fmt"
+	"math"
 	"strings"
 )
 
@@ -328,8 +329,11 @@ func UpgradeTest(ctx *ProwContext, k8sVersion string) *Job {
 // so e.g. if there's a vuln in the "controller" container we might never scan "ctl" container.
 // Instead, we generate a test for each container so it's obvious which ones have failures and it's easier to get results
 // for each container
-func TrivyTest(ctx *ProwContext, containerName string) *Job {
+// periodicity is the number of hours between runs of this job; this is used to calculate when the job should be considered stale
+func TrivyTest(ctx *ProwContext, containerName string, periodicity int) *Job {
 	containerName = strings.ToLower(containerName)
+
+	stale := math.Round(float64(periodicity) * 1.5)
 
 	job := jobTemplate(
 		fmt.Sprintf("trivy-test-%s", containerName),
@@ -342,9 +346,13 @@ func TrivyTest(ctx *ProwContext, containerName string) *Job {
 		// Need to ensure that trivy tests send a failure email as soon as they fail since
 		// they tend to be run relatively infrequently and a failure is important to address
 		addTestGridCustomFailuresToAlert(1),
+		// Trivy tests are quite binary - either the scan passes or fails.
+		// Having a fixed test report as "flaky" isn't helpful, so set "num columns recent" to 1
+		// so that the test should report as either passing or failing but not flaky.
+		addTestGridNumColumnsRecent(1),
 		// Ask TestGrid to alert us if the job hasn't run in the last 36 hours. Sets
 		// an upper limit on how regularly the job can be scheduled.
-		addTestGridStaleResultsAlert(36),
+		addTestGridStaleResultsAlert(int(stale)),
 	)
 
 	makeJobs, cpuRequest := calculateMakeConcurrency("1000m")

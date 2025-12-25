@@ -147,6 +147,15 @@ func addTestGridCustomFailuresToAlert(failuresToAlert int) JobConfigurer {
 	}
 }
 
+// addTestGridNumColumnsRecent changes the number of test results to considered when testgrid
+// decides whether a test is "flaky"
+// See https://github.com/kubernetes/test-infra/blob/737791c6e2ee79bdc8efce2195eb6d20ebb6eb04/testgrid/config.md#prow-job-configuration
+func addTestGridNumColumnsRecent(numColumnsRecent int) JobConfigurer {
+	return func(job *Job) {
+		job.Annotations["testgrid-num-columns-recent"] = fmt.Sprintf("%d", numColumnsRecent)
+	}
+}
+
 // addTestGridStaleResultsAlert sets, in hours, the length of time before a job should be
 // considered stale. This guards against a job not running for whatever reason.
 func addTestGridStaleResultsAlert(hoursUntilStale int) JobConfigurer {
