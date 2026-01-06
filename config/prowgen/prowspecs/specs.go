@@ -167,7 +167,8 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 	}
 
 	for _, container := range m.containerNames {
-		m.prowContext.Periodics(pkg.TrivyTest(m.prowContext, container), 24)
+		periodicity := 12
+		m.prowContext.Periodics(pkg.TrivyTest(m.prowContext, container, periodicity), periodicity)
 	}
 
 	return m.prowContext.JobFile()
