@@ -53,6 +53,8 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
+
+		checkLicensesSeparately: true,
 	},
 	"release-1.19": {
 		prowContext: &pkg.ProwContext{
@@ -113,6 +115,9 @@ type BranchSpec struct {
 
 	// TODO: remove this field once we've migrated to the new set of container names
 	containerNames []string
+
+	// TODO: remove this field once we've migrated fully to the licenses makefile module
+	checkLicensesSeparately bool
 }
 
 // GenerateJobFile will create a complete test file based on the BranchSpec. This
@@ -129,7 +134,9 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 
 	m.prowContext.RequiredPresubmit(pkg.UpgradeTest(m.prowContext, m.primaryKubernetesVersion))
 
-	m.prowContext.OptionalPresubmitIfChanged(pkg.LicenseTest(m.prowContext), `go.mod`)
+	if m.checkLicensesSeparately {
+		m.prowContext.OptionalPresubmitIfChanged(pkg.LicenseTest(m.prowContext), `go.mod`)
+	}
 
 	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiTPP(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiCloud(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
