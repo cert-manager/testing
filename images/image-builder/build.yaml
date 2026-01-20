@@ -3,7 +3,7 @@ name: image-builder # Name of the image to be built
 variants:
   gcloud-516:
     arguments:
-      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20250327-a3af8ba-1.24"
+      BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260120-31ee990-1.25"
       CLOUD_SDK_VERSION: "516.0.0"
 
 # Image names to be tagged and pushed
