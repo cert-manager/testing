@@ -27,7 +27,6 @@ RUN apt-get update \
         ca-certificates \
         curl \
         gnupg2 \
-        software-properties-common \
         lsb-release \
         g++ \
         zip \
