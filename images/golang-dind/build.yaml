@@ -1,10 +1,10 @@
 name: golang-dind # Name of the image to be built
 
 variants:
-  "1.24":
+  "1.25":
     arguments:
       BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie"
-      GO_VERSION: "1.24.1"
+      GO_VERSION: "1.25.6"
 
 # Image names to be tagged and pushed
 images:
