@@ -38,7 +38,7 @@ test:
 local-checkconfig:
 	docker run --rm \
 		-v $(CURDIR)/config:/config \
-		us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20240802-66b115076 \
+		us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20260119-643bbf68a \
 		--strict=true \
         --config-path=/config/config.yaml \
         --job-config-path=/config/jobs \
@@ -46,7 +46,7 @@ local-checkconfig:
 
 	docker run --rm \
 		-v $(CURDIR)/config:/config \
-		gcr.io/k8s-staging-test-infra/configurator:v20250306-095fc63a16 \
+		gcr.io/k8s-staging-test-infra/configurator:v20251212-3f863f26d7 \
         --yaml=/config/testgrid/dashboards.yaml \
         --default=config/testgrid/default.yaml \
         --prow-config=/config/config.yaml \

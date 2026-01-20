@@ -29,7 +29,7 @@ help:
 .PHONY: bootstrap-config
 bootstrap-config:
 	cd ../ && \
-	go run sigs.k8s.io/prow/prow/cmd/config-bootstrapper@v0.0.0-20240415223539-7013691e3f35 \
+	go run sigs.k8s.io/prow/cmd/config-bootstrapper@v0.0.0-20260119105717-643bbf68a1ed \
 		--dry-run=false \
 		--source-path=. \
 		--config-path=config/config.yaml \
