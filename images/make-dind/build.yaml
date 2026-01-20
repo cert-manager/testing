@@ -3,10 +3,10 @@ name: make-dind # Name of the image to be built
 # Variants allow multiple images to be built in a single build step, with
 # different build arguments for each build.
 variants:
-  bookworm:
+  trixie:
     arguments:
-      DEBIAN_VERSION: bookworm-slim
-      DOCKER_VERSION: 5:28.0.4-1~debian.12~bookworm
+      DEBIAN_VERSION: trixie-slim
+      DOCKER_VERSION: 5:29.1.5-1~debian.13~trixie
 
 # Image names to be tagged and pushed
 images:
