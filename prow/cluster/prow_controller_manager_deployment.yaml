@@ -39,7 +39,7 @@ spec:
       serviceAccountName: prow-controller-manager
       containers:
       - name: prow-controller-manager
-        image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/prow-controller-manager-spot:20250327-d147921
+        image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/prow-controller-manager-spot:20260120-d633f50
         args:
         - --config-path=/etc/config/config.yaml
         - --dry-run=false
