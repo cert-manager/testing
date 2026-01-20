@@ -28,7 +28,7 @@ To get the image built for the first time you can either merge the postsubmit jo
 From the root of this repository run:
 
 ```bash
-docker run -it -v$(pwd):/testing us-docker.pkg.dev/k8s-infra-prow/images/mkpj --job=NAME_OF_YOUR_POSTSUBMIT_JOB--config-path=/testing/config/config.yaml --job-config-path=/testing/config/jobs/testing/testing-trusted.yaml --base-ref=master
+docker run -it -v$(pwd):/testing us-docker.pkg.dev/k8s-infra-prow/images/mkpj --job=NAME_OF_YOUR_POSTSUBMIT_JOB --config-path=/testing/config/config.yaml --job-config-path=/testing/config/jobs/testing/ --base-ref=master
 ```
 
 This command will output a ProwJob config that you can apply to [build infra cluster](../prow/README.md)
