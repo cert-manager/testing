@@ -6,8 +6,8 @@ require (
 	github.com/spf13/pflag v1.0.10
 	golang.org/x/oauth2 v0.35.0
 	google.golang.org/api v0.264.0
-	k8s.io/apimachinery v0.35.0
-	k8s.io/client-go v0.35.0
+	k8s.io/apimachinery v0.35.1
+	k8s.io/client-go v0.35.1
 	k8s.io/test-infra v0.0.0-20250410111042-d89cba22bbb7
 	sigs.k8s.io/prow v0.0.0-20250410115646-b8e0bd8d428f
 	sigs.k8s.io/yaml v1.6.0
@@ -65,7 +65,7 @@ require (
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.35.0 // indirect
+	k8s.io/api v0.35.1 // indirect
 	k8s.io/klog/v2 v2.130.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20250910181357-589584f1c912 // indirect
 	k8s.io/utils v0.0.0-20251002143259-bc988d571ff4 // indirect
