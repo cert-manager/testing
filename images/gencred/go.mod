@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/spf13/pflag v1.0.10
 	golang.org/x/oauth2 v0.35.0
-	google.golang.org/api v0.266.0
+	google.golang.org/api v0.267.0
 	k8s.io/apimachinery v0.35.1
 	k8s.io/client-go v0.35.1
 	k8s.io/test-infra v0.0.0-20250410111042-d89cba22bbb7
