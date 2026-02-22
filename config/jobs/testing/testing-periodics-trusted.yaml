@@ -112,7 +112,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: us-docker.pkg.dev/k8s-infra-prow/images/generic-autobumper:v20260128-95b2a3412
+    - image: us-docker.pkg.dev/k8s-infra-prow/images/generic-autobumper:v20260220-ea4b6a3dc
       command:
       - generic-autobumper
       args:
@@ -179,7 +179,7 @@ periodics:
   spec:
     containers:
     - name: branchprotector
-      image: us-docker.pkg.dev/k8s-infra-prow/images/branchprotector:v20260128-95b2a3412
+      image: us-docker.pkg.dev/k8s-infra-prow/images/branchprotector:v20260220-ea4b6a3dc
       command:
       - branchprotector
       args:
