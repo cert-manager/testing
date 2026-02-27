@@ -12,7 +12,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/commenter:v20251212-3f863f26d7
+    - image: gcr.io/k8s-staging-test-infra/commenter:v20260226-ccc15f6c33
       command:
       - commenter
       args:
@@ -42,7 +42,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/commenter:v20251212-3f863f26d7
+    - image: gcr.io/k8s-staging-test-infra/commenter:v20260226-ccc15f6c33
       command:
       - commenter
       args:
@@ -75,7 +75,7 @@ periodics:
     preset-deployer-github-token: "true"
   spec:
     containers:
-    - image: gcr.io/k8s-staging-test-infra/commenter:v20251212-3f863f26d7
+    - image: gcr.io/k8s-staging-test-infra/commenter:v20260226-ccc15f6c33
       command:
       - commenter
       args:
@@ -112,7 +112,7 @@ periodics:
     preset-deployer-ssh-key: "true"
   spec:
     containers:
-    - image: us-docker.pkg.dev/k8s-infra-prow/images/generic-autobumper:v20260128-95b2a3412
+    - image: us-docker.pkg.dev/k8s-infra-prow/images/generic-autobumper:v20260227-937f24a5d
       command:
       - generic-autobumper
       args:
@@ -134,7 +134,7 @@ periodics:
   spec:
     containers:
     - name: label-sync
-      image: gcr.io/k8s-staging-test-infra/label_sync:v20251212-3f863f26d7
+      image: gcr.io/k8s-staging-test-infra/label_sync:v20260226-ccc15f6c33
       command:
       - label_sync
       args:
@@ -179,7 +179,7 @@ periodics:
   spec:
     containers:
     - name: branchprotector
-      image: us-docker.pkg.dev/k8s-infra-prow/images/branchprotector:v20260128-95b2a3412
+      image: us-docker.pkg.dev/k8s-infra-prow/images/branchprotector:v20260227-937f24a5d
       command:
       - branchprotector
       args:
