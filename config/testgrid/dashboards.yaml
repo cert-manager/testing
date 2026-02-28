@@ -5,6 +5,7 @@ dashboard_groups:
   - cert-manager-periodics-master
   - cert-manager-periodics-release-1.18
   - cert-manager-periodics-release-1.19
+  - cert-manager-periodics-release-1.20
   - cert-manager-presubmits-master
   - cert-manager-testing-janitors
 - name: cert-manager-subprojects
@@ -16,6 +17,7 @@ dashboards:
 - name: cert-manager-periodics-master
 - name: cert-manager-periodics-release-1.18
 - name: cert-manager-periodics-release-1.19
+- name: cert-manager-periodics-release-1.20
 - name: cert-manager-presubmits-master
 - name: cert-manager-testing-janitors
 - name: istio-csr-periodics

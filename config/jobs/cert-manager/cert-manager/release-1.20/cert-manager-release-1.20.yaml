@@ -1,0 +1,1162 @@
+# THIS FILE HAS BEEN AUTOMATICALLY GENERATED
+# Don't manually edit it; instead edit the "prowgen" tool which generated it
+# Generated with: prowgen --branch=* -o cert-manager
+
+presubmits:
+  cert-manager/cert-manager:
+  - name: pull-cert-manager-release-1.20-make-verify
+    max_concurrency: 8
+    decorate: true
+    annotations:
+      description: Runs linting and verification targets
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j2
+        - vendor-go
+        - ci-presubmit
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 4Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-release-1.20-make-test
+    max_concurrency: 8
+    decorate: true
+    annotations:
+      description: Runs unit and integration tests
+    labels:
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j2
+        - vendor-go
+        - test-ci
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 4Gi
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-release-1.20-e2e-v1-32
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.32 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.32
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-33
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.33 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.33
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-34
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.34 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.34
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-35
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.35 cluster
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.35
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-release-1.20-e2e-v1-35-upgrade
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs cert-manager upgrade from latest published release
+    labels:
+      preset-dind-enabled: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - K8S_VERSION=1.35
+        - vendor-go
+        - test-upgrade
+        resources:
+          requests:
+            cpu: 3500m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: true
+    optional: false
+  - name: pull-cert-manager-release-1.20-e2e-v1-35-issuers-venafi-tpp
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with 'Venafi TPP' in name
+    labels:
+      preset-dind-enabled: "true"
+      preset-ginkgo-focus-venafi-tpp: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-venafi-tpp-credentials: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.35
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-35-issuers-venafi-cloud
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with 'Venafi Cloud' in name
+    labels:
+      preset-dind-enabled: "true"
+      preset-ginkgo-focus-venafi-cloud: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-venafi-cloud-credentials: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.35
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-35-feature-gates-disabled
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with all feature gates disabled
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.35
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-release-1.20-e2e-v1-35-bestpractice-install
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with cert-manager installed in accordance with
+        https://cert-manager.io/docs/installation/best-practice/
+    labels:
+      preset-bestpractice-install: "true"
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-disable-all-alpha-beta-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.35
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.20
+    always_run: false
+    optional: true
+periodics:
+- name: ci-cert-manager-release-1.20-make-test
+  max_concurrency: 8
+  decorate: true
+  annotations:
+    description: Runs unit and integration tests
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j2
+      - vendor-go
+      - test-ci
+      resources:
+        requests:
+          cpu: 2000m
+          memory: 4Gi
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 03 01-23/02 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-32
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.32 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.32
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 07 00-23/02 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-33
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.33 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.33
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 11 01-23/02 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-34
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.34 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.34
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 15 00-23/02 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-35
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.35 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.35
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 19 01-23/02 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-35-issuers-venafi
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs Venafi (VaaS and TPP) e2e tests
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-dind-enabled: "true"
+    preset-ginkgo-focus-venafi: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+    preset-venafi-cloud-credentials: "true"
+    preset-venafi-tpp-credentials: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.35
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 23 03-23/12 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-35-upgrade
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs cert-manager upgrade from latest published release
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - K8S_VERSION=1.35
+      - vendor-go
+      - test-upgrade
+      resources:
+        requests:
+          cpu: 3500m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 27 03-23/08 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-35-bestpractice-install
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with cert-manager installed in accordance with
+      https://cert-manager.io/docs/installation/best-practice/
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-bestpractice-install: "true"
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.35
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 31 03-23/24 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-32-feature-gates-disabled
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.32
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 35 10-23/24 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-33-feature-gates-disabled
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.33
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 39 17-23/24 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-34-feature-gates-disabled
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.34
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 43 00-23/24 * * *
+- name: ci-cert-manager-release-1.20-e2e-v1-35-feature-gates-disabled
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.35
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 47 07-23/24 * * *
+- name: ci-cert-manager-release-1.20-trivy-test-controller
+  max_concurrency: 2
+  decorate: true
+  annotations:
+    description: Runs a Trivy scan against the controller container
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "18"
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+    testgrid-num-columns-recent: "1"
+    testgrid-num-failures-to-alert: "1"
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-trivy: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j1
+      - vendor-go
+      - trivy-scan-controller
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      securityContext:
+        privileged: true
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 51 05-23/12 * * *
+- name: ci-cert-manager-release-1.20-trivy-test-acmesolver
+  max_concurrency: 2
+  decorate: true
+  annotations:
+    description: Runs a Trivy scan against the acmesolver container
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "18"
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+    testgrid-num-columns-recent: "1"
+    testgrid-num-failures-to-alert: "1"
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-trivy: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j1
+      - vendor-go
+      - trivy-scan-acmesolver
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      securityContext:
+        privileged: true
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 55 07-23/12 * * *
+- name: ci-cert-manager-release-1.20-trivy-test-startupapicheck
+  max_concurrency: 2
+  decorate: true
+  annotations:
+    description: Runs a Trivy scan against the startupapicheck container
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "18"
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+    testgrid-num-columns-recent: "1"
+    testgrid-num-failures-to-alert: "1"
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-trivy: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j1
+      - vendor-go
+      - trivy-scan-startupapicheck
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      securityContext:
+        privileged: true
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 59 09-23/12 * * *
+- name: ci-cert-manager-release-1.20-trivy-test-cainjector
+  max_concurrency: 2
+  decorate: true
+  annotations:
+    description: Runs a Trivy scan against the cainjector container
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "18"
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+    testgrid-num-columns-recent: "1"
+    testgrid-num-failures-to-alert: "1"
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-trivy: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j1
+      - vendor-go
+      - trivy-scan-cainjector
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      securityContext:
+        privileged: true
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 03 11-23/12 * * *
+- name: ci-cert-manager-release-1.20-trivy-test-webhook
+  max_concurrency: 2
+  decorate: true
+  annotations:
+    description: Runs a Trivy scan against the webhook container
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-alert-stale-results-hours: "18"
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-release-1.20
+    testgrid-num-columns-recent: "1"
+    testgrid-num-failures-to-alert: "1"
+  labels:
+    preset-dind-enabled: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-trivy: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+      args:
+      - runner
+      - make
+      - -j1
+      - vendor-go
+      - trivy-scan-webhook
+      resources:
+        requests:
+          cpu: 1000m
+          memory: 2Gi
+      securityContext:
+        privileged: true
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: release-1.20
+  cron: 07 01-23/12 * * *
