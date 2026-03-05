@@ -77,6 +77,27 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
 	},
+	"release-1.20": {
+		prowContext: &pkg.ProwContext{
+			Branch: "release-1.20",
+
+			// Use latest image.
+			Image: pkg.CommonTestImage,
+
+			// NB: we don't use a presubmit dashboard outside of "master", currently
+			PresubmitDashboard: false,
+			PeriodicDashboard:  true,
+
+			Org:  "cert-manager",
+			Repo: "cert-manager",
+		},
+
+		primaryKubernetesVersion: "1.35",
+		otherKubernetesVersions:  []string{"1.32", "1.33", "1.34"},
+
+		e2eCPURequest:    "7000m",
+		e2eMemoryRequest: "6Gi",
+	},
 	"master": {
 		prowContext: &pkg.ProwContext{
 			Branch: "master",
