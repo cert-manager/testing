@@ -305,3 +305,20 @@ tide:
     - do-not-merge/invalid-owners-file
     - do-not-merge/work-in-progress
     - needs-rebase
+
+  # Copilot-authored PRs do not require DCO sign-off but still require the
+  # normal lgtm + approved review gates and all the standard merge blockers.
+  - author: Copilot
+    orgs:
+    - cert-manager
+    labels:
+    - lgtm
+    - approved
+    missingLabels:
+    - do-not-merge
+    - do-not-merge/hold
+    - do-not-merge/invalid-owners-file
+    - do-not-merge/work-in-progress
+    - needs-rebase
+    - needs-kind
+    - do-not-merge/release-note-label-needed
