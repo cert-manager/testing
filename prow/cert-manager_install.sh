@@ -21,6 +21,6 @@ helm upgrade \
     --reset-values \
     --namespace cert-manager \
     --create-namespace \
-    --version v1.18.2 \
+    --version v1.20.1 \
     --set crds.enabled=true \
     --set config.enableGatewayAPI="true"

@@ -33,29 +33,6 @@ import (
 // based on the k8s version it's being run against.
 
 var knownBranches map[string]BranchSpec = map[string]BranchSpec{
-	"release-1.18": {
-		prowContext: &pkg.ProwContext{
-			Branch: "release-1.18",
-
-			// Use latest image.
-			Image: pkg.CommonTestImage,
-
-			// NB: we don't use a presubmit dashboard outside of "master", currently
-			PresubmitDashboard: false,
-			PeriodicDashboard:  true,
-
-			Org:  "cert-manager",
-			Repo: "cert-manager",
-		},
-
-		primaryKubernetesVersion: "1.33",
-		otherKubernetesVersions:  []string{"1.29", "1.30", "1.31", "1.32"},
-
-		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
-
-		checkLicensesSeparately: true,
-	},
 	"release-1.19": {
 		prowContext: &pkg.ProwContext{
 			Branch: "release-1.19",
