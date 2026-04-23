@@ -19,10 +19,9 @@ package prowspecs
 
 import (
 	"fmt"
+	"prowgen/pkg"
 	"slices"
 	"strings"
-
-	"prowgen/pkg"
 )
 
 // knownBranches specifies a BranchSpec for each possible branch to test against
@@ -90,7 +89,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		},
 
 		primaryKubernetesVersion: "1.35",
-		otherKubernetesVersions:  []string{"1.32", "1.33", "1.34"},
+		otherKubernetesVersions:  []string{"1.33", "1.34", "1.36"},
 
 		e2eCPURequest:    "7000m",
 		e2eMemoryRequest: "6Gi",
@@ -150,7 +149,6 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 
 	for _, kubernetesVersion := range allKubernetesVersions {
 		m.prowContext.Periodics(pkg.E2ETest(m.prowContext, kubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 2)
-
 	}
 
 	m.prowContext.Periodics(pkg.E2ETestVenafiBoth(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest), 12)
