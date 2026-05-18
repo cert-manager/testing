@@ -64,6 +64,35 @@ presets:
         key: apitoken
 
 - labels:
+    preset-venafi-ngts-credentials: "true"
+  env:
+  - name: VENAFI_NGTS_ZONE
+    valueFrom:
+      secretKeyRef:
+        name: venafi-ngts
+        key: zone
+  - name: VENAFI_NGTS_TOKEN_ENDPOINT
+    valueFrom:
+      secretKeyRef:
+        name: venafi-ngts
+        key: token-endpoint
+  - name: VENAFI_NGTS_TSG_ID
+    valueFrom:
+      secretKeyRef:
+        name: venafi-ngts
+        key: tsg-id
+  - name: VENAFI_NGTS_CLIENT_ID
+    valueFrom:
+      secretKeyRef:
+        name: venafi-ngts
+        key: client-id
+  - name: VENAFI_NGTS_CLIENT_SECRET
+    valueFrom:
+      secretKeyRef:
+        name: venafi-ngts
+        key: client-secret
+
+- labels:
     preset-retry-flakey-tests: "true"
   env:
   - name: FLAKE_ATTEMPTS
@@ -135,6 +164,12 @@ presets:
   env:
   - name: GINKGO_FOCUS
     value: "Venafi Cloud"
+
+- labels:
+    preset-ginkgo-focus-venafi-ngts: "true"
+  env:
+  - name: GINKGO_FOCUS
+    value: "Venafi NGTS"
 
 # This preset adds common configuration for all trivy jobs
 #

@@ -101,6 +101,11 @@ func addVenafiCloudLabels(job *Job) {
 	job.Labels["preset-venafi-cloud-credentials"] = "true"
 }
 
+func addVenafiNGTSLabels(job *Job) {
+	job.Labels["preset-ginkgo-focus-venafi-ngts"] = "true"
+	job.Labels["preset-venafi-ngts-credentials"] = "true"
+}
+
 func addBestPracticeInstallLabel(job *Job) {
 	job.Labels["preset-bestpractice-install"] = "true"
 }
