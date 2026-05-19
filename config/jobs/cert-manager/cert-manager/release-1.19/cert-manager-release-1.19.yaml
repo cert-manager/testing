@@ -385,6 +385,46 @@ presubmits:
     - release-1.19
     always_run: false
     optional: true
+  - name: pull-cert-manager-release-1.19-e2e-v1-34-issuers-venafi-ngts
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the E2E tests with 'Venafi NGTS' in name
+    labels:
+      preset-dind-enabled: "true"
+      preset-ginkgo-focus-venafi-ngts: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+      preset-venafi-ngts-credentials: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260120-8648794-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.34
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - release-1.19
+    always_run: false
+    optional: true
   - name: pull-cert-manager-release-1.19-e2e-v1-34-feature-gates-disabled
     max_concurrency: 4
     decorate: true
