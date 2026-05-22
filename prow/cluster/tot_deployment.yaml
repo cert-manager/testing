@@ -47,7 +47,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
       - name: tot
-        image: us-docker.pkg.dev/k8s-infra-prow/images/tot:v20260414-6691f5aff
+        image: us-docker.pkg.dev/k8s-infra-prow/images/tot:v20260519-32fe11af9
         imagePullPolicy: Always
         args:
         - -storage=/store/tot.json
