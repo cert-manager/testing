@@ -3,6 +3,9 @@ kind: ServiceAccount
 metadata:
   namespace: default
   name: deck
+  annotations:
+    # Workload Identity binding to the GSA in cert-manager/infrastructure gcp/trusted_prow_controllers.tf.
+    iam.gke.io/gcp-service-account: prow-deck@cert-manager-tests-trusted.iam.gserviceaccount.com
 ---
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
