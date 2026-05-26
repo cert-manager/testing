@@ -32,17 +32,3 @@ presets:
     secret:
       secretName: cert-manager-bot-ssh-keys
       defaultMode: 0400
-
-- labels:
-    preset-deployer-service-account: "true"
-  env:
-  - name: GOOGLE_APPLICATION_CREDENTIALS
-    value: /creds/service-account.json
-  volumeMounts:
-  - name: creds
-    mountPath: /creds
-    readOnly: true
-  volumes:
-  - name: creds
-    secret:
-      secretName: cert-manager-bot-gcp-service-account
