@@ -44,7 +44,6 @@ spec:
         - --github-workers=10
         - --job-config-path=/etc/job-config
         - --kubernetes-blob-storage-workers=10
-        - --gcs-credentials-file=/etc/gcs-credentials/service-account.json
         env:
         # Use KUBECONFIG envvar rather than --kubeconfig flag in order to provide multiple configs to merge.
         - name: KUBECONFIG
@@ -73,9 +72,6 @@ spec:
         - name: github-app-token
           mountPath: /etc/github
           readOnly: true
-        - name: gcs-credentials
-          mountPath: /etc/gcs-credentials
-          readOnly: true
       volumes:
       - name: config
         configMap:
@@ -86,9 +82,6 @@ spec:
       - name: github-app-token
         secret:
           secretName: github-app-token
-      - name: gcs-credentials
-        secret:
-          secretName: gcs-credentials
       - name: kubeconfig-prow-trusted
         configMap:
           defaultMode: 420

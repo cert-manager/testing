@@ -19,7 +19,8 @@ plank:
       gcs_configuration:
         bucket: cert-manager-prow-artifacts
         path_strategy: explicit
-      gcs_credentials_secret: gcs-credentials
+      gcs_credentials_secret: "" # Use workload identity for uploading artifacts
+      default_service_account_name: prowjob-default
       resources:
         clonerefs:
           requests:
