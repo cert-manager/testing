@@ -31,6 +31,7 @@ KUBECTL_UNTRUSTED := kubectl --context=$(UNTRUSTED_CTX)
 help:
 	@echo "Main targets:"
 	@echo "  get-kubeconfig       - fetch kubeconfig for both clusters"
+	@echo "  create-cookie-secret - create cookie secret with random data"
 	@echo "  verify               - verify required secrets and resources exist"
 	@echo "  diff                 - diff all resources"
 	@echo "  deploy               - verify, deploy all, and restart deployments"
@@ -39,8 +40,13 @@ help:
 .PHONY: get-kubeconfig
 get-kubeconfig:
 	@echo "Fetching kubeconfig..."
-	@gcloud container clusters get-credentials $(TRUSTED_CLUSTER) --zone=$(ZONE) --project=$(TRUSTED_PROJECT)
 	@gcloud container clusters get-credentials $(UNTRUSTED_CLUSTER) --zone=$(ZONE) --project=$(UNTRUSTED_PROJECT)
+	@gcloud container clusters get-credentials $(TRUSTED_CLUSTER) --zone=$(ZONE) --project=$(TRUSTED_PROJECT)
+
+.PHONY: create-cookie-secret
+create-cookie-secret:
+	@echo "Creating cookie secret..."
+	@$(KUBECTL_TRUSTED) create secret generic cookie --from-literal=secret=$$(openssl rand -base64 32) --dry-run=client -o yaml | $(KUBECTL_TRUSTED) apply -f -
 
 .PHONY: bootstrap-config
 bootstrap-config:
@@ -56,20 +62,22 @@ verify:
 	@$(KUBECTL_TRUSTED) get ns default >/dev/null || (echo "ERROR: Cannot connect to trusted cluster" && exit 1)
 	@$(KUBECTL_UNTRUSTED) get ns default >/dev/null || (echo "ERROR: Cannot connect to untrusted cluster" && exit 1)
 	
-	@for secret in gcs-credentials cert-manager-bot-github-token hmac-token github-app-token; do \
+	@for secret in gcs-credentials cert-manager-bot-github-token hmac-token github-app-token github-oauth-config; do \
 		$(KUBECTL_TRUSTED) get secret $$secret -n default >/dev/null || (echo "ERROR: $$secret not found" && exit 1); \
 	done
 	@for cm in config plugins job-config; do \
 		$(KUBECTL_TRUSTED) get cm $$cm -n default >/dev/null || (echo "ERROR: $$cm configmap not found" && exit 1); \
 	done
-	@if $(KUBECTL_TRUSTED) get ns test-pods >/dev/null 2>&1; then \
-		for secret in cloudflare-api-key:DNS01 venafi-tpp:TPP venafi-cloud:Cloud venafi-ngts:NGTS \
-			cert-manager-bot-ssh-keys cert-manager-bot-gcp-service-account; do \
-			name=$${secret%%:*}; desc=$${secret#*:}; \
-			$(KUBECTL_TRUSTED) get secret $$name -n test-pods >/dev/null 2>&1 || \
-				echo "WARNING: $$name not found ($$desc tests)"; \
-		done; \
-	fi
+	@for secret in cert-manager-bot-ssh-keys cert-manager-bot-gcp-service-account cert-manager-bot-github-token gcs-credentials github-app-token; do \
+		$(KUBECTL_TRUSTED) get secret $$secret -n test-pods >/dev/null 2>&1 || \
+			echo "WARNING: $$secret not found"; \
+	done
+
+	@for secret in cloudflare-api-key venafi-tpp venafi-cloud venafi-ngts gcs-credentials; do \
+		$(KUBECTL_UNTRUSTED) get secret $$secret -n test-pods >/dev/null 2>&1 || \
+			echo "WARNING: $$secret not found"; \
+	done
+	
 	@echo "✓ Prerequisites verified"
 
 .PHONY: diff
