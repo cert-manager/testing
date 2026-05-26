@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: prowjob-default@cert-manager-tests-trusted.iam.gserviceaccount.com
+  name: prowjob-default
+  namespace: test-pods
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    iam.gke.io/gcp-service-account: testgrid-updater@cert-manager-tests-trusted.iam.gserviceaccount.com
+  name: testgrid-updater
+  namespace: test-pods
