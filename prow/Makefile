@@ -68,7 +68,7 @@ verify:
 	@for cm in config plugins job-config; do \
 		$(KUBECTL_TRUSTED) get cm $$cm -n default >/dev/null || (echo "ERROR: $$cm configmap not found" && exit 1); \
 	done
-	@for secret in cert-manager-bot-ssh-keys cert-manager-bot-gcp-service-account cert-manager-bot-github-token github-app-token; do \
+	@for secret in cert-manager-bot-ssh-keys cert-manager-bot-github-token github-app-token; do \
 		$(KUBECTL_TRUSTED) get secret $$secret -n test-pods >/dev/null 2>&1 || \
 			echo "WARNING: $$secret not found"; \
 	done

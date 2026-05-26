@@ -43,9 +43,6 @@ echo "Building $image_tag..."
 kind build node-image \
 	--image ${image_tag}
 
-echo "Activating service account..."
-gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
-
 echo "Generating docker credentials..."
 gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 
