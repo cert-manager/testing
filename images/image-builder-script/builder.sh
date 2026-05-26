@@ -28,17 +28,8 @@ if [ -z "${BUILD_DIR}" ]; then
 fi
 shift
 
-if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
-    echo "GOOGLE_APPLICATION_CREDENTIALS set, using service account"
-
-    echo "Activating service account..."
-    gcloud auth activate-service-account --key-file="${GOOGLE_APPLICATION_CREDENTIALS}"
-
-    echo "Generating docker credentials..."
-    gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
-else
-    echo "WARNING: GOOGLE_APPLICATION_CREDENTIALS not set"
-fi
+echo "Generating docker credentials..."
+gcloud auth configure-docker europe-west1-docker.pkg.dev --quiet
 
 echo "Executing builder..."
 PUSHED_IMAGE=$(cd "$SCRIPT_DIR" && \

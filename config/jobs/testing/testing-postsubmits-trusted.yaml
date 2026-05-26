@@ -56,6 +56,7 @@ postsubmits:
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'make-dind' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
         args:
@@ -91,6 +92,7 @@ postsubmits:
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'golang-dind' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
         args:
@@ -126,6 +128,7 @@ postsubmits:
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'image-builder' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
         args:
@@ -151,8 +154,6 @@ postsubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
-      # Mount GCP SA creds and export GOOGLE_APPLICATION_CREDENTIALS env var
-      # pointing to the creds file.
       preset-deployer-service-account: "true"
     annotations:
       testgrid-create-test-group: 'true'
@@ -161,6 +162,7 @@ postsubmits:
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'kind' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260120-31ee990-1.25
         args:
@@ -193,6 +195,7 @@ postsubmits:
       testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
       description: Build and push the 'golang-aws' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
         args:
@@ -228,6 +231,7 @@ postsubmits:
       testgrid-disable-prowjob-analysis: "true"
       description: Build and push the 'nix-dind' image
     spec:
+      serviceAccountName: image-builder
       containers:
       - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
         args:
