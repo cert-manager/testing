@@ -45,13 +45,13 @@ spec:
           readOnly: true
       volumes:
       - name: kubeconfig-prow-trusted
-        secret:
+        configMap:
           defaultMode: 420
-          secretName: kubeconfig-prow-trusted
+          name: kubeconfig-prow-trusted
       - name: kubeconfig-prow-untrusted
-        secret:
+        configMap:
           defaultMode: 420
-          secretName: kubeconfig-prow-untrusted
+          name: kubeconfig-prow-untrusted
       - name: config
         configMap:
           name: config
