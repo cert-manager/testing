@@ -39,6 +39,7 @@ RUN apt-get update \
         jq \
         rsync \
         procps \
+        mawk \
     && apt-get clean
 
 #

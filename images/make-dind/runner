@@ -162,11 +162,16 @@ start=$(date +%s)
 ACTIVITY_FILE=$(mktemp)
 echo "$start" > "$ACTIVITY_FILE"
 
-# Run the actual job. Send both stdout and stderr through a single awk process
-# via process substitution so lines stay in chronological order, while keeping
-# $! pointing at the wrapped command (not awk) so the watchdog, signal traps
-# and wait below all operate on the right process.
-"$@" > >(awk -v f="$ACTIVITY_FILE" '{ print; fflush(); printf "%d", systime() > f; close(f) }') 2>&1 &
+# Run the actual job. Send both stdout and stderr through a single mawk
+# process via process substitution so lines stay in chronological order, while
+# keeping $! pointing at the wrapped command (not mawk) so the watchdog,
+# signal traps and wait below all operate on the right process. stdbuf forces
+# line-buffered stdio on the wrapped command so output streams as it is
+# produced rather than being held in libc's 4-8 KiB block buffer (the default
+# once stdout is a pipe instead of a TTY); mawk's -W interactive flag is the
+# equivalent on the reader side — without it mawk block-buffers reads from
+# the pipe and re-introduces the stall.
+stdbuf -oL -eL "$@" > >(mawk -W interactive -v f="$ACTIVITY_FILE" '{ print; print systime() > f; close(f) }') 2>&1 &
 WRAPPED_COMMAND_PID=$!
 
 # Watchdog: if the wrapped command has produced no stdout/stderr for
@@ -183,8 +188,11 @@ WATCHDOG_STALL_SECONDS=${WATCHDOG_STALL_SECONDS:-120}
         elapsed=$((now - last))
         if (( elapsed >= WATCHDOG_STALL_SECONDS )) && (( now - last_warn >= WATCHDOG_STALL_SECONDS )); then
             echo "" >&2
-            echo "## Watchdog: no output from wrapped command for ${elapsed}s; printing process tree:" >&2
+            echo "########################################################################################" >&2
+            echo "### Watchdog: no output from wrapped command for ${elapsed}s; printing process tree: ###" >&2
             ps -ef --forest >&2 || ps -ef >&2 || true
+            echo "########################################################################################" >&2
+            echo "" >&2
             last_warn=$now
         fi
     done
