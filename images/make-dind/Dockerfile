@@ -38,6 +38,7 @@ RUN apt-get update \
         patch \
         jq \
         rsync \
+        procps \
     && apt-get clean
 
 #
