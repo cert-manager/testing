@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2023 The Kubernetes Authors.
+# Copyright 2023 The cert-manager Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,6 +19,14 @@
 # that we use in this file.
 
 # generic runner script, handles DIND, etc.
+
+# Enable job control so backgrounded children get default SIGINT/SIGQUIT
+# handling. Without this, non-interactive bash sets SIGINT and SIGQUIT to
+# SIG_IGN on any process backgrounded with `&` and that inheritance persists
+# across exec — meaning a shell-script wrapped command would silently ignore
+# the SIGINT we forward below on Prow timeout (the very signal the trap
+# section documents as the primary timeout mechanism).
+set -m
 
 # Check if the job has opted-in to local caching and if so check for a cache and
 # copy the cache to prepopulate the local cache. After the job is done, change the
@@ -154,24 +162,26 @@ start=$(date +%s)
 ACTIVITY_FILE=$(mktemp)
 echo "$start" > "$ACTIVITY_FILE"
 
-# Run the actual job. Pipe stdout and stderr through awk to forward each line
-# unchanged and record the time it was seen.
-"$@" \
-    > >(awk -v f="$ACTIVITY_FILE" '{ print; fflush(); printf "%d", systime() > f; close(f) }') \
-    2> >(awk -v f="$ACTIVITY_FILE" '{ print > "/dev/stderr"; fflush("/dev/stderr"); printf "%d", systime() > f; close(f) }') &
+# Run the actual job. Send both stdout and stderr through a single awk process
+# via process substitution so lines stay in chronological order, while keeping
+# $! pointing at the wrapped command (not awk) so the watchdog, signal traps
+# and wait below all operate on the right process.
+"$@" > >(awk -v f="$ACTIVITY_FILE" '{ print; fflush(); printf "%d", systime() > f; close(f) }') 2>&1 &
 WRAPPED_COMMAND_PID=$!
 
-# Watchdog: if the wrapped command has produced no stdout/stderr for 2 minutes,
-# dump the process tree to stderr to help diagnose hangs. Fires once per 2
-# minute window so a long hang produces periodic dumps rather than a flood.
+# Watchdog: if the wrapped command has produced no stdout/stderr for
+# $WATCHDOG_STALL_SECONDS, dump the process tree to stderr to help diagnose
+# hangs. Fires once per stall window so a long hang produces periodic dumps
+# rather than a flood. Defaults match a 2-minute threshold; tests override.
+WATCHDOG_STALL_SECONDS=${WATCHDOG_STALL_SECONDS:-120}
 (
     last_warn=0
     while kill -0 "$WRAPPED_COMMAND_PID" 2>/dev/null; do
-        sleep 30
+        sleep "$WATCHDOG_STALL_SECONDS"
         now=$(date +%s)
         last=$(cat "$ACTIVITY_FILE" 2>/dev/null || echo "$now")
         elapsed=$((now - last))
-        if (( elapsed >= 120 )) && (( now - last_warn >= 120 )); then
+        if (( elapsed >= WATCHDOG_STALL_SECONDS )) && (( now - last_warn >= WATCHDOG_STALL_SECONDS )); then
             echo "" >&2
             echo "## Watchdog: no output from wrapped command for ${elapsed}s; printing process tree:" >&2
             ps -ef --forest >&2 || ps -ef >&2 || true
