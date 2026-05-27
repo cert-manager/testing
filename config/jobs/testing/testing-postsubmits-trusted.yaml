@@ -57,7 +57,7 @@ postsubmits:
     spec:
       serviceAccountName: image-builder
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20260527-21adfa3-gcloud-569
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -92,7 +92,7 @@ postsubmits:
     spec:
       serviceAccountName: image-builder
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20260527-21adfa3-gcloud-569
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -127,7 +127,7 @@ postsubmits:
     spec:
       serviceAccountName: image-builder
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20260527-21adfa3-gcloud-569
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -192,7 +192,7 @@ postsubmits:
     spec:
       serviceAccountName: image-builder
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20260527-21adfa3-gcloud-569
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
@@ -227,7 +227,7 @@ postsubmits:
     spec:
       serviceAccountName: image-builder
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20250327-d147921-gcloud-516
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/image-builder:20260527-21adfa3-gcloud-569
         args:
         # Wrap the release script with the runner so we can use docker-in-docker
         - runner
