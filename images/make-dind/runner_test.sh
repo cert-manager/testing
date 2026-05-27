@@ -100,6 +100,48 @@ test_log_ordering() {
     rm -f "$out"
 }
 
+# Verifies the runner streams the wrapped command's output line-by-line
+# instead of letting libc's default block buffering hold output back until the
+# process exits. awk block-buffers stdout when stdout is a pipe (not a TTY).
+# The busy-wait deliberately avoids any operation that would flush the buffer
+# as a side effect — system(), close(), pipes, or exit. Without the runner
+# forcing line-buffered stdio on the wrapped command (via stdbuf -oL -eL),
+# the first print sits in libc's buffer for the full duration of the busy-wait
+# — well past our poll window.
+test_output_is_streamed() {
+    local out
+    out=$(mktemp)
+
+    ( run_runner awk 'BEGIN { print "early-line"; t = systime() + 3; while (systime() < t) {} print "late-line" }' ) >"$out" 2>&1 &
+    local runner_pid=$!
+
+    # Poll for up to 1.5s — comfortably under the 2-3s busy-wait — for early-line.
+    local found=0 i
+    for i in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+        if grep -q "^early-line$" "$out" 2>/dev/null; then
+            found=1
+            break
+        fi
+        sleep 0.1
+    done
+
+    if [[ "$found" -eq 1 ]]; then
+        pass "wrapped command output is streamed line-by-line"
+    else
+        fail "early-line not seen within 1.5s — output appears to be block-buffered"
+    fi
+
+    # Let the busy-wait finish so the runner exits cleanly.
+    wait "$runner_pid" 2>/dev/null || true
+
+    if [[ "$found" -eq 0 ]]; then
+        echo "--- captured runner output ---" >&2
+        cat "$out" >&2
+    fi
+
+    rm -f "$out"
+}
+
 # Asserts that `kill -s $1` to the runner actually kills the wrapped command,
 # not just that the runner itself exits quickly. Capturing the wrapped PID up
 # front and probing it after the runner is gone distinguishes a real kill
@@ -171,6 +213,7 @@ test_watchdog_fires_on_stall() {
 
 test_exit_code_propagates
 test_log_ordering
+test_output_is_streamed
 assert_signal_reaches_wrapped TERM
 assert_signal_reaches_wrapped INT
 test_watchdog_fires_on_stall
