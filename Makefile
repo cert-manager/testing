@@ -16,6 +16,18 @@
 verify-boilerplate:
 	go run github.com/cert-manager/boilersuite@v0.1.0 .
 
+# Images under ./images that are built via images/image-builder-script.
+# kind is excluded because its build.sh interleaves docker push with the build.
+IMAGES := golang-aws golang-dind image-builder make-dind nix-dind
+
+.PHONY: build-images
+build-images: $(addprefix build-,$(IMAGES))
+
+.PHONY: build-%
+$(addprefix build-,$(IMAGES)): build-%:
+	cd $(CURDIR)/images/image-builder-script && \
+		go run . --build-dir $(CURDIR)/images/$*
+
 .PHONY: prowgen
 prowgen:
 	cd ./config/prowgen/ && go run . --branch=* -o $(CURDIR)/config/jobs/cert-manager/cert-manager/
