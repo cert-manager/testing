@@ -20,7 +20,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"math/rand"
+	"math/rand/v2"
 	"os"
 	"os/exec"
 	"path"
@@ -113,7 +113,7 @@ func main() {
 	}
 
 	log.Printf("SUCCESS")
-	os.Stdout.Write([]byte(path.Join(registry, cfg.Name)))
+	_, _ = os.Stdout.Write([]byte(path.Join(registry, cfg.Name)))
 }
 
 func allImageNames(cfg *buildConfig, ctx *buildContext, variant string, templates ...string) ([]string, error) {
@@ -190,7 +190,7 @@ func getGitRef() (string, error) {
 	cmd.Dir = buildDir
 	output, err := cmd.Output()
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to get git ref: %w", err)
 	}
 	return strings.TrimSpace(string(output)), nil
 }
@@ -218,18 +218,18 @@ type variant struct {
 func parseConfig(path string) (*buildConfig, error) {
 	d, err := os.ReadFile(path)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to read config file %s: %w", path, err)
 	}
 
 	var cfg buildConfig
 	if err := yaml.Unmarshal(d, &cfg); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to parse config file %s: %w", path, err)
 	}
 
 	applyDefaults(&cfg)
 
 	if errs := validateConfig(cfg); len(errs) > 0 {
-		return nil, fmt.Errorf("config file error: %v", errs)
+		return nil, fmt.Errorf("config validation failed: %v", errs)
 	}
 
 	return &cfg, nil
@@ -370,18 +370,14 @@ func (b *buildContext) Push(name string) error {
 }
 
 func (b *buildContext) runDocker(args ...string) error {
-	log.Printf("running with args %v", args)
+	log.Printf("running docker with args: %v", args)
 	cmd := exec.Command("docker", args...)
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stderr
 	if err := cmd.Run(); err != nil {
-		return err
+		return fmt.Errorf("docker command failed (args: %v): %w", args, err)
 	}
 	return nil
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
 }
 
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
@@ -389,7 +385,7 @@ var letterRunes = []rune("abcdefghijklmnopqrstuvwxyz")
 func randString(n int) string {
 	b := make([]rune, n)
 	for i := range b {
-		b[i] = letterRunes[rand.Intn(len(letterRunes))]
+		b[i] = letterRunes[rand.IntN(len(letterRunes))]
 	}
 	return string(b)
 }

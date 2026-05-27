@@ -23,7 +23,8 @@ SCRIPT_DIR="${PROJECT_DIR}/images/image-builder-script"
 
 BUILD_DIR="${1:-}"
 if [ -z "${BUILD_DIR}" ]; then
-    echo "Invalid usage. Use as $0 path/to/build/dir [additional arguments]"
+    echo "ERROR: Invalid usage. Use as $0 path/to/build/dir [additional arguments]" >&2
+    echo "Example: $0 images/golang-aws --confirm" >&2
     exit 1
 fi
 shift
