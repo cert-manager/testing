@@ -188,6 +188,41 @@ assert_signal_reaches_wrapped() {
     fi
 }
 
+# Verifies the runner's stdout closes promptly after the wrapped command
+# exits, even if a leaked descendant inherited the stdout pipe. Mirrors
+# what Prow sees on its end of the runner's stdout: prow's `Wait()` blocks
+# until every writer to the pipe is gone, so a leaked process (envtest's
+# kube-apiserver, the watchdog's in-flight `sleep`, etc.) would keep the
+# pipe open until Prow's 2h timeout fires. The pipeline-reader exits as
+# soon as it sees EOF, so a fast exit here proves the runner reaped all
+# writers before returning.
+test_pipe_closes_after_leaked_grandchild() {
+    local start elapsed
+    start=$(date +%s)
+
+    (
+        run_runner bash -c '
+            # nohup detaches from the controlling terminal; the spawned sleep
+            # inherits the wrapped command'\''s stdout/stderr, which is the
+            # mawk FIFO. Without the process-group reap, this sleep would
+            # outlive the runner and hold the pipe open.
+            nohup sleep 60 >&1 2>&1 &
+            echo "leaked grandchild pid=$!"
+        '
+    ) | (
+        while IFS= read -r _; do :; done
+    )
+
+    elapsed=$(( $(date +%s) - start ))
+    if (( elapsed < 10 )); then
+        pass "stdout pipe closes promptly after leaked grandchild (${elapsed}s)"
+    else
+        fail "stdout pipe still open ${elapsed}s after runner exit — a writer leaked"
+    fi
+
+    pkill -KILL -f "^sleep 60" 2>/dev/null || true
+}
+
 # Verifies the watchdog actually fires: it dumps the process tree to stderr
 # after $WATCHDOG_STALL_SECONDS of no output from the wrapped command. We
 # shrink the threshold to 2s and run a silent 5s sleep so the watchdog has
@@ -216,6 +251,7 @@ test_log_ordering
 test_output_is_streamed
 assert_signal_reaches_wrapped TERM
 assert_signal_reaches_wrapped INT
+test_pipe_closes_after_leaked_grandchild
 test_watchdog_fires_on_stall
 
 echo ""

@@ -221,7 +221,37 @@ trap 'kill -s TERM "$WRAPPED_COMMAND_PID" || true' TERM
 wait $WRAPPED_COMMAND_PID
 EXIT_VALUE=$?
 
-kill "$WATCHDOG_PID" 2>/dev/null || true
+# Reap any survivors from the wrapped command's and watchdog's process
+# groups. Both groups inherited this script's stdout/stderr, so a leftover
+# process (e.g. an envtest-spawned kube-apiserver, or the watchdog's
+# in-flight `sleep`) keeps the pipe open after this script exits, and
+# Prow's Wait() then blocks on the never-closing pipe until the 2h
+# timeout fires (manifesting as "Process did not finish before 2h0m0s
+# timeout" / "os: process already finished" in the entrypoint logs).
+# Signalling only the group leader (`kill $PID`) is not enough: the
+# leader may already be gone while children survive, and a `sleep` child
+# of the watchdog subshell doesn't receive a signal sent to the bash
+# subshell alone. `set -m` puts each backgrounded job in its own process
+# group, so `kill -- -PGID` reaches every descendant.
+#
+# Dump the process subtree rooted in the wrapped command's process group
+# so the CI log identifies what was leaked and how it was nested. mawk's
+# presence here means it hasn't seen EOF — i.e. some descendant of the
+# wrapped command (e.g. envtest's kube-apiserver/etcd) still holds the
+# FIFO write end. The watchdog's group is excluded: its `sleep` is
+# expected to be mid-sleep, not a leak.
+survivors=$(ps --no-headers --forest -eo pid,pgid,etime,args | \
+    awk -v w="$WRAPPED_COMMAND_PID" '$2 == w')
+if [[ -n "$survivors" ]]; then
+    echo "" >&2
+    echo "########################################################################################" >&2
+    echo "### Reap: test did not cleanly exit all processes in its process group (pgid=$WRAPPED_COMMAND_PID), will kill them" >&2
+    echo "### Columns: PID PGID ELAPSED COMMAND" >&2
+    echo "$survivors" >&2
+    echo "########################################################################################" >&2
+    echo "" >&2
+fi
+kill -KILL -- -"$WRAPPED_COMMAND_PID" -"$WATCHDOG_PID" 2>/dev/null || true
 wait "$WATCHDOG_PID" 2>/dev/null || true
 rm -f "$ACTIVITY_FILE"
 
