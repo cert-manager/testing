@@ -8,7 +8,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -32,7 +32,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -56,7 +56,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -81,7 +81,7 @@ presubmits:
       preset-dind-enabled: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
