@@ -29,7 +29,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260527-69cbb03-1.26
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260529-f029ca4-1.26
         args:
         - runner
         - make
@@ -47,7 +47,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260527-69cbb03-1.26
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260529-f029ca4-1.26
         args:
         - runner
         - make
