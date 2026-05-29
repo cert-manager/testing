@@ -14,7 +14,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -44,7 +44,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -79,7 +79,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -120,7 +120,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -161,7 +161,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -202,7 +202,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -239,7 +239,7 @@ presubmits:
       preset-local-cache: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -278,7 +278,7 @@ presubmits:
       preset-venafi-tpp-credentials: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -318,7 +318,7 @@ presubmits:
       preset-venafi-cloud-credentials: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -358,7 +358,7 @@ presubmits:
       preset-venafi-ngts-credentials: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -399,7 +399,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -442,7 +442,7 @@ presubmits:
       preset-retry-flakey-jobs: "true"
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
         args:
         - runner
         - make
@@ -482,7 +482,7 @@ periodics:
     preset-local-cache: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -521,7 +521,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -566,7 +566,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -611,7 +611,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -656,7 +656,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -701,7 +701,7 @@ periodics:
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -742,7 +742,7 @@ periodics:
     preset-local-cache: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -788,7 +788,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -833,7 +833,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -878,7 +878,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -923,7 +923,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -968,7 +968,7 @@ periodics:
     preset-retry-flakey-jobs: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -1013,7 +1013,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -1054,7 +1054,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -1095,7 +1095,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -1136,7 +1136,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
@@ -1177,7 +1177,7 @@ periodics:
     preset-trivy: "true"
   spec:
     containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260527-d8a883d-trixie
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
       args:
       - runner
       - make
