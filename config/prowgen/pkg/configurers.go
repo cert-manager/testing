@@ -93,6 +93,7 @@ func addVenafiBothLabels(job *Job) {
 	job.Labels["preset-ginkgo-focus-venafi"] = "true"
 
 	job.Labels["preset-venafi-cloud-credentials"] = "true"
+	job.Labels["preset-venafi-ngts-credentials"] = "true"
 	job.Labels["preset-venafi-tpp-credentials"] = "true"
 }
 

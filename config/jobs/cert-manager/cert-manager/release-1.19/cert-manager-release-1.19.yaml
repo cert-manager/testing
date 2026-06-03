@@ -773,7 +773,7 @@ periodics:
   max_concurrency: 4
   decorate: true
   annotations:
-    description: Runs Venafi (VaaS and TPP) e2e tests
+    description: Runs Venafi (VaaS, TPP, and NGTS) e2e tests
     testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.19
@@ -784,6 +784,7 @@ periodics:
     preset-local-cache: "true"
     preset-retry-flakey-jobs: "true"
     preset-venafi-cloud-credentials: "true"
+    preset-venafi-ngts-credentials: "true"
     preset-venafi-tpp-credentials: "true"
   spec:
     containers:
