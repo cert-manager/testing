@@ -242,7 +242,7 @@ func E2ETestVenafiBoth(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRe
 	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
 
 	job.Name = job.Name + "-issuers-venafi"
-	job.Annotations["description"] = "Runs Venafi (VaaS and TPP) e2e tests"
+	job.Annotations["description"] = "Runs Venafi (VaaS, TPP, and NGTS) e2e tests"
 
 	job.Labels = make(map[string]string)
 
