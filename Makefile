@@ -18,7 +18,7 @@ verify-boilerplate:
 
 # Images under ./images that are built via images/image-builder-script.
 # kind is excluded because its build.sh interleaves docker push with the build.
-IMAGES := golang-aws golang-dind image-builder make-dind nix-dind
+IMAGES := golang-dind image-builder make-dind
 
 .PHONY: build-images
 build-images: $(addprefix build-,$(IMAGES))
