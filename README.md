@@ -49,7 +49,6 @@ running:
 
 ```bash
 $ ./images/image-builder-script/builder.sh images/golang-dind
-./images/image-builder-script/builder.sh images/golang-aws
 WARNING: GOOGLE_APPLICATION_CREDENTIALS not set
 Executing builder...
 2023/04/07 16:31:51 --confirm is set to false, not pushing images
@@ -69,13 +68,13 @@ builder.sh can also be used to *push* built docker images to the remote registry
 This push target **will not** handle authentication with the remote registry for
 you. You should ensure your Docker client is already authenticated using gcloud.
 
-For example, to build and push the `images/golang-aws` image:
+For example, to build and push the `images/golang-dind` image:
 
 ```bash
 # Obtain credentials for the docker registry
 $ gcloud docker -a
 # Build (if required) and push the docker image
-$ ./images/image-builder-script/builder.sh images/golang-aws --confirm=true
+$ ./images/image-builder-script/builder.sh images/golang-dind --confirm=true
 ...
 ```
 

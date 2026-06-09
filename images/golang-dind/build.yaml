@@ -5,6 +5,8 @@ variants:
     arguments:
       BASE_IMAGE: "europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie"
       GO_VERSION: "1.26.3"
+      # curl -sL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz | sha256sum
+      GO_SHA256: "2b2cfc7148493da5e73981bffbf3353af381d5f93e789c82c79aff64962eb556"
 
 # Image names to be tagged and pushed
 images:

@@ -20,7 +20,9 @@ LABEL maintainer="cert-manager-maintainers@googlegroups.com"
 
 # install golang
 ARG GO_VERSION
+ARG GO_SHA256
 RUN wget -O go${GO_VERSION}.amd64.tar.gz https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz && \
+    echo "${GO_SHA256}  go${GO_VERSION}.amd64.tar.gz" | sha256sum -c - && \
     tar -C /usr/local -xzf go${GO_VERSION}.amd64.tar.gz && \
     rm go${GO_VERSION}.amd64.tar.gz
 
