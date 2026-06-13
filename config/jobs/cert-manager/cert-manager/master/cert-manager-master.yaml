@@ -158,50 +158,6 @@ presubmits:
     - master
     always_run: false
     optional: true
-  - name: pull-cert-manager-master-e2e-v1-36
-    max_concurrency: 4
-    decorate: true
-    annotations:
-      description: Runs the end-to-end test suite against a Kubernetes v1.36 cluster
-      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-      testgrid-create-job-group: "true"
-      testgrid-dashboards: cert-manager-presubmits-master
-    labels:
-      preset-cloudflare-credentials: "true"
-      preset-dind-enabled: "true"
-      preset-enable-all-feature-gates: "true"
-      preset-ginkgo-skip-default: "true"
-      preset-go-cache: "true"
-      preset-local-cache: "true"
-      preset-retry-flakey-jobs: "true"
-    spec:
-      containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
-        args:
-        - runner
-        - make
-        - -j7
-        - vendor-go
-        - e2e-ci
-        - K8S_VERSION=1.36
-        resources:
-          requests:
-            cpu: 7000m
-            memory: 6Gi
-        securityContext:
-          privileged: true
-          capabilities:
-            add:
-            - SYS_ADMIN
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-        - 8.8.8.8
-        - 8.8.4.4
-    branches:
-    - master
-    always_run: false
-    optional: true
   - name: pull-cert-manager-master-e2e-v1-35
     max_concurrency: 4
     decorate: true
@@ -244,9 +200,53 @@ presubmits:
         - 8.8.4.4
     branches:
     - master
+    always_run: false
+    optional: true
+  - name: pull-cert-manager-master-e2e-v1-36
+    max_concurrency: 4
+    decorate: true
+    annotations:
+      description: Runs the end-to-end test suite against a Kubernetes v1.36 cluster
+      testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+      testgrid-create-job-group: "true"
+      testgrid-dashboards: cert-manager-presubmits-master
+    labels:
+      preset-cloudflare-credentials: "true"
+      preset-dind-enabled: "true"
+      preset-enable-all-feature-gates: "true"
+      preset-ginkgo-skip-default: "true"
+      preset-go-cache: "true"
+      preset-local-cache: "true"
+      preset-retry-flakey-jobs: "true"
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
+        args:
+        - runner
+        - make
+        - -j7
+        - vendor-go
+        - e2e-ci
+        - K8S_VERSION=1.36
+        resources:
+          requests:
+            cpu: 7000m
+            memory: 6Gi
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+    branches:
+    - master
     always_run: true
     optional: false
-  - name: pull-cert-manager-master-e2e-v1-35-upgrade
+  - name: pull-cert-manager-master-e2e-v1-36-upgrade
     max_concurrency: 4
     decorate: true
     annotations:
@@ -264,7 +264,7 @@ presubmits:
         args:
         - runner
         - make
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         - vendor-go
         - test-upgrade
         resources:
@@ -285,7 +285,7 @@ presubmits:
     - master
     always_run: true
     optional: false
-  - name: pull-cert-manager-master-e2e-v1-35-issuers-venafi-tpp
+  - name: pull-cert-manager-master-e2e-v1-36-issuers-venafi-tpp
     max_concurrency: 4
     decorate: true
     annotations:
@@ -309,7 +309,7 @@ presubmits:
         - -j7
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         resources:
           requests:
             cpu: 7000m
@@ -328,7 +328,7 @@ presubmits:
     - master
     always_run: false
     optional: true
-  - name: pull-cert-manager-master-e2e-v1-35-issuers-venafi-cloud
+  - name: pull-cert-manager-master-e2e-v1-36-issuers-venafi-cloud
     max_concurrency: 4
     decorate: true
     annotations:
@@ -352,7 +352,7 @@ presubmits:
         - -j7
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         resources:
           requests:
             cpu: 7000m
@@ -371,7 +371,7 @@ presubmits:
     - master
     always_run: false
     optional: true
-  - name: pull-cert-manager-master-e2e-v1-35-issuers-venafi-ngts
+  - name: pull-cert-manager-master-e2e-v1-36-issuers-venafi-ngts
     max_concurrency: 4
     decorate: true
     annotations:
@@ -395,7 +395,7 @@ presubmits:
         - -j7
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         resources:
           requests:
             cpu: 7000m
@@ -414,7 +414,7 @@ presubmits:
     - master
     always_run: false
     optional: true
-  - name: pull-cert-manager-master-e2e-v1-35-feature-gates-disabled
+  - name: pull-cert-manager-master-e2e-v1-36-feature-gates-disabled
     max_concurrency: 4
     decorate: true
     annotations:
@@ -439,7 +439,7 @@ presubmits:
         - -j7
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         resources:
           requests:
             cpu: 7000m
@@ -458,7 +458,7 @@ presubmits:
     - master
     always_run: false
     optional: true
-  - name: pull-cert-manager-master-e2e-v1-35-bestpractice-install
+  - name: pull-cert-manager-master-e2e-v1-36-bestpractice-install
     max_concurrency: 4
     decorate: true
     annotations:
@@ -485,7 +485,7 @@ presubmits:
         - -j7
         - vendor-go
         - e2e-ci
-        - K8S_VERSION=1.35
+        - K8S_VERSION=1.36
         resources:
           requests:
             cpu: 7000m
@@ -629,51 +629,6 @@ periodics:
     repo: cert-manager
     base_ref: master
   cron: 08 00-23/02 * * *
-- name: ci-cert-manager-master-e2e-v1-36
-  max_concurrency: 4
-  decorate: true
-  annotations:
-    description: Runs the end-to-end test suite against a Kubernetes v1.36 cluster
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-master
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-dind-enabled: "true"
-    preset-enable-all-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-go-cache: "true"
-    preset-local-cache: "true"
-    preset-retry-flakey-jobs: "true"
-  spec:
-    containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
-      args:
-      - runner
-      - make
-      - -j7
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.36
-      resources:
-        requests:
-          cpu: 7000m
-          memory: 6Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-    dnsPolicy: None
-    dnsConfig:
-      nameservers:
-      - 8.8.8.8
-      - 8.8.4.4
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: master
-  cron: 12 01-23/02 * * *
 - name: ci-cert-manager-master-e2e-v1-35
   max_concurrency: 4
   decorate: true
@@ -718,8 +673,53 @@ periodics:
   - org: cert-manager
     repo: cert-manager
     base_ref: master
+  cron: 12 01-23/02 * * *
+- name: ci-cert-manager-master-e2e-v1-36
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the end-to-end test suite against a Kubernetes v1.36 cluster
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-master
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-enable-all-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.36
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
   cron: 16 00-23/02 * * *
-- name: ci-cert-manager-master-e2e-v1-35-issuers-venafi
+- name: ci-cert-manager-master-e2e-v1-36-issuers-venafi
   max_concurrency: 4
   decorate: true
   annotations:
@@ -745,7 +745,7 @@ periodics:
       - -j7
       - vendor-go
       - e2e-ci
-      - K8S_VERSION=1.35
+      - K8S_VERSION=1.36
       resources:
         requests:
           cpu: 7000m
@@ -765,7 +765,7 @@ periodics:
     repo: cert-manager
     base_ref: master
   cron: 20 00-23/12 * * *
-- name: ci-cert-manager-master-e2e-v1-35-upgrade
+- name: ci-cert-manager-master-e2e-v1-36-upgrade
   max_concurrency: 4
   decorate: true
   annotations:
@@ -783,7 +783,7 @@ periodics:
       args:
       - runner
       - make
-      - K8S_VERSION=1.35
+      - K8S_VERSION=1.36
       - vendor-go
       - test-upgrade
       resources:
@@ -805,7 +805,7 @@ periodics:
     repo: cert-manager
     base_ref: master
   cron: 24 00-23/08 * * *
-- name: ci-cert-manager-master-e2e-v1-35-bestpractice-install
+- name: ci-cert-manager-master-e2e-v1-36-bestpractice-install
   max_concurrency: 4
   decorate: true
   annotations:
@@ -832,7 +832,7 @@ periodics:
       - -j7
       - vendor-go
       - e2e-ci
-      - K8S_VERSION=1.35
+      - K8S_VERSION=1.36
       resources:
         requests:
           cpu: 7000m
@@ -942,51 +942,6 @@ periodics:
     repo: cert-manager
     base_ref: master
   cron: 36 14-23/24 * * *
-- name: ci-cert-manager-master-e2e-v1-36-feature-gates-disabled
-  max_concurrency: 4
-  decorate: true
-  annotations:
-    description: Runs the E2E tests with all feature gates disabled
-    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
-    testgrid-create-job-group: "true"
-    testgrid-dashboards: cert-manager-periodics-master
-  labels:
-    preset-cloudflare-credentials: "true"
-    preset-dind-enabled: "true"
-    preset-disable-all-alpha-beta-feature-gates: "true"
-    preset-ginkgo-skip-default: "true"
-    preset-go-cache: "true"
-    preset-local-cache: "true"
-    preset-retry-flakey-jobs: "true"
-  spec:
-    containers:
-    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
-      args:
-      - runner
-      - make
-      - -j7
-      - vendor-go
-      - e2e-ci
-      - K8S_VERSION=1.36
-      resources:
-        requests:
-          cpu: 7000m
-          memory: 6Gi
-      securityContext:
-        privileged: true
-        capabilities:
-          add:
-          - SYS_ADMIN
-    dnsPolicy: None
-    dnsConfig:
-      nameservers:
-      - 8.8.8.8
-      - 8.8.4.4
-  extra_refs:
-  - org: cert-manager
-    repo: cert-manager
-    base_ref: master
-  cron: 40 21-23/24 * * *
 - name: ci-cert-manager-master-e2e-v1-35-feature-gates-disabled
   max_concurrency: 4
   decorate: true
@@ -1013,6 +968,51 @@ periodics:
       - vendor-go
       - e2e-ci
       - K8S_VERSION=1.35
+      resources:
+        requests:
+          cpu: 7000m
+          memory: 6Gi
+      securityContext:
+        privileged: true
+        capabilities:
+          add:
+          - SYS_ADMIN
+    dnsPolicy: None
+    dnsConfig:
+      nameservers:
+      - 8.8.8.8
+      - 8.8.4.4
+  extra_refs:
+  - org: cert-manager
+    repo: cert-manager
+    base_ref: master
+  cron: 40 21-23/24 * * *
+- name: ci-cert-manager-master-e2e-v1-36-feature-gates-disabled
+  max_concurrency: 4
+  decorate: true
+  annotations:
+    description: Runs the E2E tests with all feature gates disabled
+    testgrid-alert-email: cert-manager-dev-alerts@googlegroups.com
+    testgrid-create-job-group: "true"
+    testgrid-dashboards: cert-manager-periodics-master
+  labels:
+    preset-cloudflare-credentials: "true"
+    preset-dind-enabled: "true"
+    preset-disable-all-alpha-beta-feature-gates: "true"
+    preset-ginkgo-skip-default: "true"
+    preset-go-cache: "true"
+    preset-local-cache: "true"
+    preset-retry-flakey-jobs: "true"
+  spec:
+    containers:
+    - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
+      args:
+      - runner
+      - make
+      - -j7
+      - vendor-go
+      - e2e-ci
+      - K8S_VERSION=1.36
       resources:
         requests:
           cpu: 7000m
