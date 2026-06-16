@@ -31,7 +31,7 @@ import (
 
 	"github.com/spf13/cobra"
 	flag "github.com/spf13/pflag"
-	"gopkg.in/yaml.v2"
+	"go.yaml.in/yaml/v2"
 
 	"prowgen/prowspecs"
 )
