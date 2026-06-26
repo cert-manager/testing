@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20260526-71428b9c2
+      - image: us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20260624-2b5fea27a
         command:
         - checkconfig
         args:
@@ -29,7 +29,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260529-f029ca4-1.26
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260609-50dd797-1.26
         args:
         - runner
         - make
@@ -47,7 +47,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260529-f029ca4-1.26
+      - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/golang-dind:20260609-50dd797-1.26
         args:
         - runner
         - make
