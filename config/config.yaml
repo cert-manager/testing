@@ -264,6 +264,10 @@ tide:
   - author: github-actions[bot]
     orgs:
     - cert-manager
+    excludedRepos:
+    - cert-manager/testing        # CI/CD trust boundary: configures prow and trusted-cluster jobs
+    - cert-manager/infrastructure # CI/CD trust boundary: infrastructure configuration
+    - cert-manager/renovate-config # CI/CD trust boundary: shared Renovate preset applied org-wide
     labels:
     - skip-review
     - "dco-signoff: yes"
@@ -277,6 +281,10 @@ tide:
   - author: octo-sts[bot]
     orgs:
     - cert-manager
+    excludedRepos:
+    - cert-manager/testing        # CI/CD trust boundary: configures prow and trusted-cluster jobs
+    - cert-manager/infrastructure # CI/CD trust boundary: infrastructure configuration
+    - cert-manager/renovate-config # CI/CD trust boundary: shared Renovate preset applied org-wide
     labels:
     - skip-review
     - "dco-signoff: yes"
@@ -290,6 +298,10 @@ tide:
   - author: renovate[bot]
     orgs:
     - cert-manager
+    excludedRepos:
+    - cert-manager/testing        # CI/CD trust boundary: configures prow and trusted-cluster jobs
+    - cert-manager/infrastructure # CI/CD trust boundary: infrastructure configuration
+    - cert-manager/renovate-config # CI/CD trust boundary: shared Renovate preset applied org-wide
     labels:
     - skip-review
     - "dco-signoff: yes"
