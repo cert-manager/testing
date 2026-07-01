@@ -12,10 +12,10 @@ plank:
       timeout: 7200000000000 # 2h
       grace_period: 10000000000 # 10s
       utility_images:
-        clonerefs: "us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20260624-2b5fea27a"
-        initupload: "us-docker.pkg.dev/k8s-infra-prow/images/initupload:v20260624-2b5fea27a"
-        entrypoint: "us-docker.pkg.dev/k8s-infra-prow/images/entrypoint:v20260624-2b5fea27a"
-        sidecar: "us-docker.pkg.dev/k8s-infra-prow/images/sidecar:v20260624-2b5fea27a"
+        clonerefs: "us-docker.pkg.dev/k8s-infra-prow/images/clonerefs:v20260701-444074c65"
+        initupload: "us-docker.pkg.dev/k8s-infra-prow/images/initupload:v20260701-444074c65"
+        entrypoint: "us-docker.pkg.dev/k8s-infra-prow/images/entrypoint:v20260701-444074c65"
+        sidecar: "us-docker.pkg.dev/k8s-infra-prow/images/sidecar:v20260701-444074c65"
       gcs_configuration:
         bucket: cert-manager-prow-artifacts
         path_strategy: explicit
