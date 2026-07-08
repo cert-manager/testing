@@ -45,6 +45,20 @@ verify: verify-boilerplate verify-prowgen
 test:
 	cd ./config/prowgen/ && go test ./...
 
+.PHONY: list-periodics
+list-periodics:
+ifndef BRANCH
+	$(error BRANCH is required, e.g. make list-periodics BRANCH=release-1.21)
+endif
+	@$(CURDIR)/prow/periodic-jobs.sh list $(BRANCH)
+
+.PHONY: rerun-failed-periodics
+rerun-failed-periodics:
+ifndef BRANCH
+	$(error BRANCH is required, e.g. make rerun-failed-periodics BRANCH=release-1.21)
+endif
+	@$(CURDIR)/prow/periodic-jobs.sh rerun $(BRANCH)
+
 # Run checkconfig locally to verify the Prow configuration, CI runs this
 # directly in the Prow cluster.
 local-checkconfig:

@@ -62,3 +62,47 @@ make deploy-prow
 - Ensure you can access `https://prow.infra.cert-manager.io/` (and see logs for the tests there) and `https://triage.infra.cert-manager.io/s/daily`
 
 11. Commit and PR in your change
+
+## Rerunning periodic jobs
+
+Periodic jobs run on a cron schedule and cannot be retriggered with `/retest`.
+Sometimes you need to rerun them manually — for example, shortly before a
+release after merging last-minute dependency updates (Go version bumps, trivy
+ignore list changes), when you want to see the periodic trivy scans go green
+for reassurance before proceeding with the release.
+
+### Prerequisites
+
+You need `roles/container.developer` on the `cert-manager-tests-trusted` GCP
+project (see the
+[cluster definitions in cert-manager/infrastructure](https://github.com/cert-manager/infrastructure/blob/7b45ed95c68919c1d3cb14b8ff35fa5de46275be/gcp/clusters.tf#L3-L24))
+and kubectl access to the `prow-trusted` cluster:
+
+```sh
+gcloud container clusters get-credentials \
+  prow-trusted \
+  --zone europe-west1-b \
+  --project cert-manager-tests-trusted
+```
+
+### Listing periodic job status
+
+List the latest run of each periodic job matching a search term:
+
+```sh
+make list-periodics BRANCH=release-1.21
+```
+
+### Rerunning all failed periodic jobs
+
+Rerun every non-success periodic job for a release branch:
+
+```sh
+make rerun-failed-periodics BRANCH=release-1.21
+```
+
+This creates new ProwJob instances; any already-running instances are not
+interrupted. Results will appear on the
+[Prow dashboard](https://prow.infra.cert-manager.io/) immediately and on
+[testgrid](https://testgrid.k8s.io/) after its next sync (typically within an
+hour).
