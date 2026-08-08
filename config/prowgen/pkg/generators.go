@@ -177,63 +177,6 @@ func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest stri
 	return job
 }
 
-// E2ETestVenafiTPP generates a test which runs end-to-end tests only focusing on Venafi TPP.
-// This runs inside a container and so requires additional permissions.
-func E2ETestVenafiTPP(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
-	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
-
-	job.Name = job.Name + "-issuers-venafi-tpp"
-	job.Annotations["description"] = "Runs the E2E tests with 'Venafi TPP' in name"
-
-	job.Labels = make(map[string]string)
-
-	addDindLabel(job)
-	addLocalCacheLabel(job)
-	addGoCacheLabel(job)
-	addRetryFlakesLabel(job)
-	addVenafiTPPLabels(job)
-
-	return job
-}
-
-// E2ETestVenafiCloud generates a test which runs end-to-end tests only focusing on Venafi Cloud.
-// This runs inside a container and so requires additional permissions.
-func E2ETestVenafiCloud(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
-	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
-
-	job.Name = job.Name + "-issuers-venafi-cloud"
-	job.Annotations["description"] = "Runs the E2E tests with 'Venafi Cloud' in name"
-
-	job.Labels = make(map[string]string)
-
-	addDindLabel(job)
-	addLocalCacheLabel(job)
-	addGoCacheLabel(job)
-	addRetryFlakesLabel(job)
-	addVenafiCloudLabels(job)
-
-	return job
-}
-
-// E2ETestVenafiNGTS generates a test which runs end-to-end tests only focusing on Venafi NGTS.
-// This runs inside a container and so requires additional permissions.
-func E2ETestVenafiNGTS(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest string) *Job {
-	job := E2ETest(ctx, k8sVersion, cpuRequest, memoryRequest)
-
-	job.Name = job.Name + "-issuers-venafi-ngts"
-	job.Annotations["description"] = "Runs the E2E tests with 'Venafi NGTS' in name"
-
-	job.Labels = make(map[string]string)
-
-	addDindLabel(job)
-	addLocalCacheLabel(job)
-	addGoCacheLabel(job)
-	addRetryFlakesLabel(job)
-	addVenafiNGTSLabels(job)
-
-	return job
-}
-
 // E2ETestVenafiBoth generates a test which runs end-to-end tests focusing on
 // both Venafi TPP and Venafi Cloud.
 // This runs inside a container and so requires additional permissions.

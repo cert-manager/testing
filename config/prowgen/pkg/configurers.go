@@ -80,27 +80,15 @@ func addDisableFeatureGatesLabel(job *Job) {
 	job.Labels["preset-disable-all-alpha-beta-feature-gates"] = "true"
 }
 
-func addVenafiTPPLabels(job *Job) {
-	job.Labels["preset-ginkgo-focus-venafi-tpp"] = "true"
-	job.Labels["preset-venafi-tpp-credentials"] = "true"
-}
-
+// addVenafiBothLabels configures the E2ETestVenafiBoth periodic, which focuses
+// on all Venafi issuers (VaaS, TPP, NGTS) and is the sole remaining Venafi
+// coverage now that the per-issuer presubmits have been removed.
 func addVenafiBothLabels(job *Job) {
 	job.Labels["preset-ginkgo-focus-venafi"] = "true"
 
 	job.Labels["preset-venafi-cloud-credentials"] = "true"
 	job.Labels["preset-venafi-ngts-credentials"] = "true"
 	job.Labels["preset-venafi-tpp-credentials"] = "true"
-}
-
-func addVenafiCloudLabels(job *Job) {
-	job.Labels["preset-ginkgo-focus-venafi-cloud"] = "true"
-	job.Labels["preset-venafi-cloud-credentials"] = "true"
-}
-
-func addVenafiNGTSLabels(job *Job) {
-	job.Labels["preset-ginkgo-focus-venafi-ngts"] = "true"
-	job.Labels["preset-venafi-ngts-credentials"] = "true"
 }
 
 func addBestPracticeInstallLabel(job *Job) {

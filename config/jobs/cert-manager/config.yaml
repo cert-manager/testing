@@ -134,24 +134,6 @@ presets:
   - name: GINKGO_FOCUS
     value: "Venafi"
 
-- labels:
-    preset-ginkgo-focus-venafi-tpp: "true"
-  env:
-  - name: GINKGO_FOCUS
-    value: "Venafi TPP"
-
-- labels:
-    preset-ginkgo-focus-venafi-cloud: "true"
-  env:
-  - name: GINKGO_FOCUS
-    value: "Venafi Cloud"
-
-- labels:
-    preset-ginkgo-focus-venafi-ngts: "true"
-  env:
-  - name: GINKGO_FOCUS
-    value: "Venafi NGTS"
-
 # This preset adds common configuration for all trivy jobs
 #
 # 1. Mitigate the impact of Trivy DB download rate limiting on GHCR. E.g.

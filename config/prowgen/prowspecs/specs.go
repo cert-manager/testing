@@ -135,9 +135,11 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 		m.prowContext.OptionalPresubmitIfChanged(pkg.LicenseTest(m.prowContext), `go.mod`)
 	}
 
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiTPP(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiCloud(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiNGTS(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
+	// The per-issuer Venafi presubmits were removed: they never ran by default
+	// (optional, /test-only) and, since credential presets are stripped from
+	// presubmits, they could no longer authenticate against the live Venafi
+	// services. Regular Venafi coverage is provided by the E2ETestVenafiBoth
+	// periodic below, which keeps its credentials.
 	m.prowContext.OptionalPresubmit(pkg.E2ETestFeatureGatesDisabled(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 	m.prowContext.OptionalPresubmit(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 
