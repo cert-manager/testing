@@ -70,7 +70,6 @@ presubmits:
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.32 cluster
     labels:
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -111,7 +110,6 @@ presubmits:
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.33 cluster
     labels:
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -152,7 +150,6 @@ presubmits:
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.34 cluster
     labels:
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -193,7 +190,6 @@ presubmits:
     annotations:
       description: Runs the end-to-end test suite against a Kubernetes v1.35 cluster
     labels:
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-enable-all-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -390,7 +386,6 @@ presubmits:
     annotations:
       description: Runs the E2E tests with all feature gates disabled
     labels:
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -433,7 +428,6 @@ presubmits:
         https://cert-manager.io/docs/installation/best-practice/
     labels:
       preset-bestpractice-install: "true"
-      preset-cloudflare-credentials: "true"
       preset-dind-enabled: "true"
       preset-disable-all-alpha-beta-feature-gates: "true"
       preset-ginkgo-skip-default: "true"
@@ -512,7 +506,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -557,7 +550,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -602,7 +594,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -647,7 +638,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-enable-all-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -780,7 +770,6 @@ periodics:
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
     preset-bestpractice-install: "true"
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -825,7 +814,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -870,7 +858,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -915,7 +902,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"
@@ -960,7 +946,6 @@ periodics:
     testgrid-create-job-group: "true"
     testgrid-dashboards: cert-manager-periodics-release-1.20
   labels:
-    preset-cloudflare-credentials: "true"
     preset-dind-enabled: "true"
     preset-disable-all-alpha-beta-feature-gates: "true"
     preset-ginkgo-skip-default: "true"

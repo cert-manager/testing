@@ -137,7 +137,6 @@ func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest stri
 		"e2e-v"+nameVersion,
 		desc,
 		addDindLabel,
-		addCloudflareCredentialsLabel,
 		addLocalCacheLabel,
 		addGoCacheLabel,
 		addStandardE2ELabels(k8sVersion),
@@ -264,7 +263,6 @@ func E2ETestFeatureGatesDisabled(ctx *ProwContext, k8sVersion string, cpuRequest
 
 	job.Labels = make(map[string]string)
 
-	addCloudflareCredentialsLabel(job)
 	addDindLabel(job)
 	addDisableFeatureGatesLabel(job)
 	addGinkgoSkipDefaultLabel(job)
@@ -286,7 +284,6 @@ func E2ETestWithBestPracticeInstall(ctx *ProwContext, k8sVersion string, cpuRequ
 
 	job.Labels = make(map[string]string)
 
-	addCloudflareCredentialsLabel(job)
 	addDindLabel(job)
 	addDisableFeatureGatesLabel(job)
 	addGinkgoSkipDefaultLabel(job)
