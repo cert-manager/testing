@@ -295,7 +295,6 @@ presubmits:
             preset-go-cache: "true"
             preset-local-cache: "true"
             preset-retry-flakey-jobs: "true"
-            preset-venafi-tpp-credentials: "true"
           spec:
             containers:
                 - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
@@ -338,7 +337,6 @@ presubmits:
             preset-go-cache: "true"
             preset-local-cache: "true"
             preset-retry-flakey-jobs: "true"
-            preset-venafi-cloud-credentials: "true"
           spec:
             containers:
                 - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie
@@ -381,7 +379,6 @@ presubmits:
             preset-go-cache: "true"
             preset-local-cache: "true"
             preset-retry-flakey-jobs: "true"
-            preset-venafi-ngts-credentials: "true"
           spec:
             containers:
                 - image: europe-west1-docker.pkg.dev/cert-manager-tests-trusted/cert-manager-infra-images/make-dind:20260529-7f372af-trixie

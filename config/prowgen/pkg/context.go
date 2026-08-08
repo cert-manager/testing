@@ -85,8 +85,22 @@ func (pc *ProwContext) OptionalPresubmitIfChanged(job *Job, changedFileRegex str
 	pc.addPresubmit(job, false, true, changedFileRegex)
 }
 
+// presubmitForbiddenLabels are presets that mount live credentials. Presubmits run
+// unreviewed PR code, so they must never carry these; only periodics/postsubmits (which
+// run merged, reviewed code) may. Stripping them here, at the single point through which
+// every presubmit passes, means no generator can accidentally re-add them to a presubmit.
+var presubmitForbiddenLabels = []string{
+	"preset-venafi-tpp-credentials",
+	"preset-venafi-cloud-credentials",
+	"preset-venafi-ngts-credentials",
+}
+
 func (pc *ProwContext) addPresubmit(job *Job, alwaysRun bool, optional bool, changedFileRegex string) {
 	job.Name = pc.presubmitJobName(job.Name)
+
+	for _, label := range presubmitForbiddenLabels {
+		delete(job.Labels, label)
+	}
 
 	if pc.PresubmitDashboard {
 		addTestGridAnnotations(pc.presubmitDashboardName())(job)
