@@ -8,7 +8,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20260728-850dcba9b
+      - image: us-docker.pkg.dev/k8s-infra-prow/images/checkconfig:v20260729-7f8580d8d
         command:
         - checkconfig
         args:
@@ -65,7 +65,7 @@ presubmits:
     decorate: true
     spec:
       containers:
-      - image: gcr.io/k8s-staging-test-infra/configurator:v20260721-91123b8ffb
+      - image: gcr.io/k8s-staging-test-infra/configurator:v20260729-f66136c16c
         command:
         - configurator
         args:
