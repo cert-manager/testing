@@ -28,7 +28,7 @@ import (
 	"sync"
 	"time"
 
-	yaml "go.yaml.in/yaml/v2"
+	yaml "go.yaml.in/yaml/v3"
 )
 
 // builder builds docker images given a build.yaml file provided in the
