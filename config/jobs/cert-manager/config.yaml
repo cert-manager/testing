@@ -7,25 +7,6 @@ presets:
     value: TRUE
 
 - labels:
-    preset-cloudflare-credentials: "true"
-  env:
-  - name: CLOUDFLARE_E2E_API_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: api-token
-  - name: CLOUDFLARE_E2E_EMAIL
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: email
-  - name: CLOUDFLARE_E2E_DOMAIN
-    valueFrom:
-      secretKeyRef:
-        name: cloudflare-api-key
-        key: domain
-
-- labels:
     preset-venafi-tpp-credentials: "true"
   env:
   - name: VENAFI_TPP_URL

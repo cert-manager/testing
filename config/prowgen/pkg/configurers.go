@@ -68,10 +68,6 @@ func addDindLabel(job *Job) {
 	job.Labels["preset-dind-enabled"] = "true"
 }
 
-func addCloudflareCredentialsLabel(job *Job) {
-	job.Labels["preset-cloudflare-credentials"] = "true"
-}
-
 func addRetryFlakesLabel(job *Job) {
 	job.Labels["preset-retry-flakey-jobs"] = "true"
 }
