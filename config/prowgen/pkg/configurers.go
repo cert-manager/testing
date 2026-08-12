@@ -81,8 +81,9 @@ func addDisableFeatureGatesLabel(job *Job) {
 }
 
 // addVenafiBothLabels configures the E2ETestVenafiBoth periodic, which focuses
-// on all Venafi issuers (VaaS, TPP, NGTS) and is the sole remaining Venafi
-// coverage now that the per-issuer presubmits have been removed.
+// on all Venafi issuers (VaaS, TPP, NGTS) and is the only Venafi e2e coverage;
+// https://github.com/cert-manager/testing/issues/1226 tracks restoring
+// credential-free pre-merge coverage.
 func addVenafiBothLabels(job *Job) {
 	job.Labels["preset-ginkgo-focus-venafi"] = "true"
 
