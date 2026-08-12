@@ -32,7 +32,7 @@ func testProwContext() *ProwContext {
 }
 
 // jobWithForbiddenLabels returns a job carrying every credential preset that
-// presubmits must never mount, so we can assert they are stripped/retained.
+// presubmits must never mount, so we can assert they are rejected/retained.
 func jobWithForbiddenLabels(name string) *Job {
 	job := jobTemplate(name, "some description")
 	for _, label := range presubmitForbiddenLabels {
@@ -41,26 +41,27 @@ func jobWithForbiddenLabels(name string) *Job {
 	return job
 }
 
-// Presubmits run unreviewed PR code, so addPresubmit must strip every
-// credential preset regardless of which generator added it.
-func Test_addPresubmit_stripsCredentialLabels(t *testing.T) {
-	pc := testProwContext()
-	pc.RequiredPresubmit(jobWithForbiddenLabels("e2e"))
-
-	if len(pc.presubmits) != 1 {
-		t.Fatalf("expected exactly one presubmit, got %d", len(pc.presubmits))
-	}
-
-	labels := pc.presubmits[0].Labels
+// Presubmits run unreviewed PR code, so addPresubmit must fail generation for
+// a job carrying a credential preset, regardless of which generator added it.
+func Test_addPresubmit_rejectsCredentialLabels(t *testing.T) {
 	for _, label := range presubmitForbiddenLabels {
-		if value, ok := labels[label]; ok {
-			t.Errorf("presubmit must not carry credential preset %q, but it is set to %q", label, value)
-		}
+		t.Run(label, func(t *testing.T) {
+			defer func() {
+				if recover() == nil {
+					t.Errorf("expected a panic for presubmit with credential preset %q, but generation succeeded", label)
+				}
+			}()
+
+			job := jobTemplate("e2e", "some description")
+			job.Labels[label] = "true"
+
+			testProwContext().RequiredPresubmit(job)
+		})
 	}
 }
 
 // Periodics run merged, reviewed code, so they must keep their credentials:
-// the strip is a presubmit-only guard, not a blanket removal.
+// the rejection is a presubmit-only guard.
 func Test_Periodics_retainsCredentialLabels(t *testing.T) {
 	pc := testProwContext()
 	pc.Periodics(jobWithForbiddenLabels("e2e"), 2)

@@ -86,9 +86,12 @@ func (pc *ProwContext) OptionalPresubmitIfChanged(job *Job, changedFileRegex str
 }
 
 // presubmitForbiddenLabels are presets that mount live credentials. Presubmits run
-// unreviewed PR code, so they must never carry these; only periodics/postsubmits (which
-// run merged, reviewed code) may. Stripping them here, at the single point through which
-// every presubmit passes, means no generator can accidentally re-add them to a presubmit.
+// unreviewed PR code, so they must never carry these; only periodics (which run
+// merged, reviewed code) may. Panicking here, at the single point through which
+// every presubmit passes, means no generator can accidentally add them to a
+// presubmit: generation fails loudly and the developer must remove the preset or
+// make the job a periodic. TestNoPresubmitUsesSecretBearingPreset is the backstop
+// covering hand-written job files and presets not in this list.
 var presubmitForbiddenLabels = []string{
 	"preset-venafi-tpp-credentials",
 	"preset-venafi-cloud-credentials",
@@ -99,7 +102,12 @@ func (pc *ProwContext) addPresubmit(job *Job, alwaysRun bool, optional bool, cha
 	job.Name = pc.presubmitJobName(job.Name)
 
 	for _, label := range presubmitForbiddenLabels {
-		delete(job.Labels, label)
+		if _, found := job.Labels[label]; found {
+			// note: we panic for the same reason as configurers.go: this tool is
+			// developer-facing and a generator adding live credentials to a
+			// presubmit must fail generation, not be silently repaired.
+			panic(fmt.Errorf("presubmit %s must not use preset %s, which mounts live credentials; presubmits run unreviewed PR code", job.Name, label))
+		}
 	}
 
 	if pc.PresubmitDashboard {
