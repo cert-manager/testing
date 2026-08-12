@@ -6,6 +6,15 @@ presets:
   - name: GINKGO_NO_COLOR
     value: TRUE
 
+# The venafi-* presets inject credentials as env vars, but Prow's log/artifact
+# censoring (censor_secrets in config.yaml) only learns the values to redact
+# from Secrets *mounted* into the Pod; env vars are never scanned:
+# https://github.com/kubernetes-sigs/prow/blob/85e45f6d25aa66f1ee071705b4f72a425fbaeed4/site/content/en/docs/components/pod-utilities/_index.md#L158-L162
+# https://github.com/kubernetes-sigs/prow/blob/85e45f6d25aa66f1ee071705b4f72a425fbaeed4/pkg/pod-utils/decorate/podspec.go#L758-L769
+# https://github.com/kubernetes-sigs/prow/blob/85e45f6d25aa66f1ee071705b4f72a425fbaeed4/pkg/sidecar/censor.go#L488-L511
+# Each preset therefore also mounts its Secret under /etc/censor/, projecting
+# only the sensitive keys so that non-secret values (URLs, zones) remain
+# readable in the logs.
 - labels:
     preset-venafi-tpp-credentials: "true"
   env:
@@ -29,6 +38,19 @@ presets:
       secretKeyRef:
         name: venafi-tpp
         key: password
+  volumes:
+  - name: censor-venafi-tpp
+    secret:
+      secretName: venafi-tpp
+      items:
+      - key: username
+        path: username
+      - key: password
+        path: password
+  volumeMounts:
+  - name: censor-venafi-tpp
+    mountPath: /etc/censor/venafi-tpp
+    readOnly: true
 
 - labels:
     preset-venafi-cloud-credentials: "true"
@@ -43,6 +65,18 @@ presets:
       secretKeyRef:
         name: venafi-cloud
         key: apitoken
+  # Mounted so the values are censored; see the comment above venafi-tpp.
+  volumes:
+  - name: censor-venafi-cloud
+    secret:
+      secretName: venafi-cloud
+      items:
+      - key: apitoken
+        path: apitoken
+  volumeMounts:
+  - name: censor-venafi-cloud
+    mountPath: /etc/censor/venafi-cloud
+    readOnly: true
 
 - labels:
     preset-venafi-ngts-credentials: "true"
@@ -72,6 +106,20 @@ presets:
       secretKeyRef:
         name: venafi-ngts
         key: client-secret
+  # Mounted so the values are censored; see the comment above venafi-tpp.
+  volumes:
+  - name: censor-venafi-ngts
+    secret:
+      secretName: venafi-ngts
+      items:
+      - key: client-id
+        path: client-id
+      - key: client-secret
+        path: client-secret
+  volumeMounts:
+  - name: censor-venafi-ngts
+    mountPath: /etc/censor/venafi-ngts
+    readOnly: true
 
 - labels:
     preset-retry-flakey-tests: "true"

@@ -10,9 +10,12 @@ plank:
   default_decoration_configs:
     '*':
       # Redact known secret values from job logs and artifacts before they are
-      # uploaded to the public cert-manager-prow-artifacts bucket. Defence in
-      # depth: it does not stop a job from exfiltrating a secret over the
-      # network, only from leaking one into the public logs.
+      # uploaded to the public cert-manager-prow-artifacts bucket. The sidecar
+      # only learns the values to redact from Secrets mounted into the Pod
+      # (env vars are not scanned), which is why the venafi-* presets in
+      # config/jobs/cert-manager/config.yaml mount their Secrets as volumes.
+      # Defense in depth: it does not stop a job from exfiltrating a secret
+      # over the network, only from leaking one into the public logs.
       censor_secrets: true
       timeout: 7200000000000 # 2h
       grace_period: 10000000000 # 10s
