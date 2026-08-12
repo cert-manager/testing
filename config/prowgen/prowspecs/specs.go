@@ -135,9 +135,6 @@ func (m *BranchSpec) GenerateJobFile() *pkg.JobFile {
 		m.prowContext.OptionalPresubmitIfChanged(pkg.LicenseTest(m.prowContext), `go.mod`)
 	}
 
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiTPP(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiCloud(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
-	m.prowContext.OptionalPresubmit(pkg.E2ETestVenafiNGTS(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 	m.prowContext.OptionalPresubmit(pkg.E2ETestFeatureGatesDisabled(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 	m.prowContext.OptionalPresubmit(pkg.E2ETestWithBestPracticeInstall(m.prowContext, m.primaryKubernetesVersion, m.e2eCPURequest, m.e2eMemoryRequest))
 
