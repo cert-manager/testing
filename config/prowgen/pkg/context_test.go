@@ -35,7 +35,7 @@ func testProwContext() *ProwContext {
 // presubmits must never mount, so we can assert they are rejected/retained.
 func jobWithForbiddenLabels(name string) *Job {
 	job := jobTemplate(name, "some description")
-	for _, label := range presubmitForbiddenLabels {
+	for _, label := range credentialPresets {
 		job.Labels[label] = "true"
 	}
 	return job
@@ -44,7 +44,7 @@ func jobWithForbiddenLabels(name string) *Job {
 // Presubmits run unreviewed PR code, so addPresubmit must fail generation for
 // a job carrying a credential preset, regardless of which generator added it.
 func Test_addPresubmit_rejectsCredentialLabels(t *testing.T) {
-	for _, label := range presubmitForbiddenLabels {
+	for _, label := range credentialPresets {
 		t.Run(label, func(t *testing.T) {
 			defer func() {
 				if recover() == nil {
@@ -71,9 +71,43 @@ func Test_Periodics_retainsCredentialLabels(t *testing.T) {
 	}
 
 	labels := pc.periodics[0].Labels
-	for _, label := range presubmitForbiddenLabels {
+	for _, label := range credentialPresets {
 		if _, ok := labels[label]; !ok {
 			t.Errorf("periodic must retain credential preset %q, but it was stripped", label)
 		}
+	}
+}
+
+// Periodics carrying a credential preset must be pinned to the dedicated
+// credentialed-jobs node pool, so they never share a node (or its hostPath
+// build caches) with presubmits running unreviewed PR code.
+func Test_Periodics_pinsCredentialedJobsToDedicatedPool(t *testing.T) {
+	for _, label := range credentialPresets {
+		t.Run(label, func(t *testing.T) {
+			pc := testProwContext()
+			job := jobTemplate("e2e", "some description")
+			job.Labels[label] = "true"
+			pc.Periodics(job, 2)
+
+			spec := pc.periodics[0].Spec
+			if got := spec.NodeSelector["dedicated"]; got != "credentialed-jobs" {
+				t.Errorf("credentialed periodic must have nodeSelector dedicated=credentialed-jobs, got %q", got)
+			}
+			if len(spec.Tolerations) != 1 || spec.Tolerations[0].Value != "credentialed-jobs" {
+				t.Errorf("credentialed periodic must tolerate the credentialed-jobs taint, got %+v", spec.Tolerations)
+			}
+		})
+	}
+}
+
+// Periodics without credentials stay on the shared worker pool: the dedicated
+// pool is reserved for jobs which must not co-tenant with presubmits.
+func Test_Periodics_leavesUncredentialedJobsUnpinned(t *testing.T) {
+	pc := testProwContext()
+	pc.Periodics(jobTemplate("e2e", "some description"), 2)
+
+	spec := pc.periodics[0].Spec
+	if spec.NodeSelector != nil || spec.Tolerations != nil {
+		t.Errorf("uncredentialed periodic must not be pinned to the credentialed pool, got nodeSelector=%v tolerations=%+v", spec.NodeSelector, spec.Tolerations)
 	}
 }

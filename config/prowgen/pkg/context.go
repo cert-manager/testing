@@ -85,14 +85,17 @@ func (pc *ProwContext) OptionalPresubmitIfChanged(job *Job, changedFileRegex str
 	pc.addPresubmit(job, false, true, changedFileRegex)
 }
 
-// presubmitForbiddenLabels are presets that mount live credentials. Presubmits run
+// credentialPresets are presets that mount live credentials. Presubmits run
 // unreviewed PR code, so they must never carry these; only periodics (which run
 // merged, reviewed code) may. Panicking here, at the single point through which
 // every presubmit passes, means no generator can accidentally add them to a
 // presubmit: generation fails loudly and the developer must remove the preset or
 // make the job a periodic. TestNoPresubmitUsesSecretBearingPreset is the backstop
 // covering hand-written job files and presets not in this list.
-var presubmitForbiddenLabels = []string{
+//
+// Any periodic carrying one of these presets is additionally pinned, in
+// Periodics, to the dedicated credentialed-jobs node pool.
+var credentialPresets = []string{
 	"preset-venafi-tpp-credentials",
 	"preset-venafi-cloud-credentials",
 	"preset-venafi-ngts-credentials",
@@ -101,7 +104,7 @@ var presubmitForbiddenLabels = []string{
 func (pc *ProwContext) addPresubmit(job *Job, alwaysRun bool, optional bool, changedFileRegex string) {
 	job.Name = pc.presubmitJobName(job.Name)
 
-	for _, label := range presubmitForbiddenLabels {
+	for _, label := range credentialPresets {
 		if _, found := job.Labels[label]; found {
 			// note: we panic for the same reason as configurers.go: this tool is
 			// developer-facing and a generator adding live credentials to a
@@ -133,6 +136,27 @@ func (pc *ProwContext) Periodics(job *Job, periodicityHours int) {
 
 	if pc.PeriodicDashboard {
 		addTestGridAnnotations(pc.periodicDashboardName())(job)
+	}
+
+	// Jobs which mount live credentials must run on the dedicated
+	// credentialed-jobs node pool, so that they never share a node — or its
+	// hostPath build caches — with presubmits, which run unreviewed PR code
+	// in privileged (dind) pods. Injecting the placement here, at the single
+	// point through which every periodic passes, means no generator can
+	// accidentally schedule a credentialed job onto the shared worker pool.
+	// The pool, its label and its taint are defined in
+	// cert-manager/infrastructure gcp/modules/gcp-cluster/main.tf.
+	for _, label := range credentialPresets {
+		if _, found := job.Labels[label]; found {
+			job.Spec.NodeSelector = map[string]string{"dedicated": "credentialed-jobs"}
+			job.Spec.Tolerations = []Toleration{{
+				Key:      "dedicated",
+				Operator: "Equal",
+				Value:    "credentialed-jobs",
+				Effect:   "NoSchedule",
+			}}
+			break
+		}
 	}
 
 	pc.periodics = append(pc.periodics, &PeriodicJob{
