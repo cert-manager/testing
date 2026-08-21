@@ -620,6 +620,13 @@ periodics:
             nameservers:
                 - 8.8.8.8
                 - 8.8.4.4
+        nodeSelector:
+            dedicated: credentialed-jobs
+        tolerations:
+            - key: dedicated
+              operator: Equal
+              value: credentialed-jobs
+              effect: NoSchedule
       extra_refs:
         - org: cert-manager
           repo: cert-manager

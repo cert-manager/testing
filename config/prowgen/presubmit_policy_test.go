@@ -58,7 +58,7 @@ type policyConfig struct {
 // check covers hand-written job files as well as prowgen-generated ones
 // (which are committed and kept in sync by verify-prowgen). This is the
 // repo-wide enforcement backing the generation-time strip of
-// presubmitForbiddenLabels in pkg/context.go.
+// credentialPresets in pkg/context.go.
 func TestNoPresubmitUsesSecretBearingPreset(t *testing.T) {
 	files := []string{"../config.yaml"}
 	err := filepath.WalkDir("../jobs", func(path string, d fs.DirEntry, err error) error {

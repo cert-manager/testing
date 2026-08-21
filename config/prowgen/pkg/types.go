@@ -43,9 +43,18 @@ type Job struct {
 }
 
 type JobSpec struct {
-	Containers []Container `yaml:"containers"`
-	DNSPolicy  string      `yaml:"dnsPolicy"`
-	DNSConfig  DNSConfig   `yaml:"dnsConfig"`
+	Containers   []Container       `yaml:"containers"`
+	DNSPolicy    string            `yaml:"dnsPolicy"`
+	DNSConfig    DNSConfig         `yaml:"dnsConfig"`
+	NodeSelector map[string]string `yaml:"nodeSelector,omitempty"`
+	Tolerations  []Toleration      `yaml:"tolerations,omitempty"`
+}
+
+type Toleration struct {
+	Key      string `yaml:"key"`
+	Operator string `yaml:"operator"`
+	Value    string `yaml:"value"`
+	Effect   string `yaml:"effect"`
 }
 
 type Container struct {
