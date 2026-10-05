@@ -82,7 +82,7 @@ func MakeVerify(ctx *ProwContext) *Job {
 			Resources: ContainerResources{
 				Requests: ContainerResourceRequest{
 					CPU:    cpuRequest,
-					Memory: "4Gi",
+					Memory: "6Gi",
 				},
 			},
 		},
