@@ -51,7 +51,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		otherKubernetesVersions:  []string{"1.32", "1.33", "1.34"},
 
 		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
+		e2eMemoryRequest: "8Gi",
 	},
 	"release-1.21": {
 		prowContext: &pkg.ProwContext{
@@ -72,7 +72,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		otherKubernetesVersions:  []string{"1.33", "1.34", "1.35"},
 
 		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
+		e2eMemoryRequest: "8Gi",
 	},
 	"master": {
 		prowContext: &pkg.ProwContext{
@@ -92,7 +92,7 @@ var knownBranches map[string]BranchSpec = map[string]BranchSpec{
 		otherKubernetesVersions:  []string{"1.34", "1.35", "1.36"},
 
 		e2eCPURequest:    "7000m",
-		e2eMemoryRequest: "6Gi",
+		e2eMemoryRequest: "8Gi",
 	},
 }
 

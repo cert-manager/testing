@@ -24,7 +24,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 2000m
-                        memory: 4Gi
+                        memory: 6Gi
             dnsPolicy: None
             dnsConfig:
                 nameservers:
@@ -89,7 +89,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -129,7 +129,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -169,7 +169,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -209,7 +209,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -285,7 +285,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -326,7 +326,7 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 6Gi
+                        memory: 8Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -404,7 +404,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -448,7 +448,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -492,7 +492,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -536,7 +536,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -582,7 +582,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -674,7 +674,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -718,7 +718,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -762,7 +762,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -806,7 +806,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -850,7 +850,7 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 6Gi
+                    memory: 8Gi
               securityContext:
                 privileged: true
                 capabilities:
