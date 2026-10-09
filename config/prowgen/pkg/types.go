@@ -62,17 +62,35 @@ type Container struct {
 
 	Args []string `yaml:"args"`
 
+	Env []EnvVar `yaml:"env,omitempty"`
+
 	Resources ContainerResources `yaml:"resources"`
 
 	SecurityContext *SecurityContext `yaml:"securityContext,omitempty"`
 }
 
+type EnvVar struct {
+	Name  string `yaml:"name"`
+	Value string `yaml:"value"`
+}
+
 type ContainerResources struct {
 	Requests ContainerResourceRequest `yaml:"requests"`
+
+	// Limits is nil only for jobs whose peak memory has not been measured
+	// yet; see memoryResources.
+	Limits *ContainerResourceLimits `yaml:"limits,omitempty"`
 }
 
 type ContainerResourceRequest struct {
 	CPU    string `yaml:"cpu"`
+	Memory string `yaml:"memory"`
+}
+
+// ContainerResourceLimits deliberately has no CPU field: CPU is compressible,
+// so a CPU limit only slows a job down, while a memory limit stops a job that
+// outgrows its request from taking down the whole node.
+type ContainerResourceLimits struct {
 	Memory string `yaml:"memory"`
 }
 
