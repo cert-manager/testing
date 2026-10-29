@@ -21,10 +21,13 @@ presubmits:
                     - -j2
                     - vendor-go
                     - ci-presubmit
+                  env:
+                    - name: GOMAXPROCS
+                      value: "4"
                   resources:
                     requests:
                         cpu: 2000m
-                        memory: 6Gi
+                        memory: 10Gi
             dnsPolicy: None
             dnsConfig:
                 nameservers:
@@ -54,7 +57,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 2000m
-                        memory: 4Gi
+                        memory: 7Gi
+                    limits:
+                        memory: 7Gi
             dnsPolicy: None
             dnsConfig:
                 nameservers:
@@ -89,7 +94,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -129,7 +136,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -169,7 +178,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -209,7 +220,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -245,6 +258,8 @@ presubmits:
                   resources:
                     requests:
                         cpu: 3500m
+                        memory: 6Gi
+                    limits:
                         memory: 6Gi
                   securityContext:
                     privileged: true
@@ -285,7 +300,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -326,7 +343,9 @@ presubmits:
                   resources:
                     requests:
                         cpu: 7000m
-                        memory: 8Gi
+                        memory: 9Gi
+                    limits:
+                        memory: 9Gi
                   securityContext:
                     privileged: true
                     capabilities:
@@ -365,7 +384,9 @@ periodics:
               resources:
                 requests:
                     cpu: 2000m
-                    memory: 4Gi
+                    memory: 7Gi
+                limits:
+                    memory: 7Gi
         dnsPolicy: None
         dnsConfig:
             nameservers:
@@ -404,7 +425,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -448,7 +471,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -492,7 +517,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -536,7 +563,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -582,7 +611,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -630,6 +661,8 @@ periodics:
                 requests:
                     cpu: 3500m
                     memory: 6Gi
+                limits:
+                    memory: 6Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -674,7 +707,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -718,7 +753,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -762,7 +799,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -806,7 +845,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -850,7 +891,9 @@ periodics:
               resources:
                 requests:
                     cpu: 7000m
-                    memory: 8Gi
+                    memory: 9Gi
+                limits:
+                    memory: 9Gi
               securityContext:
                 privileged: true
                 capabilities:
@@ -894,7 +937,9 @@ periodics:
               resources:
                 requests:
                     cpu: 1000m
-                    memory: 2Gi
+                    memory: 3Gi
+                limits:
+                    memory: 3Gi
               securityContext:
                 privileged: true
         dnsPolicy: None
@@ -935,7 +980,9 @@ periodics:
               resources:
                 requests:
                     cpu: 1000m
-                    memory: 2Gi
+                    memory: 3Gi
+                limits:
+                    memory: 3Gi
               securityContext:
                 privileged: true
         dnsPolicy: None
@@ -976,7 +1023,9 @@ periodics:
               resources:
                 requests:
                     cpu: 1000m
-                    memory: 2Gi
+                    memory: 3Gi
+                limits:
+                    memory: 3Gi
               securityContext:
                 privileged: true
         dnsPolicy: None
@@ -1017,7 +1066,9 @@ periodics:
               resources:
                 requests:
                     cpu: 1000m
-                    memory: 2Gi
+                    memory: 3Gi
+                limits:
+                    memory: 3Gi
               securityContext:
                 privileged: true
         dnsPolicy: None
@@ -1058,7 +1109,9 @@ periodics:
               resources:
                 requests:
                     cpu: 1000m
-                    memory: 2Gi
+                    memory: 3Gi
+                limits:
+                    memory: 3Gi
               securityContext:
                 privileged: true
         dnsPolicy: None
