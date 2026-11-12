@@ -18,7 +18,9 @@ presubmits:
             resources:
               requests:
                 cpu: 1
-                memory: 1Gi
+                memory: 4Gi
+              limits:
+                memory: 4Gi
         dnsPolicy: None
         dnsConfig:
           nameservers:
@@ -42,7 +44,9 @@ presubmits:
             resources:
               requests:
                 cpu: 1
-                memory: 1Gi
+                memory: 4Gi
+              limits:
+                memory: 4Gi
         dnsPolicy: None
         dnsConfig:
           nameservers:
