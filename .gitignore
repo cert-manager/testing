@@ -2,3 +2,4 @@
 /.vscode/
 _temp/
 *.iml
+__pycache__/
