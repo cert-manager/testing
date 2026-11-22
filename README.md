@@ -33,6 +33,20 @@ make local-checkconfig
 This will use the test-infra 'checkconfig' tool to verify the configuration
 files.
 
+### Measuring how much memory each job uses
+
+Use this before you change a memory request or limit in a job. It prints a
+Markdown table of the peak memory (RSS) of every job over the last 30 days:
+
+```bash
+gcloud auth login
+hack/prow-job-memory-peaks.py --days 30 > peaks.md
+```
+
+Your account needs read access to Cloud Monitoring in the
+`cert-manager-tests-untrusted` project. Size a request at the peak plus about
+25%, because the metric is sampled and misses short spikes.
+
 ### Deploying a new version of Prow
 
 Prow's deployment on our prow-untrusted cluster is done manually using a Makefile in ./prow/cluster.
