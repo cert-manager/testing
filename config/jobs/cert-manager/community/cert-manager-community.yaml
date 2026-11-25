@@ -1,0 +1,19 @@
+presubmits:
+  cert-manager/community:
+  - name: pull-cert-manager-community-peribolos
+    # cluster: prow-trusted
+    decorate: true
+    decoration_config:
+      timeout: 10m
+    labels:
+      preset-deployer-github-token: "true"
+    run_if_changed: github/.*
+    spec:
+      containers:
+        - name: peribolos
+          image: us-docker.pkg.dev/k8s-infra-prow/images/peribolos:v20260904-1a000594c
+          command:
+            - peribolos
+          args:
+            - --config-path=github/org.yaml
+            - --github-token-path=/etc/github/token
