@@ -23,6 +23,26 @@ import (
 	"strings"
 )
 
+// memoryResources returns a CPU request plus a memory request and a memory
+// limit of the same size. With the limit, a job that outgrows its request is
+// OOM-killed in its own cgroup and Prow reports that against the job. Without
+// it the node runs out of memory, goes NotReady, and every job on it fails
+// with "Pod got deleted unexpectedly", which Prow does not retry.
+//
+// Size memory from the measured peak RSS of the job plus about 25% headroom;
+// see https://github.com/cert-manager/testing/issues/1240 for the numbers.
+func memoryResources(cpuRequest, memory string) ContainerResources {
+	return ContainerResources{
+		Requests: ContainerResourceRequest{
+			CPU:    cpuRequest,
+			Memory: memory,
+		},
+		Limits: &ContainerResourceLimits{
+			Memory: memory,
+		},
+	}
+}
+
 // MakeTest generates a test which runs unit and integration tests
 func MakeTest(ctx *ProwContext) *Job {
 	job := jobTemplate(
@@ -45,12 +65,7 @@ func MakeTest(ctx *ProwContext) *Job {
 				"vendor-go",
 				"test-ci",
 			},
-			Resources: ContainerResources{
-				Requests: ContainerResourceRequest{
-					CPU:    cpuRequest,
-					Memory: "4Gi",
-				},
-			},
+			Resources: memoryResources(cpuRequest, "7Gi"),
 		},
 	}
 
@@ -79,10 +94,19 @@ func MakeVerify(ctx *ProwContext) *Job {
 				"vendor-go",
 				"ci-presubmit",
 			},
+			// Step one of https://github.com/cert-manager/testing/issues/1240:
+			// make-verify peaks at 9.8 GiB RSS because golangci-lint and the
+			// Go compiler size their parallelism to the node's 16 CPUs rather
+			// than the CPU request. GOMAXPROCS caps both without changing the
+			// make -j setting, so the trial changes one variable. The limit is set
+			// once the peak has been measured again with this cap in place.
+			Env: []EnvVar{
+				{Name: "GOMAXPROCS", Value: "4"},
+			},
 			Resources: ContainerResources{
 				Requests: ContainerResourceRequest{
 					CPU:    cpuRequest,
-					Memory: "6Gi",
+					Memory: "10Gi",
 				},
 			},
 		},
@@ -113,12 +137,7 @@ func LicenseTest(ctx *ProwContext) *Job {
 				"vendor-go",
 				"verify-licenses",
 			},
-			Resources: ContainerResources{
-				Requests: ContainerResourceRequest{
-					CPU:    "1",
-					Memory: "1Gi",
-				},
-			},
+			Resources: memoryResources("1", "4Gi"),
 		},
 	}
 
@@ -159,12 +178,7 @@ func E2ETest(ctx *ProwContext, k8sVersion string, cpuRequest, memoryRequest stri
 				"e2e-ci",
 				k8sVersionArg,
 			},
-			Resources: ContainerResources{
-				Requests: ContainerResourceRequest{
-					CPU:    cpuRequest,
-					Memory: memoryRequest,
-				},
-			},
+			Resources: memoryResources(cpuRequest, memoryRequest),
 			SecurityContext: &SecurityContext{
 				Privileged: true,
 				Capabilities: &SecurityContextCapabilities{
@@ -265,12 +279,7 @@ func UpgradeTest(ctx *ProwContext, k8sVersion string) *Job {
 				"vendor-go",
 				"test-upgrade",
 			},
-			Resources: ContainerResources{
-				Requests: ContainerResourceRequest{
-					CPU:    "3500m",
-					Memory: "6Gi",
-				},
-			},
+			Resources: memoryResources("3500m", "6Gi"),
 			SecurityContext: &SecurityContext{
 				Privileged: true,
 				Capabilities: &SecurityContextCapabilities{
@@ -326,12 +335,7 @@ func TrivyTest(ctx *ProwContext, containerName string, periodicity int) *Job {
 				"vendor-go",
 				fmt.Sprintf("trivy-scan-%s", containerName),
 			},
-			Resources: ContainerResources{
-				Requests: ContainerResourceRequest{
-					CPU:    cpuRequest,
-					Memory: "2Gi",
-				},
-			},
+			Resources: memoryResources(cpuRequest, "3Gi"),
 			SecurityContext: &SecurityContext{
 				Privileged: true,
 			},
